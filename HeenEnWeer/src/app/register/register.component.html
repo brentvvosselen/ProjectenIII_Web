@@ -1,0 +1,9 @@
+<div>
+  <label for="username">Username: </label>
+  <input type="text" name="username" #username>
+
+  <label for="password">Password: </label>
+  <input type="text" name="password" #password>
+
+  <button (click)="createUser(username.value, password.value)">Create user</button>
+</div>
