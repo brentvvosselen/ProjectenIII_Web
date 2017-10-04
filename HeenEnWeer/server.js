@@ -27,7 +27,7 @@ mongodb.MongoClient.connect("mongodb://localhost:27017/heenenweer", function (er
   console.log("Database connection ready");
 
   // Initialize the app.
-  var server = app.listen(process.env.PORT || 9801, function () {
+  var server = app.listen(process.env.PORT || 5000, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
   });

@@ -13,11 +13,11 @@
     <button class="btn btn-warning" (click)="createNewParent()">New</button>
   </div>
   <div class="col-md-5 col-md-offset-2">
-    <parents-details
+    <app-parents-details
       [parent]="selectedParent"
       [createHandler]="addParent"
       [updateHandler]="updateParent"
       [deleteHandler]="deleteParent">
-    </parents-details>
+    </app-parents-details>
   </div>
 </div>

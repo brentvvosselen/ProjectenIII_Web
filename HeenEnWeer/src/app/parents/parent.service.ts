@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class ParentService {
-  private parentsUrl = 'localhost:9801/api/parents';
+  private parentsUrl = 'http://localhost:5000/api/parents';
   constructor(private http: Http) { }
 
   // get("/api/Parents")
