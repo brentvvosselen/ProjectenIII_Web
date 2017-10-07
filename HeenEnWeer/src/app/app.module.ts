@@ -33,7 +33,7 @@ import { ParentsListComponent } from './parents/parents-list/parents-list.compon
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: "login", component: LoginComponent},
+      { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent}
     ])
   ],

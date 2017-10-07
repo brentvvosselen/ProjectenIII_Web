@@ -1,12 +1,25 @@
+// =======================
+// get the packages we need ============
+// =======================
+
 var express = require("express");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
+var mongoose = require('mongoose');
+var jwt = require('jsonwebtoken');
+var config = require('./server/config.js');
+var User = require('./server/app/models/user.js');
+
 
 var PARENTS_COLLECTION = "parents";
+var USERS_COLLECTION = "users";
 
 var app = express();
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+
 
 // Resolves the Access-Control-Allow-Origin error in the console
 app.use(function(req, res, next) {
@@ -41,7 +54,11 @@ mongodb.MongoClient.connect("mongodb://localhost:27017/heenenweer", function (er
   });
 });
 
+//set secret variable
+app.set('superSecret',config.secret);
+
 // CONTACTS API ROUTES BELOW
+
 
 // Generic error handler used by all endpoints.
 function handleError(res, reason, message, code) {
@@ -68,11 +85,45 @@ app.post("/api/parents", function(req, res) {
 
   db.collection(PARENTS_COLLECTION).insertOne(newParent, function(err, doc) {
     if (err) {
-      handleError(res, err.message, "Failed to create new parent.");
+      handleError(res, err.message, "Failed to create a new parent.");
     } else {
       res.status(201).json(doc.ops[0]);
     }
   });
+});
+
+
+/*create sample user*/
+app.get('/setup', function(req, res){
+  var nick = new User({
+    name: 'Nick Lippens',
+    password: 'password'
+  });
+
+  db.collection(USERS_COLLECTION).insertOne(nick, function(err,doc){
+    if(err){
+      handleError(res, err.message, "Failed to create a new user.");
+    }
+    console.log('User saved successfully');
+    res.json({success:true});
+  });
+});
+
+app.post("/api/register", function(req,res){
+  var newUser = req.body;
+
+  if(!req.body.username || !req.body.password){
+    handleError(res,"Invalid user input", "Must provide a name and a password.",400);
+    }
+
+    db.collection(USERS_COLLECTION).insertOne(newUser,function(err,doc){
+      if(err){
+        handleError(res,err.message,"Failed to create a new user.");
+
+      }else{
+        res.status(201).json(doc.ops[0]);
+      }
+    });
 });
 
 /*  "/api/contacts/:id"

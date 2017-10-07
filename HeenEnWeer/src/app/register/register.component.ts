@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
   }
 
   createUser(username, password) {
-    this.http.post('http://127.0.0.1:5000/users/add', {
+    this.http.post('http://127.0.0.1:5000/api/register', {
       username: username,
       password: password
     }).subscribe(data => {
