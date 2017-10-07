@@ -8,6 +8,14 @@ var PARENTS_COLLECTION = "parents";
 var app = express();
 app.use(bodyParser.json());
 
+// Resolves the Access-Control-Allow-Origin error in the console
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+
 // Create link to Angular build directory
 var distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
