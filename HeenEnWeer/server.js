@@ -114,18 +114,34 @@ app.post("/api/register", function(req,res){
   var newUser = req.body;
   newUser.password = hash.generate(newUser.password);
 
+
   if(!req.body.email || !req.body.password){
     handleError(res,"Invalid user input", "Must provide a name and a password.",400);
     }
 
-    db.collection(USERS_COLLECTION).insertOne(newUser,function(err,doc){
+    console.log(newUser);
+    db.collection(USERS_COLLECTION).findOne({email: newUser.email},function(err, newUser){
+      console.log(newUser);
       if(err){
-        handleError(res,err.message,"Failed to create a new user.");
-
+        console.log(err);
       }else{
-        res.status(201).json(doc.ops[0]);
+        if(newUser){
+          //salert('this username is already taken. Please choose another.');
+          console.log('user exists');
+          return false;
+        }else{
+          db.collection(USERS_COLLECTION).insertOne(newUser,function(err,doc){
+            if(err){
+              handleError(res,err.message,"Failed to create a new user.");
+            }else{
+              res.status(201).json(doc.ops[0]);
+            }
+          });
+        }
       }
     });
+
+
 });
 
 /*  "/api/contacts/:id"
