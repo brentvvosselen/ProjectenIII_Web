@@ -34,7 +34,8 @@ import { ParentsListComponent } from './parents/parents-list/parents-list.compon
     FormsModule,
     RouterModule.forRoot([
       { path: "login", component:LoginComponent},
-      { path: "register", component:RegisterComponent}
+      { path: "register", component:RegisterComponent},
+      { path: "parents", component:ParentsListComponent}
     ])
   ],
   providers: [AuthService, ParentService],

@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  error: string;
 
   constructor(private http:HttpClient) { }
 
@@ -14,16 +15,20 @@ export class RegisterComponent implements OnInit {
   }
 
   createUser(email, password, confirmationPassword) {
-    if(password == confirmationPassword){
-      this.http.post('http://127.0.0.1:5000/api/register', {
-        email: email,
-        password: password
-      }).subscribe(data => {
-        console.log(data);
-      });
-    }else{
-      console.log("Password komt niet overeen met confirmation password");
+    this.error = "";
+    if (password != confirmationPassword) {
+      this.error = "Password doesn't match with confirmation";
+      return;
     }
 
+    this.http.post('http://127.0.0.1:5000/api/register', {
+      email: email,
+      password: password
+    }).subscribe(data => {
+      console.log(data);
+    }, err => {
+      console.log(err);
+      this.error = err.error;
+    });
   }
 }

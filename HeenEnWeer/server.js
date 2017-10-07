@@ -97,8 +97,8 @@ app.post("/api/parents", function(req, res) {
 /*create sample user*/
 app.get('/setup', function(req, res){
   var nick = new User({
-    name: 'Nick Lippens',
-    password: 'password'
+    email: 'nick_Lippens@hotmail.com',
+    password: 'password1'
   });
 
   db.collection(USERS_COLLECTION).insertOne(nick, function(err,doc){
@@ -114,34 +114,36 @@ app.post("/api/register", function(req,res){
   var newUser = req.body;
   newUser.password = hash.generate(newUser.password);
 
-
   if(!req.body.email || !req.body.password){
-    handleError(res,"Invalid user input", "Must provide a name and a password.",400);
-    }
+    res.status(400).send('Incomplete form.');
+    //handleError(res,"Invalid user input", "Must provide a name and a password.",400);
+  }
 
-    console.log(newUser);
-    db.collection(USERS_COLLECTION).findOne({email: newUser.email},function(err, newUser){
-      console.log(newUser);
-      if(err){
-        console.log(err);
-      }else{
-        if(newUser){
-          //salert('this username is already taken. Please choose another.');
-          console.log('user exists');
-          return false;
-        }else{
-          db.collection(USERS_COLLECTION).insertOne(newUser,function(err,doc){
-            if(err){
-              handleError(res,err.message,"Failed to create a new user.");
-            }else{
-              res.status(201).json(doc.ops[0]);
-            }
-          });
+  db.collection(USERS_COLLECTION).findOne({email: newUser.email},function(err, existingUser){
+    if (err){
+      res.status(400).send(err);
+      //handleError(res, err.message, "Failed to create a new user.", 400);
+    } else{
+      if (existingUser){
+        res.status(400).send('User already exists.');
+        //handleError(res, "User already exists", "Use an email that hasn't been used.", 400);
+        return false;
+      } else{
+        temp = {
+          email: newUser.email,
+          password: newUser.password
         }
+
+        db.collection(USERS_COLLECTION).insertOne(temp,function(err,doc){
+          if (err){
+            handleError(res,err.message,"Failed to create a new user.", 400);
+          } else{
+            res.status(201).json(doc.ops[0]);
+          }
+        });
       }
-    });
-
-
+    }
+  });
 });
 
 /*  "/api/contacts/:id"
