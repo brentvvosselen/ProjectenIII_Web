@@ -13,12 +13,17 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
-  createUser(username, password) {
-    this.http.post('http://127.0.0.1:5000/api/register', {
-      username: username,
-      password: password
-    }).subscribe(data => {
-      console.log(data);
-    });
+  createUser(email, password, confirmationPassword) {
+    if(password == confirmationPassword){
+      this.http.post('http://127.0.0.1:5000/api/register', {
+        email: email,
+        password: password
+      }).subscribe(data => {
+        console.log(data);
+      });
+    }else{
+      console.log("Password komt niet overeen met confirmation password");
+    }
+
   }
 }

@@ -10,6 +10,7 @@ var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
 var config = require('./server/config.js');
 var User = require('./server/app/models/user.js');
+var hash = require('password-hash');
 
 
 var PARENTS_COLLECTION = "parents";
@@ -111,8 +112,9 @@ app.get('/setup', function(req, res){
 
 app.post("/api/register", function(req,res){
   var newUser = req.body;
+  newUser.password = hash.generate(newUser.password);
 
-  if(!req.body.username || !req.body.password){
+  if(!req.body.email || !req.body.password){
     handleError(res,"Invalid user input", "Must provide a name and a password.",400);
     }
 

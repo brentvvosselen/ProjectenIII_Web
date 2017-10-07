@@ -1,9 +1,12 @@
 <div>
-  <label for="username">Username: </label>
-  <input type="text" name="username" #username>
+  <label for="email">Email: </label>
+  <input type="email" name="email" #email>
 
   <label for="password">Password: </label>
-  <input type="text" name="password" #password>
+  <input type="password" name="password" #password>
 
-  <button (click)="createUser(username.value, password.value)">Create user</button>
+  <label for="confirmationPassword">Confirm your password: </label>
+  <input type="password" name="confirmationPassword" #confirmationPassword>
+
+  <button (click)="createUser(email.value, password.value, confirmationPassword.value)">Create user</button>
 </div>
