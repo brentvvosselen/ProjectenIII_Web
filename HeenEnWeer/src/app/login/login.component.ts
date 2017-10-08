@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../services/auth.service";
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -7,27 +7,22 @@ import {AuthService} from "../services/auth.service";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  test: string = 'just a test';
-
-  constructor(private auth: AuthService) {}
+  error: string;
+  constructor(private http:HttpClient) {}
 
   ngOnInit(): void {
-    let sampleUser: any = {
-      email: 'michael@realpython.com' as string,
-      password: 'michael' as string
-    };
-    this.auth.register(sampleUser)
-    .then((user) => {
-      console.log(user.json());
-    })
-    .catch((err) => {
+
+  }
+
+  onLogin(email,password){
+    this.http.post('http://127.0.0.1:5000/api/login', {
+      email: email,
+      password: password
+    }).subscribe(data => {
+      console.log(data);
+    }, err => {
       console.log(err);
-    });
-    this.auth.login(sampleUser).then((user) => {
-      console.log(user.json());
-    })
-    .catch((err) => {
-      console.log(err);
+      this.error = err.error;
     });
   }
   

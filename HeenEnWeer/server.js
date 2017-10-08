@@ -7,20 +7,28 @@ var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 var mongoose = require('mongoose');
-var jwt = require('jsonwebtoken');
+var jwt = require('jwt-simple');
+var morgan = require("morgan");
 var config = require('./server/config.js');
 var User = require('./server/app/models/user.js');
 var hash = require('password-hash');
+var passport	= require('passport');
 
 
 var PARENTS_COLLECTION = "parents";
 var USERS_COLLECTION = "users";
 
 var app = express();
+app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(passport.initialize());
 
+// connect to database
+mongoose.connect(config.database);
 
+// pass passport for configuration
+require('./server/config/passport')(passport);
 
 // Resolves the Access-Control-Allow-Origin error in the console
 app.use(function(req, res, next) {
@@ -55,8 +63,6 @@ mongodb.MongoClient.connect("mongodb://localhost:27017/heenenweer", function (er
   });
 });
 
-//set secret variable
-app.set('superSecret',config.secret);
 
 // CONTACTS API ROUTES BELOW
 
@@ -142,6 +148,49 @@ app.post("/api/register", function(req,res){
           }
         });
       }
+    }
+  });
+});
+
+app.post('/api/signup', function(req, res) {
+  if (!req.body.email || !req.body.password) {
+    res.json({success: false, msg: 'Please pass email and password.'});
+  } else {
+    var newUser = new User({
+      email: req.body.email,
+      password: req.body.password
+    });
+    // save the user
+    newUser.save(function(err) {
+      if (err) {
+        return res.json({success: false, msg: 'Username already exists.'});
+      }
+      res.json({success: true, msg: 'Successful created new user.'});
+    });
+  }
+});
+
+app.post("/api/login", function(req,res){
+
+  User.findOne({
+    email: req.body.email
+  }, function(err, user) {
+    if (err) throw err;
+ 
+    if (!user) {
+      res.send({success: false, msg: 'Authentication failed. User not found.'});
+    } else {
+      // check if password matches
+      user.comparePassword(req.body.password, function (err, isMatch) {
+        if (isMatch && !err) {
+          // if user is found and password is right create a token
+          var token = jwt.encode(user, config.secret);
+          // return the information including token as JSON
+          res.json({success: true, token: 'JWT ' + token});
+        } else {
+          res.send({success: false, msg: 'Authentication failed. Wrong password.'});
+        }
+      });
     }
   });
 });
