@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.http.post('http://127.0.0.1:5000/api/register', {
+    this.http.post('http://127.0.0.1:5000/api/signup', {
       email: email,
       password: password
     }).subscribe(data => {
