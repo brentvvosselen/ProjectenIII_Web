@@ -10,9 +10,11 @@ var mongoose = require('mongoose');
 var jwt = require('jwt-simple');
 var morgan = require("morgan");
 var config = require('./server/config.js');
-var User = require('./server/app/models/user.js');
+var Users = require('./server/app/models/user.js');
 var hash = require('password-hash');
 var passport	= require('passport');
+var localStorage = require('node-localstorage').localStorage;
+
 
 
 var PARENTS_COLLECTION = "parents";
@@ -33,7 +35,7 @@ require('./server/config/passport')(passport);
 // Resolves the Access-Control-Allow-Origin error in the console
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   next();
 });
 
@@ -116,82 +118,61 @@ app.get('/setup', function(req, res){
   });
 });
 
-app.post("/api/register", function(req,res){
-  var newUser = req.body;
-  newUser.password = hash.generate(newUser.password);
-
-  if(!req.body.email || !req.body.password){
-    res.status(400).send('Incomplete form.');
-    //handleError(res,"Invalid user input", "Must provide a name and a password.",400);
-  }
-
-  db.collection(USERS_COLLECTION).findOne({email: newUser.email},function(err, existingUser){
-    if (err){
-      res.status(400).send(err);
-      //handleError(res, err.message, "Failed to create a new user.", 400);
-    } else{
-      if (existingUser){
-        res.status(400).send('User already exists.');
-        //handleError(res, "User already exists", "Use an email that hasn't been used.", 400);
-        return false;
-      } else{
-        temp = {
-          email: newUser.email,
-          password: newUser.password
-        }
-
-        db.collection(USERS_COLLECTION).insertOne(temp,function(err,doc){
-          if (err){
-            handleError(res,err.message,"Failed to create a new user.", 400);
-          } else{
-            res.status(201).json(doc.ops[0]);
-          }
-        });
-      }
-    }
-  });
-});
-
 app.post('/api/signup', function(req, res) {
   if (!req.body.email || !req.body.password) {
     res.json({success: false, msg: 'Please pass email and password.'});
+    console.log("fout");
   } else {
-    var newUser = new User({
+    var newUser = new Users({
       email: req.body.email,
       password: req.body.password
     });
     // save the user
     newUser.save(function(err) {
       if (err) {
-        return res.json({success: false, msg: 'Username already exists.'});
+        return res.json({success: false, msg: 'Email already exists.'});
+        console.log("email bestaat al");
       }
       res.json({success: true, msg: 'Successful created new user.'});
+      console.log("user aangemaakt");
     });
   }
 });
 
 app.post("/api/login", function(req,res){
-
-  User.findOne({
+  Users.findOne({
     email: req.body.email
   }, function(err, user) {
     if (err) throw err;
- 
     if (!user) {
       res.send({success: false, msg: 'Authentication failed. User not found.'});
     } else {
       // check if password matches
       user.comparePassword(req.body.password, function (err, isMatch) {
         if (isMatch && !err) {
-          // if user is found and password is right create a token
           var token = jwt.encode(user, config.secret);
-          // return the information including token as JSON
-          res.json({success: true, token: 'JWT ' + token});
+          if (typeof localStorage === "undefined" || localStorage === null) {
+            var LocalStorage = require('node-localstorage').LocalStorage;
+            localStorage = new LocalStorage('./scratch');
+          }
+          localStorage.setItem('currentUser', user)
+          console.log(user);
+          res.json({
+            email: user.email,
+            password: user.password,
+            token: token
+          });
         } else {
           res.send({success: false, msg: 'Authentication failed. Wrong password.'});
         }
       });
     }
+  });
+});
+
+app.get("/api/users", function(req,res){
+  Users.find({}, function(err,users){
+    res.send(JSON.stringify(users)); 
   });
 });
 

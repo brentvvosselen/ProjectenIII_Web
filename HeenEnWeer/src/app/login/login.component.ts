@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {HttpHeaders} from '@angular/common/http';
+import {AuthenticationService} from "../services/authentication-service.service";
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,30 +11,36 @@ import {HttpHeaders} from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
   error: string;
+  model: any = {};
+  loading = false;
+  returnUrl: string;
  
-  constructor(private http:HttpClient) {}
+  constructor(private http:HttpClient, 
+      private authenticationService: AuthenticationService,
+      private router: Router,private route: ActivatedRoute,) {}
 
   ngOnInit(): void {
+    // reset login status
+    this.authenticationService.logout();
+          
+    // get return url from route parameters or default to '/'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+  }
+
+  private onLoginSuccesFull(){
 
   }
 
-  
-
-  login(email,password){
-    let options = {
-      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-    };
-
-    let body = new URLSearchParams();
-    body.set('email', email);
-    body.set('password', password);
-
-    this.http.post('http://127.0.0.1:5000/api/login',body.toString(),options).subscribe(data => {
-      console.log(data);
-    }, err => {
-      console.log(err);
-      this.error = err.error;
-    });
-  }
+  login() {
+    this.loading = true;
+    this.authenticationService.login(this.model.email, this.model.password)
+        .subscribe(
+            data => {
+                this.router.navigate([this.returnUrl]);
+            },
+            error => {
+                this.loading = false;
+            });
+}
   
 }

@@ -4,7 +4,7 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class AuthService {
-  private BASE_URL: string = 'http://localhost:8080';
+  private BASE_URL: string = 'http://localhost:5000';
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
   
   constructor(private http: Http) {}
@@ -15,7 +15,7 @@ export class AuthService {
   }
 
   register(user): Promise<any> {
-    let url: string = `${this.BASE_URL}/register`;
+    let url: string = `${this.BASE_URL}/signup`;
     return this.http.post(url, user, {headers: this.headers}).toPromise();
   }
 
