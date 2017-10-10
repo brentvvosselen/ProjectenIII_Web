@@ -49,6 +49,6 @@ import { AuthGuard } from '../app/guards/auth-guard.guard';
     ])
   ],
   providers: [AuthenticationService, ParentService, UserService, AuthGuard],
-  bootstrap: [AppComponent,NavbarComponent,ParentsListComponent,ParentsDetailsComponent]
+  bootstrap: [AppComponent,NavbarComponent,]
 })
 export class AppModule { }
