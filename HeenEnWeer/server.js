@@ -206,6 +206,18 @@ app.get("/api/parents/:email",function(req,res){
   })
 });
 
+app.post("/api/parents/edit/", function(req,res){
+  Parents.find({
+    _id: req.body['id']
+  },function(err, parent){
+    if (err) throw err;
+    if(!parent){
+      res.send({success:false, msg: 'Updating user failed. User not found.'});
+    }else{
+      res.send({success:true, msg:"found user"});
+    }
+  });
+});
 /*  "/api/contacts/:id"
  *    GET: find parents by id
  *    PUT: update parents by id
