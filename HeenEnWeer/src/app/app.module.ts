@@ -18,6 +18,7 @@ import { AuthenticationService } from "../app/services/authentication-service.se
 import { UserService } from "../app/services/user-service.service";
 import { AsyncLocalStorageModule } from 'angular-async-local-storage';
 import { LocalStorageModule } from 'angular-2-local-storage';
+import { AuthGuard } from '../app/guards/auth-guard.guard';
 
 @NgModule({
   declarations: [
@@ -43,10 +44,11 @@ import { LocalStorageModule } from 'angular-2-local-storage';
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},
       { path: "parents", component:ParentsListComponent},
-      { path: "", component:HomeComponent},
+      { path: "", component:HomeComponent, canActivate: [AuthGuard]},
+      { path: "**", redirectTo: "" },
     ])
   ],
-  providers: [AuthenticationService, ParentService, UserService],
+  providers: [AuthenticationService, ParentService, UserService, AuthGuard],
   bootstrap: [AppComponent,NavbarComponent,ParentsListComponent,ParentsDetailsComponent]
 })
 export class AppModule { }
