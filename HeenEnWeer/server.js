@@ -163,7 +163,7 @@ app.post('/api/signup', function(req, res) {
 
 app.post("/api/login", function(req,res){
   Users.findOne({
-    email: req.body.email
+    _id: req.body.email
   }, function(err, user) {
     if (err) throw err;
     if (!user) {
