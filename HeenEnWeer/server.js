@@ -11,6 +11,7 @@ var jwt = require('jwt-simple');
 var morgan = require("morgan");
 var config = require('./server/config.js');
 var Users = require('./server/app/models/user.js');
+var Parents = require('./server/app/models/parent.js');
 var hash = require('password-hash');
 var passport	= require('passport');
 var localStorage = require('node-localstorage').localStorage;
@@ -22,7 +23,7 @@ var USERS_COLLECTION = "users";
 
 var app = express();
 app.use(morgan("dev"));
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 
@@ -123,18 +124,39 @@ app.post('/api/signup', function(req, res) {
     res.json({success: false, msg: 'Please pass email and password.'});
     console.log("fout");
   } else {
+    //create a new user
     var newUser = new Users({
       email: req.body.email,
       password: req.body.password
     });
+    //create a new parent
+    var newParent = new Parents({
+      email: req.body.email,
+      firstname: req.body.firstName,
+      lastname: req.body.lastName
+
+    });
+    console.log(newParent);
     // save the user
     newUser.save(function(err) {
       if (err) {
         return res.json({success: false, msg: 'Email already exists.'});
         console.log("email bestaat al");
       }
-      res.json({success: true, msg: 'Successful created new user.'});
-      console.log("user aangemaakt");
+        res.json({success: true, msg: 'Successful created new user.'});
+        console.log("user aangemaakt");
+
+
+    });
+
+    //save the parent
+    newParent.save(function(err){
+      if (err){
+        console.log("nieuwe parent aanmaken niet gelukt");
+      }
+        console.log('parent aangemaakt');
+
+
     });
   }
 });
@@ -172,8 +194,16 @@ app.post("/api/login", function(req,res){
 
 app.get("/api/users", function(req,res){
   Users.find({}, function(err,users){
-    res.send(JSON.stringify(users)); 
+    res.send(JSON.stringify(users));
   });
+});
+
+
+app.get("/api/parents/:email",function(req,res){
+  //virtual werkt hier niet
+  Parents.find({_id:req.params.email},function(err,user){
+    res.send(JSON.stringify(user));
+  })
 });
 
 /*  "/api/contacts/:id"
