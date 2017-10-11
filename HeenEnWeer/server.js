@@ -198,12 +198,12 @@ app.get("/api/users", function(req,res){
   });
 });
 
-<<<<<<< HEAD
+
 app.get("/api/secret", passport.authenticate('jwt', { session: false }), function(req, res){
   res.json("Success! You can not see this without a token");
 });
 
-=======
+
 
 app.get("/api/parents/:email",function(req,res){
   //virtual werkt hier niet
@@ -224,7 +224,6 @@ app.post("/api/parents/edit/", function(req,res){
     }
   });
 });
->>>>>>> b51daa9259325cc6559e0cfc002696a0d4f37333
 /*  "/api/contacts/:id"
  *    GET: find parents by id
  *    PUT: update parents by id
