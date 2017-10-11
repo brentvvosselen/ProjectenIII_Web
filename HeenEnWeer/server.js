@@ -125,13 +125,13 @@ app.post('/api/signup', function(req, res) {
   } else {
     //create a new user
     var newUser = new Users({
-      email: req.body.email,
+      _id: req.body.email,
       password: req.body.password
     });
 
     //create a new parent
     var newParent = new Parents({
-      email: req.body.email,
+      _id: req.body.email,
       firstname: req.body.firstName,
       lastname: req.body.lastName
     });
