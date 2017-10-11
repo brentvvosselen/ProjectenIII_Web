@@ -139,17 +139,32 @@ app.post('/api/signup', function(req, res) {
     // save the user
     newUser.save(function(err) {
       if (err) {
+<<<<<<< HEAD
         return res.json({success: false, msg: 'Email already exists.'});
         console.log("email bestaat al");
       }
         res.json({success: true, msg: 'Successful created new user.'});
         console.log("user aangemaakt");
+=======
+        handleError(res, err.message, "Email already exists.");
+        console.log("Email bestaat al");
+      }
+
+      res.json({success: true, msg: 'Successful created new user.'});
+      console.log("User aangemaakt");
+>>>>>>> a94c4a5908326b9611013e4dad9724aa8cead9c9
     });
 
     //save the parent
     newParent.save(function(err){
       if (err){
+<<<<<<< HEAD
         console.log("nieuwe parent aanmaken niet gelukt");
+=======
+        console.log("Nieuwe parent aanmaken niet gelukt");
+      } else {
+        console.log('Parent aangemaakt');
+>>>>>>> a94c4a5908326b9611013e4dad9724aa8cead9c9
       }
         console.log('parent aangemaakt');
 
@@ -160,11 +175,15 @@ app.post('/api/signup', function(req, res) {
 
 app.post("/api/login", function(req,res){
   Users.findOne({
-    _id: req.body.email
+    email: req.body.email
   }, function(err, user) {
     if (err) throw err;  
     if (!user) {
+<<<<<<< HEAD
       res.send({success: false, msg: 'Authentication failed. User not found.'});
+=======
+      handleError(res, "No user found", "Authentication failed. User not found", 400);
+>>>>>>> a94c4a5908326b9611013e4dad9724aa8cead9c9
     } else {
       // check if password matches
       user.comparePassword(req.body.password, function (err, isMatch) {
@@ -175,12 +194,12 @@ app.post("/api/login", function(req,res){
             localStorage = new LocalStorage('./scratch');
           }
           localStorage.setItem('currentUser', user)
-          console.log(user);
           res.json({
             email: user.email,
             password: user.password,
             token: token
           });
+          console.log("User logged in");
         } else {
           res.send({success: false, msg: 'Authentication failed. Wrong password.'});
         }
@@ -204,22 +223,57 @@ app.get("/api/secret", passport.authenticate('jwt', { session: false }), functio
 
 app.get("/api/parents/:email",function(req,res){
   //virtual werkt hier niet
-  Parents.find({_id:req.params.email},function(err,user){
+  Parents.find({email:req.params.email},function(err,user){
     res.send(JSON.stringify(user));
   })
 });
 
 app.post("/api/parents/edit/", function(req,res){
-  Parents.find({
-    _id: req.body['id']
-  },function(err, parent){
-    if (err) throw err;
+  //update valideert niet
+  Parents.findOne({
+    email: req.body.email
+  },function(err,parent){
+    if(err)throw err;
     if(!parent){
-      res.send({success:false, msg: 'Updating user failed. User not found.'});
+      handleError(res, "Updating failed", "Updating failed. Could not find parent.");
     }else{
-      res.send({success:true, msg:"found user"});
+      //change attributes from parent if not undefined
+      if(req.body.firstname){
+        parent.firstname = req.body.firstname;
+      }
+      if(req.body.lastname){
+        parent.lastname = req.body.lastname;
+      }
+      if(req.body.address_street){
+        parent.address_street = req.body.address_street;
+      }
+      if(req.body.address_number){
+        parent.address_number = req.body.address_number;
+      }
+      if(req.body.address_postalcode){
+        parent.address_postalcode = req.body.address_postalcode;
+      }
+      if(req.body.address_city){
+        parent.address_city = req.body.address_city;
+      }
+      if(req.body.number){
+        parent.number = req.body.number;
+      }
+      if(req.body.work_name){
+        parent.work_name = req.body.work_name;
+      }
+      if(req.body.work_number){
+        parent.work_number = req.body.work_number;
+      }
+
+
+      parent.save(function(err){
+        if (err) throw err;
+        res.send({success: true, msg: 'Parent updated'});
+      });
+
     }
-  });
+
 });
 /*  "/api/contacts/:id"
  *    GET: find parents by id

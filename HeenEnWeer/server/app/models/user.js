@@ -6,22 +6,18 @@ var bcrypt = require('bcrypt');
 
 // set up a mongoose model
 var UserSchema = new Schema({
-  _id: {
-        type: String
-    },
+  
+  email: {
+      type: String,
+      required: true
+  },
   password: {
-        type: String,
-        required: true
+      type: String,
+      required: true
     }
 });
 
-//create a virtual field named email
-UserSchema.virtual('email').get(function(){
-  return this._id;
-});
-UserSchema.virtual('email').set(function(email){
-  this._id = email;
-});
+
 
 UserSchema.pre('save', function (next) {
     var user = this;
