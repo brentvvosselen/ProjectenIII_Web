@@ -3,8 +3,9 @@ var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
 
 var ParentSchema = new Schema({
-  _id: {
-    type: String
+  email: {
+    type: String,
+    required: true
   },
   firstname: {
     type: String,
@@ -44,12 +45,6 @@ var ParentSchema = new Schema({
   }
 });
 
-ParentSchema.virtual('email').get(function(){
-  return this._id;
-});
-ParentSchema.virtual('email').set(function(email){
-  this._id = email;
-})
 
 
 

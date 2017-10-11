@@ -1,3 +1,4 @@
-{ _id: 'test',
-  password: '$2a$10$j22bFrQo5IlawvEPyspTa.TwmlWcE8IH38xwtjAmxs8GgpsbkCiJu',
+{ _id: 59de4502a002fb24859b0993,
+  email: 'adil@zarkan.be',
+  password: '$2a$10$3o94xx111ijBnk2gcYqQSeNpmh4M6CAfFkxA0/BtZN1UbuIiDWC/W',
   __v: 0 }

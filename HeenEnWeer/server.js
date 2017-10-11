@@ -125,13 +125,13 @@ app.post('/api/signup', function(req, res) {
   } else {
     //create a new user
     var newUser = new Users({
-      _id: req.body.email,
+      email: req.body.email,
       password: req.body.password
     });
 
     //create a new parent
     var newParent = new Parents({
-      _id: req.body.email,
+      email: req.body.email,
       firstname: req.body.firstName,
       lastname: req.body.lastName
     });
@@ -161,7 +161,7 @@ app.post('/api/signup', function(req, res) {
 
 app.post("/api/login", function(req,res){
   Users.findOne({
-    _id: req.body.email
+    email: req.body.email
   }, function(err, user) {
     if (err) throw err;
     if (!user) {
@@ -205,14 +205,14 @@ app.get("/api/secret", passport.authenticate('jwt', { session: false }), functio
 
 app.get("/api/parents/:email",function(req,res){
   //virtual werkt hier niet
-  Parents.find({_id:req.params.email},function(err,user){
+  Parents.find({email:req.params.email},function(err,user){
     res.send(JSON.stringify(user));
   })
 });
 
 app.post("/api/parents/edit/", function(req,res){
   Parents.find({
-    _id: req.body['id']
+    email: req.body['id']
   },function(err, parent){
     if (err) throw err;
     if(!parent){
