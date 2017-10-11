@@ -139,32 +139,20 @@ app.post('/api/signup', function(req, res) {
     // save the user
     newUser.save(function(err) {
       if (err) {
-<<<<<<< HEAD
-        return res.json({success: false, msg: 'Email already exists.'});
-        console.log("email bestaat al");
-      }
-        res.json({success: true, msg: 'Successful created new user.'});
-        console.log("user aangemaakt");
-=======
         handleError(res, err.message, "Email already exists.");
         console.log("Email bestaat al");
       }
 
       res.json({success: true, msg: 'Successful created new user.'});
       console.log("User aangemaakt");
->>>>>>> a94c4a5908326b9611013e4dad9724aa8cead9c9
     });
 
     //save the parent
     newParent.save(function(err){
       if (err){
-<<<<<<< HEAD
-        console.log("nieuwe parent aanmaken niet gelukt");
-=======
         console.log("Nieuwe parent aanmaken niet gelukt");
       } else {
         console.log('Parent aangemaakt');
->>>>>>> a94c4a5908326b9611013e4dad9724aa8cead9c9
       }
         console.log('parent aangemaakt');
 
@@ -179,11 +167,7 @@ app.post("/api/login", function(req,res){
   }, function(err, user) {
     if (err) throw err;  
     if (!user) {
-<<<<<<< HEAD
       res.send({success: false, msg: 'Authentication failed. User not found.'});
-=======
-      handleError(res, "No user found", "Authentication failed. User not found", 400);
->>>>>>> a94c4a5908326b9611013e4dad9724aa8cead9c9
     } else {
       // check if password matches
       user.comparePassword(req.body.password, function (err, isMatch) {
@@ -274,6 +258,7 @@ app.post("/api/parents/edit/", function(req,res){
 
     }
 
+    });
 });
 /*  "/api/contacts/:id"
  *    GET: find parents by id
@@ -289,3 +274,4 @@ app.put("/api/parent/:id", function(req, res) {
 
 app.delete("/api/parent/:id", function(req, res) {
 });
+

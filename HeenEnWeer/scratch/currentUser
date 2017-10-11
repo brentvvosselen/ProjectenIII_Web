@@ -1,9 +1,3 @@
-<<<<<<< HEAD
 { _id: 'p@p.be',
   password: '$2a$10$t5mSA0GCbypGbf3c3jau2eFyoRKvej1a5gyGoOr1oKV3beO9CgZfa',
-=======
-{ _id: 59de4502a002fb24859b0993,
-  email: 'adil@zarkan.be',
-  password: '$2a$10$3o94xx111ijBnk2gcYqQSeNpmh4M6CAfFkxA0/BtZN1UbuIiDWC/W',
->>>>>>> a94c4a5908326b9611013e4dad9724aa8cead9c9
   __v: 0 }
