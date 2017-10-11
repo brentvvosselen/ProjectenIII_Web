@@ -207,16 +207,59 @@ app.get("/api/parents/:email",function(req,res){
 });
 
 app.post("/api/parents/edit/", function(req,res){
-  Parents.find({
-    _id: req.body['id']
-  },function(err, parent){
-    if (err) throw err;
+  //update valideert niet
+  Parents.findOne({
+    _id: req.body.email
+  },function(err,parent){
+    if(err)throw err;
     if(!parent){
-      res.send({success:false, msg: 'Updating user failed. User not found.'});
+      res.send({success: false, msg: 'Parent not found.'});
     }else{
-      res.send({success:true, msg:"found user"});
+      //change attributes from parent if not undefined
+      if(req.body.firstname){
+        parent.firstname = req.body.firstname;
+      }
+      if(req.body.lastname){
+        parent.lastname = req.body.lastname;
+      }
+      if(req.body.address_street){
+        parent.address_street = req.body.address_street;
+      }
+      if(req.body.address_number){
+        parent.address_number = req.body.address_number;
+      }
+      if(req.body.address_postalcode){
+        parent.address_postalcode = req.body.address_postalcode;
+      }
+      if(req.body.address_city){
+        parent.address_city = req.body.address_city;
+      }
+      if(req.body.number){
+        parent.number = req.body.number;
+      }
+      if(req.body.work_name){
+        parent.work_name = req.body.work_name;
+      }
+      if(req.body.work_number){
+        parent.work_number = req.body.work_number;
+      }
+
+
+      parent.save(function(err){
+        if (err) throw err;
+        res.send({success: true, msg: 'Parent updated'});
+      });
+
     }
+
   });
+
+  /*Parents.update({_id: req.body['id']}, {
+    address_street: req.body.address_street
+  }, function(err, numberAffected, rawResponse) {
+     if (err) throw err;
+     res.send(JSON.stringify({"Succes": "True"}));
+  });*/
 });
 /*  "/api/contacts/:id"
  *    GET: find parents by id
