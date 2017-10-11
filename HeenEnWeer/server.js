@@ -176,6 +176,10 @@ app.get("/api/users", function(req,res){
   });
 });
 
+app.get("/api/secret", passport.authenticate('jwt', { session: false }), function(req, res){
+  res.json("Success! You can not see this without a token");
+});
+
 /*  "/api/contacts/:id"
  *    GET: find parents by id
  *    PUT: update parents by id
