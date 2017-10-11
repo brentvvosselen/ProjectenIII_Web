@@ -73,7 +73,7 @@ mongodb.MongoClient.connect("mongodb://localhost:27017/heenenweer", function (er
 // Generic error handler used by all endpoints.
 function handleError(res, reason, message, code) {
   console.log("ERROR: " + reason);
-  res.status(code || 500).json({"error": message});
+  res.status(code || 400).json({"error": message});
 }
 
 app.get("/api/parents", function(req, res) {
@@ -121,42 +121,40 @@ app.get('/setup', function(req, res){
 
 app.post('/api/signup', function(req, res) {
   if (!req.body.email || !req.body.password) {
-    res.json({success: false, msg: 'Please pass email and password.'});
-    console.log("fout");
+    handleError(res, "Incomplete request", "Please pass email and password.");
   } else {
     //create a new user
     var newUser = new Users({
       email: req.body.email,
       password: req.body.password
     });
+
     //create a new parent
     var newParent = new Parents({
       email: req.body.email,
       firstname: req.body.firstName,
       lastname: req.body.lastName
-
     });
+
     console.log(newParent);
     // save the user
     newUser.save(function(err) {
       if (err) {
-        return res.json({success: false, msg: 'Email already exists.'});
+        handleError(res, err.message, "Email already exists.");
         console.log("email bestaat al");
       }
-        res.json({success: true, msg: 'Successful created new user.'});
-        console.log("user aangemaakt");
 
-
+      res.json({success: true, msg: 'Successful created new user.'});
+      console.log("user aangemaakt");
     });
 
     //save the parent
     newParent.save(function(err){
       if (err){
         console.log("nieuwe parent aanmaken niet gelukt");
-      }
+      } else {
         console.log('parent aangemaakt');
-
-
+      }
     });
   }
 });
@@ -167,7 +165,7 @@ app.post("/api/login", function(req,res){
   }, function(err, user) {
     if (err) throw err;
     if (!user) {
-      res.send({success: false, msg: 'Authentication failed. User not found.'});
+      handleError(res, "No user found", "Authentication failed. User not found");
     } else {
       // check if password matches
       user.comparePassword(req.body.password, function (err, isMatch) {
@@ -185,7 +183,7 @@ app.post("/api/login", function(req,res){
             token: token
           });
         } else {
-          res.send({success: false, msg: 'Authentication failed. Wrong password.'});
+          handleError(res, "Authentication failed", "Authentication failed. Wrong password.");
         }
       });
     }
