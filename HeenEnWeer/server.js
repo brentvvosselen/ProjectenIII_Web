@@ -11,6 +11,7 @@ var jwt = require('jwt-simple');
 var morgan = require("morgan");
 var config = require('./server/config.js');
 var Users = require('./server/app/models/user.js');
+var Parents = require('./server/app/models/parent.js');
 var hash = require('password-hash');
 var passport	= require('passport');
 var localStorage = require('node-localstorage').localStorage;
@@ -22,7 +23,7 @@ var USERS_COLLECTION = "users";
 
 var app = express();
 app.use(morgan("dev"));
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 
@@ -123,25 +124,46 @@ app.post('/api/signup', function(req, res) {
     res.json({success: false, msg: 'Please pass email and password.'});
     console.log("fout");
   } else {
+    //create a new user
     var newUser = new Users({
       email: req.body.email,
       password: req.body.password
     });
+    //create a new parent
+    var newParent = new Parents({
+      email: req.body.email,
+      firstname: req.body.firstName,
+      lastname: req.body.lastName
+
+    });
+    console.log(newParent);
     // save the user
     newUser.save(function(err) {
       if (err) {
         return res.json({success: false, msg: 'Email already exists.'});
         console.log("email bestaat al");
       }
-      res.json({success: true, msg: 'Successful created new user.'});
-      console.log("user aangemaakt");
+        res.json({success: true, msg: 'Successful created new user.'});
+        console.log("user aangemaakt");
+
+
+    });
+
+    //save the parent
+    newParent.save(function(err){
+      if (err){
+        console.log("nieuwe parent aanmaken niet gelukt");
+      }
+        console.log('parent aangemaakt');
+
+
     });
   }
 });
 
 app.post("/api/login", function(req,res){
   Users.findOne({
-    email: req.body.email
+    _id: req.body.email
   }, function(err, user) {
     if (err) throw err;
     if (!user) {
@@ -172,14 +194,37 @@ app.post("/api/login", function(req,res){
 
 app.get("/api/users", function(req,res){
   Users.find({}, function(err,users){
-    res.send(JSON.stringify(users)); 
+    res.send(JSON.stringify(users));
   });
 });
 
+<<<<<<< HEAD
 app.get("/api/secret", passport.authenticate('jwt', { session: false }), function(req, res){
   res.json("Success! You can not see this without a token");
 });
 
+=======
+
+app.get("/api/parents/:email",function(req,res){
+  //virtual werkt hier niet
+  Parents.find({_id:req.params.email},function(err,user){
+    res.send(JSON.stringify(user));
+  })
+});
+
+app.post("/api/parents/edit/", function(req,res){
+  Parents.find({
+    _id: req.body['id']
+  },function(err, parent){
+    if (err) throw err;
+    if(!parent){
+      res.send({success:false, msg: 'Updating user failed. User not found.'});
+    }else{
+      res.send({success:true, msg:"found user"});
+    }
+  });
+});
+>>>>>>> b51daa9259325cc6559e0cfc002696a0d4f37333
 /*  "/api/contacts/:id"
  *    GET: find parents by id
  *    PUT: update parents by id

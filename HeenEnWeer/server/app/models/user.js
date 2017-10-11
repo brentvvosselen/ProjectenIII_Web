@@ -1,22 +1,28 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
- 
+
 // Thanks to http://blog.matoski.com/articles/jwt-express-node-mongoose/
- 
+
 // set up a mongoose model
 var UserSchema = new Schema({
-  email: {
-        type: String,
-        unique: true,
-        required: true
+  _id: {
+        type: String
     },
   password: {
         type: String,
         required: true
     }
 });
- 
+
+//create a virtual field named email
+UserSchema.virtual('email').get(function(){
+  return this._id;
+});
+UserSchema.virtual('email').set(function(email){
+  this._id = email;
+});
+
 UserSchema.pre('save', function (next) {
     var user = this;
     if (this.isModified('password') || this.isNew) {
@@ -36,7 +42,7 @@ UserSchema.pre('save', function (next) {
         return next();
     }
 });
- 
+
 UserSchema.methods.comparePassword = function (passw, cb) {
     bcrypt.compare(passw, this.password, function (err, isMatch) {
         if (err) {
@@ -45,5 +51,5 @@ UserSchema.methods.comparePassword = function (passw, cb) {
         cb(null, isMatch);
     });
 };
- 
+
 module.exports = mongoose.model('Users', UserSchema);
