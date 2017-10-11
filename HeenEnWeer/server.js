@@ -141,19 +141,19 @@ app.post('/api/signup', function(req, res) {
     newUser.save(function(err) {
       if (err) {
         handleError(res, err.message, "Email already exists.");
-        console.log("email bestaat al");
+        console.log("Email bestaat al");
       }
 
       res.json({success: true, msg: 'Successful created new user.'});
-      console.log("user aangemaakt");
+      console.log("User aangemaakt");
     });
 
     //save the parent
     newParent.save(function(err){
       if (err){
-        console.log("nieuwe parent aanmaken niet gelukt");
+        console.log("Nieuwe parent aanmaken niet gelukt");
       } else {
-        console.log('parent aangemaakt');
+        console.log('Parent aangemaakt');
       }
     });
   }
@@ -165,7 +165,7 @@ app.post("/api/login", function(req,res){
   }, function(err, user) {
     if (err) throw err;
     if (!user) {
-      handleError(res, "No user found", "Authentication failed. User not found");
+      handleError(res, "No user found", "Authentication failed. User not found", 400);
     } else {
       // check if password matches
       user.comparePassword(req.body.password, function (err, isMatch) {
@@ -176,12 +176,12 @@ app.post("/api/login", function(req,res){
             localStorage = new LocalStorage('./scratch');
           }
           localStorage.setItem('currentUser', user)
-          console.log(user);
           res.json({
             email: user.email,
             password: user.password,
             token: token
           });
+          console.log("User logged in");
         } else {
           handleError(res, "Authentication failed", "Authentication failed. Wrong password.");
         }
