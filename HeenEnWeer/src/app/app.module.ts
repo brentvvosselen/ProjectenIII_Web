@@ -9,14 +9,12 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './login/login.component';
-import {AuthService} from './services/auth.service';
 import { RegisterComponent } from './register/register.component';
 import { ParentsDetailsComponent } from './parents/parents-details/parents-details.component';
 import { ParentsListComponent } from './parents/parents-list/parents-list.component';
 import { HomeComponent } from './home/home.component';
 import { AuthenticationService } from "../app/services/authentication-service.service";
 import { UserService } from "../app/services/user-service.service";
-import { AsyncLocalStorageModule } from 'angular-async-local-storage';
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { AuthGuard } from '../app/guards/auth-guard.guard';
 
@@ -39,7 +37,6 @@ import { AuthGuard } from '../app/guards/auth-guard.guard';
     HttpModule,
     HttpClientModule,
     FormsModule,
-    AsyncLocalStorageModule,
     RouterModule.forRoot([
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},

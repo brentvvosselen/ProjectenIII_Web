@@ -18,6 +18,14 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#" routerLink="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
         <li><a href="#" routerLink="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li *ngIf="userIsLoggedIn">
+          <a [routerLink]="['TaskEditorComponent']">Publish Task</a>
+        </li>
+        <li *ngIf="!userIsLoggedIn"><a [routerLink]="['LoginComponent']">Login</a>
+        </li>
+        <li *ngIf="userIsLoggedIn">
+          <a href="#" (click)="logout($event)">Logout</a>
+        </li>
       </ul>
     </div>
   </div>
