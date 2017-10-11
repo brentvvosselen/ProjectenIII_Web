@@ -18,7 +18,7 @@
           <li><a href="#">Page 3</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-
+          <span class="navbar-text" *ngIf="userIsLoggedIn" >Hello {{user.email}}</span>
           <li *ngIf="userIsLoggedIn">
             <a [routerLink]="['TaskEditorComponent']">Profiel</a>
           </li>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../app/services/authentication-service.service'; 
+import { User } from '../app/models/user';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +11,12 @@ import { AuthenticationService } from '../app/services/authentication-service.se
 export class AppComponent {
   title = 'app';
   userIsLoggedIn: boolean;
+  user = new User();
   
-    constructor(
-      private authenticationService: AuthenticationService,
-      private router: Router) {
+    constructor(private authenticationService: AuthenticationService,private router: Router) {
       authenticationService.userIsloggedIn.subscribe(isLoggedIn => {
         this.userIsLoggedIn = isLoggedIn;
+        this.user = authenticationService.getUser();
       });
     }
   

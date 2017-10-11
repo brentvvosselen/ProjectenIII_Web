@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/map'
 import { AsyncLocalStorage } from 'angular-async-local-storage';
+import { User } from '../models/user';
 
 @Injectable()
 export class AuthenticationService {
@@ -13,7 +14,6 @@ export class AuthenticationService {
     constructor(private http: Http) { 
         this.userIsloggedIn = new EventEmitter();
     }
-  
     
     login(email: string, password: string) {
       let body = new URLSearchParams();
@@ -42,5 +42,9 @@ export class AuthenticationService {
         this.userIsloggedIn.emit(false);
         resolve(true);
         });
+    }
+
+    getUser(): User{
+        return JSON.parse(localStorage.getItem('currentUser'));
     }
 }
