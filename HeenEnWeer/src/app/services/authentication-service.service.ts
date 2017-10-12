@@ -11,8 +11,8 @@ export class AuthenticationService {
     private headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
     userIsloggedIn: EventEmitter<boolean>;
 
-    constructor(private http: Http) { 
-        this.userIsloggedIn = new EventEmitter();
+    constructor(private http: Http) {
+         this.userIsloggedIn = new EventEmitter();
     }
     
     login(email: string, password: string) {

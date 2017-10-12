@@ -17,6 +17,7 @@ import { UserService } from "../app/services/user-service.service";
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { AuthGuard } from '../app/guards/auth-guard.guard';
 import { ProfielComponent } from './profiel/profiel.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ProfielComponent } from './profiel/profiel.component';
     ParentsListComponent,
     HomeComponent,
     ProfielComponent,
+    NavbarComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -47,6 +49,6 @@ import { ProfielComponent } from './profiel/profiel.component';
     ])
   ],
   providers: [AuthenticationService, ParentService, UserService, AuthGuard],
-  bootstrap: [AppComponent,]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

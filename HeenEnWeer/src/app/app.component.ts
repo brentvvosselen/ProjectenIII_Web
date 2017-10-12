@@ -10,23 +10,10 @@ import { User } from '../app/models/user';
 })
 export class AppComponent {
   title = 'app';
-  userIsLoggedIn: boolean;
-  user = new User();
+
   
-    constructor(private authenticationService: AuthenticationService,private router: Router) {
-      authenticationService.userIsloggedIn.subscribe(isLoggedIn => {
-        this.userIsLoggedIn = isLoggedIn;
-        this.user = authenticationService.getUser();
-      });
+    constructor() {
+
     }
-  
-    logout($event): void {
-      $event.preventDefault();
-  
-      this.authenticationService.logout().then(success => {
-        if (success) {
-          this.router.navigateByUrl('/login');
-        }
-      });
-    }
+
 }
