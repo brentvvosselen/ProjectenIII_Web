@@ -3,6 +3,7 @@ import { Parent } from '../../app/models/parent';
 import { User } from '../models/user';
 import { ParentService } from '../services/parent.service';
 import { AuthenticationService } from '../services/authentication-service.service';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-profiel',
@@ -20,17 +21,19 @@ export class ProfielComponent implements OnInit {
     //haalt user op uit localstorage
     this.user = authenticationService.getUser();
 
-
+    //hier of in ngOnInit()?
     this.getParentFromUserEmail(this.user.email);
   }
 
   ngOnInit() {
+    this.getParentFromUserEmail(this.user.email);
   }
 
   //roept een api call op via parentservice.. Dit deel werkt wel -> kijk in de console -> probeer een object van de data te maken 
   private getParentFromUserEmail(email: string){
-    this.parentService.getByEmail(email).subscribe(data => {
-        this.currentUser == new Parent(data.firstname, data.lastname, data.email);
+    this.parentService.getByEmail(email).map(
+      (response) => this.currentUser = response).subscribe(data => {
+        //oke parent object is gezet naar currentUser 
         console.log(this.currentUser);
     })
   }
