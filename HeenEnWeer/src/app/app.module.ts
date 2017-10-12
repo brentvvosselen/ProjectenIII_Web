@@ -3,7 +3,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
-import { ParentService } from './parents/parent.service';
+import { ParentService } from '../app/services/parent.service';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -16,6 +16,7 @@ import { AuthenticationService } from "../app/services/authentication-service.se
 import { UserService } from "../app/services/user-service.service";
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { AuthGuard } from '../app/guards/auth-guard.guard';
+import { ProfielComponent } from './profiel/profiel.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { AuthGuard } from '../app/guards/auth-guard.guard';
     ParentsDetailsComponent,
     ParentsListComponent,
     HomeComponent,
+    ProfielComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -39,6 +41,7 @@ import { AuthGuard } from '../app/guards/auth-guard.guard';
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},
       { path: "parents", component:ParentsListComponent},
+      { path: "profiel", component:ProfielComponent},
       { path: "", component:HomeComponent, canActivate: [AuthGuard]},
       { path: "**", redirectTo: "" },
     ])

@@ -205,9 +205,9 @@ app.get("/api/secret", passport.authenticate('jwt', { session: false }), functio
 
 
 
-app.get("/api/parents/:email",function(req,res){
+app.get("/api/parents/email",function(req,res){
   //virtual werkt hier niet
-  Parents.find({email:req.params.email},function(err,user){
+  Parents.findOne({email:req.params.email},function(err,user){
     res.send(JSON.stringify(user));
   })
 });

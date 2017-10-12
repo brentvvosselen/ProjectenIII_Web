@@ -1,15 +1,68 @@
-<div class="col-md-6 col-md-offset-3">
-  <h1>Hi {{currentUser.email}}!</h1>
-  <p>You're logged in with Angular 4!!</p>
-  <h3>All registered users:</h3>
-  <ul>
-      <li *ngFor="let user of users">
-          {{user.email}} ({{user.firstName}} {{user.lastName}})
-          - <a (click)="deleteUser(user.id)">Delete</a>
-      </li>
-  </ul>
-  <p><a [routerLink]="['/login']">Logout</a></p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar" id="sidebar" role="navigation">
+            <div class="sidebar-nav">
+                <ul class="nav">
 
-  <br>
-  <p><a (click)="requestSecretRoute()">Secret</a></p>
+                    <li><a href="#">Kindinfo</a></li>
+                    <li><a href="#">Agenda</a></li>
+                    <li class="nav-divider"></li>
+                    <li><a href="#">Financiën</a></li>
+                    <li><a href="#">Heen-en-weer</a></li>
+                </ul>
+            </div>
+            <!--/.well -->
+        </div>
+        <!--/span-->
+
+        <div class="col-xs-12 col-sm-9">
+            <br>
+            <div class="jumbotron">
+                <a href="#" class="visible-xs" data-toggle="offcanvas"><i class="fa fa-lg fa-reorder"></i></a>
+                <h1>Welkom bij oogappl</h1>
+                <p>Dit is een platform speciaal gemaakt voor co-ouderschap.</p>
+            </div>
+            <div class="row">
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Kindinfo</h2>
+                    <p>Bekijk of wijzig hier de informatie van je kind of kinderen.</p>
+                    <p><a class="btn btn-default" href="#">Bekijk »</a></p>
+                </div>
+                <!--/span-->
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+                    <p>Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap friendly HTML, CSS and Javascript. Bootstrap is a front-end framework that uses CSS and JavaScript to
+                        facilitate responsive Web design. </p>
+                    <p><a class="btn btn-default" href="#">View details »</a></p>
+                </div>
+                <!--/span-->
+
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+                    <p>Bootstrap is a front-end framework that uses CSS and JavaScript to facilitate responsive Web design. Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap
+                        friendly HTML, CSS and Javascript.</p>
+                    <p><a class="btn btn-default" href="#">View details »</a></p>
+                </div>
+                <!--/span-->
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+                    <p>Bootstrap is a front-end framework that uses CSS and JavaScript to facilitate responsive Web design. Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap
+                        friendly HTML, CSS and Javascript.</p>
+                    <p><a class="btn btn-default" href="#">View details »</a></p>
+                </div>
+                <!--/span-->
+            </div>
+            <!--/row-->
+        </div>
+        <!--/span-->
+
+
+    </div>
+    <!--/row-->
+
+    <hr>
+
+    
+
 </div>
+<!--/.container-->

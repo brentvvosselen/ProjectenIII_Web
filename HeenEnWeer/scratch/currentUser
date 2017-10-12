@@ -1,3 +1,4 @@
-{ _id: 'p@p.be',
-  password: '$2a$10$t5mSA0GCbypGbf3c3jau2eFyoRKvej1a5gyGoOr1oKV3beO9CgZfa',
+{ _id: 59df50538c276323ece121e8,
+  email: 'pap@pap.be',
+  password: '$2a$10$E8y77afgUtSW5g5On8lUF.QTdf3yXQs.nN2PyYwMyjkEgnxd2eZFW',
   __v: 0 }

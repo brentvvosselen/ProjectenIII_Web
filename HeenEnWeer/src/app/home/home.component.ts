@@ -5,7 +5,8 @@ import { UserService } from '../services/user-service.service';
 
 @Component({
    moduleId: module.id,
-   templateUrl: 'home.component.html'
+   templateUrl: 'home.component.html',
+   styleUrls: ['./home.component.css']
 })
 
 export class HomeComponent implements OnInit {
