@@ -13,10 +13,10 @@ export class ProfielComponent implements OnInit {
   user: User;
 
   //gebruiken van currentUser in de html voor info
-  currentUser = new Parent();
+  currentUser: Parent;
 
   constructor(private authenticationService: AuthenticationService,private parentService: ParentService) { 
-    
+
     //haalt user op uit localstorage
     this.user = authenticationService.getUser();
 
@@ -30,7 +30,8 @@ export class ProfielComponent implements OnInit {
   //roept een api call op via parentservice.. Dit deel werkt wel -> kijk in de console -> probeer een object van de data te maken 
   private getParentFromUserEmail(email: string){
     this.parentService.getByEmail(email).subscribe(data => {
-        console.log(data);
+        this.currentUser == new Parent(data.firstname, data.lastname, data.email);
+        console.log(this.currentUser);
     })
   }
 

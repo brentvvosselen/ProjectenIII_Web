@@ -4,4 +4,5 @@ export class Parent {
     firstname: string;
     lastname: string;
     email: string;
+    constructor(firstname: string, lastname: string, email: string){}
 }
