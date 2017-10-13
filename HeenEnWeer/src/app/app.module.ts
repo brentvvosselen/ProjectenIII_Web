@@ -18,6 +18,7 @@ import { LocalStorageModule } from 'angular-2-local-storage';
 import { AuthGuard } from '../app/guards/auth-guard.guard';
 import { ProfielComponent } from './profiel/profiel.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ProfileEditComponent } from './profiel/profile-edit/profile-edit.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     HomeComponent,
     ProfielComponent,
     NavbarComponent,
+    ProfileEditComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -44,6 +46,7 @@ import { NavbarComponent } from './navbar/navbar.component';
       { path: "register", component:RegisterComponent},
       { path: "parents", component:ParentsListComponent},
       { path: "profiel", component:ProfielComponent},
+      { path: "profiel/edit", component:ProfileEditComponent},
       { path: "", component:HomeComponent, canActivate: [AuthGuard]},
       { path: "**", redirectTo: "" },
     ])
