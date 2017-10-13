@@ -16,7 +16,7 @@ export class ProfielComponent implements OnInit {
   //gebruiken van currentUser in de html voor info
   currentUser: Parent;
 
-  constructor(private authenticationService: AuthenticationService,private parentService: ParentService) { 
+  constructor(private authenticationService: AuthenticationService,private parentService: ParentService) {
 
     //haalt user op uit localstorage
     this.user = authenticationService.getUser();
@@ -29,13 +29,13 @@ export class ProfielComponent implements OnInit {
     this.getParentFromUserEmail(this.user.email);
   }
 
-  //roept een api call op via parentservice.. Dit deel werkt wel -> kijk in de console -> probeer een object van de data te maken 
+  //roept een api call op via parentservice.. Dit deel werkt wel -> kijk in de console -> probeer een object van de data te maken
   private getParentFromUserEmail(email: string){
     this.parentService.getByEmail(email).map(
       (response) => this.currentUser = response).subscribe(data => {
-        //oke parent object is gezet naar currentUser 
-        console.log(this.currentUser);
-    })
+        //oke parent object is gezet naar currentUser
+        //console.log(this.currentUser);
+    });
   }
 
 }
