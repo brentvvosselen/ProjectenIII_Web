@@ -1,6 +1,13 @@
 <div class="container">
   <h2>Profielpagina</h2>
-
+  <a routerLink="/profiel/edit" routerLinkActive="active">Edit</a>
   <h3>Basisgegevens</h3>
-  <p>Naam: {{currentUser.firstname}}</p>
+  <p>Voornaam: {{currentUser.firstname}}</p>
+  <p>Achternaam: {{currentUser.lastname}}</p>
+  <p  *ngIf="currentUser.address_street || currentUser.address_number || currentUser.address_postalcode || currentUser.address_city">Adres: {{currentUser.address_street}} {{currentUser.address_number}}<br>
+      {{currentUser.address_postalcode}} {{currentUser.address_city}}</p>
+  <p *ngIf="currentUser.number">Tel Nr.: {{currentUser.number}}</p>
+  <p *ngIf="currentUser.work_name || currentUser.work_name">Werk: {{currentUser.work_name}}, {{currentUser.work_number}}</p>
+
+
 </div>
