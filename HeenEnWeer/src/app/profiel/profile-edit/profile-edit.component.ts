@@ -29,6 +29,7 @@ export class ProfileEditComponent implements OnInit {
 
   ngOnInit() {
     this.getParentFromUserEmail(this.user.email);
+    
   }
 
   //roept api call op via parentservice
@@ -53,7 +54,7 @@ export class ProfileEditComponent implements OnInit {
 
 
     this.parentService.update(updatedUser).subscribe(data => {
-      
+
     });
 
 
