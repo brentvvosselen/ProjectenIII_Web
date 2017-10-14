@@ -12,6 +12,7 @@ import { AuthenticationService } from '../../services/authentication-service.ser
 })
 export class ProfileEditComponent implements OnInit {
   user: User;
+  model: any = {};
 
   //gebruiken van currentUser in de html voor de waarden
   currentUser: Parent;
@@ -37,5 +38,22 @@ export class ProfileEditComponent implements OnInit {
         console.log(this.currentUser);
       });
     }
+
+  edit(){
+    console.log(this.model);
+    console.log(this.currentUser);
+    var updatedUser = this.currentUser;
+
+    updatedUser['addressStreet'] = this.model.addressStreet;
+    updatedUser['addressCity'] = this.model.addressCity;
+    updatedUser['addressNumber'] = this.model.addressNumber;
+    updatedUser['addressPostalcode'] =  this.model.addressPostalcode;
+
+
+
+
+    //this.parentService.update()
+  }
+
 
 }
