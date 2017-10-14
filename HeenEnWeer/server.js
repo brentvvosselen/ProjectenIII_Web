@@ -12,6 +12,7 @@ var morgan = require("morgan");
 var config = require('./server/config.js');
 var Users = require('./server/app/models/user.js');
 var Parents = require('./server/app/models/parent.js');
+var Child = require('./server/app/models/child');
 var hash = require('password-hash');
 var passport	= require('passport');
 var localStorage = require('node-localstorage').localStorage;
@@ -105,18 +106,46 @@ app.post("/api/parents", function(req, res) {
 
 /*create sample user*/
 app.get('/setup', function(req, res){
-  var nick = new User({
-    email: 'nick_Lippens@hotmail.com',
-    password: 'password1'
+
+  var child1 = new Child({
+    firstname: "kind1",
+    lastname: "kind1 achternaam"
   });
 
-  db.collection(USERS_COLLECTION).insertOne(nick, function(err,doc){
-    if(err){
-      handleError(res, err.message, "Failed to create a new user.");
-    }
-    console.log('User saved successfully');
-    res.json({success:true});
+  var child2 = new Child({
+    firstname: "kind2",
+    lastname: "kind2 achternaam"
   });
+
+  var nick = new Parents({
+    email: 'nick@hotmail.com',
+    firstname: "nick",
+    lastname: "lippens",
+    password: 'password1',
+  });
+
+  nick['children'].push(child1);
+
+  nick.save(function(err) {
+    if (err) {
+      handleError(res, err.message, "Email already exists.");
+      console.log("Email bestaat al");
+    }
+
+    res.json({success: true, msg: 'Successful created new user.'});
+    console.log("Parent aangemaakt");
+  });
+
+  child1.save(function(err) {
+    if (err) {
+      handleError(res, err.message, "Email already exists.");
+      console.log("Email bestaat al");
+    }
+
+    res.json({success: true, msg: 'Successful created new user.'});
+    console.log("Child aangemaakt");
+  });
+
 });
 
 app.post('/api/signup', function(req, res) {

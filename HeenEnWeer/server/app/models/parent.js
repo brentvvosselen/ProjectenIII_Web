@@ -42,7 +42,8 @@ var ParentSchema = new Schema({
   work_number: {
     type:String,
     required: false
-  }
+  },
+  children: [{ type: Schema.Types.ObjectId, ref: 'Child' }]
 });
 
 
