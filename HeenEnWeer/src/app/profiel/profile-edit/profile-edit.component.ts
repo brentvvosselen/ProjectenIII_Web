@@ -52,7 +52,9 @@ export class ProfileEditComponent implements OnInit {
     updatedUser['workNumber'] = this.model.workNumber;
 
 
-    this.parentService.update(updatedUser);
+    this.parentService.update(updatedUser).subscribe(data => {
+      
+    });
 
 
     //this.parentService.update()

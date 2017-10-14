@@ -23,7 +23,7 @@ export class ParentService {
     update(parent: Parent) {
         console.log('service');
         console.log(parent);
-        return this.http.post('http://localhost:5000/api/parents/edit/', parent, this.jwt()).map((response: Response) => response.json());
+        return this.http.post('http://127.0.0.1:5000/api/parents/edit', parent, this.jwt()).map((response: Response) => response.json());
     }
 
     delete(id: number) {
