@@ -237,6 +237,7 @@ app.get("/api/parents/:email",function(req,res){
 
 app.post("/api/parents/edit/", function(req,res){
   //update valideert niet
+  console.log("api call");
   Parents.findOne({
     email: req.body.email
   },function(err,parent){
@@ -252,25 +253,25 @@ app.post("/api/parents/edit/", function(req,res){
         parent.lastname = req.body.lastname;
       }
       if(req.body.address_street){
-        parent.address_street = req.body.address_street;
+        parent.address_street = req.body.addressStreet;
       }
       if(req.body.address_number){
-        parent.address_number = req.body.address_number;
+        parent.address_number = req.body.addressNumber;
       }
       if(req.body.address_postalcode){
-        parent.address_postalcode = req.body.address_postalcode;
+        parent.address_postalcode = req.body.addressPostalcode;
       }
       if(req.body.address_city){
-        parent.address_city = req.body.address_city;
+        parent.address_city = req.body.addressCity;
       }
       if(req.body.number){
         parent.number = req.body.number;
       }
       if(req.body.work_name){
-        parent.work_name = req.body.work_name;
+        parent.work_name = req.body.workName;
       }
       if(req.body.work_number){
-        parent.work_number = req.body.work_number;
+        parent.work_number = req.body.workNumber;
       }
 
 

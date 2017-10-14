@@ -40,16 +40,19 @@ export class ProfileEditComponent implements OnInit {
     }
 
   edit(){
-    console.log(this.model);
-    console.log(this.currentUser);
+
     var updatedUser = this.currentUser;
 
     updatedUser['addressStreet'] = this.model.addressStreet;
     updatedUser['addressCity'] = this.model.addressCity;
     updatedUser['addressNumber'] = this.model.addressNumber;
     updatedUser['addressPostalcode'] =  this.model.addressPostalcode;
+    updatedUser['telephoneNumber'] = this.model.telephoneNumber;
+    updatedUser['workName'] = this.model.workName;
+    updatedUser['workNumber'] = this.model.workNumber;
 
 
+    this.parentService.update(updatedUser);
 
 
     //this.parentService.update()
