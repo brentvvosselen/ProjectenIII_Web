@@ -2,6 +2,24 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
 
+var Child = new Schema({
+    geboortedatum: {
+        type: String,
+        required: false
+    },
+    firstname: {
+        type: String,
+        required: true
+    },
+    lastname: {
+        type: String,
+        required: true
+    },
+    info: {
+        type: String,
+    },
+});
+
 var ParentSchema = new Schema({
   email: {
     type: String,
@@ -43,10 +61,7 @@ var ParentSchema = new Schema({
     type:String,
     required: false
   },
-  children: [{ type: Schema.Types.ObjectId, ref: 'Child' }]
+  children: [Child]
 });
-
-
-
 
 module.exports = mongoose.model('Parents',ParentSchema);

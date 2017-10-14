@@ -19,6 +19,7 @@ import { AuthGuard } from '../app/guards/auth-guard.guard';
 import { ProfielComponent } from './profiel/profiel.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProfileEditComponent } from './profiel/profile-edit/profile-edit.component';
+import { ChildInfoComponent } from './child-info/child-info.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ProfileEditComponent } from './profiel/profile-edit/profile-edit.compon
     ProfielComponent,
     NavbarComponent,
     ProfileEditComponent,
+    ChildInfoComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -47,6 +49,7 @@ import { ProfileEditComponent } from './profiel/profile-edit/profile-edit.compon
       { path: "parents", component:ParentsListComponent},
       { path: "profiel", component:ProfielComponent},
       { path: "profiel/edit", component:ProfileEditComponent},
+      { path: "children", component:ChildInfoComponent},
       { path: "", component:HomeComponent, canActivate: [AuthGuard]},
       { path: "**", redirectTo: "" },
     ])

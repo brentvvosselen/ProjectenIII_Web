@@ -12,15 +12,13 @@ var morgan = require("morgan");
 var config = require('./server/config.js');
 var Users = require('./server/app/models/user.js');
 var Parents = require('./server/app/models/parent.js');
-var Child = require('./server/app/models/child');
 var hash = require('password-hash');
 var passport	= require('passport');
 var localStorage = require('node-localstorage').localStorage;
 
-
-
 var PARENTS_COLLECTION = "parents";
 var USERS_COLLECTION = "users";
+var CHILDREN_COLLECTION = "children";
 
 var app = express();
 app.use(morgan("dev"));
@@ -106,15 +104,9 @@ app.post("/api/parents", function(req, res) {
 
 /*create sample user*/
 app.get('/setup', function(req, res){
-
-  var child1 = new Child({
-    firstname: "kind1",
-    lastname: "kind1 achternaam"
-  });
-
-  var child2 = new Child({
-    firstname: "kind2",
-    lastname: "kind2 achternaam"
+  var nickUser = new Users({
+    email: 'nick@hotmail.com',
+    password: 'password1'
   });
 
   var nick = new Parents({
@@ -122,9 +114,22 @@ app.get('/setup', function(req, res){
     firstname: "nick",
     lastname: "lippens",
     password: 'password1',
+    children: [],
   });
 
-  nick['children'].push(child1);
+  nick.children.push({
+    firstname: "kind1",
+    lastname: "kind1 achternaam",
+    info: "schoenmaat: 34; vriendjes: Jeroen, Dilson;"
+  });
+
+  nickUser.save(function(err) {
+    if (err) {
+      console.log("Email bestaat al");
+    } else {
+      console.log("User aangemaakt");
+    }
+  });
 
   nick.save(function(err) {
     if (err) {
@@ -135,17 +140,6 @@ app.get('/setup', function(req, res){
     res.json({success: true, msg: 'Successful created new user.'});
     console.log("Parent aangemaakt");
   });
-
-  child1.save(function(err) {
-    if (err) {
-      handleError(res, err.message, "Email already exists.");
-      console.log("Email bestaat al");
-    }
-
-    res.json({success: true, msg: 'Successful created new user.'});
-    console.log("Child aangemaakt");
-  });
-
 });
 
 app.post('/api/signup', function(req, res) {
@@ -194,7 +188,7 @@ app.post("/api/login", function(req,res){
   Users.findOne({
     email: req.body.email
   }, function(err, user) {
-    if (err) throw err;  
+    if (err) throw err;
     if (!user) {
       res.send({success: false, msg: 'Authentication failed. User not found.'});
     } else {
@@ -296,6 +290,7 @@ app.post("/api/parents/edit/", function(req,res){
  */
 
 app.get("/api/parent/:id", function(req, res) {
+
 });
 
 app.put("/api/parent/:id", function(req, res) {
@@ -303,4 +298,3 @@ app.put("/api/parent/:id", function(req, res) {
 
 app.delete("/api/parent/:id", function(req, res) {
 });
-
