@@ -1,0 +1,22 @@
+<div>
+  {{firstname}} <br/>
+  {{lastname}} <br/>
+
+  <div *ngFor="let i of infoNodes; let j = index">
+    <label for="{{i.name}}">{{i.name}}</label>
+    <input type="text" name="{{i.name}}" id="{{i.name}}" value="{{i.value}}" #value><br>
+    <button (click)="delete(i)"> Delete </button>
+    <button (click)="save(value.value, j)"> Save </button>
+  </div>
+
+  <div>
+    Nieuwe Info:
+    <label for="infoNodeName">Infotype: </label>
+    <input type="text" name="infoNodeName" id="infoNodeName" #name>
+    <label for="infoNodeValue">Info: </label>
+    <input type="text" name="infoNodeValue" id="infoNodeValue" #value><br>
+    <button (click)="addInfoNode(name.value, value.value)"> Add </button>
+  </div>
+
+  <button (click)="saveChanges()"> Save </button>
+</div>

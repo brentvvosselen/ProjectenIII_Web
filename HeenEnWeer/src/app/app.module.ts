@@ -20,6 +20,7 @@ import { ProfielComponent } from './profiel/profiel.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProfileEditComponent } from './profiel/profile-edit/profile-edit.component';
 import { ChildInfoComponent } from './child-info/child-info.component';
+import { ChildComponent } from './child-info/child/child.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ChildInfoComponent } from './child-info/child-info.component';
     NavbarComponent,
     ProfileEditComponent,
     ChildInfoComponent,
+    ChildComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

@@ -1,7 +1,9 @@
 {{currentUser.firstname}}
 {{currentUser.lastname}}
 
-<div *ngFor="let child of currentUser.children; let i = index">
-  {{child.firstname}}
-  {{child.lastname}}
-</div>
+<app-child *ngFor="let child of currentUser.children"
+    [firstname] = "child.firstname"
+    [lastname] = "child.lastname"
+    [info] = "child.info"
+    [currentUser] = "currentUser">
+</app-child>

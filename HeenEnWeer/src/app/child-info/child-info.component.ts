@@ -10,9 +10,9 @@ import { AuthenticationService } from '../services/authentication-service.servic
   styleUrls: ['./child-info.component.css']
 })
 export class ChildInfoComponent implements OnInit {
-
   user: User;
   currentUser: Parent;
+  info: string;
 
   constructor(private authenticationService: AuthenticationService,private parentService: ParentService) {
 
@@ -24,7 +24,7 @@ export class ChildInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getParentFromUserEmail(this.user.email);
+    // this.getParentFromUserEmail(this.user.email);
   }
 
   //roept een api call op via parentservice.. Dit deel werkt wel -> kijk in de console -> probeer een object van de data te maken
@@ -33,6 +33,7 @@ export class ChildInfoComponent implements OnInit {
       (response) => this.currentUser = response).subscribe(data => {
         //oke parent object is gezet naar currentUser
         //console.log(this.currentUser);
+        this.info = data.children[0].info;
     });
   }
 }

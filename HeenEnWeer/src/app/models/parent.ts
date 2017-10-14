@@ -1,3 +1,5 @@
+import { Child } from './child';
+
 export class Parent {
     _id: number;
     password: string;
@@ -11,6 +13,6 @@ export class Parent {
     telephoneNumber: string;
     workName: string;
     workNumber: string;
-    // children: Child[];
+    children: Child[];
     constructor(firstname: string, lastname: string, email: string){}
 }

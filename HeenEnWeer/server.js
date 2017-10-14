@@ -256,6 +256,9 @@ app.post("/api/parents/edit", function(req,res){
       parent.number = req.body.telephoneNumber;
       parent.work_name = req.body.workName;
       parent.work_number = req.body.workNumber;
+      parent.children = req.body.children;
+
+      console.log(req.body);
 
       parent.save(function(err){
         if (err) throw err;
