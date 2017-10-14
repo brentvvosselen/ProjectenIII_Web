@@ -247,42 +247,21 @@ app.post("/api/parents/edit", function(req,res){
       handleError(res, "Updating failed", "Updating failed. Could not find parent.");
     }else{
       //change attributes from parent if not undefined
-      if(req.body.firstname){
-        parent.firstname = req.body.firstname;
-      }
-      if(req.body.lastname){
-        parent.lastname = req.body.lastname;
-      }
-      if(req.body.addressStreet){
-        parent.address_street = req.body.addressStreet;
-      }
-      if(req.body.addressNumber){
-        parent.address_number = req.body.addressNumber;
-      }
-      if(req.body.addressPostalcode){
-        parent.address_postalcode = req.body.addressPostalcode;
-      }
-      if(req.body.addressCity){
-        parent.address_city = req.body.addressCity;
-      }
-      if(req.body.telephoneNumber){
-        parent.number = req.body.telephoneNumber;
-      }
-      if(req.body.workName){
-        parent.work_name = req.body.workName;
-      }
-      if(req.body.workNumber){
-        parent.work_number = req.body.workNumber;
-      }
-
+      parent.firstname = req.body.firstname;
+      parent.lastname = req.body.lastname;
+      parent.address_street = req.body.addressStreet;
+      parent.address_number = req.body.addressNumber;
+      parent.address_postalcode = req.body.addressPostalcode;
+      parent.address_city = req.body.addressCity;
+      parent.number = req.body.telephoneNumber;
+      parent.work_name = req.body.workName;
+      parent.work_number = req.body.workNumber;
 
       parent.save(function(err){
         if (err) throw err;
         res.send({success: true, msg: 'Parent updated'});
       });
-
     }
-
     });
 });
 /*  "/api/contacts/:id"
