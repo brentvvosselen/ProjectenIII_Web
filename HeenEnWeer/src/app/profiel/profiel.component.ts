@@ -23,6 +23,8 @@ export class ProfielComponent implements OnInit {
 
     //hier of in ngOnInit()?
     this.getParentFromUserEmail(this.user.email);
+
+    console.log(this.currentUser);
   }
 
   ngOnInit() {
