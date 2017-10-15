@@ -190,7 +190,8 @@ app.post("/api/login", function(req,res){
   }, function(err, user) {
     if (err) throw err;
     if (!user) {
-      res.send({success: false, msg: 'Authentication failed. User not found.'});
+      //res.send({success: false, msg: 'Authentication failed. User not found.'});
+      handleError(res, "User not found", "User doesn't exists", 400);
     } else {
       // check if password matches
       user.comparePassword(req.body.password, function (err, isMatch) {
@@ -208,7 +209,7 @@ app.post("/api/login", function(req,res){
           });
           console.log("User logged in");
         } else {
-          res.send({success: false, msg: 'Authentication failed. Wrong password.'});
+          handleError(res, "Wrond password", "Wrond password", 400);
         }
       });
     }
