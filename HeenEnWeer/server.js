@@ -250,13 +250,13 @@ app.post("/api/parents/edit", function(req,res){
       //change attributes from parent if not undefined
       parent.firstname = req.body.firstname;
       parent.lastname = req.body.lastname;
-      parent.address_street = req.body.addressStreet;
-      parent.address_number = req.body.addressNumber;
-      parent.address_postalcode = req.body.addressPostalcode;
-      parent.address_city = req.body.addressCity;
-      parent.number = req.body.telephoneNumber;
-      parent.work_name = req.body.workName;
-      parent.work_number = req.body.workNumber;
+      parent.addressStreet = req.body.addressStreet;
+      parent.addressNumber = req.body.addressNumber;
+      parent.addressPostalcode = req.body.addressPostalcode;
+      parent.addressCity = req.body.addressCity;
+      parent.telephoneNumber = req.body.telephoneNumber;
+      parent.workName = req.body.workName;
+      parent.workNumber = req.body.workNumber;
       parent.children = req.body.children;
 
       console.log(req.body);

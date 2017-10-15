@@ -7,9 +7,9 @@ export class Parent {
     lastname: string;
     email: string;
     addressStreet: string;
-    addressNumber: number;
+    addressNumber: string;
     addressCity: string;
-    addressPostalcode: number;
+    addressPostalcode: string;
     telephoneNumber: string;
     workName: string;
     workNumber: string;

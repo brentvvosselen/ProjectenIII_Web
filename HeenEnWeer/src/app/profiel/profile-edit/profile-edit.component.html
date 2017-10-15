@@ -5,39 +5,39 @@
     <!--straat-->
     <div class="form-group">
       <label for="addressStreet"></label>
-      <input type="text" class="form-control" name="addressStreet" [(ngModel)]="model.addressStreet" #addressStreet="ngModel" required placeholder="Straat" value="{{currentUser.address_street}}"/>
+      <input type="text" class="form-control" name="addressStreet" [(ngModel)]="model.addressStreet" #addressStreet="ngModel" required placeholder="Straat" value="{{currentUser.addressStreet}}"/>
     </div>
     <!--huisnummer-->
     <div class="form-group">
       <label for="addressNumber"></label>
-      <input type="number" class="form-control" name="addressNumber" [(ngModel)]="model.addressNumber" #addressNumber="ngModel" required placeholder="Huisnummer" value="{{currentUser.address_number}}" />
+      <input type="text" class="form-control" name="addressNumber" [(ngModel)]="model.addressNumber" #addressNumber="ngModel" required placeholder="Huisnummer" value="{{currentUser.addressNumber}}" />
     </div>
     <!--postcode-->
     <div class="form-group">
       <label for="addressPostalcode"></label>
-      <input type="number" class="form-control" name="addressPostalcode" [(ngModel)]="model.addressPostalcode" #addressPostalcode="ngModel" required placeholder="Postcode" value="{{currentUser.address_postalcode}}"/>
+      <input type="text" class="form-control" name="addressPostalcode" [(ngModel)]="model.addressPostalcode" #addressPostalcode="ngModel" required placeholder="Postcode" value="{{currentUser.addressPostalcode}}"/>
     </div>
     <!--stad-->
     <div class="form-group">
       <label for="addressCity"></label>
-      <input type="text" class="form-control" name="addressCity" [(ngModel)]="model.addressCity" #addressCity="ngModel" required placeholder="Stad" value="{{currentUser.address_city}}" />
+      <input type="text" class="form-control" name="addressCity" [(ngModel)]="model.addressCity" #addressCity="ngModel" required placeholder="Stad" value="{{currentUser.addressCity}}" />
     </div>
     <!--telefoonnummer-->
     <h3>Contact</h3>
     <div class="form-group">
       <label for="telephoneNumber"></label>
-      <input type="text" class="form-control" name="telephoneNumber" [(ngModel)]="model.telephoneNumber" #telephoneNumber="ngModel" required placeholder="Telefoonnummer" value="{{currentUser.number}}" />
+      <input type="text" class="form-control" name="telephoneNumber" [(ngModel)]="model.telephoneNumber" #telephoneNumber="ngModel" required placeholder="Telefoonnummer" value="{{currentUser.telephoneNumber}}" />
     </div>
     <!--werk_naam-->
     <h3>Werkgegevens</h3>
     <div class="form-group">
       <label for="workName"></label>
-      <input type="text" class="form-control" name="workName" [(ngModel)]="model.workName" #workName="ngModel" required placeholder="Bedrijfsnaam" value="{{currentUser.work_name}}" />
+      <input type="text" class="form-control" name="workName" [(ngModel)]="model.workName" #workName="ngModel" required placeholder="Bedrijfsnaam" value="{{currentUser.workName}}" />
     </div>
     <!--werk_nummer-->
     <div class="form-group">
       <label for="workNumber"></label>
-      <input type="text" class="form-control" name="workNumber" [(ngModel)]="model.workNumber" #workNumber="ngModel" required placeholder="Bedrijfstelefoonnummer" value="{{currentUser.work_number}}"/>
+      <input type="text" class="form-control" name="workNumber" [(ngModel)]="model.workNumber" #workNumber="ngModel" required placeholder="Bedrijfstelefoonnummer" value="{{currentUser.workNumber}}"/>
     </div>
     <input (click)="edit(addressStreet.value,addressNumber.value,addressPostalcode.value,addressCity.value,telephoneNumber.value,workName.value,workNumber.value)" type="submit" name="profile_edit_submit" value="Edit" />
 
