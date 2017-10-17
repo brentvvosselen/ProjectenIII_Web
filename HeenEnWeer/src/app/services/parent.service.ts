@@ -21,13 +21,15 @@ export class ParentService {
     }
 
     update(parent: Parent) {
-        console.log("UPDATE PARENT");
-        console.log(parent);
         return this.http.post('http://127.0.0.1:5000/api/parents/edit', parent, this.jwt()).map((response: Response) => response.json());
     }
 
     delete(id: number) {
         return this.http.delete('http://127.0.0.1:5000/api/parents' + id, this.jwt()).map((response: Response) => response.json());
+    }
+
+    getChildren(email: string){
+        return this.http.get('http://127.0.0.1:5000/api/children/' + email, this.jwt()).map((response: Response) => response.json());        
     }
 
     requestSecretRoute(){
