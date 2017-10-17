@@ -1,7 +1,7 @@
-{{currentUser.firstname}}
-{{currentUser.lastname}}
+{{currentUser?.firstname}}
+{{currentUser?.lastname}}
 
-<app-child *ngFor="let child of currentUser.children"
+<app-child *ngFor="let child of currentUser?.group.children"
     [model] = "child"
     [currentUser] = "currentUser">
 </app-child>

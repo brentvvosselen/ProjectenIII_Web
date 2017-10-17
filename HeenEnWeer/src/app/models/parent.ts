@@ -1,4 +1,4 @@
-import { Child } from './child';
+import { Group } from './group';
 
 export class Parent {
     _id: number;
@@ -13,6 +13,6 @@ export class Parent {
     telephoneNumber: string;
     workName: string;
     workNumber: string;
-    children: Child[];
+    group: Group;
     constructor(firstname: string, lastname: string, email: string){}
 }

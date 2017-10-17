@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Parent } from '../../../app/models/parent';
+import { Child } from '../../../app/models/child';
 import { ParentService } from '../../services/parent.service';
 
 
@@ -9,8 +10,10 @@ import { ParentService } from '../../services/parent.service';
   styleUrls: ['./child.component.css']
 })
 export class ChildComponent implements OnInit {
-  model: any = {};
+  @Input() model: any = {};
   currentUser: Parent;
+
+  @Input() child: Child;
 
   infoNodes = new Array<infoNode>();
 
@@ -19,6 +22,8 @@ export class ChildComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.model);
+
     let temp = this.model.info.split(';');
     for (let i of temp) {
       if(i != "") {

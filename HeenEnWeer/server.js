@@ -97,7 +97,7 @@ app.get('/setup', function(req, res){
   group1.children.push(child1,child2);
 
   var newUser = new Users({
-    email: "koen@aarschot.be",
+    email: "jess@aarschot.be",
     password: "test"
   });
 
@@ -269,8 +269,14 @@ app.post("/api/parents", function(req, res) {
 app.get("/api/parents/:email",function(req,res){
   //virtual werkt hier niet
   Parents.findOne({email:req.params.email},function(err,user){
+    if(err){
+      handleError(res, err.message, "could not find parent");
+    }
     res.json(user);
-  })
+  }).populate({
+    path: 'group', 
+    populate: { path: 'children' }
+  });
 });
 
 //EDIT PARENTS
