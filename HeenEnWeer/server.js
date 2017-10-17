@@ -220,11 +220,6 @@ app.post("/api/login", function(req,res){
       user.comparePassword(req.body.password, function (err, isMatch) {
         if (isMatch && !err) {
           var token = jwt.encode(user, config.secret);
-          if (typeof localStorage === "undefined" || localStorage === null) {
-            var LocalStorage = require('node-localstorage').LocalStorage;
-            localStorage = new LocalStorage('./scratch');
-          }
-          localStorage.setItem('currentUser', user)
           res.json({
             email: user.email,
             password: user.password,
