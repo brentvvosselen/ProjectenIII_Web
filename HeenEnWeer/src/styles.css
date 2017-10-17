@@ -1,2 +1,186 @@
 /* You can add global styles to this file, and also import other style files */
 
+:root {
+    --bg-start-blue: #00C6FF;
+    --bg-end-blue: #3E8DBC;
+    --color-mid-blue: #48A9DD;
+    --color-light-gray: #E5E5E5;
+}
+
+body {
+    font-family: 'open sans', sans-serif;
+    font-weight: 300;
+
+        background: var(--color-mid-blue);
+        background: -webkit-linear-gradient(left, var(--bg-start-blue), var(--bg-end-blue));
+        background: -o-linear-gradient(right, var(--bg-start-blue), var(--bg-end-blue));
+        background: -moz-linear-gradient(right, var(--bg-start-blue), var(--bg-end-blue));
+        background: linear-gradient(to right, var(--bg-start-blue), var(--bg-end-blue));
+
+
+}
+
+.title {
+    color: white;
+    font-weight: 100;
+    font-size: 5rem;
+    width: 100%;
+    margin-top: 1em;
+    text-align: center;
+}
+
+.title-login {
+    margin-top: 2em;
+}
+
+.command {
+    margin-top: 1em;
+    margin-bottom: 2em;
+}
+
+.command .command-content {
+    color: white;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.form-title {
+    color: white;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 2em;
+}
+
+.form-title h3 {
+    font-size: 1.5rem;
+}
+
+.card {
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card.card-form {
+    width: 80%;
+    margin: 0 auto 3em;
+}
+
+.card .form-item input {
+    border: none;
+    font-size: 1.5rem;
+    font-weight: 300;
+    padding: 1em;
+    border-radius: 0;
+    outline: none;
+    box-shadow: none;
+}
+
+.card.card-form .form-item:not(:last-child) input {
+    border-bottom: 1px solid var(--color-light-gray);
+}
+
+.button-login {
+    text-align: center;
+    margin-top: 2em;
+}
+
+.button-login input {
+    color: white;
+    font-size: 1.5rem;
+    padding: 1rem;
+    width: 80%;
+    background: none;
+    border: 2px solid white;
+    border-radius: 4rem;
+}
+
+.button-login input:hover {
+    color: var(--color-mid-blue);
+    background: white;
+    transition: .2s ease-in-out;
+}
+
+.form-container .btn-lg {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.btn-lg input {
+    height: auto;
+    width: 80%;
+    margin: 0 auto;
+    border: none;
+    border-radius: 0;
+    font-size: 1.5rem;
+    padding: 1.2rem 0 !important;
+    letter-spacing: .2em;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--color-mid-blue);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.form-container .btn-lg input:hover {
+    background: #eee;
+    transition: .2s ease-in-out;
+}
+
+.center{
+  text-align: center;
+  width: auto;
+  margin: 0 auto;
+}
+.btn-else{
+  margin-top: 1em;
+  color:white;
+}
+.btn-else:hover{
+  color: #eee;
+  text-decoration: none;
+  transition: .2s ease-in-out;
+}
+
+
+.mt-1{
+  margin-top: 1em;
+}
+
+@media(min-width: 480px) {
+    .title {
+        font-size: 8rem;
+    }
+    .command .command-content {
+        font-size: 3rem;
+    }
+    .card.card-form {
+        width: 400px;
+    }
+    .card .form-item input {
+        font-size: 2rem;
+    }
+    .form-title {
+        width: 400px;
+    }
+    .form-title h3 {
+        font-size: 2rem;
+    }
+    .form-container {
+        margin-top: 2em;
+    }
+    .button-login input {
+        font-size: 2.5rem;
+        border-radius: 4rem;
+        padding: 1rem;
+        width: 400px;
+    }
+    .form-container .button-lg {
+        width: 400px;
+    }
+    .btn-lg input {
+        font-size: 1.5rem;
+        padding: 1.2rem;
+        width: 400px;
+    }
+}

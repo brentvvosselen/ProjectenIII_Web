@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
 @Component({
   selector: 'app-profiel',
   templateUrl: './profiel.component.html',
-  styleUrls: ['./profiel.component.css']
+  styleUrls: ['./profiel.component.css'],
 })
 export class ProfielComponent implements OnInit {
   user: User;

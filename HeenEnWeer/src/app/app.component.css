@@ -1,0 +1,7 @@
+body {
+    background: var(--color-mid-blue);
+    background: -webkit-linear-gradient(left, var(--bg-start-blue), var(--bg-end-blue));
+    background: -o-linear-gradient(right, var(--bg-start-blue), var(--bg-end-blue));
+    background: -moz-linear-gradient(right, var(--bg-start-blue), var(--bg-end-blue));
+    background: linear-gradient(to right, var(--bg-start-blue), var(--bg-end-blue));
+}
