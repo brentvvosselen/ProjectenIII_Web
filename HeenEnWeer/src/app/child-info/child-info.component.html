@@ -2,8 +2,6 @@
 {{currentUser.lastname}}
 
 <app-child *ngFor="let child of currentUser.children"
-    [firstname] = "child.firstname"
-    [lastname] = "child.lastname"
-    [info] = "child.info"
+    [model] = "child"
     [currentUser] = "currentUser">
 </app-child>

@@ -9,10 +9,8 @@ import { ParentService } from '../../services/parent.service';
   styleUrls: ['./child.component.css']
 })
 export class ChildComponent implements OnInit {
-  @Input() firstname: string;
-  @Input() lastname: string;
-  @Input() info: string;
-  @Input() currentUser: Parent;
+  model: any = {};
+  currentUser: Parent;
 
   infoNodes = new Array<infoNode>();
 
@@ -21,7 +19,7 @@ export class ChildComponent implements OnInit {
   }
 
   ngOnInit() {
-    let temp = this.info.split(';');
+    let temp = this.model.info.split(';');
     for (let i of temp) {
       if(i != "") {
         let temp2 = i.split(':');
@@ -45,7 +43,7 @@ export class ChildComponent implements OnInit {
       temp = temp + i.name + ":" + i.value + ";";
     }
 
-    this.currentUser.children[0].info = temp;
+    //this.model.info = temp;
     this.parentService.update(this.currentUser).subscribe(data => {
       console.log(data);
     });

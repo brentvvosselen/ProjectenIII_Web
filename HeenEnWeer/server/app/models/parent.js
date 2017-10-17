@@ -1,24 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
-
-var Child = new Schema({
-    geboortedatum: {
-        type: String,
-        required: false
-    },
-    firstname: {
-        type: String,
-        required: true
-    },
-    lastname: {
-        type: String,
-        required: true
-    },
-    info: {
-        type: String,
-    },
-});
+var Group = require("./group")
 
 var ParentSchema = new Schema({
   email: {
@@ -33,35 +16,38 @@ var ParentSchema = new Schema({
     type: String,
     required: true
   },
-  addressStreet: {
+  address_street: {
     type: String,
     required: false
   },
-  addressNumber: {
+  address_number: {
     type: String,
     required: false
   },
-  addressPostalcode: {
+  address_postalcode: {
     type:String,
     required: false
   },
-  addressCity: {
+  address_city: {
     type: String,
     required: false
   },
-  telephoneNumber: {
+  number: {
     type: String,
     required: false
   },
-  workName: {
+  work_name: {
     type: String,
     required: false
   },
-  workNumber: {
+  work_number: {
     type:String,
     required: false
   },
-  children: [Child]
+  group: {type: Schema.ObjectId, ref: 'Group'}
 });
+
+
+
 
 module.exports = mongoose.model('Parents',ParentSchema);
