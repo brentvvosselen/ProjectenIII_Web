@@ -16,19 +16,19 @@ var ParentSchema = new Schema({
     type: String,
     required: true
   },
-  address_street: {
+  addressStreet: {
     type: String,
     required: false
   },
-  address_number: {
+  addressNumber: {
     type: String,
     required: false
   },
-  address_postalcode: {
+  addressPostalcode: {
     type:String,
     required: false
   },
-  address_city: {
+  addressCity: {
     type: String,
     required: false
   },
@@ -36,11 +36,11 @@ var ParentSchema = new Schema({
     type: String,
     required: false
   },
-  work_name: {
+  workName: {
     type: String,
     required: false
   },
-  work_number: {
+  workNumber: {
     type:String,
     required: false
   },

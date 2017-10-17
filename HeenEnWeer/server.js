@@ -277,8 +277,6 @@ app.get("/api/parents/:email",function(req,res){
 app.post("/api/parents/edit", function(req,res){
   //update valideert niet
 
-  console.log(res);
-
   Parents.findOne({
     email: req.body.email
   },function(err,parent){
@@ -286,6 +284,8 @@ app.post("/api/parents/edit", function(req,res){
     if(!parent){
       handleError(res, "Updating failed", "Updating failed. Could not find parent.");
     }else{
+
+      console.log(parent);
       
       parent.firstname = req.body.firstname;
       parent.lastname = req.body.lastname;
@@ -297,7 +297,8 @@ app.post("/api/parents/edit", function(req,res){
       parent.workName = req.body.workName;
       parent.workNumber = req.body.workNumber;
       parent.children = req.body.children;
-      
+
+      console.log(parent);
 
       parent.save(function(err){
         if (err) throw err;
