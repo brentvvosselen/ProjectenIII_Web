@@ -148,8 +148,7 @@ app.get('/setup', function(req, res){
 
 app.post('/api/signup', function(req, res) {
   if (!req.body.email || !req.body.password) {
-    res.json({success: false, msg: 'Please pass email and password.'});
-    console.log("fout");
+    handleError(res, 'No email in body', 'Password or Email not valid', 400);
   } else {
     if(!req.body.key){
       var newGroup = new Group({
@@ -180,8 +179,7 @@ app.post('/api/signup', function(req, res) {
     // save the user
     newUser.save(function(err) {
       if (err) {
-        handleError(res, err.message, "Email already exists.");
-        console.log("Email bestaat al");
+        handleError(res, "Email bestaat al", "Email already exists.");
       }
       console.log("User aangemaakt");
     });
@@ -213,7 +211,6 @@ app.post("/api/login", function(req,res){
   }, function(err, user) {
     if (err) throw err;
     if (!user) {
-      //res.send({success: false, msg: 'Authentication failed. User not found.'});
       handleError(res, "User not found", "User doesn't exists", 400);
     } else {
       // check if password matches
@@ -236,7 +233,7 @@ app.post("/api/login", function(req,res){
 
 app.get("/api/users", function(req,res){
   Users.find({}, function(err,users){
-    res.send(JSON.stringify(users));
+    res.json(users);
   });
 });
 
@@ -246,7 +243,7 @@ app.get("/api/parents", function(req, res) {
     if (err) {
       handleError(res, err.message, "Failed to get parents.");
     } else {
-      res.send(parents);
+      res.json(parents);
     }
   });
 });
@@ -259,11 +256,11 @@ app.post("/api/parents", function(req, res) {
     handleError(res, "Invalid user input", "Must provide a name.", 400);
   }
 
-  db.collection(PARENTS_COLLECTION).insertOne(newParent, function(err, doc) {
+  db.collection(PARENTS_COLLECTION).insertOne(newParent, function(err, parents) {
     if (err) {
       handleError(res, err.message, "Failed to create a new parent.");
     } else {
-      res.status(201).json(doc.ops[0]);
+      res.json(parents);
     }
   });
 });
@@ -272,23 +269,24 @@ app.post("/api/parents", function(req, res) {
 app.get("/api/parents/:email",function(req,res){
   //virtual werkt hier niet
   Parents.findOne({email:req.params.email},function(err,user){
-    res.send(JSON.stringify(user));
+    res.json(user);
   })
 });
 
 //EDIT PARENTS
 app.post("/api/parents/edit", function(req,res){
   //update valideert niet
-  console.log("api call");
-  console.log(req.body);
+
+  console.log(res);
+
   Parents.findOne({
     email: req.body.email
   },function(err,parent){
-    if(err)throw err;
+    if(err) throw err;
     if(!parent){
       handleError(res, "Updating failed", "Updating failed. Could not find parent.");
     }else{
-      //change attributes from parent if not undefined
+      
       parent.firstname = req.body.firstname;
       parent.lastname = req.body.lastname;
       parent.addressStreet = req.body.addressStreet;
@@ -299,12 +297,12 @@ app.post("/api/parents/edit", function(req,res){
       parent.workName = req.body.workName;
       parent.workNumber = req.body.workNumber;
       parent.children = req.body.children;
-
-      console.log(req.body);
+      
 
       parent.save(function(err){
         if (err) throw err;
-        res.send({success: true, msg: 'Parent updated'});
+        console.log("PARENT SAVED");
+        res.json(parent);
       });
     }
     });

@@ -2,12 +2,12 @@
   <h2>Profielpagina</h2>
   <a routerLink="/profiel/edit" routerLinkActive="active">Edit</a>
   <h3>Basisgegevens</h3>
-  <p>Voornaam: {{currentUser.firstname}}</p>
-  <p>Achternaam: {{currentUser.lastname}}</p>
-  <p  *ngIf="currentUser.addressStreet || currentUser.addressNumber || currentUser.addressPostalcode || currentUser.addressCity">Adres: {{currentUser.addressStreet}} {{currentUser.addressNumber}}<br>
-      {{currentUser.addressPostalcode}} {{currentUser.addressCity}}</p>
-  <p *ngIf="currentUser.telephoneNumber">Tel Nr.: {{currentUser.telephoneNumber}}</p>
-  <p *ngIf="currentUser.workName || currentUser.workNumber">Werk: {{currentUser.workName}} <br> {{currentUser.workNumber}}</p>
+  <p>Voornaam: {{currentUser?.firstname}}</p>
+  <p>Achternaam: {{currentUser?.lastname}}</p>
+  <p  *ngIf="currentUser?.addressStreet || currentUser?.addressNumber || currentUser?.addressPostalcode || currentUser?.addressCity">Adres: {{currentUser?.addressStreet}} {{currentUser?.addressNumber}}<br>
+      {{currentUser?.addressPostalcode}} {{currentUser?.addressCity}}</p>
+  <p *ngIf="currentUser?.telephoneNumber">Tel Nr.: {{currentUser?.telephoneNumber}}</p>
+  <p *ngIf="currentUser?.workName || currentUser?.workNumber">Werk: {{currentUser?.workName}} <br> {{currentUser?.workNumber}}</p>
 
 
 </div>

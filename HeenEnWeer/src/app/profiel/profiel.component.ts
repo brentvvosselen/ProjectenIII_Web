@@ -17,19 +17,12 @@ export class ProfielComponent implements OnInit {
   currentUser: Parent;
 
   constructor(private authenticationService: AuthenticationService,private parentService: ParentService) {
-
     //haalt user op uit localstorage
     this.user = authenticationService.getUser();
-
-    //hier of in ngOnInit()?
-    this.getParentFromUserEmail(this.user.email);
-
   }
 
   ngOnInit() {
     this.getParentFromUserEmail(this.user.email);
-    console.log(this.currentUser);
-    
   }
 
   //roept een api call op via parentservice.. Dit deel werkt wel -> kijk in de console -> probeer een object van de data te maken

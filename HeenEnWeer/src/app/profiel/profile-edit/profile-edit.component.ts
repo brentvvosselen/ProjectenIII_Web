@@ -17,7 +17,9 @@ export class ProfileEditComponent implements OnInit {
   //gebruiken van currentUser in de html voor de waarden
   currentUser: Parent;
 
-  constructor(private authenticationService: AuthenticationService, private parentService: ParentService) {}
+  constructor(private authenticationService: AuthenticationService, private parentService: ParentService) {
+    this.user = authenticationService.getUser();
+  }
 
   ngOnInit() {
     this.getParentFromUserEmail(this.user.email);
@@ -28,7 +30,6 @@ export class ProfileEditComponent implements OnInit {
     this.parentService.getByEmail(email).map(
       (response) => this.currentUser = response).subscribe(data => {
         this.model = this.currentUser;
-        console.log(this.currentUser);
       });
   }
 
@@ -43,11 +44,9 @@ export class ProfileEditComponent implements OnInit {
     updatedUser['workName'] = this.model.workName;
     updatedUser['workNumber'] = this.model.workNumber;
 
-
     this.parentService.update(updatedUser).subscribe(data => {
-
+      console.log("DATA");
+      console.log(data);
     });
   }
-
-
 }
