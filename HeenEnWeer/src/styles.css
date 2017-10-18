@@ -184,3 +184,161 @@ body {
         width: 400px;
     }
 }
+
+
+
+
+
+/*styles of the navigation and wrapper*/
+:root {
+    --bg-start-blue: #00C6FF;
+    --bg-end-blue: #3E8DBC;
+    --color-mid-blue: #48A9DD;
+    --color-light-gray: #E5E5E5;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: #F9F9F9;
+}
+
+
+/* Toggle Styles */
+
+#menu-toggle {
+    border: none;
+    background: none;
+    box-shadow: none;
+}
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 250px;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.2);
+    background: white;
+    -webkit-transition: all 0.5es ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+
+/* Sidebar Styles */
+
+.sidebar-brand {
+    text-align: center;
+    margin-top: 2em;
+}
+
+.sidebar-brand h1 {
+    color: var(--color-mid-blue);
+    font-weight: 200;
+}
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+.sidebar-nav li:not(.sidebar-brand) a {
+    display: block;
+    text-decoration: none;
+    color: #7D7D7D;
+    font-weight: 200;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    padding: .5em 1em;
+    margin: 0;
+    border-left: 8px solid transparent;
+}
+.sidebar-nav li a.current {
+    border-color: var(--color-mid-blue);
+}
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #000;
+    background: rgba(255, 255, 255, 0.2);
+    transition: .2s ease-in-out;
+}
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+.sidebar-nav>.sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+}
+.sidebar-nav>.sidebar-brand a {
+    color: #999999;
+}
+.sidebar-nav>.sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}

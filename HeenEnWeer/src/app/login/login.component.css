@@ -5,3 +5,11 @@ body{
     background: -moz-linear-gradient(right, var(--bg-start-blue), var(--bg-end-blue));
     background: linear-gradient(to right, var(--bg-start-blue), var(--bg-end-blue));
 }
+
+/*undo wrapper css*/
+div#wrapper{
+  padding: 0;
+}
+a#menu-toggle{
+  display: none;
+}
