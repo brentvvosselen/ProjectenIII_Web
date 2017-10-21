@@ -1,10 +1,16 @@
 
 body{
   background: var(--color-mid-blue);
-  background: -webkit-linear-gradient(left, var(--bg-start-blue), var(--bg-end-blue));
-  background: -o-linear-gradient(right, var(--bg-start-blue), var(--bg-end-blue));
-  background: -moz-linear-gradient(right, var(--bg-start-blue), var(--bg-end-blue));
-  background: linear-gradient(to right, var(--bg-start-blue), var(--bg-end-blue));
+  
+}
+
+@media(min-width: 768px){
+body{
+  background: -webkit-linear-gradient(left, #00C6FF, #3E8DBC);
+  background: -o-linear-gradient(right, #00C6FF, #3E8DBC);
+  background: -moz-linear-gradient(right, #00C6FF, #3E8DBC);
+  background: linear-gradient(to right, #00C6FF, #3E8DBC);
+}
 }
 
 /*undo wrapper css*/

@@ -7,25 +7,27 @@
     --color-light-gray: #E5E5E5;
 }
 
-body {
-    font-family: 'open sans', sans-serif;
-    font-weight: 300;
-
-        background: var(--color-mid-blue);
-        background: -webkit-linear-gradient(left, var(--bg-start-blue), var(--bg-end-blue));
-        background: -o-linear-gradient(right, var(--bg-start-blue), var(--bg-end-blue));
-        background: -moz-linear-gradient(right, var(--bg-start-blue), var(--bg-end-blue));
-        background: linear-gradient(to right, var(--bg-start-blue), var(--bg-end-blue));
-
-
+body{
+    background: var(--color-mid-blue);
+    
 }
+
+@media(min-width: 768px){
+  body{
+    background: -webkit-linear-gradient(left, #00C6FF, #3E8DBC);
+    background: -o-linear-gradient(right, #00C6FF, #3E8DBC);
+    background: -moz-linear-gradient(right, #00C6FF, #3E8DBC);
+    background: linear-gradient(to right, #00C6FF, #3E8DBC);
+  }
+}
+
 
 .bg-blue-gradient{
   background: var(--color-mid-blue);
-  background: -webkit-linear-gradient(left, var(--bg-start-blue), var(--bg-end-blue));
-  background: -o-linear-gradient(right, var(--bg-start-blue), var(--bg-end-blue));
-  background: -moz-linear-gradient(right, var(--bg-start-blue), var(--bg-end-blue));
-  background: linear-gradient(to right, var(--bg-start-blue), var(--bg-end-blue));
+  background: -webkit-linear-gradient(left, #00C6FF, #3E8DBC);
+  background: -o-linear-gradient(right, #00C6FF, #3E8DBC);
+  background: -moz-linear-gradient(right, #00C6FF, #3E8DBC);
+  background: linear-gradient(to right, #00C6FF, #3E8DBC);
 }
 
 .title {
