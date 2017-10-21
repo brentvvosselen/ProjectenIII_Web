@@ -32,7 +32,7 @@ var ParentSchema = new Schema({
     type: String,
     required: false
   },
-  number: {
+  telephoneNumber: {
     type: String,
     required: false
   },
