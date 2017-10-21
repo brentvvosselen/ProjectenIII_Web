@@ -1,39 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
- 
+import { NgModel, Validators, FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { matchOtherValidator } from './match-other-validators';
+
 import { UserService } from '../../app/services/user-service.service';
- 
+
 @Component({
     moduleId: module.id,
     templateUrl: 'register.component.html',
     styleUrls: ['./register.component.css']
 })
- 
-export class RegisterComponent {
+
+export class RegisterComponent implements OnInit {
     model: any = {};
     loading = false;
- 
-    constructor(
-        private router: Router,
-        private userService: UserService,) { }
- 
-    register(email: string, password: string) {
+
+    registerForm: FormGroup;
+
+    constructor(private router: Router, private userService: UserService, private fb: FormBuilder) { }
+
+    ngOnInit() {
+      this.registerForm = this.fb.group({
+        email: ['', [Validators.required, Validators.minLength(3), Validators.pattern('[a-z0-9._%+-]+@[a-z0-9]+\\.[a-z]{2,3}')]],
+        lastname: ['', [Validators.required, Validators.minLength(3)]],
+        firstname: ['', [Validators.required, Validators.minLength(3)]],
+        password: ['', [Validators.required, Validators.minLength(3)]],
+        passwordConfirm: ['', [Validators.required, Validators.minLength(3), matchOtherValidator('password')]],
+      });
+    }
+
+    register() {
         this.loading = true;
-        if(this.model.password == this.model.confirmPassword){
-            this.userService.create(this.model)
-            .subscribe(
-                data => {
-                    // set success message and pass true paramater to persist the message after redirecting to the login page
-                    //this.alertService.success('Registration successful', true);
-                    this.router.navigate(['/login']);
-                },
-                error => {
-                    //this.alertService.error(error);
-                    this.loading = false;
-                });
-        }else{
-            console.log("passwords komen niet overeen");
-        }
-        
+
+        this.userService.create(this.model).subscribe(data => {
+          this.router.navigate(['/login']);
+        }, error => {
+          this.loading = false;
+        });
     }
 }

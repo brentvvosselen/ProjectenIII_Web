@@ -1,38 +1,82 @@
 <div id="login-box">
-    <form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
-        <div class="left">
-            <h1>Sign up</h1>
-            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
-                    <label for="firstName">First Name</label>
-                    <input  type="text" class="form-control" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" required placeholder="FirstName" />
-                    <div *ngIf="f.submitted && !firstName.valid" class="help-block">First Name is required</div>
+    <form (ngSubmit)="register()" [formGroup]="registerForm">
+        <fieldset>
+          <div class="left">
+            <div class="form-group">
+              <label for="email" >Email</label>
+              <input id="email" type="text" placeholder="Email" formControlName="email"/>
+
+              <div *ngIf="(registerForm.get('email').touched || registerForm.get('email').dirty) && registerForm.get('email').errors" class="alert alert-danger">
+                <div *ngIf="registerForm.get('email').errors.required">
+                  Email is verplicht
+                </div>
+                <div *ngIf="registerForm.get('email').errors.minlength">
+                  Moet minstens 3 lang zijn
+                </div>
+                <div *ngIf="registerForm.get('email').errors.pattern">
+                  Geef een geldig email in
+                </div>
+              </div>
+
+              <label for="firstname" >Firstname</label>
+              <input id="firstname" type="text" placeholder="Firstname" formControlName="firstname"/>
+
+              <div *ngIf="(registerForm.get('firstname').touched || registerForm.get('firstname').dirty) && registerForm.get('firstname').errors" class="alert alert-danger">
+                <div *ngIf="registerForm.get('firstname').errors.required">
+                  Firstname is verplicht
+                </div>
+                <div *ngIf="registerForm.get('firstname').errors.minlength">
+                  Moet minstens 3 lang zijn
+                </div>
+              </div>
+
+              <label for="lastname" >Lastname</label>
+              <input id="lastname" type="text" placeholder="Lastname" formControlName="lastname"/>
+
+              <div *ngIf="(registerForm.get('lastname').touched || registerForm.get('lastname').dirty) && registerForm.get('lastname').errors" class="alert alert-danger">
+                <div *ngIf="registerForm.get('lastname').errors.required">
+                  Lastname is verplicht
+                </div>
+                <div *ngIf="registerForm.get('lastname').errors.minlength">
+                  Moet minstens 3 lang zijn
+                </div>
+              </div>
+
+              <label for="password" >Password</label>
+              <input id="password" type="text" placeholder="Password" formControlName="password"/>
+
+              <div *ngIf="(registerForm.get('password').touched || registerForm.get('password').dirty) && registerForm.get('password').errors" class="alert alert-danger">
+                <div *ngIf="registerForm.get('password').errors.required">
+                  Password is verplicht
+                </div>
+                <div *ngIf="registerForm.get('email').errors.minlength">
+                  Moet minstens 3 lang zijn
+                </div>
+              </div>
+
+              <label for="passwordConfirm" >Confirm password</label>
+              <input id="passwordConfirm" type="text" placeholder="Confirm Password" formControlName="passwordConfirm"/>
+
+              <div *ngIf="(registerForm.get('passwordConfirm').touched || registerForm.get('passwordConfirm').dirty) && registerForm.get('passwordConfirm').errors" class="alert alert-danger">
+                <div *ngIf="registerForm.get('passwordConfirm').errors.required">
+                  Confirm Password is verplicht
+                </div>
+                <div *ngIf="registerForm.get('passwordConfirm').errors.minlength">
+                  Moet minstens 3 lang zijn
+                </div>
+                <div *ngIf="registerForm.get('passwordConfirm').errors.matchOther">
+                  Dylan is een dikke kuthomo
+                </div>
+              </div>
+
+              <button type="submit" name="signup_submit" [disabled]="!registerForm.valid">Sign me up</button>
             </div>
-            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
-                    <label for="lastName">Last Name</label>
-                    <input  type="text" class="form-control" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" required placeholder="LastName" />
-                    <div *ngIf="f.submitted && !lastName.valid" class="help-block">Last Name is required</div>
-            </div>
-            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
-                    <label for="email">email</label>
-                    <input  type="text" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" required  placeholder="E-mail" />
-                    <div *ngIf="f.submitted && !email.valid" class="help-block">email is required</div>
-            </div>
-            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required placeholder="Password" />
-                    <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
-            </div>
-            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-                <label for="confirmPassword">Confirm Password</label>
-                <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="model.confirmPassword" #confirmPassword="ngModel" required placeholder="Confirm Password" />
-                <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
-            </div>
-            <input (click)="register(email.value, password.value)" type="submit" name="signup_submit" value="Sign me up"  />
-        </div>
-    
+          </div>
+        </fieldset>
+
         <div class="right">
             <span class="loginwith">Sign in with<br />social network</span>
-      
+
             <button class="social-signin facebook">Log in with facebook</button>
             <button class="social-signin twitter">Log in with Twitter</button>
             <button class="social-signin google">Log in with Google+</button>
