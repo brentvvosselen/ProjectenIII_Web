@@ -14,5 +14,6 @@ export class Parent {
     workName: string;
     workNumber: string;
     group: Group;
-    constructor(firstname: string, lastname: string, email: string){}
+    //constructor(firstname: string, lastname: string, email: string){}
+    constructor(){};
 }

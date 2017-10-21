@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { ParentService } from '../app/services/parent.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormControl, FormBuilder,ReactiveFormsModule  } from '@angular/forms';
 import { AppComponent } from './app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './login/login.component';
@@ -45,6 +45,7 @@ import { ChildComponent } from './child-info/child/child.component';
     HttpModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},
@@ -56,7 +57,7 @@ import { ChildComponent } from './child-info/child/child.component';
       { path: "**", redirectTo: "" },
     ])
   ],
-  providers: [AuthenticationService, ParentService, UserService, AuthGuard],
+  providers: [AuthenticationService, ParentService, UserService, AuthGuard, FormBuilder, ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

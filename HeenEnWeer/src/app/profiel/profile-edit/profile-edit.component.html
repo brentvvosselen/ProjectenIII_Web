@@ -1,51 +1,167 @@
 <div class="col-md-6 col-md-offset-3">
   <h2>Login</h2>
-  <form name="form" (ngSubmit)="edit()" #f="ngForm" novalidate>
+  <form (ngSubmit)="edit()" #profielForm="ngForm">
     <h3>Adres</h3>
 
     <!--straat-->
     <div class="form-group">
       <label for="addressStreet"></label>
-      <input type="text" class="form-control" name="addressStreet" [(ngModel)]="model.addressStreet"  required placeholder="Straat" />
+
+      <input class="form-control" #addressStreetVar="ngModel" name="addressStreet" minlength="4" required [(ngModel)]="model.addressStreet"
+        placeholder="Straat">
+
+      <div *ngIf="addressStreetVar.errors && (addressStreetVar.dirty || addressStreetVar.touched)" class="alert alert-danger">
+
+        <div *ngIf="addressStreetVar.errors.required">
+          Straatnaam is verplicht
+        </div>
+        <div *ngIf="addressStreetVar.errors.minlength">
+          Straatnaam moet minsten 4 letters lang zijn
+        </div>
+        <div *ngIf="addressStreetVar.errors.forbiddenName">
+          Streetname cannot be Bob.
+        </div>
+
+      </div>
+
     </div>
 
     <!--huisnummer-->
     <div class="form-group">
       <label for="addressNumber"></label>
-      <input type="text" class="form-control" name="addressNumber" [(ngModel)]="model.addressNumber"  required placeholder="Huisnummer"  />
+
+      <input class="form-control" #addressNumberVar="ngModel" name="addressNumber" minlength="1" required [(ngModel)]="model.addressNumber"
+        placeholder="Huisnummer">
+
+      <div *ngIf="addressNumberVar.errors && (addressNumberVar.dirty || addressNumberVar.touched)" class="alert alert-danger">
+
+        <div *ngIf="addressNumberVar.errors.required">
+          Straatnummer is verplicht
+        </div>
+        <div *ngIf="addressNumberVar.errors.minlength">
+          Straatnummer moet minstens 1 cijfer bevatten
+        </div>
+        <div *ngIf="addressNumberVar.errors.forbiddenName">
+          Streetname cannot be Bob.
+        </div>
+
+      </div>
+
     </div>
 
     <!--postcode-->
     <div class="form-group">
       <label for="addressPostalcode"></label>
-      <input type="text" class="form-control" name="addressPostalcode" [(ngModel)]="model.addressPostalcode"  required placeholder="Postcode" />
+
+      <input class="form-control" #addressPostalcodeVar="ngModel" name="addressPostalcode" minlength="4" maxlength="4" required
+        [(ngModel)]="model.addressPostalcode" placeholder="Postcode">
+
+      <div *ngIf="addressPostalcodeVar.errors && (addressPostalcodeVar.dirty || addressPostalcodeVar.touched)" class="alert alert-danger">
+
+        <div *ngIf="addressPostalcodeVar.errors.required">
+          Postcode is verplicht
+        </div>
+        <div *ngIf="addressPostalcodeVar.errors.minlength">
+          Postcode moet minstens 4 cijfers bevatten
+        </div>
+        <div *ngIf="addressPostalcodeVar.errors.forbiddenName">
+          Streetname cannot be Bob.
+        </div>
+
+      </div>
+
     </div>
 
     <!--stad-->
     <div class="form-group">
       <label for="addressCity"></label>
-      <input type="text" class="form-control" name="addressCity" [(ngModel)]="model.addressCity"required placeholder="Stad"  />
+
+      <input class="form-control" #addressCityVar="ngModel" name="addressCity" minlength="4" required [(ngModel)]="model.addressCity"
+        placeholder="Stad">
+
+      <div *ngIf="addressCityVar.errors && (addressCityVar.dirty || addressCityVar.touched)" class="alert alert-danger">
+
+        <div *ngIf="addressCityVar.errors.required">
+          Stadsnaam is verplicht
+        </div>
+        <div *ngIf="addressCityVar.errors.minlength">
+          Stadsnaam moet minsten 4 letters lang zijn
+        </div>
+        <div *ngIf="addressCityVar.errors.forbiddenName">
+          Streetname cannot be Bob.
+        </div>
+
+      </div>
+
     </div>
 
     <!--telefoonnummer-->
-    <h3>Contact</h3>
     <div class="form-group">
       <label for="telephoneNumber"></label>
-      <input type="text" class="form-control" name="telephoneNumber" [(ngModel)]="model.telephoneNumber" required placeholder="Telefoonnummer"  />
-    </div>
-    
-    <!--werk_naam-->
-    <h3>Werkgegevens</h3>
-    <div class="form-group">
-      <label for="workName"></label>
-      <input type="text" class="form-control" name="workName" [(ngModel)]="model.workName" required placeholder="Bedrijfsnaam" />
+
+      <input class="form-control" #telephoneNumberVar="ngModel" name="telephoneNumber" minlength="10" maxlength="10" required [(ngModel)]="model.telephoneNumber"
+        placeholder="Telefoonnummer">
+
+      <div *ngIf="telephoneNumberVar.errors && (telephoneNumberVar.dirty || telephoneNumberVar.touched)" class="alert alert-danger">
+
+        <div *ngIf="telephoneNumberVar.errors.required">
+          Telefoonnummer is verplicht
+        </div>
+        <div *ngIf="telephoneNumberVar.errors.minlength">
+          Telefoonnummer moet minstens 4 cijfers bevatten
+        </div>
+        <div *ngIf="telephoneNumberVar.errors.forbiddenName">
+          Streetname cannot be Bob.
+        </div>
+
+      </div>
+
     </div>
 
+    <h3>Werkgegevens</h3>
+    <!--werk_naam-->
+    <div class="form-group">
+      <label for="workName"></label>
+
+      <input class="form-control" #workNameVar="ngModel" name="workName" minlength="4" [(ngModel)]="model.workName" placeholder="Bedrijfsnaam">
+
+      <div *ngIf="workNameVar.errors && (workNameVar.dirty || workNameVar.touched)" class="alert alert-danger">
+
+        <div *ngIf="workNameVar.errors.required">
+          Telefoonnummer is verplicht
+        </div>
+        <div *ngIf="workNameVar.errors.minlength">
+          Telefoonnummer moet minstens 10 cijfers bevatten
+        </div>
+        <div *ngIf="workNameVar.errors.forbiddenName">
+          Streetname cannot be Bob.
+        </div>
+
+      </div>
+
+    </div>
     <!--werk_nummer-->
     <div class="form-group">
       <label for="workNumber"></label>
-      <input type="text" class="form-control" name="workNumber" [(ngModel)]="model.workNumber" required placeholder="Bedrijfstelefoonnummer" />
+
+      <input class="form-control" #workNumberVar="ngModel" name="workNumber" minlength="4" [(ngModel)]="model.workNumber" placeholder="Bedrijfsnummer">
+
+      <div *ngIf="workNumberVar.errors && (workNumberVar.dirty || workNumberVar.touched)" class="alert alert-danger">
+
+        <div *ngIf="workNumberVar.errors.required">
+          Telefoonnummer is verplicht
+        </div>
+        <div *ngIf="workNumberVar.errors.minlength">
+          Telefoonnummer moet minstens 4 cijfers bevatten
+        </div>
+        <div *ngIf="workNumberVar.errors.forbiddenName">
+          Streetname cannot be Bob.
+        </div>
+
+      </div>
+
     </div>
+
     <button type="submit" name="profile_edit_submit">Edit</button>
   </form>
 </div>
