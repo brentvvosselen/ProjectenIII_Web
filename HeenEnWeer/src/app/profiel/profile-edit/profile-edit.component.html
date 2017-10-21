@@ -100,15 +100,15 @@
       <label for="telephoneNumber"></label>
 
       <input class="form-control" #telephoneNumberVar="ngModel" name="telephoneNumber" minlength="10" maxlength="10" required [(ngModel)]="model.telephoneNumber"
-        placeholder="Telefoonnummer">
+        placeholder="Gsm nummer">
 
       <div *ngIf="telephoneNumberVar.errors && (telephoneNumberVar.dirty || telephoneNumberVar.touched)" class="alert alert-danger">
 
         <div *ngIf="telephoneNumberVar.errors.required">
-          Telefoonnummer is verplicht
+          Gsm nummer is verplicht
         </div>
         <div *ngIf="telephoneNumberVar.errors.minlength">
-          Telefoonnummer moet minstens 4 cijfers bevatten
+          Gsm nummer moet minstens 12 cijfers bevatten
         </div>
         <div *ngIf="telephoneNumberVar.errors.forbiddenName">
           Streetname cannot be Bob.
@@ -162,7 +162,7 @@
 
     </div>
 
-    <button type="submit" name="profile_edit_submit">Edit</button>
+    <button type="submit" name="profile_edit_submit" [disabled]="!profielForm.valid">Edit</button>
   </form>
 </div>
 

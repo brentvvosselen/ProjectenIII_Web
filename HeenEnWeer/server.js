@@ -291,8 +291,6 @@ app.post("/api/parents/edit", function(req,res){
       handleError(res, "Updating failed", "Updating failed. Could not find parent.");
     }else{
 
-      console.log(parent);
-      
       parent.firstname = req.body.firstname;
       parent.lastname = req.body.lastname;
       parent.addressStreet = req.body.addressStreet;
@@ -304,11 +302,13 @@ app.post("/api/parents/edit", function(req,res){
       parent.workNumber = req.body.workNumber;
       parent.children = req.body.children;
 
-      console.log(parent);
+      //console.log(parent);
+      console.log("telefoonnummer"+parent.telephoneNumber);
 
       parent.save(function(err){
         if (err) throw err;
         console.log("PARENT SAVED");
+        console.log(parent.telephoneNumber);
         res.json(parent);
       });
     }

@@ -22,6 +22,11 @@
                     <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required placeholder="Password" />
                     <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
             </div>
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="model.confirmPassword" #confirmPassword="ngModel" required placeholder="Confirm Password" />
+                <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+            </div>
             <input (click)="register(email.value, password.value)" type="submit" name="signup_submit" value="Sign me up"  />
         </div>
     

@@ -4,6 +4,7 @@ import { Parent } from '../../../app/models/parent';
 import { User } from '../../models/user';
 import { ParentService } from '../../services/parent.service';
 import { AuthenticationService } from '../../services/authentication-service.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class ProfileEditComponent implements OnInit {
   profielForm : FormGroup;
   //addressStreet = new FormControl();
 
-  constructor(private fb: FormBuilder, private authenticationService: AuthenticationService, private parentService: ParentService) {
+  constructor(private fb: FormBuilder, private authenticationService: AuthenticationService, private parentService: ParentService,private router: Router) {
     this.user = authenticationService.getUser();
     //this.createForm();
   }
@@ -59,9 +60,13 @@ export class ProfileEditComponent implements OnInit {
     updatedUser['workName'] = this.model.workName;
     updatedUser['workNumber'] = this.model.workNumber;
 
+    console.log(updatedUser["telephoneNumber"]);
+
     this.parentService.update(updatedUser).subscribe(data => {
       this.submitted = true;
     });
+
+    this.router.navigate(["/profiel"]);
 
   }
 
