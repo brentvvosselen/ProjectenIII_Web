@@ -1,4 +1,24 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+
+body{
+  background: var(--color-mid-blue);
+  background: -webkit-linear-gradient(left, var(--bg-start-blue), var(--bg-end-blue));
+  background: -o-linear-gradient(right, var(--bg-start-blue), var(--bg-end-blue));
+  background: -moz-linear-gradient(right, var(--bg-start-blue), var(--bg-end-blue));
+  background: linear-gradient(to right, var(--bg-start-blue), var(--bg-end-blue));
+}
+
+/*undo wrapper css*/
+div#wrapper{
+padding: 0;
+}
+a#menu-toggle{
+display: none;
+}
+
+
+
+
+/*@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
 *:focus {
   outline: none;
 }
@@ -163,4 +183,4 @@ button.social-signin.twitter {
 
 button.social-signin.google {
   background: #DD4B39;
-}
+}*/

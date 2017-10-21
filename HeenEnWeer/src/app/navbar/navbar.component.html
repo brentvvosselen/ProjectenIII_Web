@@ -8,10 +8,10 @@
                     </a>
                 </li>
                 <li>
-                    <a routerLink="/home" routerLinkActive="active" class="current">Home</a>
+                    <div *ngIf="router.url === '/'" class="current bg-blue-gradient"></div><a routerLink="/home" routerLinkActive="active" >Home</a>
                 </li>
                 <li>
-                    <a routerLink="/profiel" routerLinkActive="active">Profiel</a>
+                    <span *ngIf="router.url === '/profiel'" class="current bg-blue-gradient"></span><a routerLink="/profiel" routerLinkActive="active">Profiel</a>
                 </li>
                 <li *ngIf="userIsLoggedIn">
                   <a href="#" (click)="logout($event)">Logout</a>

@@ -1,10 +1,128 @@
-<div id="login-box">
+<h1 class="title">OOGAPPL.</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="command">
+      <p class="command-content">Create a new account.</p>
+    </div>
+  </div>
+</div>
+
+<div class="container form-container">
+  <div class="row">
+    <div class="form-title">
+      <h3>Persoonlijke info</h3>
+    </div>
     <form (ngSubmit)="register()" [formGroup]="registerForm">
+      <div class="card card-form">
+        <div class="form-item">
+          <input id="firstname" class="form-control" type="text" placeholder="Voornaam" formControlName="firstname" />
+          <div *ngIf="(registerForm.get('firstname').touched || registerForm.get('firstname').dirty) && registerForm.get('firstname').errors"
+            class="alert alert-danger">
+            <div *ngIf="registerForm.get('firstname').errors.required">
+              Firstname is verplicht
+            </div>
+            <div *ngIf="registerForm.get('firstname').errors.minlength">
+              Moet minstens 3 lang zijn
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <input id="lastname" class="form-control" type="text" placeholder="Achternaam" formControlName="lastname" />
+
+          <div *ngIf="(registerForm.get('lastname').touched || registerForm.get('lastname').dirty) && registerForm.get('lastname').errors"
+            class="alert alert-danger">
+            <div *ngIf="registerForm.get('lastname').errors.required">
+              Lastname is verplicht
+            </div>
+            <div *ngIf="registerForm.get('lastname').errors.minlength">
+              Moet minstens 3 lang zijn
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <input id="email" class="form-control" type="email" placeholder="Email" formControlName="email" />
+          <div *ngIf="(registerForm.get('email').touched || registerForm.get('email').dirty) && registerForm.get('email').errors" class="alert alert-danger">
+            <div *ngIf="registerForm.get('email').errors.required">
+              Email is verplicht
+            </div>
+            <div *ngIf="registerForm.get('email').errors.minlength">
+              Moet minstens 3 lang zijn
+            </div>
+            <div *ngIf="registerForm.get('email').errors.pattern">
+              Geef een geldig email in
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+      <div class="form-title">
+        <h3>Beveiligingsinfo</h3>
+      </div>
+
+      <div class="card card-form">
+        <div class="form-item">
+          <input id="password" class="form-control" type="password" placeholder="Paswoord" formControlName="password" />
+
+          <div *ngIf="(registerForm.get('password').touched || registerForm.get('password').dirty) && registerForm.get('password').errors"
+            class="alert alert-danger">
+            <div *ngIf="registerForm.get('password').errors.required">
+              Password is verplicht
+            </div>
+            <div *ngIf="registerForm.get('email').errors.minlength">
+              Moet minstens 3 lang zijn
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <input id="passwordConfirm" class="form-control" type="password" placeholder="Herhaal Paswoord" formControlName="passwordConfirm" />
+
+          <div *ngIf="(registerForm.get('passwordConfirm').touched || registerForm.get('passwordConfirm').dirty) && registerForm.get('passwordConfirm').errors"
+            class="alert alert-danger">
+            <div *ngIf="registerForm.get('passwordConfirm').errors.required">
+              Herhaal Passwoord is verplicht
+            </div>
+            <div *ngIf="registerForm.get('passwordConfirm').errors.minlength">
+              Moet minstens 3 lang zijn
+            </div>
+            <div *ngIf="registerForm.get('passwordConfirm').errors.matchOther">
+              Dylan is een dikke kuthomo
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-lg">
+        <input type="submit" class="form-control" value="registreer" name="signup_submit" [disabled]="!registerForm.valid">
+      </div>
+
+      <div class="center mt-1">
+        <a [routerLink]="['/login']" class="btn-else">Cancel</a>
+      </div>
+      
+
+    </form>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- <div id="login-box">
+      <form (ngSubmit)="register()" [formGroup]="registerForm">
         <fieldset>
           <div class="left">
             <div class="form-group">
-              <label for="email" >Email</label>
-              <input id="email" type="text" placeholder="Email" formControlName="email"/>
+              <label for="email">Email</label>
+              <input id="email" type="text" placeholder="Email" formControlName="email" />
 
               <div *ngIf="(registerForm.get('email').touched || registerForm.get('email').dirty) && registerForm.get('email').errors" class="alert alert-danger">
                 <div *ngIf="registerForm.get('email').errors.required">
@@ -18,10 +136,11 @@
                 </div>
               </div>
 
-              <label for="firstname" >Firstname</label>
-              <input id="firstname" type="text" placeholder="Firstname" formControlName="firstname"/>
+              <label for="firstname">Firstname</label>
+              <input id="firstname" type="text" placeholder="Firstname" formControlName="firstname" />
 
-              <div *ngIf="(registerForm.get('firstname').touched || registerForm.get('firstname').dirty) && registerForm.get('firstname').errors" class="alert alert-danger">
+              <div *ngIf="(registerForm.get('firstname').touched || registerForm.get('firstname').dirty) && registerForm.get('firstname').errors"
+                class="alert alert-danger">
                 <div *ngIf="registerForm.get('firstname').errors.required">
                   Firstname is verplicht
                 </div>
@@ -30,10 +149,11 @@
                 </div>
               </div>
 
-              <label for="lastname" >Lastname</label>
-              <input id="lastname" type="text" placeholder="Lastname" formControlName="lastname"/>
+              <label for="lastname">Lastname</label>
+              <input id="lastname" type="text" placeholder="Lastname" formControlName="lastname" />
 
-              <div *ngIf="(registerForm.get('lastname').touched || registerForm.get('lastname').dirty) && registerForm.get('lastname').errors" class="alert alert-danger">
+              <div *ngIf="(registerForm.get('lastname').touched || registerForm.get('lastname').dirty) && registerForm.get('lastname').errors"
+                class="alert alert-danger">
                 <div *ngIf="registerForm.get('lastname').errors.required">
                   Lastname is verplicht
                 </div>
@@ -42,10 +162,11 @@
                 </div>
               </div>
 
-              <label for="password" >Password</label>
-              <input id="password" type="text" placeholder="Password" formControlName="password"/>
+              <label for="password">Password</label>
+              <input id="password" type="text" placeholder="Password" formControlName="password" />
 
-              <div *ngIf="(registerForm.get('password').touched || registerForm.get('password').dirty) && registerForm.get('password').errors" class="alert alert-danger">
+              <div *ngIf="(registerForm.get('password').touched || registerForm.get('password').dirty) && registerForm.get('password').errors"
+                class="alert alert-danger">
                 <div *ngIf="registerForm.get('password').errors.required">
                   Password is verplicht
                 </div>
@@ -54,10 +175,11 @@
                 </div>
               </div>
 
-              <label for="passwordConfirm" >Confirm password</label>
-              <input id="passwordConfirm" type="text" placeholder="Confirm Password" formControlName="passwordConfirm"/>
+              <label for="passwordConfirm">Confirm password</label>
+              <input id="passwordConfirm" type="text" placeholder="Confirm Password" formControlName="passwordConfirm" />
 
-              <div *ngIf="(registerForm.get('passwordConfirm').touched || registerForm.get('passwordConfirm').dirty) && registerForm.get('passwordConfirm').errors" class="alert alert-danger">
+              <div *ngIf="(registerForm.get('passwordConfirm').touched || registerForm.get('passwordConfirm').dirty) && registerForm.get('passwordConfirm').errors"
+                class="alert alert-danger">
                 <div *ngIf="registerForm.get('passwordConfirm').errors.required">
                   Confirm Password is verplicht
                 </div>
@@ -75,15 +197,17 @@
         </fieldset>
 
         <div class="right">
-            <span class="loginwith">Sign in with<br />social network</span>
+          <span class="loginwith">Sign in with
+            <br />social network</span>
 
-            <button class="social-signin facebook">Log in with facebook</button>
-            <button class="social-signin twitter">Log in with Twitter</button>
-            <button class="social-signin google">Log in with Google+</button>
-            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-            <a [routerLink]="['/login']" class="btn btn-link">Cancel</a>
+          <button class="social-signin facebook">Log in with facebook</button>
+          <button class="social-signin twitter">Log in with Twitter</button>
+          <button class="social-signin google">Log in with Google+</button>
+          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+          />
+          <a [routerLink]="['/login']" class="btn btn-link">Cancel</a>
         </div>
 
         <div class="or">OR</div>
-    </form>
-</div>
+      </form>
+    </div>-->
