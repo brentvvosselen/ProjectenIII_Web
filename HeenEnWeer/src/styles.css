@@ -20,6 +20,14 @@ body {
 
 }
 
+.bg-blue-gradient{
+  background: var(--color-mid-blue);
+  background: -webkit-linear-gradient(left, var(--bg-start-blue), var(--bg-end-blue));
+  background: -o-linear-gradient(right, var(--bg-start-blue), var(--bg-end-blue));
+  background: -moz-linear-gradient(right, var(--bg-start-blue), var(--bg-end-blue));
+  background: linear-gradient(to right, var(--bg-start-blue), var(--bg-end-blue));
+}
+
 .title {
     color: white;
     font-weight: 100;
@@ -314,6 +322,12 @@ body {
 .sidebar-nav>.sidebar-brand a:hover {
     color: #fff;
     background: none;
+}
+
+.current{
+  width: 10px;
+  height: 3.858em;
+  float: left;
 }
 @media(min-width:768px) {
     #wrapper {
