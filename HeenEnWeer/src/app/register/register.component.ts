@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgModel, Validators, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { matchOtherValidator } from './match-other-validators';
+import { ViewEncapsulation } from '@angular/core';
 
 import { UserService } from '../../app/services/user-service.service';
 
 @Component({
     moduleId: module.id,
     templateUrl: 'register.component.html',
-    styleUrls: ['./register.component.css']
+    styleUrls: ['./register.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 
 export class RegisterComponent implements OnInit {
