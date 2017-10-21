@@ -32,6 +32,13 @@ export class RegisterComponent implements OnInit {
     register() {
         this.loading = true;
 
+        this.model = {
+          password: this.registerForm.get('password').value,
+          firstName: this.registerForm.get('firstname').value,
+          lastName: this.registerForm.get('lastname').value,
+          email: this.registerForm.get('email').value
+        };
+
         this.userService.create(this.model).subscribe(data => {
           this.router.navigate(['/login']);
         }, error => {

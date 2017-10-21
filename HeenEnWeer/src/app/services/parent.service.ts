@@ -29,7 +29,7 @@ export class ParentService {
     }
 
     getChildren(email: string){
-        return this.http.get('http://127.0.0.1:5000/api/children/' + email, this.jwt()).map((response: Response) => response.json());        
+        return this.http.get('http://127.0.0.1:5000/api/children/' + email, this.jwt()).map((response: Response) => response.json());
     }
 
     requestSecretRoute(){
