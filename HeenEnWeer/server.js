@@ -14,6 +14,7 @@ var Users = require('./server/app/models/user.js');
 var Parents = require('./server/app/models/parent.js');
 var Group = require('./server/app/models/group.js');
 var Child = require('./server/app/models/child.js');
+var Invitee = require('./server/app/models/invitee.js');
 
 var hash = require('password-hash');
 var passport	= require('passport');
@@ -313,6 +314,45 @@ app.post("/api/parents/edit", function(req,res){
       });
     }
     });
+});
+
+
+//setup
+app.post("/api/setup", function(req,res){
+  Parents.findOne({
+    email: req.body.email
+  }, function(err,parent){
+    if(err){
+      handleError(res,err.message,"Could not find parent");
+    }else{
+      var currentType = req.body.currentType;
+      if(currentType != "F" && currentType != "M"){
+        handleError(res, "Could not update parent", "Usertype does not exist. must be 'F' or 'M'", 400);
+      }
+      parent.type = currentType;
+     
+      var invitee = new Invitee({
+        email: req.body.otherEmail,
+        firstname: req.body.otherFirstname,
+        lastname: req.body.otherLastname,
+        //linken aan groep van de huidige parent
+        key: "AAAAA"
+      });
+
+      parent.save(function(err){
+        if(err)
+        handleError(res,err.message,"Could not update parent");
+        console.log("PARENT SAVED");
+      });
+
+      invitee.save(function(err){
+        if(err)
+        handleError(res,err.message,"Could not invite other parent");
+        console.log("INVITEE ADDED");
+      });
+      res.json("SETUP COMPLETE");
+    }
+  });
 });
 
 app.get("/api/parent/:id", function(req, res) {
