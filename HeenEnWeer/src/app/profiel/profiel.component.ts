@@ -19,7 +19,6 @@ export class ProfielComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService,private parentService: ParentService) {
     this.user = authenticationService.getUser();
-
   }
 
   ngOnInit() {
@@ -34,10 +33,7 @@ export class ProfielComponent implements OnInit {
   private getParentFromUserEmail(email: string){
     this.parentService.getByEmail(email).map(
       (response) => this.currentUser = response).subscribe(data => {
-
+        console.log(data);
       });
   }
-
-
-
 }

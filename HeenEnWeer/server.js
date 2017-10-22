@@ -9,20 +9,30 @@ var ObjectID = mongodb.ObjectID;
 var mongoose = require('mongoose');
 var jwt = require('jwt-simple');
 var morgan = require("morgan");
+var hash = require('password-hash');
+var passport	= require('passport');
+var localStorage = require('node-localstorage').localStorage;
+
 var config = require('./server/config.js');
 var Users = require('./server/app/models/user.js');
 var Parents = require('./server/app/models/parent.js');
 var Group = require('./server/app/models/group.js');
 var Child = require('./server/app/models/child.js');
 
-var hash = require('password-hash');
-var passport	= require('passport');
-var localStorage = require('node-localstorage').localStorage;
-
 var PARENTS_COLLECTION = "parents";
 var USERS_COLLECTION = "users";
 var CHILDREN_COLLECTION = "children";
 var GROUP_COLLECTION = "groups";
+
+var nodemailer = require('nodemailer');
+var transport = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'oogappl@gmail.com',
+      pass: 'ABC111111'
+    },
+    debug: true,
+  });
 
 var app = express();
 app.use(morgan("dev"));
@@ -174,7 +184,7 @@ app.post('/api/signup', function(req, res) {
       lastname: req.body.lastName,
       group: newGroup
     });
-    
+
     console.log(newParent);
     // save the user
     newUser.save(function(err) {
@@ -191,7 +201,7 @@ app.post('/api/signup', function(req, res) {
       } else {
         console.log('Parent aangemaakt');
       }
-        console.log('parent aangemaakt');
+      console.log('parent aangemaakt');
     });
 
     newGroup.save(function(err) {
@@ -274,7 +284,7 @@ app.get("/api/parents/:email",function(req,res){
     }
     res.json(user);
   }).populate({
-    path: 'group', 
+    path: 'group',
     populate: { path: 'children' }
   });
 });
@@ -312,7 +322,7 @@ app.post("/api/parents/edit", function(req,res){
         res.json(parent);
       });
     }
-    });
+  });
 });
 
 app.get("/api/parent/:id", function(req, res) {
@@ -328,4 +338,21 @@ app.delete("/api/parent/:id", function(req, res) {
 //VOORBEELD VOOR JWT AUTHENTICATED ROUTE
 app.get("/api/secret", passport.authenticate('jwt', { session: false }), function(req, res){
   res.json("Success! You can not see this without a token");
+});
+
+app.post('/sendMail', function (req, res) {
+  var mailOptions = {
+    from: 'oogappl@gmail.com',
+    to: req.body.email,
+    subject: 'test',
+    text: 'test'
+  };
+
+  transport.sendMail(mailOptions, function (err, info) {
+    if (err) {
+      console.log(err);
+    }
+  });
+
+  res.send("Email has been send");
 });
