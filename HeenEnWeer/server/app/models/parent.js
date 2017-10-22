@@ -16,6 +16,11 @@ var ParentSchema = new Schema({
     type: String,
     required: true
   },
+  type:{
+    type: String,
+    enum: ["F","M"],
+    required: false
+  },
   addressStreet: {
     type: String,
     required: false
