@@ -1,3 +1,80 @@
-<p>
-  {{key}}
-</p>
+<h1 class="title">OOGAPPL.</h1>
+<div class="container">
+  <div class="row">
+    <div class="command">
+      <p class="command-content">You were invited, create your account.</p>
+    </div>
+  </div>
+</div>
+<div class="container form-container">
+  <div class="row">
+    <div class="form-title">
+      <h3>Persoonlijke info</h3>
+    </div>
+    <form (ngSubmit)="register()" #registerInviteeForm="ngForm">
+      <div class="card card-form">
+        <div class="form-item">
+          <input type="email" class="form-control" placeholder="Email" #emailVar="ngModel" name="email" required [(ngModel)]="invitee.email">
+          <div *ngIf="emailVar.errors && (emailVar.dirty || emailVar.touched)" class="alert alert-danger">
+            <div *ngIf="emailVar.errors.required">
+              Email is verplicht!
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <input type="text" class="form-control" placeholder="Voornaam" #firstnameVar="ngModel" name="firstname" required [(ngModel)]="invitee.firstname">
+          <div *ngIf="firstnameVar.errors && (firstnameVar.dirty || firstnameVar.touched)" class="alert alert-danger">
+            <div *ngIf="firstnameVar.errors.required">
+              Voornaam is verplicht!
+            </div>
+          </div>
+        </div>
+          <div class="form-item">
+            <input type="text" class="form-control" placeholder="Achternaam" #lastnameVar="ngModel" name="lastname" required [(ngModel)]="invitee.lastname">
+            <div *ngIf="lastnameVar.errors && (lastnameVar.dirty || lastnameVar.touched)" class="alert alert-danger">
+              <div *ngIf="lastnameVar.errors.required">
+                Achternaam is verplicht!
+              </div>
+            </div>
+          </div>
+         <!--hier komt select voor geslacht-->
+        
+      </div>
+
+      <div class="form-title">
+        <h3>Beveiligingsinfo</h3>
+      </div>
+      <div class="card card-form">
+        <div class="form-item">
+          <input class="form-control" type="password" placeholder="Paswoord" #passwordVar="ngModel" name="password" minlength="3" required
+            [(ngModel)]="model.password" />
+          <div *ngIf="passwordVar.errors && (passwordVar.dirty || passwordVar.touched)" class="alert alert-danger">
+            <div *ngIf="passwordVar.errors.required">
+              Paswoord is verplicht!
+            </div>
+            <div *ngIf="passwordVar.errors.minlength">
+              Paswoord moet minstens 3 karakters lang zijn!
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <input class="form-control" type="password" placeholder="Herhaal Paswoord" #passwordconfirmVar="ngModel" name="passwordConfirm"
+            minlength="3" required [(ngModel)]="model.password" />
+          <div *ngIf="passwordconfirmVar.errors && (passwordconfirmVar.dirty || passwordconfirmVar.touched)" class="alert alert-danger">
+            <div *ngIf="passwordconfirmVar.errors.required">
+              Paswoord is verplicht!
+            </div>
+            <div *ngIf="passwordconfirmVar.errors.minlength">
+              Paswoord moet minstens 3 karakters lang zijn!
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-lg">
+        <input type="submit" class="form-control" value="registreer" name="invite_register_submit" [disabled]="!registerInviteeForm.valid">
+
+      </div>
+    </form>
+  </div>
+</div>

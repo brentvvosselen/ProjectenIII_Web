@@ -1,0 +1,7 @@
+/*undo wrapper css*/
+div#wrapper{
+    padding: 0;
+  }
+  a#menu-toggle{
+    display: none;
+  }

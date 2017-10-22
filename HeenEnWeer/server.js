@@ -327,12 +327,13 @@ app.post("/api/setup", function(req,res){
     if(err){
       handleError(res,err.message,"Could not find parent");
     }else{
+      //type parent instellen
       var currentType = req.body.currentType;
       if(currentType != "F" && currentType != "M"){
         handleError(res, "Could not update parent", "Usertype does not exist. must be 'F' or 'M'", 400);
       }
       parent.type = currentType;
-      console.log(req.body);
+      //aanmaken uitgenodigde
       var invitee = new Invitee({
         email: req.body.otherEmail,
         firstname: req.body.otherFirstname,
@@ -360,7 +361,7 @@ app.post("/api/setup", function(req,res){
             handleErr(res,err.message,"Could not save children");
             console.log("CHILDREN SAVED");
           }
-        })
+        });
         children.push(tempChild);
       });
 
@@ -398,6 +399,19 @@ app.post("/api/setup", function(req,res){
       sendMail(invitee);
 
       res.json("SETUP COMPLETE");
+    }
+  });
+});
+
+//vraag invitee op adhv key
+app.get("/api/invitee/:key",function(req,res){
+  Invitee.findOne({
+    key: req.params.key
+  },function(err,invitee){
+    if(err){
+      handleError(res,err.message,"Could not find invitee");
+    }else{
+      res.json(invitee);
     }
   });
 });

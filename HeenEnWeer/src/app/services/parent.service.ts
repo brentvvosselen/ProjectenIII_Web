@@ -36,6 +36,10 @@ export class ParentService {
         return this.http.get("http://127.0.0.1:5000/api/secret", this.jwt()).map((response: Response) => response.json());
     }
 
+    getInvitee(key: string){
+        return this.http.get('http://127.0.0.1:5000/api/invitee/' + key).map((response: Response) => response.json());
+    }
+
     // private helper methods
 
     private jwt() {
