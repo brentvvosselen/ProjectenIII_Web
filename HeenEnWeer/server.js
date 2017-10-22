@@ -161,17 +161,9 @@ app.post('/api/signup', function(req, res) {
   if (!req.body.email || !req.body.password) {
     handleError(res, 'No email in body', 'Password or Email not valid', 400);
   } else {
-    if(!req.body.key){
-      var newGroup = new Group({
-        children: [],
-      })
-    } else {
-      // zoek groep op key
-      // ver newGroup = ...
-      var newGroup = new Group({
-        children: [],
-      })
-    }
+    var newGroup = new Group({
+      children: [],
+    });
 
     //create a new user
     var newUser = new Users({
@@ -346,7 +338,7 @@ app.post("/api/setup", function(req,res){
         firstname: req.body.otherFirstname,
         lastname: req.body.otherLastname,
         //linken aan groep van de huidige parent
-        key: "AAAAA"
+        key: parent.group
       });
 
       parent.save(function(err){
@@ -360,6 +352,9 @@ app.post("/api/setup", function(req,res){
         handleError(res,err.message,"Could not invite other parent");
         console.log("INVITEE ADDED");
       });
+
+      sendMail(invitee);
+
       res.json("SETUP COMPLETE");
     }
   });
@@ -380,12 +375,18 @@ app.get("/api/secret", passport.authenticate('jwt', { session: false }), functio
   res.json("Success! You can not see this without a token");
 });
 
-app.post('/sendMail', function (req, res) {
+function sendMail(invitee){
+  var text = "Hallo, beste " + invitee.firstname + " " + invitee.lastname +
+  " U werd uitgenodigd om samen te werken via OOGAPPL.";
+  var htmlString = '<h1>Hallo</h1><h4>Beste ' + invitee.firstname +
+  " " + invitee.lastname + '</h4><p>U werd uitgenodigd om samen te werken via OOGAPPL.</p><a href="http://localhost:4200/register/invite/' 
+  + invitee.key +'">Klik hier om te beginnen.</a>';
   var mailOptions = {
     from: 'oogappl@gmail.com',
-    to: req.body.email,
-    subject: 'test',
-    text: 'test'
+    to: invitee.email,
+    subject: 'Uitnodiging tot OOGAPPL.',
+    text: text,
+    html: htmlString
   };
 
   transport.sendMail(mailOptions, function (err, info) {
@@ -394,5 +395,4 @@ app.post('/sendMail', function (req, res) {
     }
   });
 
-  res.send("Email has been send");
-});
+}

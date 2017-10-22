@@ -21,6 +21,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ProfileEditComponent } from './profiel/profile-edit/profile-edit.component';
 import { ChildInfoComponent } from './child-info/child-info.component';
 import { ChildComponent } from './child-info/child/child.component';
+import { InviteRegisterComponent } from './invite-register/invite-register.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ChildComponent } from './child-info/child/child.component';
     ProfileEditComponent,
     ChildInfoComponent,
     ChildComponent,
+    InviteRegisterComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -53,6 +55,7 @@ import { ChildComponent } from './child-info/child/child.component';
       { path: "profiel", component:ProfielComponent},
       { path: "profiel/edit", component:ProfileEditComponent},
       { path: "children", component:ChildInfoComponent},
+      { path: "register/invite/:key", component:InviteRegisterComponent},
       { path: "", component:HomeComponent, canActivate: [AuthGuard]},
       { path: "**", redirectTo: "" },
     ])
