@@ -2,6 +2,8 @@ import { Component, OnInit  } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication-service.service';
 import { User } from '../models/user';
+import { ParentService } from '../services/parent.service';
+import { Parent } from '../models/parent';
 
 @Component({
   selector: 'app-navbar',
@@ -11,9 +13,10 @@ import { User } from '../models/user';
 export class NavbarComponent implements OnInit {
   title = 'navbar';
   userIsLoggedIn: boolean;
-  user = new User();
+  user : User;
+  currentUser: Parent;
 
-  constructor(private authenticationService: AuthenticationService, private router: Router) {
+  constructor(private authenticationService: AuthenticationService, private router: Router, private parentService: ParentService) {
     authenticationService.userIsloggedIn.subscribe(isLoggedIn => {
       this.userIsLoggedIn = isLoggedIn;
       this.user = authenticationService.getUser();
@@ -24,6 +27,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authenticationService.getUser();
     this.userIsLoggedIn = this.user != undefined;
+    this.getParentFromUserEmail(this.user.email);
   }
 
 
@@ -35,5 +39,13 @@ export class NavbarComponent implements OnInit {
         this.router.navigateByUrl('/login');
       }
     });
+  }
+
+   //roept api call op via parentservice
+   private getParentFromUserEmail(email: string){
+    this.parentService.getByEmail(email).map(
+      (response) => this.currentUser = response).subscribe(data => {
+
+      });
   }
 }
