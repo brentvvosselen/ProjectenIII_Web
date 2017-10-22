@@ -330,7 +330,7 @@ app.post("/api/setup", function(req,res){
         handleError(res, "Could not update parent", "Usertype does not exist. must be 'F' or 'M'", 400);
       }
       parent.type = currentType;
-     
+      console.log(req.body);
       var invitee = new Invitee({
         email: req.body.otherEmail,
         firstname: req.body.otherFirstname,
