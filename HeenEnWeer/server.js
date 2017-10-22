@@ -341,6 +341,47 @@ app.post("/api/setup", function(req,res){
         key: parent.group
       });
 
+      //put children in an array
+      var children = [];
+      req.body.children.forEach(function(child){
+        //if the gender is not F or M give an error
+        if(child.gender != "F" && child.gender != "M"){
+          handleError(res, "Could not update parent", "Usertype does not exist. must be 'F' or 'M'", 400);
+        }
+        var tempChild = new Child({
+          firstname: child.firstname,
+          lastname: child.lastname,
+          gender: child.gender,
+          age: child.age
+        })
+        //save each child to db
+        tempChild.save(function(err){
+          if(err){
+            handleErr(res,err.message,"Could not save children");
+            console.log("CHILDREN SAVED");
+          }
+        })
+        children.push(tempChild);
+      });
+
+      //find group of parent and add children to the group
+      Group.findOne({
+        _id: parent.group
+      },function(err,group){
+        if(err){
+          handleErr(res,err.message,"Could not find group");
+        }else{
+          //there are no children in db before setup
+          group.children = children;
+          //save the group to the db
+          group.save(function(err){
+            if(err)
+            handleError(res,err.message,"Could not add children to group");
+            console.log("CHILDREN ADDED");
+          });
+        }
+      });
+
       parent.save(function(err){
         if(err)
         handleError(res,err.message,"Could not update parent");
@@ -353,6 +394,7 @@ app.post("/api/setup", function(req,res){
         console.log("INVITEE ADDED");
       });
 
+      //send a mail to the invitee
       sendMail(invitee);
 
       res.json("SETUP COMPLETE");

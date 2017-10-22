@@ -10,6 +10,15 @@ var ChildSchema = new Schema({
         type: String,
         required: true
       },
+      gender:{
+        type: String,
+        enum: ["M","F"],
+        required: true
+      },
+      age:{
+        type: Number,
+        required:true
+      },
       info: String
   });
 
