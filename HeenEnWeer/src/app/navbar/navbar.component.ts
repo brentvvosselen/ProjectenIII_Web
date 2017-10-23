@@ -37,6 +37,8 @@ export class NavbarComponent implements OnInit {
     this.authenticationService.logout().then(success => {
       if (success) {
         this.router.navigateByUrl('/login');
+        window.location.reload();
+        
       }
     });
   }

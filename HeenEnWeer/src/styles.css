@@ -12,7 +12,7 @@ body{
     
 }
 
-@media(min-width: 768px){
+/*@media(min-width: 768px){
   body{
     background: -webkit-linear-gradient(left, #00C6FF, #3E8DBC);
     background: -o-linear-gradient(right, #00C6FF, #3E8DBC);
@@ -20,7 +20,7 @@ body{
     background: linear-gradient(to right, #00C6FF, #3E8DBC);
   }
 }
-
+*/
 
 .bg-blue-gradient{
   background: var(--color-mid-blue);

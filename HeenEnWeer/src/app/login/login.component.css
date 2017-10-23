@@ -20,9 +20,9 @@ body{
 }
 
 /*undo wrapper css*/
-div#wrapper{
+#wrapper{
   padding: 0;
 }
-a#menu-toggle{
+#menu-toggle{
   display: none;
 }
