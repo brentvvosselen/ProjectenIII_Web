@@ -1,7 +1,6 @@
 <div>
   {{firstname}} <br/>
   {{lastname}} <br/>
-
   <div *ngFor="let i of infoNodes; let j = index">
     <label for="{{i.name}}">{{i.name}}</label>
     <input type="text" name="{{i.name}}" id="{{i.name}}" value="{{i.value}}" #value><br>
