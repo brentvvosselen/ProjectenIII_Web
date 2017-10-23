@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     // reset login status
     this.authenticationService.logout();
-
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
@@ -38,6 +37,7 @@ export class LoginComponent implements OnInit {
     
     this.authenticationService.login(this.model.email, this.model.password).subscribe(data => {
       this.router.navigate([this.returnUrl]);
+      window.location.reload();
     }, error => {
       this.error = "Combinatie email - paswoord is niet correct";
       this.loading = false;
