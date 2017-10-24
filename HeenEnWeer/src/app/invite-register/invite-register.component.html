@@ -14,7 +14,7 @@
     <form (ngSubmit)="register()" #registerInviteeForm="ngForm">
       <div class="card card-form">
         <div class="form-item">
-          <input type="email" class="form-control" placeholder="Email" #emailVar="ngModel" name="email" required [(ngModel)]="invitee.email">
+          <input type="email" class="form-control" placeholder="Email" #emailVar="ngModel" name="email" required [(ngModel)]="model.email">
           <div *ngIf="emailVar.errors && (emailVar.dirty || emailVar.touched)" class="alert alert-danger">
             <div *ngIf="emailVar.errors.required">
               Email is verplicht!
@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="form-item">
-          <input type="text" class="form-control" placeholder="Voornaam" #firstnameVar="ngModel" name="firstname" required [(ngModel)]="invitee.firstname">
+          <input type="text" class="form-control" placeholder="Voornaam" #firstnameVar="ngModel" name="firstname" required [(ngModel)]="model.firstname">
           <div *ngIf="firstnameVar.errors && (firstnameVar.dirty || firstnameVar.touched)" class="alert alert-danger">
             <div *ngIf="firstnameVar.errors.required">
               Voornaam is verplicht!
@@ -30,7 +30,7 @@
           </div>
         </div>
           <div class="form-item">
-            <input type="text" class="form-control" placeholder="Achternaam" #lastnameVar="ngModel" name="lastname" required [(ngModel)]="invitee.lastname">
+            <input type="text" class="form-control" placeholder="Achternaam" #lastnameVar="ngModel" name="lastname" required [(ngModel)]="model.lastname">
             <div *ngIf="lastnameVar.errors && (lastnameVar.dirty || lastnameVar.touched)" class="alert alert-danger">
               <div *ngIf="lastnameVar.errors.required">
                 Achternaam is verplicht!
@@ -38,7 +38,11 @@
             </div>
           </div>
          <!--hier komt select voor geslacht-->
-        
+        <div class="form-item">
+          <select class="form-control" #genderVar="ngModel" name="gender" [(ngModel)]="model.gender" required>
+            <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
+          </select>
+        </div>
       </div>
 
       <div class="form-title">
@@ -59,7 +63,7 @@
         </div>
         <div class="form-item">
           <input class="form-control" type="password" placeholder="Herhaal Paswoord" #passwordconfirmVar="ngModel" name="passwordConfirm"
-            minlength="3" required [(ngModel)]="model.password" />
+            minlength="3" required [(ngModel)]="model.passwordConfirm" />
           <div *ngIf="passwordconfirmVar.errors && (passwordconfirmVar.dirty || passwordconfirmVar.touched)" class="alert alert-danger">
             <div *ngIf="passwordconfirmVar.errors.required">
               Paswoord is verplicht!

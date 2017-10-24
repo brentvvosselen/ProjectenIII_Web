@@ -32,9 +32,14 @@ export class UserService {
     }
     */
 
+    addByInvite(user: Object){
+        return this.http.post('http://127.0.0.1:5000/api/invite', user ,this.jwt()).map((response: Response) => response.json());
+    }
+
     requestSecretRoute(){
         return this.http.get("http://127.0.0.1:5000/api/secret", this.jwt()).map((response: Response) => response.json());
     }
+
 
     // private helper methods
 

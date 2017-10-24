@@ -21,6 +21,12 @@ body{
   }
 }
 */
+.form-item select{
+    border: none;
+    outline: none;
+    box-shadow: none !important;
+    
+}
 
 .bg-blue-gradient{
   background: var(--color-mid-blue);
