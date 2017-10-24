@@ -15,7 +15,8 @@ var InviteeSchema = new Schema({
         required: true
     },
     key:{
-       type: String,
+        type: String,
+        unique: true,
         required: true 
     } 
 });

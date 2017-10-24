@@ -416,6 +416,52 @@ app.get("/api/invitee/:key",function(req,res){
   });
 });
 
+/**
+ * Eerst de Invitee verwijderen uit de databank,
+ * een nieuwe user aanmaken, met een nieuwe parent met alle values
+ * groep aan parent toevoegen
+ */
+app.post("/api/invite",function(req,res){
+  console.log(req.body);
+  //verwijder uitgenodigde
+  Invitee.findOneAndRemove({
+    key : req.body.key
+  },function(err,res){
+    if(err){
+      handleError(res,err.message,"Could not remove invitee");
+    }
+  });
+  //maak nieuwe user aan
+  var newUser = new Users({
+    email: req.body.email,
+    password: req.body.password
+  });
+  //maak nieuwe parent aan
+  var newParent = new Parents({
+    email: req.body.email,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    group: req.body.key,
+    type: req.body.gender
+  });
+  //save the user
+  newUser.save(function(err){
+    if(err){
+      handleError(res, "Email bestaat al", "Email already exists.");
+    }
+    console.log("user aangemaakt");
+  });
+  //save the parent
+  newParent.save(function(err){
+    if(err){
+      console.log("Nieuwe parent aanmaken niet gelukt");
+    }else{
+      console.log("Parent aangemaakt");
+    }
+  });
+  res.json("REGISTREERD");
+});
+
 app.get("/api/parent/:id", function(req, res) {
 
 });

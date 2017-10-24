@@ -6,6 +6,7 @@ var Group = require("./group")
 var ParentSchema = new Schema({
   email: {
     type: String,
+    unique: true,
     required: true
   },
   firstname: {
