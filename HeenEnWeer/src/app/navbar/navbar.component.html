@@ -22,6 +22,9 @@
                 <li>
                     <span *ngIf="router.url === '/profiel'" class="current bg-blue-gradient"></span><a routerLink="/profiel" routerLinkActive="active">Profiel</a>
                 </li>
+                <li>
+                  <span *ngIf="router.url === '/children'" class="current bg-blue-gradient"></span><a routerLink="/children" routerLinkActive="active">Kindinfo</a>
+              </li>
                 <li *ngIf="userIsLoggedIn">
                   <a href="#" (click)="logout($event)">Logout</a>
                 </li>

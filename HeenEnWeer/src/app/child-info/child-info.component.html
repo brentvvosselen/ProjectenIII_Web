@@ -1,6 +1,9 @@
-{{currentUser?.firstname}}
-{{currentUser?.lastname}}
+<h2>KINDINFO</h2>
 
+<a routerLink="/children/add" routerLinkActive="active"><i class="material-icons">add_circle</i></a>
+<div *ngIf="currentUser?.group == undefined">
+    <p>test</p>
+</div>
 <app-child *ngFor="let child of currentUser?.group.children"
     [model] = "child"
     [currentUser] = "currentUser">

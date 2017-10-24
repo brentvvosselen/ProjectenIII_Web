@@ -329,7 +329,7 @@ app.post("/api/setup", function(req,res){
     }else{
       //type parent instellen
       var currentType = req.body.currentType;
-      if(currentType != "F" && currentType != "M"){
+      if(currentType != "F" || currentType != "M"){
         handleError(res, "Could not update parent", "Usertype does not exist. must be 'F' or 'M'", 400);
       }
       parent.type = currentType;
