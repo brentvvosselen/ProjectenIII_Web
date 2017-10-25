@@ -325,8 +325,8 @@ app.post("/api/setup", function(req,res){
     }else{
       //type parent instellen
       var currentType = req.body.currentType;
-      if(currentType != "F" || currentType != "M"){
-        handleError(res, "Could not update parent", "Usertype does not exist. must be 'F' or 'M'", 400);
+      if(currentType != "F" && currentType != "M"){
+        handleError(res, "Could not update parent: F/M fout parent", "Usertype does not exist. must be 'F' or 'M'", 400);
       }
       parent.type = currentType;
       //aanmaken uitgenodigde
@@ -343,7 +343,7 @@ app.post("/api/setup", function(req,res){
       req.body.children.forEach(function(child){
         //if the gender is not F or M give an error
         if(child.gender != "F" && child.gender != "M"){
-          handleError(res, "Could not update parent", "Usertype does not exist. must be 'F' or 'M'", 400);
+          handleError(res, "Could not update parent: F/M fout child", "Usertype does not exist. must be 'F' or 'M'", 400);
         }
         var tempChild = new Child({
           firstname: child.firstname,
@@ -410,6 +410,52 @@ app.get("/api/invitee/:key",function(req,res){
       res.json(invitee);
     }
   });
+});
+
+/**
+ * Eerst de Invitee verwijderen uit de databank,
+ * een nieuwe user aanmaken, met een nieuwe parent met alle values
+ * groep aan parent toevoegen
+ */
+app.post("/api/invite",function(req,res){
+  console.log(req.body);
+  //verwijder uitgenodigde
+  Invitee.findOneAndRemove({
+    key : req.body.key
+  },function(err,res){
+    if(err){
+      handleError(res,err.message,"Could not remove invitee");
+    }
+  });
+  //maak nieuwe user aan
+  var newUser = new Users({
+    email: req.body.email,
+    password: req.body.password
+  });
+  //maak nieuwe parent aan
+  var newParent = new Parents({
+    email: req.body.email,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    group: req.body.key,
+    type: req.body.gender
+  });
+  //save the user
+  newUser.save(function(err){
+    if(err){
+      handleError(res, "Email bestaat al", "Email already exists.");
+    }
+    console.log("user aangemaakt");
+  });
+  //save the parent
+  newParent.save(function(err){
+    if(err){
+      console.log("Nieuwe parent aanmaken niet gelukt");
+    }else{
+      console.log("Parent aangemaakt");
+    }
+  });
+  res.json("REGISTREERD");
 });
 
 app.get("/api/parent/:id", function(req, res) {
