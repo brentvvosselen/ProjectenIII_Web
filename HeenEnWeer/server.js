@@ -170,7 +170,9 @@ app.post('/api/signup', function(req, res, next) {
     //create a new user for authentication
     var newUser = new Users({
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      firstname: req.body.firstName,
+      lastname: req.body.lastName
     });
 
     //create a new parent for saving all the info
@@ -228,6 +230,8 @@ app.post("/api/login", function(req,res){
           res.json({
             email: user.email,
             //password: user.password
+            firstname: user.firstname,
+            lastname: user.lastname,
             token: token
           });
           console.log("User logged in");

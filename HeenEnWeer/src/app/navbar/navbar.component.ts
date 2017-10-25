@@ -23,17 +23,13 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-
   ngOnInit(): void {
     this.user = this.authenticationService.getUser();
     this.userIsLoggedIn = this.user != undefined;
-    this.getParentFromUserEmail(this.user.email);
   }
-
 
   logout($event): void {
     $event.preventDefault();
-
     this.authenticationService.logout().then(success => {
       if (success) {
         this.router.navigateByUrl('/login');
@@ -41,13 +37,5 @@ export class NavbarComponent implements OnInit {
         
       }
     });
-  }
-
-   //roept api call op via parentservice
-   private getParentFromUserEmail(email: string){
-    this.parentService.getByEmail(email).map(
-      (response) => this.currentUser = response).subscribe(data => {
-
-      });
   }
 }
