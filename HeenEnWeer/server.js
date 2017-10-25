@@ -157,7 +157,7 @@ app.get('/setup', function(req, res){
   res.json(newParent);
 });
 
-app.post('/api/signup', function(req, res) {
+app.post('/api/signup', function(req, res, next) {
   if (!req.body.email || !req.body.password) {
     handleError(res, 'No email in body', 'Password or Email not valid', 400);
   } else {
@@ -178,33 +178,29 @@ app.post('/api/signup', function(req, res) {
       group: newGroup
     });
 
-    console.log(newParent);
-    // save the user
-    newUser.save(function(err) {
-      if (err) {
-        handleError(res, "Email bestaat al", "Email already exists.");
-      }
-      console.log("User aangemaakt");
-    });
-
-    //save the parent
-    newParent.save(function(err){
-      if (err){
-        console.log("Nieuwe parent aanmaken niet gelukt");
-      } else {
-        console.log('Parent aangemaakt');
-      }
-      console.log('parent aangemaakt');
-    });
-
-    newGroup.save(function(err) {
-      if (err) {
-        handleError(res, err.message, "Group already exists");
-        console.log("Groep bestaat al");
+    Users.findOne({email:req.body.email},function(err,user){
+      if(!user){
+        newUser.save(function(err) {
+          if (err) {
+            next(handleError(res, "Email bestaat al", "Email already exists."));     
+          }
+          newGroup.save(function(err) {
+            if (err) {
+              next(handleError(res, err.message, "Group already exists"));
+            }
+          });
+          //save the parent
+          newParent.save(function(err){
+            if (err){
+              next(handleError(res, err.message, "Group already exists"));
+            }
+          });
+          res.send(newUser);
+        });
+      }else{
+        next(handleError(res,"User already exists","User Already exists"));
       }
     });
-
-    res.json(newParent);
   }
 });
 
