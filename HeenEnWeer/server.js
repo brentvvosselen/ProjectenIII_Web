@@ -189,7 +189,7 @@ app.post('/api/signup', function(req, res, next) {
       if(!user){
         newUser.save(function(err) {
           if (err) {
-            next(handleError(res, "Email already exists."));     
+            next(handleError(res, "Email already exists."));
           }
           newGroup.save(function(err) {
             if (err) {
@@ -212,7 +212,7 @@ app.post('/api/signup', function(req, res, next) {
 });
 
 //login with in our app and get a token
-app.post("/api/login", function(req,res){
+app.post("/api/login", function(req,res, next){
   Users.findOne({
     email: req.body.email
   }, function(err, user) {
@@ -491,7 +491,7 @@ function sendMail(invitee){
   var text = "Hallo, beste " + invitee.firstname + " " + invitee.lastname +
   " U werd uitgenodigd om samen te werken via OOGAPPL.";
   var htmlString = '<h1>Hallo</h1><h4>Beste ' + invitee.firstname +
-  " " + invitee.lastname + '</h4><p>U werd uitgenodigd om samen te werken via OOGAPPL.</p><a href="http://localhost:4200/register/invite/' 
+  " " + invitee.lastname + '</h4><p>U werd uitgenodigd om samen te werken via OOGAPPL.</p><a href="http://localhost:4200/register/invite/'
   + invitee.key +'">Klik hier om te beginnen.</a>';
   var mailOptions = {
     from: 'oogappl@gmail.com',
