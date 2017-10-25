@@ -157,20 +157,23 @@ app.get('/setup', function(req, res){
   res.json(newParent);
 });
 
+//register with our app
 app.post('/api/signup', function(req, res, next) {
   if (!req.body.email || !req.body.password) {
     handleError(res, 'No email in body', 'Password or Email not valid', 400);
   } else {
+    //create a new group for sharing childinfo
     var newGroup = new Group({
       children: [],
     });
 
-    //create a new user
+    //create a new user for authentication
     var newUser = new Users({
       email: req.body.email,
       password: req.body.password
     });
-    //create a new parent
+
+    //create a new parent for saving all the info
     var newParent = new Parents({
       email: req.body.email,
       firstname: req.body.firstName,
@@ -178,58 +181,65 @@ app.post('/api/signup', function(req, res, next) {
       group: newGroup
     });
 
+    //check is user exists based on email
     Users.findOne({email:req.body.email},function(err,user){
+      //if user does not exist, save all the documents
       if(!user){
         newUser.save(function(err) {
           if (err) {
-            next(handleError(res, "Email bestaat al", "Email already exists."));     
+            next(handleError(res, "Email already exists."));     
           }
           newGroup.save(function(err) {
             if (err) {
-              next(handleError(res, err.message, "Group already exists"));
+              next(handleError(res, "Group already exists"));
             }
           });
           //save the parent
           newParent.save(function(err){
             if (err){
-              next(handleError(res, err.message, "Group already exists"));
+              next(handleError(res, "Group already exists"));
             }
           });
           res.send(newUser);
         });
       }else{
-        next(handleError(res,"User already exists","User Already exists"));
+        next(handleError(res,"User already exists"));
       }
     });
   }
 });
 
+//login with in our app and get a token
 app.post("/api/login", function(req,res){
   Users.findOne({
     email: req.body.email
   }, function(err, user) {
     if (err) throw err;
     if (!user) {
-      handleError(res, "User not found", "User doesn't exists", 400);
+      next(handleError(res, "User doesn't exists", 400));
     } else {
-      // check if password matches
+      // check if password matches with password in the database
       user.comparePassword(req.body.password, function (err, isMatch) {
         if (isMatch && !err) {
+          //issue a token if passwords match
           var token = jwt.encode(user, config.secret);
+
+          //response with token and email
           res.json({
             email: user.email,
-            password: user.password,
+            //password: user.password
             token: token
           });
           console.log("User logged in");
         } else {
-          handleError(res, "Wrond password", "Wrond password", 400);
+          handleError(res, "Wrong password", 400);
         }
       });
     }
   });
 });
 
+//get all the users
 app.get("/api/users", function(req,res){
   Users.find({}, function(err,users){
     res.json(users);
