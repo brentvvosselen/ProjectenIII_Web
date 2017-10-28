@@ -1,0 +1,44 @@
+<div class="container">
+  <h2 class="center">Kind Toevoegen</h2>
+  <br>
+  <form id="childAddForm" name="childForm" (ngSubmit)="addChild()" #f="ngForm">
+      <div class="card card-form">
+          <div class="form-item" [ngClass]="{ 'has-error': f.submitted && !firstname.valid }">
+
+              <input class="form-control" type="firstname" name="firstname" placeholder="Voornaam"[(ngModel)]="model.firstname" #firstname="ngModel" required>
+
+              <div *ngIf="f.submitted && !firstname.valid" class="help-block">Voornaam is verplicht</div>
+
+          </div>
+
+          <div class="form-item" [ngClass]="{ 'has-error': f.submitted && !lastname.valid }">
+
+              <input class="form-control" type="lastname" name="lastname" placeholder="Achternaam" [(ngModel)]="model.lastname" #lastname="ngModel" required>
+
+              <div *ngIf="f.submitted && !password.valid" class="help-block">Achternaam is verplicht</div>
+
+          </div>
+
+          <div class="form-item" [ngClass]="{ 'has-error': f.submitted && !gender.valid }">
+              
+            <input class="form-control" type="gender" name="gender" placeholder="Geslacht" [(ngModel)]="model.gender" #gender="ngModel" required>
+              
+            <div *ngIf="f.submitted && !gender.valid" class="help-block">Geslacht is verplicht</div>
+              
+          </div>
+
+          <div class="form-item" [ngClass]="{ 'has-error': f.submitted && !birthyear.valid }">
+              
+            <input class="form-control" type="birthyear" name="birthyear" placeholder="Geboortedatum" [(ngModel)]="model.birthyear" #birthyear="ngModel" required>
+              
+            <div *ngIf="f.submitted && !birthyear.valid" class="help-block">Geboortedatum is verplicht</div>
+              
+          </div>
+
+      </div>
+
+      <div class="button-login">
+          <input type="submit" value="Voeg toe" />
+      </div>
+  </form>
+</div>

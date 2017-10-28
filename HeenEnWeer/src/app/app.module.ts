@@ -23,6 +23,7 @@ import { ChildInfoComponent } from './child-info/child-info.component';
 import { ChildComponent } from './child-info/child/child.component';
 import { InviteRegisterComponent } from './invite-register/invite-register.component';
 import { SetupComponent } from './setup/setup.component';
+import { ChildAddComponent } from './child-info/child-add/child-add.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { SetupComponent } from './setup/setup.component';
     ChildComponent,
     InviteRegisterComponent,
     SetupComponent,
+    ChildAddComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -57,6 +59,7 @@ import { SetupComponent } from './setup/setup.component';
       { path: "profiel", component:ProfielComponent},
       { path: "profiel/edit", component:ProfileEditComponent},
       { path: "children", component:ChildInfoComponent},
+      { path: "children/add", component:ChildAddComponent},
       { path: "register/invite/:key", component:InviteRegisterComponent},
       { path: "setup", component:SetupComponent},
       { path: "", component:HomeComponent, canActivate: [AuthGuard]},
