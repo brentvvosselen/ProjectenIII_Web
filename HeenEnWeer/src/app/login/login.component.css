@@ -10,6 +10,7 @@ body{
     
 }
 
+
 @media(min-width: 768px){
   body{
     background: -webkit-linear-gradient(left, #00C6FF, #3E8DBC);

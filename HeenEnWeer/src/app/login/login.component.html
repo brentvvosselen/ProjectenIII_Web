@@ -1,6 +1,3 @@
-
-
-
 <h1 class="title title-login">OOGAPPL.</h1>
 
 <div class="container">
@@ -12,19 +9,17 @@
    </div>
    <div class="container form-container">
         <div class="row">
-            <form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
+            <form name="form" (ngSubmit)="f.form.valid" #f="ngForm" xt-form novalidate>
                 <div class="card card-form">
                     <div class="form-item" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
-                        <input class="form-control" type="email" name="email" placeholder="Email"[(ngModel)]="model.email" #email="ngModel" required>
-                        <div *ngIf="f.submitted && !email.valid" class="help-block">Email is required</div>
+                        <input class="form-control" type="email" name="email" placeholder="Email"[(ngModel)]="model.email" #email="ngModel" xt-validate  required>
+                        <div *ngIf="f.submitted && !password.valid" class="help-block">Email is required</div>
                     </div>
                     <div class="form-item" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
                         <input class="form-control" type="password" name="password" placeholder="Password" [(ngModel)]="model.password" #password="ngModel" required>
                         <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
                       </div>
                 </div>
-
-                <div *ngIf="error" class="help-block">{{error}}</div>
 
                 <div class="button-login">
                     <input type="submit" value="Log in" (click)="login(email.value, password.value)" />
@@ -37,3 +32,38 @@
             </form>
         </div>
     </div>
+<script>
+    $(document).ready(function() {
+        $('#registrationForm').formValidation({
+            framework: 'bootstrap',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            err: {
+                // You can set it to popover
+                // The message then will be shown in Bootstrap popover
+                container: 'tooltip'
+            },
+            fields: {
+                email: {
+                    row: '.col-xs-4',
+                    validators: {
+                        notEmpty: {
+                            message: 'Email is required'
+                        }
+                    }
+                },
+                password: {
+                    row: '.col-xs-4',
+                    validators: {
+                        notEmpty: {
+                            message: 'Password is required'
+                        }
+                    }
+                }
+            }
+        });
+    });
+    </script>
