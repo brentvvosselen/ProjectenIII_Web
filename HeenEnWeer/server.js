@@ -419,6 +419,7 @@ app.post("/api/setup", function(req,res){
         }
       });
 
+      parent.doneSetup = true;
       parent.save(function(err){
         if(err)
         handleError(res,err.message,"Could not update parent");
