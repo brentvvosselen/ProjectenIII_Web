@@ -1,10 +1,15 @@
 <div class="container">
   <div *ngIf="currentUser">
       <h2>Profielpagina</h2>
+      <i routerLink="/profiel/edit" class="material-icons">mode_edit</i>
       <a routerLink="/profiel/edit" routerLinkActive="active">Edit</a>
-      <h3>Basisgegevens</h3>
+  </div>
+  <div class="card">
       <p>Voornaam: {{currentUser?.firstname}}</p>
       <p>Achternaam: {{currentUser?.lastname}}</p>
+  </div>
+  <div class="card" *ngIf="currentUser?.addressStreet">
+      <h3 class="center">Adres</h3>
       <p  *ngIf="currentUser?.addressStreet || currentUser?.addressNumber || currentUser?.addressPostalcode || currentUser?.addressCity">Adres: {{currentUser?.addressStreet}} {{currentUser?.addressNumber}}<br>
           {{currentUser?.addressPostalcode}} {{currentUser?.addressCity}}</p>
       <p *ngIf="currentUser?.telephoneNumber">Tel Nr.: {{currentUser?.telephoneNumber}}</p>
