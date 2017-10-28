@@ -29,7 +29,7 @@ export class ChildInfoComponent implements OnInit {
     this.parentService.getByEmail(email).map(
       (response) => this.currentUser = response).subscribe(data => {
         //oke parent object is gezet naar currentUser
-        console.log(this.currentUser);
+        console.log(this.currentUser.group.children);
     });
   }
 }

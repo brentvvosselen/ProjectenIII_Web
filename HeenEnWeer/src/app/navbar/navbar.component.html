@@ -22,7 +22,7 @@
       <span *ngIf="router.url === '/profiel'" class="current bg-blue-gradient"></span>
       <a routerLink="/profiel" routerLinkActive="active">Profiel</a>
     </li>
-    <li *ngIf="currentUser?.doneSetup">
+    <li *ngIf="currentUser?.doneSetup == true">
       <span *ngIf="router.url === '/children'" class="current bg-blue-gradient"></span>
       <a routerLink="/children" routerLinkActive="active">Kindinfo</a>
     </li>

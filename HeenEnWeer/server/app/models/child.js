@@ -33,7 +33,7 @@ var ChildSchema = new Schema({
         required: true
       },
       age:{
-        type: Number,
+        type: String,
         required:true
       },
       categories: [categorySchema]

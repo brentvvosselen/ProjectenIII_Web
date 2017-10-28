@@ -141,7 +141,7 @@ app.get('/setup', function(req, res){
     firstname: "Jess",
     lastname: "Aarschot",
     group: group1,
-    doneSetup: false,
+    doneSetup: true,
   });
 
   newUser.save(function(err) {
@@ -529,14 +529,16 @@ app.post("/api/child/:id", function(req, res, next){
   Parents.findOne({
     _id : req.params.id
     }, function(err,parent){
-      
+    console.log(parent);
     if(err){
-      next(handleError(res, "Parent does not exist"))
+      next(handleError(res, "Parent does not exist"));
     }
-    console.log(parent.group)
-    Group.findOne({_id: parent.group}, function(err, group){
+    console.log(parent.group);
+    Group.findOne({
+      _id: parent.group
+    }, function(err, group){
       if(err){
-        next(handleError(res, "Group does not exist"))
+        next(handleError(res, "Group does not exist"));
       }
       //console.log(req.body);
       var newChild = new Child({
@@ -544,17 +546,17 @@ app.post("/api/child/:id", function(req, res, next){
         lastname: req.body.lastname,
         gender: req.body.gender,
         age: req.body.birthyear,
-      })
+      });
+
+      console.log(newChild);
 
       newChild.save(function(err){
         if(err){
-          next(handleError(res, "Child already exists"))
+          next(handleError(res, "Child already exists"));
         }
       });
       
       group.children.push(newChild);
-
-      
 
       group.save(function(err){
         if(err){

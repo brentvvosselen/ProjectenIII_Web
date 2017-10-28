@@ -41,8 +41,8 @@ export class ParentService {
         return this.http.get('http://127.0.0.1:5000/api/invitee/' + key).map((response: Response) => response.json());
     }
 
-    addChild(child: Child, id : number){
-        return this.http.post("http://127.0.0.1:5000/api/child/" + id, child, this.jwt()).map((response: Response) => response.json());
+    addChild(child: Child, parent: Parent){
+        return this.http.post("http://127.0.0.1:5000/api/child/"+ parent._id, child, this.jwt()).map((response: Response) => response.json());
     }
 
     updateChild(child: Child) {

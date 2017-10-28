@@ -3,6 +3,7 @@ import { AuthenticationService } from '../../services/authentication-service.ser
 import { ParentService } from '../../services/parent.service';
 import { User } from '../../models/user';
 import { Parent } from '../../models/parent';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-child-add',
@@ -20,7 +21,7 @@ export class ChildAddComponent implements OnInit {
   currentUser: Parent;
   model: any = {};
 
-  constructor(private authenticationService: AuthenticationService, private parentService: ParentService) {
+  constructor(private authenticationService: AuthenticationService, private parentService: ParentService, private router: Router) {
       this.user = authenticationService.getUser();
    }
 
@@ -31,7 +32,8 @@ export class ChildAddComponent implements OnInit {
 
   addChild(){
     console.log(this.model);
-    this.parentService.addChild(this.model, this.currentUser._id).subscribe(data => console.log(data));
+    this.parentService.addChild(this.model, this.currentUser).subscribe(data => console.log(data));
+    this.router.navigate(["/children"]);
   }
 
   private getParentFromUserEmail(email: string){

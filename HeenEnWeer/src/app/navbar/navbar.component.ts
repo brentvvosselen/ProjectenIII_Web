@@ -26,6 +26,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authenticationService.getUser();
     this.userIsLoggedIn = this.user != undefined;
+    this.getParentFromUserEmail(this.user.email);
   }
 
   logout($event): void {
@@ -33,9 +34,17 @@ export class NavbarComponent implements OnInit {
     this.authenticationService.logout().then(success => {
       if (success) {
         this.router.navigateByUrl('/login');
-        window.location.reload();
-        
+        window.location.reload();   
       }
     });
   }
+
+    //roept een api call op via parentservice.. Dit deel werkt wel -> kijk in de console -> probeer een object van de data te maken
+    private getParentFromUserEmail(email: string){
+      this.parentService.getByEmail(email).map(
+        (response) => this.currentUser = response).subscribe(data => {
+          //oke parent object is gezet naar currentUser
+          console.log(this.currentUser.group.children);
+      });
+    }
 }
