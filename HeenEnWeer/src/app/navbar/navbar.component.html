@@ -1,63 +1,37 @@
-<!--<nav *ngIf="userIsLoggedIn" class="navbar navbar-inverse">-->
+<div *ngIf="userIsLoggedIn" id="sidebar-wrapper">
+  <ul class="sidebar-nav" id="myNavbar">
+    <li class="sidebar-brand">
+      <a href="#">
+        <h1>OOGAPPL.</h1>
+      </a>
+    </li>
+    <li class="sidebar-account">
+      <div class="sidebar-account-img text-center">
+        <img src="../../assets/img_man.jpg" alt="profile picture" />
+      </div>
+      <div class="sidebar-account-content">
+        <h3>{{user?.firstname}} {{user?.lastname}}</h3>
+        <p>Vader</p>
+      </div>
+    </li>
+    <li>
+      <div *ngIf="router.url === '/'" class="current bg-blue-gradient"></div>
+      <a routerLink="/home" routerLinkActive="active">Home</a>
+    </li>
+    <li>
+      <span *ngIf="router.url === '/profiel'" class="current bg-blue-gradient"></span>
+      <a routerLink="/profiel" routerLinkActive="active">Profiel</a>
+    </li>
+    <li *ngIf="currentUser?.doneSetup">
+      <span *ngIf="router.url === '/children'" class="current bg-blue-gradient"></span>
+      <a routerLink="/children" routerLinkActive="active">Kindinfo</a>
+    </li>
+    <li *ngIf="userIsLoggedIn">
+      <a href="#" (click)="logout($event)">Logout</a>
+    </li>
+  </ul>
+</div>
 
-  <div *ngIf="userIsLoggedIn" id="sidebar-wrapper">
-            <ul class="sidebar-nav" id="myNavbar">
-                <li class="sidebar-brand">
-                    <a href="#">
-                        <h1>OOGAPPL.</h1>
-                    </a>
-                </li>
-                <li class="sidebar-account">
-                  <div class="sidebar-account-img text-center">
-                    <img src="../../assets/img_man.jpg" alt="profile picture"/>
-                  </div>
-                  <div class="sidebar-account-content">
-                    <h3>{{user?.firstname}} {{user?.lastname}}</h3>
-                    <p>Vader</p>
-                  </div>
-                </li>
-                <li>
-                    <div *ngIf="router.url === '/'" class="current bg-blue-gradient"></div><a routerLink="/home" routerLinkActive="active" >Home</a>
-                </li>
-                <li>
-                    <span *ngIf="router.url === '/profiel'" class="current bg-blue-gradient"></span><a routerLink="/profiel" routerLinkActive="active">Profiel</a>
-                </li>
-                <li *ngIf="currentUser?.doneSetup">
-                  <span *ngIf="router.url === '/children'" class="current bg-blue-gradient"></span><a routerLink="/children" routerLinkActive="active">Kindinfo</a>
-              </li>
-                <li *ngIf="userIsLoggedIn">
-                  <a href="#" (click)="logout($event)">Logout</a>
-                </li>
-            </ul>
-        </div>
 
-
-<!--  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">oogappl</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a routerLink="/home" routerLinkActive="active">Home</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <span class="navbar-text" *ngIf="userIsLoggedIn" >Hello {{user.email}}</span>
-        <li *ngIf="userIsLoggedIn">
-          <a routerLink="/profiel" routerLinkActive="active">Profiel</a>
-        </li>
-        <li *ngIf="!userIsLoggedIn"><a routerLink="/login" routerLinkActive="active">Login</a>
-          <li *ngIf="!userIsLoggedIn"><a routerLink="/register" routerLinkActive="active">Registreer</a>
-        </li>
-        <li *ngIf="userIsLoggedIn">
-          <a href="#" (click)="logout($event)">Logout</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>-->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+  crossorigin="anonymous"></script>
