@@ -4,7 +4,7 @@
 <div *ngIf="currentUser?.group == undefined">
     <p>test</p>
 </div>
+
 <app-child *ngFor="let child of currentUser?.group.children"
-    [model] = "child"
-    [currentUser] = "currentUser">
+    [model] = "child">
 </app-child>

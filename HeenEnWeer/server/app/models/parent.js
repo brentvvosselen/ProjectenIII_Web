@@ -57,7 +57,4 @@ var ParentSchema = new Schema({
   group: {type: Schema.ObjectId, ref: 'Group'}
 });
 
-
-
-
 module.exports = mongoose.model('Parents',ParentSchema);

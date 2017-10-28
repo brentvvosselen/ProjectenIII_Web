@@ -16,7 +16,6 @@ export class ChildInfoComponent implements OnInit {
   children: Child[];
 
   constructor(private authenticationService: AuthenticationService,private parentService: ParentService) {
-
     //haalt user op uit localstorage
     this.user = authenticationService.getUser();
   }
@@ -30,7 +29,6 @@ export class ChildInfoComponent implements OnInit {
     this.parentService.getByEmail(email).map(
       (response) => this.currentUser = response).subscribe(data => {
         //oke parent object is gezet naar currentUser
-        //console.log(this.currentUser);
         console.log(this.currentUser);
     });
   }
