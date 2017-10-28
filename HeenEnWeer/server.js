@@ -204,7 +204,8 @@ app.post('/api/signup', function(req, res, next) {
       email: req.body.email,
       firstname: req.body.firstName,
       lastname: req.body.lastName,
-      group: newGroup
+      group: newGroup,
+      doneSetup: false,
     });
 
     //check is user exists based on email
