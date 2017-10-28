@@ -14,6 +14,7 @@ export class Parent {
     workName: string;
     workNumber: string;
     group: Group;
+    doneSetup: boolean;
     //constructor(firstname: string, lastname: string, email: string){}
     constructor(){};
 }

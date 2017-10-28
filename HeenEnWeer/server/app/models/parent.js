@@ -50,6 +50,10 @@ var ParentSchema = new Schema({
     type:String,
     required: false
   },
+  doneSetup: {
+    type:Boolean,
+    required: false
+  },
   group: {type: Schema.ObjectId, ref: 'Group'}
 });
 
