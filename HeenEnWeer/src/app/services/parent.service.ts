@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 import { Parent } from '../../app/models/parent';
+import { Child } from '../models/child';
 
 @Injectable()
 export class ParentService {
@@ -38,6 +39,10 @@ export class ParentService {
 
     getInvitee(key: string){
         return this.http.get('http://127.0.0.1:5000/api/invitee/' + key).map((response: Response) => response.json());
+    }
+
+    addChild(child: Child, id : number){
+        return this.http.post("http://127.0.0.1:5000/api/child/" + id, child, this.jwt()).map((response: Response) => response.json());
     }
 
     // private helper methods

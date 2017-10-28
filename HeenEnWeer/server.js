@@ -508,6 +508,50 @@ app.put("/api/parent/:id", function(req, res) {
 app.delete("/api/parent/:id", function(req, res) {
 });
 
+app.post("/api/child/:id", function(req, res, next){
+  console.log(req.params.id);
+  Parents.findOne({
+    _id : req.params.id
+    }, function(err,parent){
+      
+    if(err){
+      next(handleError(res, "Parent does not exist"))
+    }
+    console.log(parent.group)
+    Group.findOne({_id: parent.group}, function(err, group){
+      if(err){
+        next(handleError(res, "Group does not exist"))
+      }
+      //console.log(req.body);
+      var newChild = new Child({
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        gender: req.body.gender,
+        age: req.body.birthyear,
+      })
+
+      newChild.save(function(err){
+        if(err){
+          next(handleError(res, "Child already exists"))
+        }
+      });
+      
+      group.children.push(newChild);
+
+      
+
+      group.save(function(err){
+        if(err){
+          next(handleError(res,"An error occured"));
+        }
+      });
+
+      res.json("succes");
+    });
+    
+  })
+});
+
 //VOORBEELD VOOR JWT AUTHENTICATED ROUTE
 app.get("/api/secret", passport.authenticate('jwt', { session: false }), function(req, res){
   res.json("Success! You can not see this without a token");
