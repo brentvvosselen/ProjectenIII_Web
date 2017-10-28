@@ -1,6 +1,25 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var infoSchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  value: {
+    type: String,
+    required: true
+  }
+})
+
+var categorySchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  info: [infoSchema]
+})
+
 var ChildSchema = new Schema({
     firstname: {
         type: String,
@@ -19,7 +38,7 @@ var ChildSchema = new Schema({
         type: Number,
         required:true
       },
-      info: String
+      categories: [categorySchema]
   });
 
 module.exports = mongoose.model('Child',ChildSchema);

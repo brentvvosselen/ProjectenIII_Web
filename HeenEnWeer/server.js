@@ -92,14 +92,36 @@ app.get('/setup', function(req, res){
   var child1 = new Child({
     firstname: "Koen",
     lastname: "Aarschot",
-    info: "Schoenmaat:34;Vriendjes:Tim,Jonas,Brent niet;"
-  })
+    gender: "M",
+    age: 4,
+    categories: {
+      name: "medisch",
+      info: [{
+        name: "Schoenmaat",
+        value: "32"
+      }, {
+        name: "Bloedgroep",
+        value: "AB+"
+      }]
+    }
+  });
 
   var child2 = new Child({
     firstname: "Ella",
     lastname: "Aarschot",
-    info: "Schoenmaat:34;Vriendjes:Tim,Jonas,Brent niet;"
-  })
+    gender: "M",
+    age: 6,
+    categories: {
+      name: "medisch",
+      info: [{
+        name: "Schoenmaat",
+        value: "32"
+      }, {
+        name: "Bloedgroep",
+        value: "A-"
+      }]
+    }
+  });
 
   var group1 = new Group({
     children: [],
@@ -108,6 +130,8 @@ app.get('/setup', function(req, res){
   group1.children.push(child1,child2);
 
   var newUser = new Users({
+    firstname: "jess",
+    lastname: "aarschot",
     email: "jess@aarschot.be",
     password: "test"
   });
@@ -286,6 +310,7 @@ app.get("/api/parents/:email",function(req,res){
     if(err){
       handleError(res, err.message, "could not find parent");
     }
+    console.log(user);
     res.json(user);
   }).populate({
     path: 'group',
