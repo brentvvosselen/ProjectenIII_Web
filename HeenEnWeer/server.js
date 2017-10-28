@@ -141,6 +141,7 @@ app.get('/setup', function(req, res){
     firstname: "Jess",
     lastname: "Aarschot",
     group: group1,
+    doneSetup: false,
   });
 
   newUser.save(function(err) {
