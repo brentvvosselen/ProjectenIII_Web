@@ -1,20 +1,23 @@
 <div>
   {{firstname}} <br/>
   {{lastname}} <br/>
-  <div *ngFor="let i of infoNodes; let j = index">
-    <label for="{{i.name}}">{{i.name}}</label>
-    <input type="text" name="{{i.name}}" id="{{i.name}}" value="{{i.value}}" #value><br>
-    <button (click)="delete(i)"> Delete </button>
-    <button (click)="save(value.value, j)"> Save </button>
-  </div>
 
-  <div>
-    Nieuwe Info:
-    <label for="infoNodeName">Infotype: </label>
-    <input type="text" name="infoNodeName" id="infoNodeName" #name>
-    <label for="infoNodeValue">Info: </label>
-    <input type="text" name="infoNodeValue" id="infoNodeValue" #value><br>
-    <button (click)="addInfoNode(name.value, value.value)"> Add </button>
+  <div *ngFor="let c of categories; let ci = index">
+    {{c.name}}
+    <div *ngFor="let i of c.info; let ii = index">
+      <label for="{{i.name}}">{{i.name}}</label>
+      <input type="text" name="{{i.name}}" id="{{i.name}}" value="{{i.value}}" #value (change)="save(ci, ii, value.value)"><br>
+      <button (click)="delete(ci, i)"> Delete </button>
+    </div>
+
+    <div>
+      Nieuwe Info:
+      <label for="infoNodeName">Infotype: </label>
+      <input type="text" name="infoNodeName" id="infoNodeName" #name>
+      <label for="infoNodeValue">Info: </label>
+      <input type="text" name="infoNodeValue" id="infoNodeValue" #value><br>
+      <button (click)="addInfoNode(ci, name.value, value.value)"> Add </button>
+    </div>
   </div>
 
   <button (click)="saveChanges()"> Save </button>

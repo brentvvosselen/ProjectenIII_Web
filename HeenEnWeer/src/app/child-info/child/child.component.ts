@@ -11,11 +11,8 @@ import { ParentService } from '../../services/parent.service';
 })
 export class ChildComponent implements OnInit {
   @Input() model: any = {};
-  currentUser: Parent;
 
-  @Input() child: Child;
-
-  infoNodes = new Array<infoNode>();
+  categories = new Array<category>();
 
   constructor(private parentService: ParentService) {
 
@@ -24,44 +21,40 @@ export class ChildComponent implements OnInit {
   ngOnInit() {
     console.log(this.model);
 
-    let temp = this.model.info.split(';');
-    for (let i of temp) {
-      if(i != "") {
-        let temp2 = i.split(':');
-        this.addInfoNode(temp2[0].trim(), temp2[1].trim());
-      }
-    }
+    this.categories = this.model.categories;
+    console.log(this.categories);
   }
 
-  addInfoNode(name: string, value: string) {
+  addInfoNode(index: number, name: string, value: string) {
     var node: infoNode = {
       name: name,
       value: value
     };
 
-    this.infoNodes.push(node);
+    this.categories[index].info.push(node);
   }
 
   saveChanges() {
-    var temp = "";
-    for (let i of this.infoNodes) {
-      temp = temp + i.name + ":" + i.value + ";";
-    }
+    this.model.categories = this.categories;
 
-    //this.model.info = temp;
-    this.parentService.update(this.currentUser).subscribe(data => {
+    this.parentService.updateChild(this.model).subscribe(data => {
       console.log(data);
     });
   }
 
-  delete(obj: infoNode) {
-    this.infoNodes = this.infoNodes.filter(info => info !== obj);
+  delete(index: number, obj: infoNode) {
+    this.categories[index].info = this.categories[index].info.filter(info => info !== obj);
   }
 
-  save(value: string, index: number) {
-    this.infoNodes[index].value = value;
-    this.saveChanges();
+  save(catIndex: number, infoIndex: number, value: string) {
+    console.log("CHANGED");
+    this.categories[catIndex].info[infoIndex].value = value;
   }
+}
+
+interface category {
+  name: string;
+  info: infoNode[];
 }
 
 interface infoNode {

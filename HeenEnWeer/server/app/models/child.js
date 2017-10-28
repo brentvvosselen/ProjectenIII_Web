@@ -3,12 +3,10 @@ var Schema = mongoose.Schema;
 
 var infoSchema = new Schema({
   name: {
-    type: String,
-    required: true
+    type: String
   },
   value: {
-    type: String,
-    required: true
+    type: String
   }
 })
 

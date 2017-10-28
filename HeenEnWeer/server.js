@@ -498,14 +498,28 @@ app.post("/api/invite",function(req,res){
   res.json("REGISTREERD");
 });
 
-app.get("/api/parent/:id", function(req, res) {
+app.post("/api/children/update", function(req, res) {
+  Child.findOne({
+    _id: req.body._id
+  }, function(err, child){
+    if(err) throw err;
+    if(!child){
+      handleError(res, "Updating failed", "Updating failed. Could not find child.");
+    } else{
+      child.firstname = req.body.firstname;
+      child.lastname = req.body.lastname;
+      child.gender = req.body.gender;
+      child.age = req.body.age;
+      child.categories = req.body.categories;
 
-});
 
-app.put("/api/parent/:id", function(req, res) {
-});
-
-app.delete("/api/parent/:id", function(req, res) {
+      child.save(function(err){
+        if (err) throw err;
+        console.log("CHILD SAVED");
+        res.json(child);
+      });
+    }
+  });
 });
 
 //VOORBEELD VOOR JWT AUTHENTICATED ROUTE
