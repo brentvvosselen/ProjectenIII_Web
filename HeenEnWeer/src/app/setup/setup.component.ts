@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Child } from '../models/child';
 
 
 @Component({
@@ -7,10 +8,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./setup.component.css']
 })
 export class SetupComponent implements OnInit {
-
+  children: Child[];
+  model : any = {};
   constructor() { }
 
   ngOnInit() {
+    
   }
 
+  onStep1Next($event){
+    console.log(this.model.gender);
+  }
+
+  onStep2Next($event){
+    console.log(this.model);
+  }
+
+  onStep3Next($event){
+    console.log(this.model);
+  }
 }

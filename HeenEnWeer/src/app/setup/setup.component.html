@@ -1,20 +1,30 @@
 <form-wizard>
-  <wizard-step [title]="'Step1'" [isValid]="emailForm.form.valid" (onNext)="onStep1Next($event)">
-    <h1>Step1</h1>
-    <form #emailForm="ngForm">
+  <wizard-step [title]="'Jij bent'" [isValid]="genderForm.form.valid" (onNext)="onStep1Next($event)">
+    <h2>Step1</h2>
+    <form #genderForm="ngForm">
       <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" name="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"
-          [(ngModel)]="data.email" required>
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <label for="Gender">Bent u vader of moeder?
+        </label>
+        <input type="radio" value="F" name="gender"  [(ngModel)]="model.gender" required> Moeder
+        <input type="radio" value="M" name="gender"  [(ngModel)]="model.gender" required> Vader
       </div>
     </form>
   </wizard-step>
   <wizard-step [title]="'Step2'" (onNext)="onStep2Next($event)">
-    <h1>Step2</h1>
+    <h2>Geef ons wat meer info over de andere ouder</h2>
+    <input type="email" class="form-control" id="email" name="email" aria-describedby="email" placeholder="email"
+    [(ngModel)]="model.otherEmail" required>
+    <input type="text" class="form-control" id="voornaam" name="voornaam" aria-describedby="voornaam" placeholder="Voornaam"
+    [(ngModel)]="model.otherFirstname" required>
+    <input type="text" class="form-control" id="achternaam" name="achternaam" aria-describedby="achternaam" placeholder="Achternaam"
+    [(ngModel)]="model.otherLastname" required>
   </wizard-step>
   <wizard-step [title]="'Step3'" (onNext)="onStep3Next($event)">
-    <h1>Step3</h1>
+    <h2>Geef ons wat informatie over je kind(eren)</h2>  
+    <app-childForm  *ngFor="let child of children"
+      [child] = "child"
+    >   
+    </app-childForm>
   </wizard-step>
   <wizard-step [title]="'Step4'" (onComplete)="onComplete($event)">
     <div [ngSwitch]="isCompleted">
