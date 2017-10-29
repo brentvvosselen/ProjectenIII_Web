@@ -75,6 +75,7 @@ body{
 .card {
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    overflow: overlay;
 }
 
 .card.card-form {
@@ -363,4 +364,34 @@ body {
         position: relative;
         margin-right: 0;
     }
+}
+
+
+/*PROFILE*/
+.card-img-left{
+    margin: 25px;
+    float:left;
+}
+.card-img-left img{
+    object-fit: cover;
+    height: 150px;
+    width: 125px;
+    box-shadow: 1px 0px 4px #888888;
+}
+
+.card-profile .card-content{
+    margin-top: 2em;
+}
+
+.card-profile .card-content h4{
+    margin-top:0;
+}
+
+.card-profile .card-content p{
+    font-weight: 200;
+    margin: 0 0 10px;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+    font-size: 2rem;
+    color: var(--color-mid-blue);
 }
