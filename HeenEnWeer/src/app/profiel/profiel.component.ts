@@ -3,12 +3,14 @@ import { Parent } from '../../app/models/parent';
 import { User } from '../models/user';
 import { ParentService } from '../services/parent.service';
 import { AuthenticationService } from '../services/authentication-service.service';
+import { ViewEncapsulation } from '@angular/core';
 import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-profiel',
   templateUrl: './profiel.component.html',
-  styleUrls: ['./profiel.component.css']
+  styleUrls: ['./profiel.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ProfielComponent implements OnInit {
   user: User;
