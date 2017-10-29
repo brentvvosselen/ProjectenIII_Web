@@ -8,12 +8,19 @@ import { Child } from '../models/child';
   styleUrls: ['./setup.component.css']
 })
 export class SetupComponent implements OnInit {
-  children: Child[];
+  children: Child[] = [];
   model : any = {};
   constructor() { }
 
   ngOnInit() {
-    
+    this.children.push(new Child = {
+      firstname: "",
+      lastname: "",
+      gender: "",
+      birthdate: "",
+      categories: [],
+    });
+    console.log(this.children);
   }
 
   onStep1Next($event){
