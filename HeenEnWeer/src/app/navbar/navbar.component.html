@@ -11,6 +11,7 @@
       </div>
       <div class="sidebar-account-content">
         <h3>{{user?.firstname}} {{user?.lastname}}</h3>
+        <p *ngIf="getSex()">Test</p>
         <p *ngIf="gender === 'F'">Vader</p>
         <p *ngIf="gender === 'M'">Moeder</p>
       </div>

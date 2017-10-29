@@ -2,14 +2,13 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Child } from '../../models/child';
 
 @Component({
-  selector: 'app-childForm',
-  templateUrl: './child.component.html',
-  styleUrls: ['./child.component.css']
+  selector: 'app-child-add-form',
+  templateUrl: './child-add-form.component.html',
+  styleUrls: ['./child-add-form.component.css']
 })
-export class ChildComponent implements OnInit {
+export class ChildAddFormComponent implements OnInit {
 
   @Input() child: Child;
-
   constructor() { }
 
   ngOnInit() {

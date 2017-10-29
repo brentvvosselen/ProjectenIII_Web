@@ -20,15 +20,12 @@ export class SetupComponent implements OnInit {
   constructor(private parentService: ParentService, private authenticationSerivce: AuthenticationService) { }
 
   ngOnInit() {
-    //this.children.push(new Child ());
+    this.children.push(new Child ());
     this.user = this.authenticationSerivce.getUser();
     this.parentService.getByEmail(this.user.email).subscribe(parent => this.parent = parent);
-    console.log(this.children);
   }
 
   onStep1Next($event){
-    console.log(this.model.type);
-    console.log(this.model);
     //this.parentService.updateParent(this.model);
     this.parent.type = this.model.type;
     console.log(this.parent.type + "dit is het type");
@@ -36,10 +33,18 @@ export class SetupComponent implements OnInit {
   }
 
   onStep2Next($event){
-    console.log(this.model);
   }
 
   onStep3Next($event){
+    this.model.children = this.children;
+    this.model.email = this.user.email;
+    this.model.currentType = this.model.type;
+
     console.log(this.model);
+    this.parentService.saveSetup(this.model).subscribe(data => console.log(data));
+  }
+
+  addChild(){
+    this.children.push(new Child());
   }
 }

@@ -10,7 +10,7 @@
       </div>
     </form>
   </wizard-step>
-  <wizard-step [title]="'Step2'"  [isValid]="otherParent.form.valid" (onNext)="onStep2Next($event)">
+  <wizard-step [title]="'Info over andere ouder'"  [isValid]="otherParent.form.valid" (onNext)="onStep2Next($event)">
     <h2>Geef ons wat meer info over de andere ouder</h2>
 
     <form #otherParent="ngForm">
@@ -23,12 +23,14 @@
     </form>
     
   </wizard-step>
-  <wizard-step [title]="'Step3'" (onNext)="onStep3Next($event)">
+  <wizard-step [title]="'Info over de kinderen'" (onNext)="onStep3Next($event)">
+    
     <h2>Geef ons wat informatie over je kind(eren)</h2>  
-    <app-childForm  *ngFor="let child of children"
+    <i class="material-icons" (click)="addChild()">person_add</i>
+    <app-child-add-form  *ngFor="let child of children"
       [child] = "child"
     >   
-    </app-childForm>
+    </app-child-add-form>
   </wizard-step>
   <wizard-step [title]="'Step4'" (onComplete)="onComplete($event)">
     <div [ngSwitch]="isCompleted">

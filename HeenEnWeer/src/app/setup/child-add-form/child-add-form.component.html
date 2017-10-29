@@ -1,0 +1,12 @@
+<br>
+<form>
+  <input type="radio" value="F" name="gender"  [(ngModel)]="child.gender" required> Meisje
+  <input type="radio" value="M" name="gender"  [(ngModel)]="child.gender" required> Jongen
+  <input type="text" class="form-control" id="voornaam" name="voornaam" aria-describedby="voornaam" placeholder="Voornaam"
+  [(ngModel)]="child.firstname" required>
+  <input type="text" class="form-control" id="achternaam" name="achternaam" aria-describedby="achternaam" placeholder="Achternaam"
+  [(ngModel)]="child.lastname" required>
+  <input type="text" class="form-control" id="leeftijd" name="leeftijd" aria-describedby="leeftijd" placeholder="Leeftijd"
+  [(ngModel)]="child.birthdate" required>
+</form>
+<br>

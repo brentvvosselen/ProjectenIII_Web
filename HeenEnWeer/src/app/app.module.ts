@@ -25,6 +25,7 @@ import { InviteRegisterComponent } from './invite-register/invite-register.compo
 import { SetupComponent } from './setup/setup.component';
 import { ChildAddComponent } from './child-info/child-add/child-add.component';
 import { FormWizardModule } from 'angular2-wizard';
+import { ChildAddFormComponent } from './setup/child-add-form/child-add-form.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { FormWizardModule } from 'angular2-wizard';
     InviteRegisterComponent,
     SetupComponent,
     ChildAddComponent,
+    ChildAddFormComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

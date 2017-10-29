@@ -1,4 +1,4 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication-service.service';
 import { User } from '../models/user';
@@ -13,7 +13,7 @@ import { Parent } from '../models/parent';
 export class NavbarComponent implements OnInit {
   title = 'navbar';
   userIsLoggedIn: boolean;
-  user : User;
+  user: User;
   currentUser: Parent;
   gender: string;
 
@@ -28,6 +28,7 @@ export class NavbarComponent implements OnInit {
     this.user = this.authenticationService.getUser();
     this.userIsLoggedIn = this.user != undefined;
     this.getParentFromUserEmail(this.user.email);
+    this.getSex();
   }
 
   logout($event): void {
@@ -35,16 +36,20 @@ export class NavbarComponent implements OnInit {
     this.authenticationService.logout().then(success => {
       if (success) {
         this.router.navigateByUrl('/login');
-        window.location.reload();   
+        window.location.reload();
       }
     });
   }
 
-    //roept een api call op via parentservice.. Dit deel werkt wel -> kijk in de console -> probeer een object van de data te maken
-    private getParentFromUserEmail(email: string){
-      this.parentService.getByEmail(email).map(
-        (response) => this.currentUser = response).subscribe(data => {
-          this.gender = data.type;
+  //roept een api call op via parentservice.. Dit deel werkt wel -> kijk in de console -> probeer een object van de data te maken
+  private getParentFromUserEmail(email: string) {
+    this.parentService.getByEmail(email).map(
+      (response) => this.currentUser = response).subscribe(data => {
+        this.gender = data.type;
       });
-    }
+  }
+
+  getSex() {
+    return this.gender;
+  }
 }
