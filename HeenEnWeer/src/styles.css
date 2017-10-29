@@ -387,6 +387,16 @@ h1,h2{
     margin-bottom: 1em;
 }
 
+.alert.alert-danger{
+    margin: 0;
+    padding: 1rem 2rem;
+    border-radius: 0;
+}
+
+.no-padding{
+    padding:0;
+}
+
 /*PROFILE*/
 .card-img-left{
     margin: 25px;
@@ -438,6 +448,8 @@ h1,h2{
     color:var(--color-light-gray);
     transition: .2s ease-in-out;
 }
+
+
 
 @media(min-width:576px){
     .card-img-left{
