@@ -32,7 +32,7 @@ var ChildSchema = new Schema({
         enum: ["M","F"],
         required: true
       },
-      age:{
+      birthyear:{
         type: String,
         required:true
       },
