@@ -5,12 +5,14 @@ import { User } from '../../models/user';
 import { ParentService } from '../../services/parent.service';
 import { AuthenticationService } from '../../services/authentication-service.service';
 import { Router } from '@angular/router';
+import { ViewEncapsulation } from '@angular/core';
 
 
 @Component({
   selector: 'app-profile-edit',
   templateUrl: './profile-edit.component.html',
-  styleUrls: ['./profile-edit.component.css']
+  styleUrls: ['./profile-edit.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ProfileEditComponent implements OnInit {
   submitted = false;

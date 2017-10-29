@@ -1,10 +1,15 @@
-<div class="container">
+<div class="container-fluid">
   <div *ngIf="currentUser">
-      <h2>Profielpagina</h2>
-      <i routerLink="/profiel/edit" class="material-icons">mode_edit</i>
-      <a routerLink="/profiel/edit" routerLinkActive="active">Edit</a>
+      <h2 class="center page-title">Profiel</h2>
+      <div class="row action-row">
+          <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+                <a div class="action-button" routerLink="/profiel/edit" routerLinkActive="active"><i routerLink="/profiel/edit" class="material-icons">mode_edit</i></a>
+          </div>
+            
+      </div>
+      
   </div>
-  <div class="card card-profile">
+  <div class="card card-profile col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
       <div class="card-img-left">
           <img class="img img-responsive" src="../../assets/img_man.jpg"/>
       </div>
@@ -14,12 +19,19 @@
             <p>Type</p>
       </div>
   </div>
-  <div class="card" *ngIf="currentUser?.addressStreet">
-      <h3 class="center">Adres</h3>
-      <p  *ngIf="currentUser?.addressStreet || currentUser?.addressNumber || currentUser?.addressPostalcode || currentUser?.addressCity">Adres: {{currentUser?.addressStreet}} {{currentUser?.addressNumber}}<br>
-          {{currentUser?.addressPostalcode}} {{currentUser?.addressCity}}</p>
-      <p *ngIf="currentUser?.telephoneNumber">Tel Nr.: {{currentUser?.telephoneNumber}}</p>
-      <p *ngIf="currentUser?.workName || currentUser?.workNumber">Werk: {{currentUser?.workName}} <br> {{currentUser?.workNumber}}</p>  
+  <div class="card card-profile-info col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2" *ngIf="currentUser?.addressStreet">
+      <div class="card-content">
+            <h2>Persoonlijke info</h2>
+            <h4>Adres</h4>
+            <p  *ngIf="currentUser?.addressStreet || currentUser?.addressNumber || currentUser?.addressPostalcode || currentUser?.addressCity">{{currentUser?.addressStreet}} {{currentUser?.addressNumber}}<br>
+                {{currentUser?.addressPostalcode}} {{currentUser?.addressCity}}</p>
+            <h4>Telefoonnummer</h4>
+            <p *ngIf="currentUser?.telephoneNumber">{{currentUser?.telephoneNumber}}</p>
+            <h4>Werkgegevens</h4>
+            <p *ngIf="currentUser?.workName || currentUser?.workNumber">{{currentUser?.workName}} <br> {{currentUser?.workNumber}}</p>  
+
+      </div>
+      
   </div>
   
 </div>
