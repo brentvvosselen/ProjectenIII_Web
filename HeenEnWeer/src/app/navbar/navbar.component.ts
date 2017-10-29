@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit {
   userIsLoggedIn: boolean;
   user : User;
   currentUser: Parent;
+  gender: string;
 
   constructor(private authenticationService: AuthenticationService, private router: Router, private parentService: ParentService) {
     authenticationService.userIsloggedIn.subscribe(isLoggedIn => {
@@ -43,8 +44,7 @@ export class NavbarComponent implements OnInit {
     private getParentFromUserEmail(email: string){
       this.parentService.getByEmail(email).map(
         (response) => this.currentUser = response).subscribe(data => {
-          //oke parent object is gezet naar currentUser
-          console.log(this.currentUser.group.children);
+          this.gender = data.type;
       });
     }
 }
