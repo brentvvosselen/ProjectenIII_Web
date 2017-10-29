@@ -137,11 +137,13 @@ app.get('/setup', function(req, res){
   });
 
   var newParent = new Parents({
+    type: "M",    
     email: "jess@aarschot.be",
     firstname: "Jess",
     lastname: "Aarschot",
     group: group1,
     doneSetup: true,
+
   });
 
   newUser.save(function(err) {
@@ -341,6 +343,7 @@ app.post("/api/parents/edit", function(req,res){
       parent.workName = req.body.workName;
       parent.workNumber = req.body.workNumber;
       parent.children = req.body.children;
+      parent.type = req.body.type;
 
       //console.log(parent);
       console.log("telefoonnummer"+parent.telephoneNumber);

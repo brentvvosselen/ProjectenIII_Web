@@ -5,19 +5,23 @@
       <div class="form-group">
         <label for="Gender">Bent u vader of moeder?
         </label>
-        <input type="radio" value="F" name="gender"  [(ngModel)]="model.gender" required> Moeder
-        <input type="radio" value="M" name="gender"  [(ngModel)]="model.gender" required> Vader
+        <input type="radio" value="F" name="type"  [(ngModel)]="model.type" required> Moeder
+        <input type="radio" value="M" name="type"  [(ngModel)]="model.type" required> Vader
       </div>
     </form>
   </wizard-step>
-  <wizard-step [title]="'Step2'" (onNext)="onStep2Next($event)">
+  <wizard-step [title]="'Step2'"  [isValid]="otherParent.form.valid" (onNext)="onStep2Next($event)">
     <h2>Geef ons wat meer info over de andere ouder</h2>
-    <input type="email" class="form-control" id="email" name="email" aria-describedby="email" placeholder="email"
-    [(ngModel)]="model.otherEmail" required>
-    <input type="text" class="form-control" id="voornaam" name="voornaam" aria-describedby="voornaam" placeholder="Voornaam"
-    [(ngModel)]="model.otherFirstname" required>
-    <input type="text" class="form-control" id="achternaam" name="achternaam" aria-describedby="achternaam" placeholder="Achternaam"
-    [(ngModel)]="model.otherLastname" required>
+
+    <form #otherParent="ngForm">
+      <input type="email" class="form-control" id="email" name="email" aria-describedby="email" placeholder="email"
+      [(ngModel)]="model.otherEmail" required>
+      <input type="text" class="form-control" id="voornaam" name="voornaam" aria-describedby="voornaam" placeholder="Voornaam"
+      [(ngModel)]="model.otherFirstname" required>
+      <input type="text" class="form-control" id="achternaam" name="achternaam" aria-describedby="achternaam" placeholder="Achternaam"
+      [(ngModel)]="model.otherLastname" required>
+    </form>
+    
   </wizard-step>
   <wizard-step [title]="'Step3'" (onNext)="onStep3Next($event)">
     <h2>Geef ons wat informatie over je kind(eren)</h2>  

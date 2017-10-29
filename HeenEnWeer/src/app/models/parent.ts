@@ -15,6 +15,12 @@ export class Parent {
     workNumber: string;
     group: Group;
     doneSetup: boolean;
+    type: type;
     //constructor(firstname: string, lastname: string, email: string){}
     constructor(){};
+}
+
+enum type{
+    "M",
+    "F"
 }
