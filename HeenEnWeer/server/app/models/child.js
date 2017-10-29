@@ -32,8 +32,8 @@ var ChildSchema = new Schema({
         enum: ["M","F"],
         required: true
       },
-      birthyear:{
-        type: String,
+      birthdate:{
+        type: Date,
         required:true
       },
       categories: [categorySchema]

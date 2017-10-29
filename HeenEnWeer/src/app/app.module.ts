@@ -24,6 +24,7 @@ import { ChildComponent } from './child-info/child/child.component';
 import { InviteRegisterComponent } from './invite-register/invite-register.component';
 import { SetupComponent } from './setup/setup.component';
 import { ChildAddComponent } from './child-info/child-add/child-add.component';
+import { FormWizardModule } from 'angular2-wizard';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ChildAddComponent } from './child-info/child-add/child-add.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    FormWizardModule,
     RouterModule.forRoot([
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},

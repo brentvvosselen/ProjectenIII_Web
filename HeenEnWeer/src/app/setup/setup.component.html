@@ -1,16 +1,29 @@
-<wizard on-finish="finishedWizard()" on-cancel="cancelledWizard()"> 
-  <wz-step wz-title="Starting">
-      <h1>This is the first step</h1>
-      <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
-      <input type="submit" wz-next value="Continue" />
-  </wz-step>
-  <wz-step wz-title="Continuing">
-      <h1>Continuing</h1>
-      <p>You have continued here!</p>
-      <input type="submit" wz-next value="Go on" />
-  </wz-step>
-  <wz-step wz-title="More steps">
-      <p>Even more steps!!</p>
-      <input type="submit" wz-next value="Finish now" />
-  </wz-step>
-</wizard>
+<form-wizard>
+  <wizard-step [title]="'Step1'" [isValid]="emailForm.form.valid" (onNext)="onStep1Next($event)">
+    <h1>Step1</h1>
+    <form #emailForm="ngForm">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" name="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"
+          [(ngModel)]="data.email" required>
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+    </form>
+  </wizard-step>
+  <wizard-step [title]="'Step2'" (onNext)="onStep2Next($event)">
+    <h1>Step2</h1>
+  </wizard-step>
+  <wizard-step [title]="'Step3'" (onNext)="onStep3Next($event)">
+    <h1>Step3</h1>
+  </wizard-step>
+  <wizard-step [title]="'Step4'" (onComplete)="onComplete($event)">
+    <div [ngSwitch]="isCompleted">
+      <div *ngSwitchDefault>
+        <h1>Step4</h1>
+      </div>
+      <div *ngSwitchCase="true">
+        <h4>Thank you! You have completed all the steps.</h4>
+      </div>
+    </div>
+  </wizard-step>
+</form-wizard>
