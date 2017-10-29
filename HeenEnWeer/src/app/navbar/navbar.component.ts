@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit {
     this.user = this.authenticationService.getUser();
     this.userIsLoggedIn = this.user != undefined;
     console.log(this.authenticationService.getUser().email);
-    this.parentService.getByEmail(this.authenticationService.getUser().email).then(user => (this.currentUser = user));
+    this.parentService.getByEmail(this.authenticationService.getUser().email).subscribe(user => (this.currentUser = user));
   }
 
   logout($event): void {

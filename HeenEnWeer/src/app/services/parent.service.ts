@@ -17,11 +17,8 @@ export class ParentService {
         return this.http.get('http://127.0.0.1:5000/api/parents' + id, this.jwt()).map((response: Response) => response.json());
     }
 
-    getByEmail(email: string): Promise<Parent>{
-      return this.http.get('http://127.0.0.1:5000/api/parents/' + email, this.jwt())
-      .toPromise()
-      .then(response => response.json() as Parent)
-      .catch(this.handleError);
+    getByEmail(email: string){
+      return this.http.get('http://127.0.0.1:5000/api/parents/' + email, this.jwt()).map((response: Response) => response.json());
     }
 
     update(parent: Parent) {

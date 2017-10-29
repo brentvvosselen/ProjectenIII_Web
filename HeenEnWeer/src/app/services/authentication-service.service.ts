@@ -11,6 +11,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class AuthenticationService {
     private headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
     userIsloggedIn: EventEmitter<boolean>;
+
+
     private loggedIn = new BehaviorSubject<boolean>(false);
 
     constructor(private http: Http) {

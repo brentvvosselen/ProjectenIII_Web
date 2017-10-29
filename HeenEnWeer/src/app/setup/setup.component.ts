@@ -23,7 +23,7 @@ export class SetupComponent implements OnInit {
   ngOnInit() {
     this.children.push(new Child ());
     this.user = this.authenticationSerivce.getUser();
-    this.parentService.getByEmail(this.user.email).then(user => this.parent = user);    
+    this.parentService.getByEmail(this.user.email).subscribe(user => this.parent = user)  
   }
 
   onStep1Next($event){

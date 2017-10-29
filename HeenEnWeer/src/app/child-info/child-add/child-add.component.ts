@@ -26,7 +26,7 @@ export class ChildAddComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.parentService.getByEmail(this.user.email).then(user => this.currentUser = user);    
+    this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);    
   }
 
   addChild(){

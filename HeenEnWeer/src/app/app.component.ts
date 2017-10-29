@@ -15,7 +15,6 @@ export class AppComponent {
   title = 'app';
 
     user : User;
-    userIsLoggedIn: boolean;
     isLoggedIn$: Observable<boolean>;
 
     constructor(private authenticationService: AuthenticationService) {
