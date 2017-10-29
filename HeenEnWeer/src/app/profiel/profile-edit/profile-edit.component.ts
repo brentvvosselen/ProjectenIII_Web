@@ -31,8 +31,7 @@ export class ProfileEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getParentFromUserEmail(this.user.email);
-   
+    this.parentService.getByEmail(this.user.email).then(user => this.currentUser = user);    
   }
 
   createForm() {
@@ -41,13 +40,6 @@ export class ProfileEditComponent implements OnInit {
     });
   }
 
-  //roept api call op via parentservice
-  private getParentFromUserEmail(email: string){
-    this.parentService.getByEmail(email).map(
-      (response) => this.currentUser = response).subscribe(data => {
-        this.model = this.currentUser;      
-      });
-  }
 
   edit(){
     var updatedUser = this.currentUser;

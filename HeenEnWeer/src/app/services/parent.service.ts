@@ -17,8 +17,11 @@ export class ParentService {
         return this.http.get('http://127.0.0.1:5000/api/parents' + id, this.jwt()).map((response: Response) => response.json());
     }
 
-    getByEmail(email: string){
-      return this.http.get('http://127.0.0.1:5000/api/parents/' + email, this.jwt()).map((response: Response) => response.json());
+    getByEmail(email: string): Promise<Parent>{
+      return this.http.get('http://127.0.0.1:5000/api/parents/' + email, this.jwt())
+      .toPromise()
+      .then(response => response.json() as Parent)
+      .catch(this.handleError);
     }
 
     update(parent: Parent) {
@@ -52,7 +55,12 @@ export class ParentService {
     saveSetup(model :any){
         return this.http.post("http://127.0.0.1:5000/api/setup", model, this.jwt()).map((response: Response) => response.json());
     }
+
     // private helper methods
+    private handleError(error: any): Promise<any> {
+        console.error('An error occurred', error); // for demo purposes only
+        return Promise.reject(error.message || error);
+    }
 
     private jwt() {
         // create authorization header with jwt token

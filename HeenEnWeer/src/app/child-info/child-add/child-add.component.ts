@@ -26,23 +26,13 @@ export class ChildAddComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log(this.genders);
-    this.getParentFromUserEmail(this.user.email);
+    this.parentService.getByEmail(this.user.email).then(user => this.currentUser = user);    
   }
 
   addChild(){
-    console.log(this.model);
     this.parentService.addChild(this.model, this.currentUser).subscribe(data => console.log(data));
     this.router.navigate(["/children"]);
   }
 
-  private getParentFromUserEmail(email: string){
-    this.parentService.getByEmail(email).map(
-      (response) => this.currentUser = response).subscribe(data => {
-        //oke parent object is gezet naar currentUser
-        //console.log(this.currentUser);
-        console.log(this.currentUser);
-    });
-  }
 
 }

@@ -27,7 +27,7 @@
         <!--Force user to do Setup-->
         <div class="center" *ngIf="currentUser?.doneSetup == false">
             <h2>Doorloop de Setup</h2>
-            <button class="btn btn-default">Setup</button>
+            <button class="btn btn-default" routerLink="/setup" routerLinkActive="active">Setup</button>
         </div>
 
 
