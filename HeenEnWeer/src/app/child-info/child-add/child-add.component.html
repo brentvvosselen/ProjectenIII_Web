@@ -27,11 +27,11 @@
               
           </div>
 
-          <div class="form-item" [ngClass]="{ 'has-error': f.submitted && !birthyear.valid }">
+          <div class="form-item" [ngClass]="{ 'has-error': f.submitted && !birthdate.valid }">
               
-            <input class="form-control" type="birthyear" name="birthyear" placeholder="Geboortedatum" [(ngModel)]="model.birthyear" #birthyear="ngModel" required>
+            <input class="form-control" type="birthdate" name="birthdate" placeholder="Geboortedatum" [(ngModel)]="model.birthdate" #birthdate="ngModel" required>
               
-            <div *ngIf="f.submitted && !birthyear.valid" class="help-block">Geboortedatum is verplicht</div>
+            <div *ngIf="f.submitted && !birthdate.valid" class="help-block">Geboortedatum is verplicht</div>
               
           </div>
 

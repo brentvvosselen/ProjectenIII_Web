@@ -93,7 +93,7 @@ app.get('/setup', function(req, res){
     firstname: "Koen",
     lastname: "Aarschot",
     gender: "M",
-    birthyear: 4,
+    birthdate: 4,
     categories: {
       name: "medisch",
       info: [{
@@ -110,7 +110,7 @@ app.get('/setup', function(req, res){
     firstname: "Ella",
     lastname: "Aarschot",
     gender: "M",
-    birthyear: 6,
+    birthdate: 6,
     categories: {
       name: "medisch",
       info: [{
@@ -390,7 +390,7 @@ app.post("/api/setup", function(req,res){
           firstname: child.firstname,
           lastname: child.lastname,
           gender: child.gender,
-          birthyear: child.birthyear
+          birthdate: child.birthdate
         })
         //save each child to db
         tempChild.save(function(err){
@@ -511,7 +511,7 @@ app.post("/api/children/update", function(req, res) {
       child.firstname = req.body.firstname;
       child.lastname = req.body.lastname;
       child.gender = req.body.gender;
-      child.birthyear = req.body.birthyear;
+      child.birthdate = req.body.birthdate;
       child.categories = req.body.categories;
 
 
@@ -545,7 +545,7 @@ app.post("/api/child/:id", function(req, res, next){
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         gender: req.body.gender,
-        birthyear: req.body.birthyear,
+        birthdate: req.body.birthdate,
       });
 
       console.log(newChild);
