@@ -4,11 +4,13 @@ import { User } from '../models/user';
 import { Child } from '../models/child';
 import { Parent } from '../../app/models/parent';
 import { AuthenticationService } from '../services/authentication-service.service';
+import { ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-child-info',
   templateUrl: './child-info.component.html',
-  styleUrls: ['./child-info.component.css']
+  styleUrls: ['./child-info.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ChildInfoComponent implements OnInit {
   user: User;

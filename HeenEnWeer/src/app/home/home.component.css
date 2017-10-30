@@ -12,3 +12,6 @@ body{
     display:inline;
   }
 }
+.login-overlay{
+  visibility: hidden;
+}

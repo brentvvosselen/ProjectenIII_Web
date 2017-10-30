@@ -1,7 +1,7 @@
 <div class="container-fluid">
 
-
-    <div class="center">
+    <h2 class="center page-title">Home</h2>
+   <!-- <div class="center">
         <br>
         <div class="jumbotron">
             <a href="#" class="visible-xs" data-toggle="offcanvas">
@@ -10,16 +10,22 @@
             <h1>Welkom bij oogappl</h1>
             <p>Dit is een platform speciaal gemaakt voor co-ouderschap.</p>
         </div>
-
+    -->
         <!--display all homepage templates if user has done setup-->
         <div *ngIf="currentUser?.doneSetup == true">
             <div class="row">
                 <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Kindinfo</h2>
-                    <p>Bekijk of wijzig hier de informatie van je kind of kinderen.</p>
-                    <p>
-                        <a class="btn btn-default" routerLink="/children" routerLinkActive="active">Bekijk »</a>
-                    </p>
+                    <div class="card">
+                        <div class="card-content">
+                                <h2>Kindinfo</h2>
+                                <p>Bekijk of wijzig hier de informatie van je kind of kinderen.</p>
+                                <p>
+                                    <a class="btn btn-default" routerLink="/children" routerLinkActive="active">Bekijk »</a>
+                                </p>
+                    
+                        </div>
+                           
+                    
                 </div>
             </div>
         </div>

@@ -23,6 +23,10 @@ body{
   }
 }
 */
+
+.login-overlay{
+    visibility: hidden;
+}
 .form-item select{
     border: none;
     outline: none;
@@ -83,6 +87,10 @@ body{
 .card.card-form {
     width: 80%;
     margin: 0 auto 3em;
+}
+.card-form-title{
+    width:80%;
+    margin:1em auto;
 }
 
 .card .form-item input {
@@ -176,6 +184,9 @@ body{
     }
     .card.card-form {
         width: 400px;
+    }
+    .card-form-title{
+        width:400px;
     }
     .card .form-item input {
         font-size: 2rem;
@@ -409,6 +420,12 @@ h1,h2{
 .w-10{
     width:10rem;
 }
+
+.card-content{
+    margin-left:2em;
+    margin-bottom:2em;
+}
+
 
 /*PROFILE*/
 .card-img-left{
