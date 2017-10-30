@@ -20,6 +20,7 @@ var Group = require('./server/app/models/group.js');
 var Child = require('./server/app/models/child.js');
 var Invitee = require('./server/app/models/invitee.js');
 
+
 var PARENTS_COLLECTION = "parents";
 var USERS_COLLECTION = "users";
 var CHILDREN_COLLECTION = "children";
@@ -93,7 +94,7 @@ app.get('/setup', function(req, res){
     firstname: "Koen",
     lastname: "Aarschot",
     gender: "M",
-    birthdate: 4,
+    birthdate: new Date(),
     categories: {
       name: "medisch",
       info: [{
@@ -110,7 +111,7 @@ app.get('/setup', function(req, res){
     firstname: "Ella",
     lastname: "Aarschot",
     gender: "M",
-    birthdate: 6,
+    birthdate: new Date(),
     categories: {
       name: "medisch",
       info: [{
@@ -137,7 +138,7 @@ app.get('/setup', function(req, res){
   });
 
   var newParent = new Parents({
-    type: "M",    
+    type: "M",
     email: "jess@aarschot.be",
     firstname: "Jess",
     lastname: "Aarschot",
@@ -558,7 +559,7 @@ app.post("/api/child/:id", function(req, res, next){
           next(handleError(res, "Child already exists"));
         }
       });
-      
+
       group.children.push(newChild);
 
       group.save(function(err){
@@ -569,7 +570,7 @@ app.post("/api/child/:id", function(req, res, next){
 
       res.json("succes");
     });
-    
+
   })
 });
 
