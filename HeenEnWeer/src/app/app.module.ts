@@ -26,6 +26,10 @@ import { SetupComponent } from './setup/setup.component';
 import { ChildAddComponent } from './child-info/child-add/child-add.component';
 import { FormWizardModule } from 'angular2-wizard';
 import { ChildAddFormComponent } from './setup/child-add-form/child-add-form.component';
+import {MatDatepickerModule, MatNativeDateModule} from '@angular/material';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {DatePickerModule} from "angular-io-datepicker";
+
 
 @NgModule({
   declarations: [
@@ -56,16 +60,19 @@ import { ChildAddFormComponent } from './setup/child-add-form/child-add-form.com
     FormsModule,
     ReactiveFormsModule,
     FormWizardModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    NoopAnimationsModule,
     RouterModule.forRoot([
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},
-      { path: "parents", component:ParentsListComponent},
-      { path: "profiel", component:ProfielComponent},
-      { path: "profiel/edit", component:ProfileEditComponent},
-      { path: "children", component:ChildInfoComponent},
-      { path: "children/add", component:ChildAddComponent},
+      { path: "parents", component:ParentsListComponent, canActivate: [AuthGuard]},
+      { path: "profiel", component:ProfielComponent, canActivate: [AuthGuard]},
+      { path: "profiel/edit", component:ProfileEditComponent, canActivate: [AuthGuard]},
+      { path: "children", component:ChildInfoComponent, canActivate: [AuthGuard]},
+      { path: "children/add", component:ChildAddComponent, canActivate: [AuthGuard]},
       { path: "register/invite/:key", component:InviteRegisterComponent},
-      { path: "setup", component:SetupComponent},
+      { path: "setup", component:SetupComponent, canActivate: [AuthGuard]},
       { path: "", component:HomeComponent, canActivate: [AuthGuard]},
       { path: "**", redirectTo: "" },
     ])
