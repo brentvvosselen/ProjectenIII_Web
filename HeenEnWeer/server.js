@@ -572,7 +572,7 @@ app.post("/api/child/:id", function(req, res, next){
         }
       });
 
-      res.json("succes");
+      res.json(newChild);
     });
 
   })
