@@ -27,7 +27,6 @@ import { ChildAddComponent } from './child-info/child-add/child-add.component';
 import { FormWizardModule } from 'angular2-wizard';
 import { ChildAddFormComponent } from './setup/child-add-form/child-add-form.component';
 import {MatDatepickerModule, MatNativeDateModule} from '@angular/material';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {DatePickerModule} from "angular-io-datepicker";
 
 
@@ -62,7 +61,6 @@ import {DatePickerModule} from "angular-io-datepicker";
     FormWizardModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    NoopAnimationsModule,
     RouterModule.forRoot([
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},
