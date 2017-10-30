@@ -18,42 +18,22 @@ export class ProfileEditComponent implements OnInit {
   submitted = false;
   user: User;
   model: Parent;
-
-  
   //gebruiken van currentUser in de html voor de waarden
   currentUser: Parent;
 
-
   profielForm : FormGroup;
-  //addressStreet = new FormControl();
 
   constructor(private fb: FormBuilder, private authenticationService: AuthenticationService, private parentService: ParentService,private router: Router) {
     this.user = authenticationService.getUser();
-    //this.createForm();
   }
 
   ngOnInit() {
-    this.getParentFromUserEmail(this.user.email);
-   
-  }
-
-  createForm() {
-    this.profielForm = this.fb.group({
-      addressStreet: '',
-    });
-  }
-
-  //roept api call op via parentservice
-  private getParentFromUserEmail(email: string){
-    this.parentService.getByEmail(email).map(
-      (response) => this.currentUser = response).subscribe(data => {
-        this.model = this.currentUser;      
-      });
+    this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);    
   }
 
   edit(){
     var updatedUser = this.currentUser;
-    updatedUser['addressStreet'] = this.model.addressStreet;
+    //updatedUser['addressStreet'] = this.model.addressStreet;
     updatedUser['addressCity'] = this.model.addressCity;
     updatedUser['addressNumber'] = this.model.addressNumber;
     updatedUser['addressPostalcode'] =  this.model.addressPostalcode;
@@ -69,6 +49,4 @@ export class ProfileEditComponent implements OnInit {
 
     this.router.navigate(["/profiel"]);
   }
-
-  //get addressStreet() { return this.profielForm.get('addressStreet'); }
 }

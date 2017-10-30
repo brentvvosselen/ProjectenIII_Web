@@ -4,6 +4,7 @@ import { AuthenticationService } from '../services/authentication-service.servic
 import { User } from '../models/user';
 import { ParentService } from '../services/parent.service';
 import { Parent } from '../models/parent';
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'app-navbar',
@@ -27,8 +28,8 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authenticationService.getUser();
     this.userIsLoggedIn = this.user != undefined;
-    this.getParentFromUserEmail(this.user.email);
-    this.getSex();
+    console.log(this.authenticationService.getUser().email);
+    this.parentService.getByEmail(this.authenticationService.getUser().email).subscribe(user => (this.currentUser = user));
   }
 
   logout($event): void {
@@ -39,17 +40,5 @@ export class NavbarComponent implements OnInit {
         window.location.reload();
       }
     });
-  }
-
-  //roept een api call op via parentservice.. Dit deel werkt wel -> kijk in de console -> probeer een object van de data te maken
-  private getParentFromUserEmail(email: string) {
-    this.parentService.getByEmail(email).map(
-      (response) => this.currentUser = response).subscribe(data => {
-        this.gender = data.type;
-      });
-  }
-
-  getSex() {
-    return this.gender;
   }
 }

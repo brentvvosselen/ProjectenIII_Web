@@ -24,18 +24,11 @@ export class ProfielComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getParentFromUserEmail(this.user.email);
+    this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
   }
 
 
   getParents():void{
     this.parentService.getAll().map(response => this.parents = response);
-  }
-
-  private getParentFromUserEmail(email: string){
-    this.parentService.getByEmail(email).map(
-      (response) => this.currentUser = response).subscribe(data => {
-        console.log(data);
-      });
   }
 }

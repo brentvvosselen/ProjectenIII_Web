@@ -5,14 +5,22 @@ import { HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/map'
 import { AsyncLocalStorage } from 'angular-async-local-storage';
 import { User } from '../models/user';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class AuthenticationService {
     private headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
     userIsloggedIn: EventEmitter<boolean>;
 
+
+    private loggedIn = new BehaviorSubject<boolean>(false);
+
     constructor(private http: Http) {
          this.userIsloggedIn = new EventEmitter();
+    }
+
+    get userIsLoggedIn(){
+        return this.loggedIn.asObservable();
     }
     
     login(email: string, password: string) {
@@ -26,11 +34,12 @@ export class AuthenticationService {
                 // login successful if there's a jwt token in the response
                 let user = response.json();
                 if (user && user.token) {
-                    console.log(user);
+                    //console.log(user);
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     validCredentials = true;
                 }
+                this.loggedIn.next(true);
                 this.userIsloggedIn.emit(validCredentials);
                 return user;
             });

@@ -5,6 +5,7 @@ import { UserService } from '../services/user-service.service';
 import { ViewEncapsulation } from '@angular/core';
 import { ParentService } from '../services/parent.service';
 import { AuthenticationService } from '../services/authentication-service.service';
+import { Parent } from '../models/parent';
 
 @Component({
     moduleId: module.id,
@@ -14,7 +15,7 @@ import { AuthenticationService } from '../services/authentication-service.servic
 })
 
 export class HomeComponent implements OnInit {
-    currentUser: User;
+    currentUser: Parent;
     user: User;
 
     constructor(private userService: UserService, private authenticationService: AuthenticationService, private parentService: ParentService) {
@@ -22,13 +23,6 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getParentFromUserEmail(this.user.email);
-    }
-
-    private getParentFromUserEmail(email: string) {
-        this.parentService.getByEmail(email).map(
-            (response) => this.currentUser = response).subscribe(data => {
-                console.log(data);
-            });
+        this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
     }
 }
