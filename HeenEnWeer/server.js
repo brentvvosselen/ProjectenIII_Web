@@ -20,6 +20,7 @@ var Group = require('./server/app/models/group.js');
 var Child = require('./server/app/models/child.js');
 var Invitee = require('./server/app/models/invitee.js');
 
+
 var PARENTS_COLLECTION = "parents";
 var USERS_COLLECTION = "users";
 var CHILDREN_COLLECTION = "children";
@@ -94,6 +95,7 @@ app.get('/setup', function(req, res){
     lastname: "Aarschot",
     gender: "M",
     birthdate: new Date(),
+<<<<<<< HEAD
     categories: [{
         name: "medisch",
         info: [{
@@ -105,6 +107,16 @@ app.get('/setup', function(req, res){
           name: "Schoenmaat",
           value: "32"
         }]
+=======
+    categories: {
+      name: "medisch",
+      info: [{
+        name: "Schoenmaat",
+        value: "32"
+      }, {
+        name: "Bloedgroep",
+        value: "AB+"
+>>>>>>> f4bd0b1d358650f8f20ffb63cc9fb612c538105d
       }]
     });
 
@@ -113,7 +125,11 @@ app.get('/setup', function(req, res){
     lastname: "Aarschot",
     gender: "M",
     birthdate: new Date(),
+<<<<<<< HEAD
     categories: [{
+=======
+    categories: {
+>>>>>>> f4bd0b1d358650f8f20ffb63cc9fb612c538105d
       name: "medisch",
       info: [{
         name: "Bloedgroep",
@@ -141,7 +157,7 @@ app.get('/setup', function(req, res){
   });
 
   var newParent = new Parents({
-    type: "M",    
+    type: "M",
     email: "jess@aarschot.be",
     firstname: "Jess",
     lastname: "Aarschot",
@@ -562,7 +578,7 @@ app.post("/api/child/:id", function(req, res, next){
           next(handleError(res, "Child already exists"));
         }
       });
-      
+
       group.children.push(newChild);
 
       group.save(function(err){
@@ -573,7 +589,7 @@ app.post("/api/child/:id", function(req, res, next){
 
       res.json("succes");
     });
-    
+
   })
 });
 
