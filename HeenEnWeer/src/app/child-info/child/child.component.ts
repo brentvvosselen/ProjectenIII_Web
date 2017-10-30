@@ -50,6 +50,15 @@ export class ChildComponent implements OnInit {
     console.log("CHANGED");
     this.categories[catIndex].info[infoIndex].value = value;
   }
+
+  addCategorie(naam : string){
+    var node: category = {
+      name: naam,
+      info: []
+    };
+    this.categories.push(node);
+    this.saveChanges();
+  }
 }
 
 interface category {

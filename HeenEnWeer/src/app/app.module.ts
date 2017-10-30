@@ -28,6 +28,7 @@ import { FormWizardModule } from 'angular2-wizard';
 import { ChildAddFormComponent } from './setup/child-add-form/child-add-form.component';
 import {MatDatepickerModule, MatNativeDateModule} from '@angular/material';
 import {DatePickerModule} from "angular-io-datepicker";
+import { ChildEditComponent } from './child-info/child-edit/child-edit.component';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import {DatePickerModule} from "angular-io-datepicker";
     SetupComponent,
     ChildAddComponent,
     ChildAddFormComponent,
+    ChildEditComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

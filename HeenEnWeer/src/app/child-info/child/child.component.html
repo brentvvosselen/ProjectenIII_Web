@@ -1,26 +1,17 @@
 <div>
   <br>
   <div class="card">
-      <h3>{{model?.firstname}} {{model?.lastname}}</h3>
+    <h3>{{model?.firstname}} {{model?.lastname}}</h3>
     <div *ngFor="let c of categories; let ci = index">
-      {{c.name}}
+      <h5>{{c.name}}</h5>
       <div *ngFor="let i of c.info; let ii = index">
-        <label for="{{i.name}}">{{i.name}}</label>
-        <input type="text" name="{{i.name}}" id="{{i.name}}" value="{{i.value}}" #value (change)="save(ci, ii, value.value)"><br>
-        <button class="btn btn-default" (click)="delete(ci, i)"> Delete </button>
-      </div>
-  
-      <div>
-        Nieuwe Info:
-        <label for="infoNodeName">Infotype: </label>
-        <input type="text" name="infoNodeName" id="infoNodeName" #name>
-        <label for="infoNodeValue">Info: </label>
-        <input type="text" name="infoNodeValue" id="infoNodeValue" #value><br>
-        <button class="btn btn-default" (click)="addInfoNode(ci, name.value, value.value)"> Add </button>
+        <label>{{i.name}}:</label>
+        <label>{{i.value}}</label>
       </div>
     </div>
-  
-    <button class="btn btn-default" (click)="saveChanges()"> Save </button>
+    <label>Geslacht: {{model?.gender}}</label>
+    <label>Geboortedatum: {{model?.birthdate}}</label>
+    
   </div>
  <br>
 </div>

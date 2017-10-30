@@ -93,34 +93,38 @@ app.get('/setup', function(req, res){
     firstname: "Koen",
     lastname: "Aarschot",
     gender: "M",
-    birthdate: 4,
-    categories: {
-      name: "medisch",
-      info: [{
-        name: "Schoenmaat",
-        value: "32"
-      }, {
-        name: "Bloedgroep",
-        value: "AB+"
+    birthdate: new Date(),
+    categories: [{
+        name: "medisch",
+        info: [{
+          name: "Bloedgroep",
+          value: "AB+"
+        }]},{
+        name: "persoonlijk",
+        info: [{
+          name: "Schoenmaat",
+          value: "32"
+        }]
       }]
-    }
-  });
+    });
 
   var child2 = new Child({
     firstname: "Ella",
     lastname: "Aarschot",
     gender: "M",
-    birthdate: 6,
-    categories: {
+    birthdate: new Date(),
+    categories: [{
       name: "medisch",
+      info: [{
+        name: "Bloedgroep",
+        value: "AB+"
+      }]},{
+      name: "persoonlijk",
       info: [{
         name: "Schoenmaat",
         value: "32"
-      }, {
-        name: "Bloedgroep",
-        value: "A-"
       }]
-    }
+    }]
   });
 
   var group1 = new Group({
