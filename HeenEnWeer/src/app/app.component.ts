@@ -13,13 +13,5 @@ import { Observable } from 'rxjs/Observable';
 })
 export class AppComponent {
   title = 'app';
-
-    user : User;
-    isLoggedIn$: Observable<boolean>;
-
-    constructor(private authenticationService: AuthenticationService) {
-      this.isLoggedIn$ = this.authenticationService.userIsLoggedIn;
-      console.log(this.isLoggedIn$);
-    }
-
+    constructor(private authenticationService: AuthenticationService) {}
 }

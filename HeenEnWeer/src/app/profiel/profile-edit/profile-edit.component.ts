@@ -28,12 +28,16 @@ export class ProfileEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);    
+    this.parentService.getByEmail(this.user.email).subscribe(user => 
+      {
+        this.currentUser = user,
+        this.model = user;
+      });   
   }
 
   edit(){
     var updatedUser = this.currentUser;
-    //updatedUser['addressStreet'] = this.model.addressStreet;
+    updatedUser['addressStreet'] = this.model.addressStreet;
     updatedUser['addressCity'] = this.model.addressCity;
     updatedUser['addressNumber'] = this.model.addressNumber;
     updatedUser['addressPostalcode'] =  this.model.addressPostalcode;
