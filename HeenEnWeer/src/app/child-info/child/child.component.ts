@@ -20,7 +20,13 @@ export class ChildComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.model);
-
+    var date = new Date(this.model.birthdate);
+    console.log(date);
+    var day = date.getDate();
+    var month = date.getMonth();
+    var year = date.getFullYear();
+    var myFormattedDate = day + " - " + month + " - " + year;
+    this.model.birthdate = myFormattedDate;
     this.categories = this.model.categories;
     console.log(this.categories);
   }
