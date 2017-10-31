@@ -19,6 +19,8 @@ var Parents = require('./server/app/models/parent.js');
 var Group = require('./server/app/models/group.js');
 var Child = require('./server/app/models/child.js');
 var Invitee = require('./server/app/models/invitee.js');
+var Event = require('./server/app/models/event.js');
+var Category = require('./server/app/models/category.js');
 
 
 var PARENTS_COLLECTION = "parents";
@@ -579,6 +581,58 @@ app.post("/api/child/:id", function(req, res, next){
     });
 
   })
+});
+
+
+//fake aanmaken van een agenda om te testen, email meegeven als param 
+app.get("/api/agenda/setup/:email",function(req,res,next){
+  Parents.findOne({
+    email: req.params.email
+  },function(err,parent){
+    if(err){
+      handleError(err,"Could not find parent");
+    }else{
+      console.log(parent);
+      Group.findOne({
+        _id : parent.group
+      },function(err,group){
+        if(err){
+          handleError(err, "Could not find group of parent");
+        }else{
+
+          //create category
+          var category = new Category({
+            type: "School",
+            color: "#F3F3F3"
+          });
+          //save category
+          category.save(function(err){
+            if(err){
+              handleError(err,"Category could not be saved");
+            }
+          });
+          //create test event
+          var event = new Event({
+            title: 'Test event',
+            datetime: new Date(),
+            category: category
+          });
+          group.categories.push(category);
+          group.events.push(event);
+          event.save(function(err){
+            if(err){
+              handleError(err,"event could not be saved");
+            }
+          });
+          group.save(function(err){
+            if(err){
+              handleError(err,"group could not be saved");
+            }
+          });
+        }
+      });
+    }
+  });
 });
 
 //VOORBEELD VOOR JWT AUTHENTICATED ROUTE
