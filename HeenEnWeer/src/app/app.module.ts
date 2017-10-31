@@ -29,7 +29,9 @@ import { ChildAddFormComponent } from './setup/child-add-form/child-add-form.com
 import {MatDatepickerModule, MatNativeDateModule} from '@angular/material';
 import {DatePickerModule} from "angular-io-datepicker";
 import { ChildEditComponent } from './child-info/child-edit/child-edit.component';
-
+import { CalendarComponent } from './calendar/calendar.component';
+import { CalendarModule } from 'angular-calendar';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import { ChildEditComponent } from './child-info/child-edit/child-edit.component
     ChildAddComponent,
     ChildAddFormComponent,
     ChildEditComponent,
+    CalendarComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -63,6 +66,8 @@ import { ChildEditComponent } from './child-info/child-edit/child-edit.component
     FormWizardModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    NgbModalModule.forRoot(),
+    CalendarModule.forRoot(),
     RouterModule.forRoot([
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},
@@ -72,6 +77,7 @@ import { ChildEditComponent } from './child-info/child-edit/child-edit.component
       { path: "children", component:ChildInfoComponent, canActivate: [AuthGuard]},
       { path: "children/add", component:ChildAddComponent, canActivate: [AuthGuard]},
       { path: "register/invite/:key", component:InviteRegisterComponent},
+      { path: "calendar", component:CalendarComponent},
       { path: "setup", component:SetupComponent, canActivate: [AuthGuard]},
       { path: "", component:HomeComponent, canActivate: [AuthGuard]},
       { path: "**", redirectTo: "" },

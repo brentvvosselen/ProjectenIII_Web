@@ -28,6 +28,10 @@
       <a routerLink="/children" routerLinkActive="active">Kindinfo</a>
     </li>
     <li>
+      <span *ngIf="router.url === '/calendar'" class="current bg-blue-gradient"></span>
+      <a routerLink="/calendar" routerLinkActive="active">Kalender</a>
+    </li>
+    <li>
       <a href="#" (click)="logout($event)">Logout</a>
     </li>
   </ul>
