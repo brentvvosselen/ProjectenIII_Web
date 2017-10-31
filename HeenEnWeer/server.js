@@ -480,7 +480,9 @@ app.post("/api/invite",function(req,res){
   //maak nieuwe user aan
   var newUser = new Users({
     email: req.body.email,
-    password: req.body.password
+    password: req.body.password,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname
   });
   //maak nieuwe parent aan
   var newParent = new Parents({
@@ -488,7 +490,8 @@ app.post("/api/invite",function(req,res){
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     group: req.body.key,
-    type: req.body.gender
+    type: req.body.gender,
+    doneSetup: true
   });
   //save the user
   newUser.save(function(err){
