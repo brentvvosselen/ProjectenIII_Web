@@ -585,7 +585,7 @@ app.post("/api/child/:id", function(req, res, next){
 
 
 //fake aanmaken van een agenda om te testen, email meegeven als param 
-app.get("/api/agenda/setup/:email",function(req,res,next){
+app.get("/api/calendar/setup/:email",function(req,res,next){
   Parents.findOne({
     email: req.params.email
   },function(err,parent){
@@ -615,6 +615,7 @@ app.get("/api/agenda/setup/:email",function(req,res,next){
           var event = new Event({
             title: 'Test event',
             datetime: new Date(),
+            description: 'This is a test event',
             category: category
           });
           group.categories.push(category);
@@ -634,6 +635,35 @@ app.get("/api/agenda/setup/:email",function(req,res,next){
     }
   });
 });
+
+//get all the events from a user with categories (date, title, category color, category name)
+app.get("/api/calendar/getall/:email",function(req,res){
+  Parents.findOne({
+    email: req.params.email
+  }).populate({
+    path: 'group',
+    model: 'Group',
+    populate:{
+      path: 'events',
+      model:'Events',
+      select: ['title','datetime','category'],
+      populate:{
+        path: 'category',
+        model: 'Category'
+      }
+    }
+  })
+  .exec(function(err,parent){
+    if(err){
+      res.status(500).send("Parent could not be retrieved");
+      //handleError(err,"parent could not be retrieved");
+    }else{
+      
+      res.json(parent.group.events);
+    }
+  });
+});
+
 
 //VOORBEELD VOOR JWT AUTHENTICATED ROUTE
 app.get("/api/secret", passport.authenticate('jwt', { session: false }), function(req, res){
