@@ -658,8 +658,44 @@ app.get("/api/calendar/getall/:email",function(req,res){
       res.status(500).send("Parent could not be retrieved");
       //handleError(err,"parent could not be retrieved");
     }else{
-      
       res.json(parent.group.events);
+    }
+  });
+});
+
+//toevoegen categorie
+app.post("/api/category/add/:email",function(req,res){
+  Parents.findOne({
+    email: req.params.email
+  }).populate({
+    path: 'group',
+    model: 'Group',
+    populate:{
+      path: 'category',
+      model: 'Category'
+    }
+  }).exec(function(err,parent){
+    if(err){
+      res.status(500).send("Parent could not be retrieved");
+    }else{
+      var category = new Category({
+        type: req.body.name,
+        color: req.body.color
+      });
+      category.save(function(err){
+        if(err){
+          handleError(err,'Category could not be saved');
+        }
+      });
+      var group = parent.group;
+      group.categories.push(category);
+      group.save(function(err){
+        if(err){
+          handleError(err,'Category could not be added');
+        }else{
+          res.json("Succes");
+        }
+      });
     }
   });
 });
