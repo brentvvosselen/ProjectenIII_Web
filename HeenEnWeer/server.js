@@ -663,6 +663,19 @@ app.get("/api/calendar/getall/:email",function(req,res){
   });
 });
 
+//get one event with all the data
+app.get("/api/calendar/event/:id",function(req,res){
+  Event.findOne({
+    _id: req.params.id
+  }).populate('category').exec(function(err,event){
+    if(err){
+      handleError(err)
+    }else{
+      res.json(event);
+    }
+  });
+});
+
 //toevoegen categorie
 app.post("/api/category/add/:email",function(req,res){
   Parents.findOne({
@@ -696,6 +709,26 @@ app.post("/api/category/add/:email",function(req,res){
           res.json("Succes");
         }
       });
+    }
+  });
+});
+
+//get all categories of user
+app.get("/api/category/:email",function(req,res){
+  Parents.findOne({
+    email: req.params.email
+  }).populate({
+    path:'group',
+    model:'Group',
+    populate:{
+      path:'categories',
+      model:'Category'
+    }
+  }).exec(function(err,parent){
+    if(err){
+      handleError(err,"Could not retrieve parent");
+    }else{
+      res.json(parent.group.categories);
     }
   });
 });
