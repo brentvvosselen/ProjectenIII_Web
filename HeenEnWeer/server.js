@@ -658,7 +658,10 @@ app.get("/api/calendar/getall/:email",function(req,res){
       res.status(500).send("Parent could not be retrieved");
       //handleError(err,"parent could not be retrieved");
     }else{
-      res.json(parent.group.events);
+      //return the events in order of date, 
+      res.json(parent.group.events.sort(function(a,b){
+        return a.datetime > b.datetime;
+      }));
     }
   });
 });
