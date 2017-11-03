@@ -32,7 +32,7 @@ import { ChildEditComponent } from './child-info/child-edit/child-edit.component
 import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarModule } from 'angular-calendar';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { DemoUtilsModule } from './demo-utils/module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,6 +68,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     MatNativeDateModule,
     NgbModalModule.forRoot(),
     CalendarModule.forRoot(),
+    DemoUtilsModule,
     RouterModule.forRoot([
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},
