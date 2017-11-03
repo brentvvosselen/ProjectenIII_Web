@@ -15,7 +15,7 @@ var EventSchema = new Schema({
         type: String,
         required: false
     },
-    category:{type: Schema.ObjectId, ref: 'Category'}
+    category:{type: Schema.ObjectId, ref: 'Category', required: true}
 });
 
 module.exports = mongoose.model('Events',EventSchema);

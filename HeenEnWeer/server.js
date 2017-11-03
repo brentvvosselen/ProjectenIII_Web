@@ -679,6 +679,41 @@ app.get("/api/calendar/event/:id",function(req,res){
   });
 });
 
+//toevoegen event
+app.post("/api/calendar/event/add/:email",function(req,res){
+  Parents.findOne({
+    email: req.params.email
+  }).populate({
+    path: 'group',
+    model: 'Group'
+    }).exec(function(err,parent){
+      if(err){
+        handleError(err,"Could not retrieve parent");
+      }else{
+        var event = new Event({
+          title: req.body.title,
+          datetime: req.body.datetime,
+          description: req.body.description,
+          category: req.body.categoryid
+        });
+        parent.group.events.push(event);
+        //save event
+        event.save(function(err){
+          if(err) handleError(err,"Could not save event");
+        });
+
+        parent.group.save(function(err){
+          if(err){
+            handleError(err,"Could not save group");
+          } 
+          else {
+            res.json("event added");
+          }
+        })
+      }
+    });
+});
+
 //toevoegen categorie
 app.post("/api/category/add/:email",function(req,res){
   Parents.findOne({
