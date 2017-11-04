@@ -81,7 +81,7 @@ export class CalendarComponent implements OnInit{
   events: CalendarEvent[] = [
     {
       start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
+      end: new Date(),
       title: 'A 3 day event',
       color: colors.red,
       actions: this.actions
@@ -122,9 +122,14 @@ export class CalendarComponent implements OnInit{
   }
 
   ngOnInit(){
+    this.addEvent();
     this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
-    this.parentService.getEvents(this.user.email).subscribe(data => this.events = data);
+    this.parentService.getEvents(this.user.email).subscribe(data => {
+      this.events = data;
+      console.log(data);
+    });
   }
+
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
