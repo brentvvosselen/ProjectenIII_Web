@@ -3,6 +3,8 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 import { Parent } from '../../app/models/parent';
 import { Child } from '../models/child';
+import { Observable } from 'rxjs/Observable';
+import { CalendarEvent } from 'angular-calendar';
 
 @Injectable()
 export class ParentService {
@@ -51,6 +53,10 @@ export class ParentService {
 
     saveSetup(model :any){
         return this.http.post("http://127.0.0.1:5000/api/setup", model, this.jwt()).map((response: Response) => response.json());
+    }
+
+    getEvents(email: string){
+        return this.http.get("http://127.0.0.1:5000/api/calendar/getall/" + email, this.jwt()).map((response: Response) => response.json());
     }
 
     // private helper methods

@@ -22,6 +22,10 @@ import {
   CalendarEventAction,
   CalendarEventTimesChangedEvent
 } from 'angular-calendar';
+import { ParentService } from '../services/parent.service';
+import { AuthenticationService } from '../services/authentication-service.service';
+import { User } from '../models/user';
+import { Parent } from '../models/parent';
 
 const colors: any = {
   red: {
@@ -44,7 +48,7 @@ const colors: any = {
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css'],
 })
-export class CalendarComponent{
+export class CalendarComponent implements OnInit{
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
   view: string = 'month';
@@ -110,7 +114,17 @@ export class CalendarComponent{
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: NgbModal) {}
+  user: User;
+  currentUser: Parent;
+
+  constructor(private modal: NgbModal, private parentService: ParentService, private authenticationService: AuthenticationService) {
+    this.user = authenticationService.getUser();
+  }
+
+  ngOnInit(){
+    this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
+    this.parentService.getEvents(this.user.email).subscribe(data => this.events = data);
+  }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
