@@ -12,6 +12,7 @@ var morgan = require("morgan");
 var hash = require('password-hash');
 var passport	= require('passport');
 var localStorage = require('node-localstorage').localStorage;
+var moment = require('moment');
 
 var config = require('./server/config.js');
 var Users = require('./server/app/models/user.js');
@@ -676,6 +677,68 @@ app.get("/api/calendar/event/:id",function(req,res){
     }else{
       res.json(event);
     }
+  });
+});
+
+//get next event
+app.get("/api/calendar/event/next/:email",function(req,res){
+
+  Parents.findOne({
+    email: req.params.email
+  }).populate({
+    path:'group',
+    model:'Group',
+    populate:{
+      path:'events',
+      model:'Events',
+      select: ['title','datetime','category'],
+      populate:{
+        path:'category',
+        model:'Category'
+      }
+    }
+  }).exec(function(err,parent){
+    if(err){
+      handleError(err,"Could not retrieve events");
+    }else{
+      var events = parent.group.events;
+      var ev2 = events.filter(e => e.datetime > moment(new Date()).toDate());
+      ev2.sort(function(a,b){
+        return a.datetime > b.datetime
+      });
+      res.json(ev2[0]);
+     }
+  });
+
+});
+
+//get events from a date
+app.post("/api/calendar/event/date/:date",function(req,res){
+  var startDate = moment(req.params.date).startOf('day');
+  var endDate = moment(startDate).add(1,'days');
+
+  console.log(startDate);
+  console.log(endDate);
+  Parents.findOne({
+    email: req.body.email
+  }).populate({
+    path:'group',
+    model:'Group',
+    populate:{
+        path: 'events',
+        model:'Events',
+        select: ['title','datetime','category'],
+        populate:{
+          path: 'category',
+          model: 'Category'
+        }
+    }
+  }).exec(function(err,parent){
+    if(err){
+      handleError(err,"Could not retrieve events");
+    }
+    var events = parent.group.events.filter(e => e.datetime > startDate.toDate() && e.datetime < endDate.toDate());
+    res.send(events);
   });
 });
 
