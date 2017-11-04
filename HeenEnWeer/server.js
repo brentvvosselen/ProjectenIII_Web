@@ -700,14 +700,12 @@ app.get("/api/calendar/event/next/:email",function(req,res){
 });
 
 //get events from a date
-app.post("/api/calendar/event/date/:date",function(req,res){
+app.get("/api/calendar/event/date/:email/:date",function(req,res){
   var startDate = moment(req.params.date).startOf('day');
   var endDate = moment(startDate).add(1,'days');
 
-  console.log(startDate);
-  console.log(endDate);
   Parents.findOne({
-    email: req.body.email
+    email: req.params.email
   }).populate({
     path:'group',
     model:'Group',
