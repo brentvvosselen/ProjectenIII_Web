@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
@@ -27,12 +28,13 @@ import { ChildAddComponent } from './child-info/child-add/child-add.component';
 import { FormWizardModule } from 'angular2-wizard';
 import { ChildAddFormComponent } from './setup/child-add-form/child-add-form.component';
 import {MatDatepickerModule, MatNativeDateModule} from '@angular/material';
-import {DatePickerModule} from "angular-io-datepicker";
 import { ChildEditComponent } from './child-info/child-edit/child-edit.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarModule } from 'angular-calendar';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { DemoUtilsModule } from './demo-utils/module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +60,7 @@ import { DemoUtilsModule } from './demo-utils/module';
   ],
   imports: [
     BrowserModule,
-    NgbModule,
+    NgbModule.forRoot(),
     HttpModule,
     HttpClientModule,
     FormsModule,
@@ -66,6 +68,7 @@ import { DemoUtilsModule } from './demo-utils/module';
     FormWizardModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    CommonModule,
     NgbModalModule.forRoot(),
     CalendarModule.forRoot(),
     DemoUtilsModule,

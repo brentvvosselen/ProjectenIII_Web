@@ -38,7 +38,7 @@ export const DATE_TIME_PICKER_CONTROL_VALUE_ACCESSOR: any = {
             ngbDatepicker
             #datePicker="ngbDatepicker">
             <div class="input-group-addon" (click)="datePicker.toggle()" >
-              <i class="fa fa-calendar"></i>
+              <i class="material-icons">perm_contact_calendar</i>
             </div>
         </div>
       </div>
