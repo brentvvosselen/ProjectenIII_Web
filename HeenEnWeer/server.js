@@ -368,17 +368,17 @@ app.post("/api/parents/edit", function(req,res){
 
 
 //setup
-app.post("/api/setup", function(req,res){
+app.post("/api/setup", function(req,res,next){
   Parents.findOne({
     email: req.body.email
   }, function(err,parent){
     if(err){
-      handleError(res,err.message,"Could not find parent");
+      next(handleError(res,err.message,"Could not find parent"));
     }else{
       //type parent instellen
       var currentType = req.body.currentType;
       if(currentType != "F" && currentType != "M"){
-        handleError(res, "Could not update parent: F/M fout parent", "Usertype does not exist. must be 'F' or 'M'", 400);
+        next(handleError(res, "Could not update parent: F/M fout parent", "Usertype does not exist. must be 'F' or 'M'", 400));
       }
       parent.type = currentType;
       //aanmaken uitgenodigde
@@ -391,11 +391,11 @@ app.post("/api/setup", function(req,res){
       });
 
       //put children in an array
-      var children = [];
+      var tempChildren = [];
       req.body.children.forEach(function(child){
         //if the gender is not F or M give an error
         if(child.gender != "F" && child.gender != "M"){
-          handleError(res, "Could not update parent: F/M fout child", "Usertype does not exist. must be 'F' or 'M'", 400);
+          next(handleError(res, "Could not update parent: F/M fout child", "Usertype does not exist. must be 'F' or 'M'", 400));
         }
         var tempChild = new Child({
           firstname: child.firstname,
@@ -406,49 +406,36 @@ app.post("/api/setup", function(req,res){
         //save each child to db
         tempChild.save(function(err){
           if(err){
-            handleErr(res,err.message,"Could not save children");
+            next(handleError(res,err.message,"Could not save children"));
             console.log("CHILDREN SAVED");
           }
         });
-        children.push(tempChild);
+        tempChildren.push(tempChild);
       });
 
-      //find group of parent and add children to the group
-      Group.findOne({
-        _id: parent.group
-      },function(err,group){
-        if(err){
-          handleErr(res,err.message,"Could not find group");
-        }else{
-          //there are no children in db before setup
-          group.children = children;
-          //save the group to the db
-          group.save(function(err){
-            if(err)
-            handleError(res,err.message,"Could not add children to group");
-            console.log("CHILDREN ADDED");
-          });
-        }
-      });
+      parent.group.children = tempChildren;
 
       parent.doneSetup = true;
       parent.save(function(err){
-        if(err)
-        handleError(res,err.message,"Could not update parent");
+        if(err) next(handleError(res,err.message,"Could not update parent"));
         console.log("PARENT SAVED");
       });
 
       invitee.save(function(err){
-        if(err)
-        handleError(res,err.message,"Could not invite other parent");
+        if(err) next(handleError(res,err.message,"Could not invite other parent"));
         console.log("INVITEE ADDED");
       });
 
       //send a mail to the invitee
       sendMail(invitee);
 
-      res.json("SETUP COMPLETE");
+      console.log("PARENT: " + parent);
+
+      res.json("Succesfull");
     }
+  }).populate({
+    path: 'group',
+    populate: { path: 'children' }
   });
 });
 
@@ -585,7 +572,7 @@ app.post("/api/child/:id", function(req, res, next){
 });
 
 
-//fake aanmaken van een agenda om te testen, email meegeven als param 
+//fake aanmaken van een agenda om te testen, email meegeven als param
 app.get("/api/calendar/setup/:email",function(req,res,next){
   Parents.findOne({
     email: req.params.email
@@ -659,7 +646,7 @@ app.get("/api/calendar/getall/:email",function(req,res){
       res.status(500).send("Parent could not be retrieved");
       //handleError(err,"parent could not be retrieved");
     }else{
-      //return the events in order of date, 
+      //return the events in order of date,
       res.json(parent.group.events.sort(function(a,b){
         return a.datetime > b.datetime;
       }));
@@ -768,7 +755,7 @@ app.post("/api/calendar/event/add/:email",function(req,res){
         parent.group.save(function(err){
           if(err){
             handleError(err,"Could not save group");
-          } 
+          }
           else {
             res.json("event added");
           }
