@@ -7,10 +7,6 @@ var EventSchema = new Schema({
         type: String,
         required: true
     },
-    datetime:{
-        type: Date,
-        required: true
-    },
     description:{
         type: String,
         required: false

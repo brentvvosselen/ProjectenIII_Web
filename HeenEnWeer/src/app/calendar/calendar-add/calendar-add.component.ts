@@ -52,24 +52,6 @@ export class CalendarAddComponent implements OnInit {
   ngOnInit() {
     this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
     
-    this.parentService.getEvents(this.user.email).subscribe(data => {
-      for(var event in data){
-        console.log(data);
-        var calendarEvent = {
-          "start" : new Date(data[event]["start"]),
-          "end" : new Date(data[event]["end"]),
-          "actions": this.actions,
-          "title" : data[event]["title"],
-          "color": data[event]["category"]["color"]
-        }
-
-        this.events.push(calendarEvent);
-        
-      }
-      console.log(this.events);
-      this.refresh.next();
-    });
-    console.log(this.events);
   }
 
   addEvent(): void {
@@ -88,8 +70,9 @@ export class CalendarAddComponent implements OnInit {
   }
 
   save(){
-    this.currentUser.group.events = this.events;
-    this.parentService.update(this.currentUser).subscribe(data => console.log(data));
+    for(var event in this.events){
+      this.parentService.addEvent(event,this.user.email).subscribe(data => console.log(data))
+    }
     this.router.navigate(["/calendar"]);
   }
   

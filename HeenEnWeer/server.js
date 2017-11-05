@@ -652,7 +652,7 @@ app.get("/api/calendar/getall/:email",function(req,res){
       console.log(parent.group.events);
       //return the events in order of date,
       res.json(parent.group.events.sort(function(a,b){
-        return a.datetime > b.datetime;
+        return a.start > b.start;
       }));
     }
   });
@@ -682,7 +682,7 @@ app.get("/api/calendar/event/next/:email",function(req,res){
     populate:{
       path:'events',
       model:'Events',
-      select: ['title','datetime','category'],
+      select: ['title','end','start','category'],
       populate:{
         path:'category',
         model:'Category'
@@ -693,9 +693,9 @@ app.get("/api/calendar/event/next/:email",function(req,res){
       handleError(err,"Could not retrieve events");
     }else{
       var events = parent.group.events;
-      var ev2 = events.filter(e => e.datetime > moment(new Date()).toDate());
+      var ev2 = events.filter(e => e.start > moment(new Date()).toDate());
       ev2.sort(function(a,b){
-        return a.datetime > b.datetime;
+        return a.start < b.start;
       });
       res.json(ev2[0]);
      }
@@ -716,7 +716,7 @@ app.get("/api/calendar/event/date/:email/:date",function(req,res){
     populate:{
         path: 'events',
         model:'Events',
-        select: ['title','datetime','category'],
+        select: ['title','end','start','category'],
         populate:{
           path: 'category',
           model: 'Category'
@@ -726,9 +726,9 @@ app.get("/api/calendar/event/date/:email/:date",function(req,res){
     if(err){
       handleError(err,"Could not retrieve events");
     }
-    var events = parent.group.events.filter(e => e.datetime > startDate.toDate() && e.datetime < endDate.toDate());
+    var events = parent.group.events.filter(e => e.stary <= startDate.toDate() && e.datetime >= endDate.toDate());
     res.send(events.sort(function(a,b){
-      return a.datetime > b.datetime;
+      return a.start > b.start;
     }));
   });
 });
@@ -739,14 +739,24 @@ app.post("/api/calendar/event/add/:email",function(req,res){
     email: req.params.email
   }).populate({
     path: 'group',
-    model: 'Group'
+    model: 'Group',
+    populate:{
+      path: 'events',
+      model:'Events',
+      populate:{
+        path: 'category',
+        model: 'Category'
+      }
+    }
     }).exec(function(err,parent){
+      console.log(parent);
       if(err){
         handleError(err,"Could not retrieve parent");
       }else{
         var event = new Event({
           title: req.body.title,
-          datetime: req.body.datetime,
+          start: req.body.start,
+          end: req.body.end,
           description: req.body.description,
           category: req.body.categoryid
         });
