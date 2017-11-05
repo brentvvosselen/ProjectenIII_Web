@@ -33,7 +33,8 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarModule } from 'angular-calendar';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { DemoUtilsModule } from './demo-utils/module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarAddComponent } from './calendar/calendar-add/calendar-add.component'; 
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ChildAddFormComponent,
     ChildEditComponent,
     CalendarComponent,
+    CalendarAddComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -82,6 +84,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       { path: "children/add", component:ChildAddComponent, canActivate: [AuthGuard]},
       { path: "register/invite/:key", component:InviteRegisterComponent},
       { path: "calendar", component:CalendarComponent},
+      { path: "calendar/add", component:CalendarAddComponent},
       { path: "setup", component:SetupComponent, canActivate: [AuthGuard]},
       { path: "", component:HomeComponent, canActivate: [AuthGuard]},
       { path: "**", redirectTo: "" },
