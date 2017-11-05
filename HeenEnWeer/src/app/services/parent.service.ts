@@ -60,7 +60,7 @@ export class ParentService {
     }
 
     addEvent(model:any, email:string){
-        return this.http.post("http://127.0.0.1:5000/api/calendar/event/add/" + email + model, this.jwt()).map((response: Response) => response.json());
+        return this.http.post("http://127.0.0.1:5000/api/calendar/event/add/" + email ,model, this.jwt()).map((response: Response) => response.json());
     }
 
     // private helper methods

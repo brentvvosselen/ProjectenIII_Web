@@ -12,10 +12,11 @@
     
       <thead>
         <tr>
-          <th>Title</th>
-          <th>Starts at</th>
-          <th>Ends at</th>
-          <th>Remove</th>
+          <th>Titel</th>
+          <th>Begint op</th>
+          <th>Eindigt op</th>
+          <th>Verwijder</th>
+          <th>Beschrijving</th>
         </tr>
       </thead>
     
@@ -49,6 +50,13 @@
               Delete
             </button>
           </td>
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="event.description"
+              (keyup)="refresh.next()">
+          </td>
         </tr>
       </tbody>
     
@@ -59,3 +67,6 @@
     (click)="save()">
     Save
   </button>
+
+
+  

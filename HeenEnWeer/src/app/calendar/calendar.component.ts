@@ -93,13 +93,12 @@ export class CalendarComponent implements OnInit{
     this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
     this.parentService.getEvents(this.user.email).subscribe(data => {
       for(var event in data){
-        console.log(data);
         var calendarEvent = {
           "start" : new Date(data[event]["start"]),
           "end" : new Date(data[event]["end"]),
           "actions": this.actions,
           "title" : data[event]["title"],
-          "color": data[event]["category"]["color"]
+          "color": colors.red
         }
 
         this.events.push(calendarEvent);

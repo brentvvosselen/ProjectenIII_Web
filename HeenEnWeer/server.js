@@ -602,7 +602,6 @@ app.get("/api/calendar/setup/:email",function(req,res,next){
           //create test event
           var event = new Event({
             title: 'Test event',
-            datetime: new Date(),
             start: new Date(),
             end: new Date(2017,10,06),
             description: 'This is a test event',

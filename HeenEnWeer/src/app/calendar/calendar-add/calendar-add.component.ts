@@ -9,6 +9,7 @@ import { ParentService } from '../../services/parent.service';
 import { AuthenticationService } from '../../services/authentication-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { Category } from '../../models/category';
 
 @Component({
   selector: 'app-calendar-add',
@@ -67,13 +68,24 @@ export class CalendarAddComponent implements OnInit {
       }
     });
     this.refresh.next();
+    console.log(this.events);
   }
 
   save(){
-    for(var event in this.events){
-      this.parentService.addEvent(event,this.user.email).subscribe(data => console.log(data))
+    for(let event in this.events){
+      console.log(event);
+      var model = {
+        categoryid: "59feec1f48b163357425ef07",
+        end: this.events[event]["end"],
+        start: this.events[event]["start"],
+        title: this.events[event]["title"],
+        description:  this.events[event]["description"]
+      }
+      console.log(model);
+      this.parentService.addEvent(model,this.user.email).subscribe(data => console.log(data))
     }
     this.router.navigate(["/calendar"]);
+    this.refresh.next();
   }
   
   handleEvent(action: string, event: CalendarEvent): void {
