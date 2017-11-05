@@ -52,14 +52,14 @@ export class CalendarAddComponent implements OnInit {
 
   ngOnInit() {
     this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
-    
+    this.addEvent();
   }
 
   addEvent(): void {
     this.events.push({
       title: 'New event',
-      start: startOfDay(new Date()),
-      end: endOfDay(new Date()),
+      start: new Date(),
+      end: new Date(),
       color: colors.red,
       draggable: true,
       resizable: {
@@ -73,7 +73,6 @@ export class CalendarAddComponent implements OnInit {
 
   save(){
     for(let event in this.events){
-      console.log(event);
       var model = {
         categoryid: "59feec1f48b163357425ef07",
         end: this.events[event]["end"],

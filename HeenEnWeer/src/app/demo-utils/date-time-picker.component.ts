@@ -45,7 +45,7 @@ export const DATE_TIME_PICKER_CONTROL_VALUE_ACCESSOR: any = {
     </form>
     <ngb-timepicker
       [(ngModel)]="timeStruct"
-      (ngModelChange)="updateTime()"
+      (ngModelChange)="updateDate()"
       [meridian]="true">
     </ngb-timepicker>
   `,
@@ -100,8 +100,14 @@ export class DateTimePickerComponent implements ControlValueAccessor {
         setDate(this.date, this.dateStruct.day),
         this.dateStruct.month - 1
       ),
-      this.dateStruct.year
+      this.dateStruct.year,
     );
+
+    newDate.setHours(this.timeStruct.hour)
+    newDate.setMinutes(this.timeStruct.minute);
+    newDate.setSeconds(this.timeStruct.second);
+
+    console.log(newDate);
     this.onChangeCallback(newDate);
   }
 
@@ -113,6 +119,7 @@ export class DateTimePickerComponent implements ControlValueAccessor {
       ),
       this.timeStruct.hour
     );
+    console.log(newDate);
     this.onChangeCallback(newDate);
   }
 }
