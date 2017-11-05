@@ -694,7 +694,7 @@ app.get("/api/calendar/event/next/:email",function(req,res){
       var events = parent.group.events;
       var ev2 = events.filter(e => e.datetime > moment(new Date()).toDate());
       ev2.sort(function(a,b){
-        return a.datetime > b.datetime
+        return a.datetime > b.datetime;
       });
       res.json(ev2[0]);
      }
@@ -726,7 +726,9 @@ app.get("/api/calendar/event/date/:email/:date",function(req,res){
       handleError(err,"Could not retrieve events");
     }
     var events = parent.group.events.filter(e => e.datetime > startDate.toDate() && e.datetime < endDate.toDate());
-    res.send(events);
+    res.send(events.sort(function(a,b){
+      return a.datetime > b.datetime;
+    }));
   });
 });
 
