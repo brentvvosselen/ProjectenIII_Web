@@ -15,6 +15,14 @@ var EventSchema = new Schema({
         type: String,
         required: false
     },
+    start:{
+        type: Date,
+        required: true
+    },
+    end:{
+        type: Date,
+        required: true
+    },
     category:{type: Schema.ObjectId, ref: 'Category', required: true}
 });
 
