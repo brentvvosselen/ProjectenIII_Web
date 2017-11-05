@@ -78,39 +78,7 @@ export class CalendarComponent implements OnInit{
 
   refresh: Subject<any> = new Subject();
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: new Date(),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: new Date(),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    }
-  ];
+  events: CalendarEvent[] = [];
 
   activeDayIsOpen: boolean = true;
 
@@ -122,11 +90,23 @@ export class CalendarComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.addEvent();
     this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
     this.parentService.getEvents(this.user.email).subscribe(data => {
-      this.events = data;
-      console.log(data);
+      for(var event in data){
+        console.log(data);
+        var calendarEvent = {
+          "start" : new Date(data[event]["start"]),
+          "end" : new Date(data[event]["end"]),
+          "actions": this.actions,
+          "title" : data[event]["title"],
+          "color": data[event]["category"]["color"]
+        }
+
+        this.events.push(calendarEvent);
+        
+      }
+      console.log(this.events);
+      this.refresh.next();
     });
   }
 

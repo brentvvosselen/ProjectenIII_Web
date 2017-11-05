@@ -604,7 +604,7 @@ app.get("/api/calendar/setup/:email",function(req,res,next){
             title: 'Test event',
             datetime: new Date(),
             start: new Date(),
-            end: new Date(2017,11,06),
+            end: new Date(2017,10,06),
             description: 'This is a test event',
             category: category
           });
@@ -649,6 +649,7 @@ app.get("/api/calendar/getall/:email",function(req,res){
       res.status(500).send("Parent could not be retrieved");
       //handleError(err,"parent could not be retrieved");
     }else{
+      console.log(parent.group.events);
       //return the events in order of date,
       res.json(parent.group.events.sort(function(a,b){
         return a.datetime > b.datetime;
