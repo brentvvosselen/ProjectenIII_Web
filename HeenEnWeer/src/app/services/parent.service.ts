@@ -9,8 +9,10 @@ import { CalendarEvent } from 'angular-calendar';
 @Injectable()
 export class ParentService {
   private headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
-    constructor(private http: Http) { }
-
+      
+    constructor(private http: Http) {
+    }
+    
     getAll() {
         return this.http.get('http://127.0.0.1:5000/api/parents', this.jwt()).map((response: Response) => response.json());
     }
