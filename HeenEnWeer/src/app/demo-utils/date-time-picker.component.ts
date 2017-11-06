@@ -43,6 +43,7 @@ export const DATE_TIME_PICKER_CONTROL_VALUE_ACCESSOR: any = {
         </div>
       </div>
     </form>
+    <br>
     <ngb-timepicker
       [(ngModel)]="timeStruct"
       (ngModelChange)="updateDate()"

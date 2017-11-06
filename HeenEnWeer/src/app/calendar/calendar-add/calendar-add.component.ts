@@ -14,7 +14,8 @@ import { Category } from '../../models/category';
 @Component({
   selector: 'app-calendar-add',
   templateUrl: './calendar-add.component.html',
-  styleUrls: ['./calendar-add.component.css']
+  styleUrls: ['./calendar-add.component.css'],
+  
 })
 export class CalendarAddComponent implements OnInit {
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
@@ -57,7 +58,7 @@ export class CalendarAddComponent implements OnInit {
 
   addEvent(): void {
     this.events.push({
-      title: 'New event',
+      title: 'Nieuw evenement',
       start: new Date(),
       end: new Date(),
       color: colors.red,

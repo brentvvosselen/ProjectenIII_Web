@@ -1,58 +1,62 @@
 <h2 class="center page-title">Evenement toevoegen</h2>
-  <form (ngSubmit)="save()" #eventForm="ngForm">
-    <div *ngFor="let event of events; let index = index">
-
-      <div class="form-item">
-        <label>Titel</label>
-          <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="event.title"
-          (keyup)="refresh.next()"
-          name="title">
-      </div>
-
-      <div class="form-item">
-        <label>Start datum</label>
-        <mwl-demo-utils-date-time-picker 
-          [(ngModel)]="event.start" 
-          (ngModelChange)="refresh.next()"
-          placeholder="Not set" 
-          name="startDate">
-        </mwl-demo-utils-date-time-picker>
-      </div>
-
-      <div class="form-item">
-        <label>Eind datum</label>
-        <mwl-demo-utils-date-time-picker
-          [(ngModel)]="event.end"
-          (ngModelChange)="refresh.next()"
-          placeholder="Not set"
-          name="endDate">
-        </mwl-demo-utils-date-time-picker>
-      </div>
-
-      <div class="form-item">
-        <label>Beschrijving</label>
-          <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="event.description"
-          (keyup)="refresh.next()"
-          name="description">
-      </div>
-  
-  
-      <button
-        class="btn btn-danger"
-        (click)="events.splice(index, 1); refresh.next()">
-        Delete
-      </button>
-      <button class="btn btn-primary pull-right" (click)="save()">
-        Save
-      </button>
-    </div>
-  
-  </form>
+<div class="center">
+    <form class="eventForm" (ngSubmit)="save()" #eventForm="ngForm">
+        <div *ngFor="let event of events; let index = index">
+    
+          <div class="form-item">
+            <label>Titel</label>
+              <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="event.title"
+              (keyup)="refresh.next()"
+              name="title">
+          </div>
+    
+          <div class="form-item">
+            <label>Start datum</label>
+            <mwl-demo-utils-date-time-picker 
+              [(ngModel)]="event.start" 
+              (ngModelChange)="refresh.next()"
+              placeholder="Not set" 
+              name="startDate">
+            </mwl-demo-utils-date-time-picker>
+          </div>
+    
+          <div class="form-item">
+            <label>Eind datum</label>
+            <mwl-demo-utils-date-time-picker
+              [(ngModel)]="event.end"
+              (ngModelChange)="refresh.next()"
+              placeholder="Not set"
+              name="endDate">
+            </mwl-demo-utils-date-time-picker>
+          </div>
+    
+          <div class="form-item">
+            <label>Beschrijving</label>
+              <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="event.description"
+              (keyup)="refresh.next()"
+              name="description"
+              placeholder="beschrijving">
+          </div>
+      
+      
+          <button
+            class="btn btn-danger"
+            (click)="events.splice(index, 1); refresh.next()">
+            Delete
+          </button>
+          <button class="btn btn-primary pull-right" (click)="save()">
+            Save
+          </button>
+        </div>
+      
+      </form>
+</div>
+ 
 
   
