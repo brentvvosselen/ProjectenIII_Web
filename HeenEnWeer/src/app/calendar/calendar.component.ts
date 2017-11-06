@@ -3,7 +3,8 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   TemplateRef,
-  OnInit
+  OnInit,
+  ViewEncapsulation
 } from '@angular/core';
 import {
   startOfDay,
@@ -47,6 +48,7 @@ const colors: any = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css'],
+  encapsulation: ViewEncapsulation.None  
 })
 export class CalendarComponent implements OnInit{
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
@@ -90,7 +92,7 @@ export class CalendarComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
+    this.parentService.getParentByEmail(this.user.email).subscribe(user => this.currentUser = user);
     this.parentService.getEvents(this.user.email).subscribe(data => {
       for(var event in data){
         var calendarEvent = {

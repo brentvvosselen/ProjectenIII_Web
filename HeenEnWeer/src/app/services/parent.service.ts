@@ -12,13 +12,17 @@ export class ParentService {
       
     constructor(private http: Http) {
     }
-    
+
     getAll() {
         return this.http.get('http://127.0.0.1:5000/api/parents', this.jwt()).map((response: Response) => response.json());
     }
 
     getById(id: number) {
         return this.http.get('http://127.0.0.1:5000/api/parents' + id, this.jwt()).map((response: Response) => response.json());
+    }
+
+    getParentByEmail(email: string): Observable<Parent>{
+        return this.http.get('http://127.0.0.1:5000/api/parents' + email, this.jwt()).map((response: Response) => response.json());
     }
 
     getByEmail(email: string){

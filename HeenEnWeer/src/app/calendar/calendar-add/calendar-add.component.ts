@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { startOfDay, endOfDay } from 'date-fns';
 import { colors } from '../../demo-utils/colors';
@@ -15,12 +15,13 @@ import { Category } from '../../models/category';
   selector: 'app-calendar-add',
   templateUrl: './calendar-add.component.html',
   styleUrls: ['./calendar-add.component.css'],
-  
+  encapsulation: ViewEncapsulation.None
 })
 export class CalendarAddComponent implements OnInit {
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
   events: CalendarEvent[] = [];
-  
+  event: any = {};
+
   refresh: Subject<any> = new Subject();
   
   user: User;
@@ -53,12 +54,12 @@ export class CalendarAddComponent implements OnInit {
 
   ngOnInit() {
     this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
-    this.addEvent();
+    this.newEvent();
   }
 
-  addEvent(): void {
-    this.events.push({
-      title: 'Nieuw evenement',
+  newEvent(){
+    this.event = {
+      title: "test",
       start: new Date(),
       end: new Date(),
       color: colors.red,
@@ -66,24 +67,22 @@ export class CalendarAddComponent implements OnInit {
       resizable: {
         beforeStart: true,
         afterEnd: true
-      }
-    });
+      },
+    };
+    console.log("nieuw single event aangemaakt");
     this.refresh.next();
-    console.log(this.events);
   }
 
   save(){
-    for(let event in this.events){
-      var model = {
-        categoryid: "59feec1f48b163357425ef07",
-        end: this.events[event]["end"],
-        start: this.events[event]["start"],
-        title: this.events[event]["title"],
-        description:  this.events[event]["description"]
-      }
-      console.log(model);
-      this.parentService.addEvent(model,this.user.email).subscribe(data => console.log(data))
+    var model = {
+      categoryid: "59feec1f48b163357425ef07",
+      end: this.event.end,
+      start: this.event.start,
+      title: this.event.title,
+      description:  this.event.description
     }
+    console.log("log");
+    this.parentService.addEvent(model,this.user.email).subscribe(data => console.log(data))
     this.router.navigate(["/calendar"]);
     this.refresh.next();
   }

@@ -1,7 +1,7 @@
 <h2 class="center page-title">Evenement toevoegen</h2>
 <div class="center">
     <form class="eventForm" (ngSubmit)="save()" #eventForm="ngForm">
-        <div *ngFor="let event of events; let index = index">
+        <div>
     
           <div class="form-item">
             <label>Titel</label>
@@ -50,7 +50,7 @@
             (click)="events.splice(index, 1); refresh.next()">
             Delete
           </button>
-          <button class="btn btn-primary pull-right" (click)="save()">
+          <button class="btn btn-primary pull-right" type="submit">
             Save
           </button>
         </div>
