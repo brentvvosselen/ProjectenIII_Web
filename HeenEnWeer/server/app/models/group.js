@@ -7,8 +7,24 @@ var Category = require("./category");
 var GroupSchema = new Schema({
     children: [{type: Schema.ObjectId, ref: 'Child'}],
     events: [{type: Schema.ObjectId, ref: 'Event'}],
-    categories: [{type: Schema.ObjectId, ref: 'Category'}]
-
+    categories: [{type: Schema.ObjectId, ref: 'Category'}],
+    finance: {
+      fintype: {
+        type: String,
+        required: true
+      },
+      accepted: [{type: Schema.ObjectId, ref: 'Parent'}],
+      kindrekening: {
+        maxBedrag: {
+          type: Number
+        }
+      },
+      onderhoudsbijdrage: {
+        onderhoudsgerechtigde: {type: Schema.ObjectId, ref: 'Parent'},
+        onderhoudsplichtige: {type: Schema.ObjectId, ref: 'Parent'},
+        percentage: { type: Number }
+      }
+    }
   });
 
 module.exports = mongoose.model('Group',GroupSchema);
