@@ -109,6 +109,8 @@ export class CalendarComponent implements OnInit{
       console.log(this.events);
       this.refresh.next();
     });
+
+    this.refresh.subscribe();
   }
 
 

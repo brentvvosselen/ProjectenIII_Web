@@ -110,11 +110,12 @@ body{
 .button-login {
     text-align: center;
     margin-top: 2em;
+    margin-bottom: 2em;
 }
 
 .button-login input {
     color: white;
-    font-size: 1.5rem;
+    font-size: 1rem;
     padding: 1rem;
     width: 80%;
     background: none;
@@ -189,7 +190,7 @@ body{
         width:400px;
     }
     .card .form-item input {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
     .form-title {
         width: 400px;

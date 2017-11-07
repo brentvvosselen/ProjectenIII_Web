@@ -43,7 +43,16 @@
               name="description"
               placeholder="beschrijving">
           </div>
-      
+
+          <div class="form-item">
+              <label>Categorie</label>
+              <select #selectElem (change)="setCat(selectElem.value)">
+                  <option *ngFor="let cat of categories" [value]="cat.color" ng-style="color: cat.color">
+                      <label [style.color]="cat.color">{{cat.type}}</label>
+                      <div [style.background]="cat.color"></div>
+                  </option>
+              </select>
+            </div>
       
           <button
             class="btn btn-danger"
@@ -61,22 +70,43 @@
      
 </div>
 
-<h5>Categoriën</h5>
+<h5>Alle categoriën</h5>
+<div *ngFor="let c of categories">
+    {{c.type}}
+</div>
+<br>
 <form>
-  <div *ngFor="let category of categories">
-    {{category.type}}
-  </div>
+  
 
-  <input 
-    type="text"
-    
-    name="type"
-    placeholder="type categorie">
   <button
   class="btn btn-primary"
-  (click)="addCategory">
-  Voeg categorie toe
-</button>
+  (click)="newCategory()">
+  Voeg nieuwe categorie toe
+  </button>
+
+  <div *ngIf="category">
+      <input 
+      type="text"
+      [(ngModel)]="category.name"    
+      name="name"
+      placeholder="naam categorie">
+  
+    <input [(colorPicker)]="category.color"
+      [style.background]="category.color"
+      [value]="color"
+      [cpOKButton]="true"
+      [cpSaveClickOutside]="false"
+      [(ngModel)]="category.color"
+      name="color"
+      [cpOKButtonClass]= "'btn btn-primary btn-xs'"/>
+    
+    <button
+      class="btn btn-primary"
+      (click)="addCategory()">
+      Ok
+    </button>
+  </div>
+  
 </form>
  
 

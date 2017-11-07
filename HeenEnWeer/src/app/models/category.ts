@@ -1,5 +1,5 @@
 export class Category {
-    type: String;
+    name: String;
     color: String;
     constructor(){}
   }

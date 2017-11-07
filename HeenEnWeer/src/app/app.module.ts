@@ -35,6 +35,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { DemoUtilsModule } from './demo-utils/module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarAddComponent } from './calendar/calendar-add/calendar-add.component'; 
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { CalendarAddComponent } from './calendar/calendar-add/calendar-add.compo
     NgbModalModule.forRoot(),
     CalendarModule.forRoot(),
     DemoUtilsModule,
+    ColorPickerModule,
     RouterModule.forRoot([
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},
