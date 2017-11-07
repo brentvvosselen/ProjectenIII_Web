@@ -22,7 +22,6 @@ export class NavbarComponent implements OnInit {
     authenticationService.userIsLoggedIn.subscribe(isLoggedIn => {
       this.userIsLoggedIn = isLoggedIn;
       this.user = authenticationService.getUser();
-      console.log('loggedin status update');
       if(this.userIsLoggedIn){
         this.parentService.getByEmail(this.user.email).subscribe(user => (this.currentUser = user));     
       }
