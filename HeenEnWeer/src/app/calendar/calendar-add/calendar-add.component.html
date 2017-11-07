@@ -56,7 +56,28 @@
         </div>
       
       </form>
+
+
+     
 </div>
+
+<h5>Categoriën</h5>
+<form>
+  <div *ngFor="let category of categories">
+    {{category.type}}
+  </div>
+
+  <input 
+    type="text"
+    
+    name="type"
+    placeholder="type categorie">
+  <button
+  class="btn btn-primary"
+  (click)="addCategory">
+  Voeg categorie toe
+</button>
+</form>
  
 
   

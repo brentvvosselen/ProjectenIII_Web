@@ -19,17 +19,19 @@ export class NavbarComponent implements OnInit {
   gender: string;
 
   constructor(private authenticationService: AuthenticationService, private router: Router, private parentService: ParentService) {
-    authenticationService.userIsloggedIn.subscribe(isLoggedIn => {
+    authenticationService.userIsLoggedIn.subscribe(isLoggedIn => {
       this.userIsLoggedIn = isLoggedIn;
       this.user = authenticationService.getUser();
+      console.log('loggedin status update');
+      if(this.userIsLoggedIn){
+        this.parentService.getByEmail(this.user.email).subscribe(user => (this.currentUser = user));     
+      }
     });
   }
 
   ngOnInit(): void {
     this.user = this.authenticationService.getUser();
     this.userIsLoggedIn = this.user != undefined;
-    console.log(this.authenticationService.getUser().email);
-    this.parentService.getByEmail(this.authenticationService.getUser().email).subscribe(user => (this.currentUser = user));
   }
 
   logout($event): void {

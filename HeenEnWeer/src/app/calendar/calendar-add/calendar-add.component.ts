@@ -21,6 +21,8 @@ export class CalendarAddComponent implements OnInit {
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
   events: CalendarEvent[] = [];
   event: any = {};
+  categories: any[] = [];
+  category: Category;
 
   refresh: Subject<any> = new Subject();
   
@@ -54,6 +56,10 @@ export class CalendarAddComponent implements OnInit {
 
   ngOnInit() {
     this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
+    this.parentService.getCategories(this.user.email).subscribe(data => {
+      this.categories = data;
+      console.log(this.categories);
+    });
     this.newEvent();
   }
 
@@ -90,5 +96,9 @@ export class CalendarAddComponent implements OnInit {
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
+  }
+
+  addCategory(){
+    this.categories.push(this.category);
   }
 }

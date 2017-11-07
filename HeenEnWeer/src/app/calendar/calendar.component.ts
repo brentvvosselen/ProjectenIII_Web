@@ -92,7 +92,7 @@ export class CalendarComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.parentService.getParentByEmail(this.user.email).subscribe(user => this.currentUser = user);
+    this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
     this.parentService.getEvents(this.user.email).subscribe(data => {
       for(var event in data){
         var calendarEvent = {
