@@ -22,6 +22,7 @@
               name="startDate">
             </mwl-demo-utils-date-time-picker>
           </div>
+
     
           <div class="form-item">
             <label>Eind datum</label>
@@ -47,18 +48,11 @@
           <div class="form-item">
               <label>Categorie</label>
               <select #selectElem (change)="setCat(selectElem.value)">
-                  <option *ngFor="let cat of categories" [value]="cat.color" ng-style="color: cat.color">
-                      <label [style.color]="cat.color">{{cat.type}}</label>
-                      <div [style.background]="cat.color"></div>
+                  <option *ngFor="let cat of categories" [value]="cat.type">
+                    <label>{{cat.type}}</label>
                   </option>
               </select>
             </div>
-      
-          <button
-            class="btn btn-danger"
-            (click)="events.splice(index, 1); refresh.next()">
-            Delete
-          </button>
           <button class="btn btn-primary pull-right" type="submit">
             Save
           </button>
@@ -70,44 +64,38 @@
      
 </div>
 
-<h5>Alle categoriën</h5>
-<div *ngFor="let c of categories">
-    {{c.type}}
+<div class="left">
+    <form>
+        <button
+        class="btn btn-primary"
+        (click)="newCategory()">
+        Voeg nieuwe categorie toe
+        </button>
+      
+        <div *ngIf="category">
+            <input 
+            type="text"
+            [(ngModel)]="category.type"    
+            name="type"
+            placeholder="naam categorie">
+        
+            <input
+            type="color"
+            [(ngModel)]="category.color"
+            (change)="refresh.next()"
+            name="color">
+      
+          <button
+            class="btn btn-primary"
+            (click)="addCategory()">
+            Ok
+          </button>
+        </div>
+        
+      </form>
+       
 </div>
-<br>
-<form>
-  
 
-  <button
-  class="btn btn-primary"
-  (click)="newCategory()">
-  Voeg nieuwe categorie toe
-  </button>
 
-  <div *ngIf="category">
-      <input 
-      type="text"
-      [(ngModel)]="category.name"    
-      name="name"
-      placeholder="naam categorie">
-  
-    <input [(colorPicker)]="category.color"
-      [style.background]="category.color"
-      [value]="color"
-      [cpOKButton]="true"
-      [cpSaveClickOutside]="false"
-      [(ngModel)]="category.color"
-      name="color"
-      [cpOKButtonClass]= "'btn btn-primary btn-xs'"/>
-    
-    <button
-      class="btn btn-primary"
-      (click)="addCategory()">
-      Ok
-    </button>
-  </div>
-  
-</form>
- 
 
   

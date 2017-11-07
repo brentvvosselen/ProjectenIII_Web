@@ -28,7 +28,7 @@ import { AuthenticationService } from '../services/authentication-service.servic
 import { User } from '../models/user';
 import { Parent } from '../models/parent';
 
-const colors: any = {
+var colors: any = {
   red: {
     primary: '#ad2121',
     secondary: '#FAE3E3'
@@ -94,22 +94,32 @@ export class CalendarComponent implements OnInit{
   ngOnInit(){
     this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
     this.parentService.getEvents(this.user.email).subscribe(data => {
+      //loop over alle evenementen in de data
       for(var event in data){
-        var calendarEvent = {
-          "start" : new Date(data[event]["start"]),
-          "end" : new Date(data[event]["end"]),
-          "actions": this.actions,
-          "title" : data[event]["title"],
-          "color": colors.red
+        //maakt nieuw kleur type aan voor automatische display op agenda
+        var _color  = {
+          primary: data[event]["category"]["color"],
+          secondary: data[event]["category"]["color"]
         }
-
+        //initialiseer een kalenderevenement om toe te voegen aan de kalender
+        let calendarEvent : CalendarEvent = {
+          start : new Date(data[event]["start"]),
+          end : new Date(data[event]["end"]),
+          actions: this.actions,
+          title : data[event]["title"],
+          color: _color,
+          draggable: true,
+          resizable: {
+            beforeStart: true,
+            afterEnd: true
+          }
+        }
+        //push van event
         this.events.push(calendarEvent);
-        
       }
       console.log(this.events);
       this.refresh.next();
     });
-
     this.refresh.subscribe();
   }
 

@@ -1,5 +1,6 @@
 export class Category {
-    name: String;
+    _id: number;
+    type: String;
     color: String;
     constructor(){}
   }

@@ -21,8 +21,9 @@ export class CalendarAddComponent implements OnInit {
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
   events: CalendarEvent[] = [];
   event: any = {};
-  categories: any[] = [];
+  categories: Category[] = [];
   category: Category;
+  selectedCategory: Category;
 
   refresh: Subject<any> = new Subject();
   
@@ -55,13 +56,11 @@ export class CalendarAddComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
     this.parentService.getCategories(this.user.email).subscribe(data => {
       this.categories = data;
       console.log(this.categories);
     });
     this.newEvent();
-    //this.newCategory();
   }
 
   newEvent(){
@@ -76,17 +75,18 @@ export class CalendarAddComponent implements OnInit {
         afterEnd: true
       },
     };
-    console.log("nieuw single event aangemaakt");
     this.refresh.next();
   }
 
   newCategory(){
     this.category = new Category();
+    console.log("nieuw categorie");
   }
 
   save(){
+    //console.log(this.category._id);
     var model = {
-      categoryid: "59feec1f48b163357425ef07",
+      categoryid: this.selectedCategory._id,
       end: this.event.end,
       start: this.event.start,
       title: this.event.title,
@@ -104,14 +104,19 @@ export class CalendarAddComponent implements OnInit {
   addCategory(){
     console.log(this.category);
     this.categories.push(this.category);
-    this.parentService.addCategory(this.category, this.user.email).subscribe(data => console.log(data));
-    this.category = new Category();
+    var model : any = {
+      name: this.category.type,
+      color: this.category.color 
+    }
+    this.parentService.addCategory(model, this.user.email).subscribe(data => console.log(data));
+    //this.category = new Category();
   }
 
   setCat(value: string){
-    //this.category.color = value;
-    //console.log(this.category.color);
-    //console.log(this.category);
-    console.log(value);
+    //console.log(value);
+    let obj = this.categories.find(e => e.type === value);
+    //console.log(obj);
+    this.selectedCategory = obj;
+    console.log(this.selectedCategory);
   }
 }

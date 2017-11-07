@@ -74,7 +74,7 @@ export class ParentService {
         return this.http.get("http://127.0.0.1:5000/api/category/" + email, this.jwt()).map((response: Response) => response.json());
     }
 
-    addCategory(category: Category, email:string){
+    addCategory(category: any, email:string){
         return this.http.post("http://127.0.0.1:5000/api/category/add/" + email,category, this.jwt()).map((response: Response) => response.json());        
     }
 
