@@ -21,6 +21,8 @@ export class CalendarAddComponent implements OnInit {
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
   events: CalendarEvent[] = [];
   event: any = {};
+  categories: any[] = [];
+  category: Category;
 
   refresh: Subject<any> = new Subject();
   
@@ -54,7 +56,12 @@ export class CalendarAddComponent implements OnInit {
 
   ngOnInit() {
     this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
+    this.parentService.getCategories(this.user.email).subscribe(data => {
+      this.categories = data;
+      console.log(this.categories);
+    });
     this.newEvent();
+    //this.newCategory();
   }
 
   newEvent(){
@@ -73,6 +80,10 @@ export class CalendarAddComponent implements OnInit {
     this.refresh.next();
   }
 
+  newCategory(){
+    this.category = new Category();
+  }
+
   save(){
     var model = {
       categoryid: "59feec1f48b163357425ef07",
@@ -81,14 +92,26 @@ export class CalendarAddComponent implements OnInit {
       title: this.event.title,
       description:  this.event.description
     }
-    console.log("log");
-    this.parentService.addEvent(model,this.user.email).subscribe(data => console.log(data))
-    this.router.navigate(["/calendar"]);
+    this.parentService.addEvent(model,this.user.email).subscribe(data => this.router.navigate(["/calendar"]));
     this.refresh.next();
   }
   
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
+  }
+
+  addCategory(){
+    console.log(this.category);
+    this.categories.push(this.category);
+    this.parentService.addCategory(this.category, this.user.email).subscribe(data => console.log(data));
+    this.category = new Category();
+  }
+
+  setCat(value: string){
+    //this.category.color = value;
+    //console.log(this.category.color);
+    //console.log(this.category);
+    console.log(value);
   }
 }

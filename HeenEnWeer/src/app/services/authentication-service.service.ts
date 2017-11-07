@@ -10,13 +10,13 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Injectable()
 export class AuthenticationService {
     private headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
-    userIsloggedIn: EventEmitter<boolean>;
+    // userIsloggedIn: EventEmitter<boolean>;
 
 
     private loggedIn = new BehaviorSubject<boolean>(false);
 
     constructor(private http: Http) {
-         this.userIsloggedIn = new EventEmitter();
+        //  this.userIsloggedIn = new EventEmitter();
     }
 
     get userIsLoggedIn(){
@@ -40,7 +40,7 @@ export class AuthenticationService {
                     validCredentials = true;
                 }
                 this.loggedIn.next(true);
-                this.userIsloggedIn.emit(validCredentials);
+                // this.userIsloggedIn.emit(validCredentials);
                 return user;
             });
     }
@@ -48,7 +48,8 @@ export class AuthenticationService {
     logout(): Promise<boolean> {
         return new Promise(resolve => {
         localStorage.removeItem('currentUser');
-        this.userIsloggedIn.emit(false);
+        this.loggedIn.next(false);
+        // this.userIsloggedIn.emit(false);
         resolve(true);
         });
     }

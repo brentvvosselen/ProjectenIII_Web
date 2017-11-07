@@ -13,7 +13,7 @@
     <div class="form-title">
       <h3 class="text-white">Persoonlijke info</h3>
     </div>
-    <form (ngSubmit)="register()" [formGroup]="registerForm">
+    <form class="registerForm" (ngSubmit)="register()" [formGroup]="registerForm">
       <div class="card card-form">
         <div class="form-item">
           <input id="firstname" class="form-control" type="text" placeholder="Voornaam" formControlName="firstname" />

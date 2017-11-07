@@ -10,6 +10,17 @@ body{
     
 }
 
+.command{
+  margin: 0 auto;
+}
+
+.loginForm{
+  margin: 0 auto;
+}
+
+.button-login input{
+  font-size: 1.5rem !important
+}
 
 @media(min-width: 768px){
   body{
@@ -30,4 +41,8 @@ body{
 
 .login-overlay{
   visibility: visible;
+}
+
+.title-login{
+  margin-top: 50px !important
 }
