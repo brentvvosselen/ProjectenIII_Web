@@ -23,7 +23,6 @@ var Invitee = require('./server/app/models/invitee.js');
 var Event = require('./server/app/models/event.js');
 var Category = require('./server/app/models/category.js');
 
-
 var PARENTS_COLLECTION = "parents";
 var USERS_COLLECTION = "users";
 var CHILDREN_COLLECTION = "children";
@@ -762,12 +761,12 @@ app.post("/api/calendar/event/add/:email",function(req,res){
         parent.group.events.push(event);
         //save event
         event.save(function(err){
-          if(err) handleError(err,"Could not save event");
+          if(err) handleError(res, "Could not save event");
         });
 
         parent.group.save(function(err){
           if(err){
-            handleError(err,"Could not save group");
+            handleError(res, "Could not save group");
           }
           else {
             res.json("event added");
@@ -798,14 +797,14 @@ app.post("/api/category/add/:email",function(req,res){
       });
       category.save(function(err){
         if(err){
-          handleError(err,'Category could not be saved');
+          handleError(res, 'Category could not be saved');
         }
       });
       var group = parent.group;
       group.categories.push(category);
       group.save(function(err){
         if(err){
-          handleError(err,'Category could not be added');
+          handleError(res, 'Category could not be added');
         }else{
           res.json("Succes");
         }
@@ -827,13 +826,69 @@ app.get("/api/category/:email",function(req,res){
     }
   }).exec(function(err,parent){
     if(err){
-      handleError(err,"Could not retrieve parent");
+      handleError(res, "Could not retrieve parent");
     }else{
       res.json(parent.group.categories);
     }
   });
 });
 
+// Add financial information
+app.post("/api/finance", function(req, res, next) {
+  console.log(req.body);
+
+  Parents.findOne({
+    group: req.body._id
+  }).populate({
+    path: 'group',
+    model: 'Group'
+  })
+  .exec(function(err, parent) {
+    if(err || !parent) {
+      handleError(res, err.message);
+    } else {
+      newFinType = {
+        fintype: req.body.fintype.fintype,
+        accepted: req.body.fintype.accepted,
+        kindrekening: null,
+        onderhoudsbijdrage: null
+      }
+
+      if (req.body.fintype.fintype === 'kindrekening' && req.body.fintype.kindrekening.maxBedrag !== 0) {
+        newFinType.kindrekening = {
+          maxBedrag: req.body.fintype.kindrekening.maxBedrag
+        }
+      } else if (req.body.fintype.fintype === 'onderhoudsbijdrage'){
+        newFinType.onderhoudsbijdrage = {
+          onderhoudsgerechtigde: req.body.fintype.onderhoudsbijdrage.onderhoudsgerechtigde,
+          onderhoudsplichtige: req.body.fintype.onderhoudsbijdrage.onderhoudsplichtige,
+          percentage: req.body.fintype.onderhoudsbijdrage.percentage
+        }
+      }
+
+      console.log(newFinType);
+
+      parent.group.finance = newFinType;
+
+      parent.group.save(function(err) {
+        if(err) {
+          handleError(res, 'Error while saving group');
+        } else {
+          console.log("Saving group");
+        }
+      });
+
+      parent.save(function(err) {
+        if(err) {
+          handleError(res, 'Error while saving parent');
+        } else {
+          console.log("Saving parent");
+          res.json(parent.group);
+        }
+      });
+    }
+  });
+});
 
 //VOORBEELD VOOR JWT AUTHENTICATED ROUTE
 app.get("/api/secret", passport.authenticate('jwt', { session: false }), function(req, res){
