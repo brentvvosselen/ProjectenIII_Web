@@ -761,7 +761,7 @@ app.post("/api/calendar/event/add/:email",function(req,res){
         parent.group.events.push(event);
         //save event
         event.save(function(err){
-          if(err) handleError(res, "Could not save event");
+          if(err) handleError(res, "Could not save event", err.message);
         });
 
         parent.group.save(function(err){
@@ -804,11 +804,10 @@ app.post("/api/category/add/:email",function(req,res){
       group.categories.push(category);
       group.save(function(err){
         if(err){
-          handleError(res, 'Category could not be added');
-        }else{
-          res.json("Succes");
+          handleError(res, 'Category could not be added', err.message);
         }
       });
+      res.json(category);
     }
   });
 });

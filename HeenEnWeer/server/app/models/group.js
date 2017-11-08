@@ -11,7 +11,7 @@ var GroupSchema = new Schema({
     finance: {
       fintype: {
         type: String,
-        required: true
+        required: false
       },
       accepted: [{type: Schema.ObjectId, ref: 'Parent'}],
       kindrekening: {

@@ -84,7 +84,6 @@ export class CalendarAddComponent implements OnInit {
   }
 
   save(){
-    //console.log(this.category._id);
     var model = {
       categoryid: this.selectedCategory._id,
       end: this.event.end,
@@ -103,19 +102,19 @@ export class CalendarAddComponent implements OnInit {
 
   addCategory(){
     console.log(this.category);
-    this.categories.push(this.category);
     var model : any = {
       name: this.category.type,
       color: this.category.color 
     }
-    this.parentService.addCategory(model, this.user.email).subscribe(data => console.log(data));
-    //this.category = new Category();
+    this.parentService.addCategory(model, this.user.email).subscribe(data => {
+      console.log(data),
+      this.categories.push(data);      
+      }
+    );
   }
 
   setCat(value: string){
-    //console.log(value);
     let obj = this.categories.find(e => e.type === value);
-    //console.log(obj);
     this.selectedCategory = obj;
     console.log(this.selectedCategory);
   }
