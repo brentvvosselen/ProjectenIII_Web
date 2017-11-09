@@ -111,6 +111,7 @@ export class CalendarAddComponent implements OnInit {
       this.categories.push(data);      
       }
     );
+    this.category = null;
   }
 
   setCat(value: string){
