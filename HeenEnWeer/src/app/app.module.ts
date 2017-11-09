@@ -36,6 +36,8 @@ import { DemoUtilsModule } from './demo-utils/module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarAddComponent } from './calendar/calendar-add/calendar-add.component'; 
 import { ColorPickerModule } from 'ngx-color-picker';
+import { CostsComponent } from './costs/costs.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
     ChildEditComponent,
     CalendarComponent,
     CalendarAddComponent,
+    CostsComponent,
+    PageNotFoundComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -85,11 +89,12 @@ import { ColorPickerModule } from 'ngx-color-picker';
       { path: "children", component:ChildInfoComponent, canActivate: [AuthGuard]},
       { path: "children/add", component:ChildAddComponent, canActivate: [AuthGuard]},
       { path: "register/invite/:key", component:InviteRegisterComponent},
-      { path: "calendar", component:CalendarComponent},
-      { path: "calendar/add", component:CalendarAddComponent},
+      { path: "calendar", component:CalendarComponent, canActivate: [AuthGuard]},
+      { path: "calendar/add", component:CalendarAddComponent, canActivate: [AuthGuard]},
+      { path: "costs", component:CostsComponent, canActivate: [AuthGuard]},
       { path: "setup", component:SetupComponent, canActivate: [AuthGuard]},
       { path: "", component:HomeComponent, canActivate: [AuthGuard]},
-      { path: "**", redirectTo: "" },
+      { path: "**", component:PageNotFoundComponent},
     ])
   ],
   providers: [AuthenticationService, ParentService, UserService, AuthGuard, FormBuilder, ],
