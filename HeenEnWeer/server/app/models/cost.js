@@ -12,10 +12,10 @@ var CostSchema = new Schema({
         required: false
     },
     amount: {
-        type: number,
+        type: Number,
         required: true
     },
-    data:{
+    date:{
         type:Date,
         required: true
     },
