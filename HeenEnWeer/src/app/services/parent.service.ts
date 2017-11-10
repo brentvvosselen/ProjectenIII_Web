@@ -6,6 +6,7 @@ import { Child } from '../models/child';
 import { Observable } from 'rxjs/Observable';
 import { CalendarEvent } from 'angular-calendar';
 import { Category } from '../models/category';
+import { CostData } from '../costs/costs.component';
 
 @Injectable()
 export class ParentService {
@@ -78,7 +79,7 @@ export class ParentService {
         return this.http.post("http://127.0.0.1:5000/api/category/add/" + email,category, this.jwt()).map((response: Response) => response.json());                 
     }
 
-    getCosts(email: string){
+    getCosts(email: string): Observable<CostData[]>{
         return this.http.get("http://127.0.0.1:5000/api/costs/" + email, this.jwt()).map((response: Response) => response.json());
     }
 

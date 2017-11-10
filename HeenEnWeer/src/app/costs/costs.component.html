@@ -3,31 +3,22 @@
       <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->
   
-      <!-- ID Column -->
-      <ng-container cdkColumnDef="userId">
-        <cdk-header-cell *cdkHeaderCellDef class="example-header-cell"> ID </cdk-header-cell>
-        <cdk-cell *cdkCellDef="let row" class="example-cell"> {{row.id}} </cdk-cell>
+      <!-- Datum Column -->
+      <ng-container cdkColumnDef="date">
+        <cdk-header-cell *cdkHeaderCellDef class="example-header-cell"> Datum </cdk-header-cell>
+        <cdk-cell *cdkCellDef="let row" class="example-cell"> {{row.date}} </cdk-cell>
       </ng-container>
   
-      <!-- Progress Column -->
-      <ng-container cdkColumnDef="progress">
-        <cdk-header-cell *cdkHeaderCellDef class="example-header-cell"> Progress </cdk-header-cell>
-        <cdk-cell *cdkCellDef="let row" class="example-cell"> {{row.progress}}% </cdk-cell>
+      <!-- Beschrijving Column -->
+      <ng-container cdkColumnDef="description">
+        <cdk-header-cell *cdkHeaderCellDef class="example-header-cell"> Beschrijving </cdk-header-cell>
+        <cdk-cell *cdkCellDef="let row" class="example-cell"> {{row.description}} </cdk-cell>
       </ng-container>
   
-      <!-- Name Column -->
-      <ng-container cdkColumnDef="userName">
-        <cdk-header-cell *cdkHeaderCellDef class="example-header-cell"> Name </cdk-header-cell>
-        <cdk-cell *cdkCellDef="let row" class="example-cell"> {{row.name}} </cdk-cell>
-      </ng-container>
-  
-      <!-- Color Column -->
-      <ng-container cdkColumnDef="color">
-        <cdk-header-cell *cdkHeaderCellDef class="example-header-cell">Color</cdk-header-cell>
-        <cdk-cell *cdkCellDef="let row" class="example-cell"
-                  [style.color]="row.color">
-          {{row.color}}
-        </cdk-cell>
+      <!-- Bedrag Column -->
+      <ng-container cdkColumnDef="amount">
+        <cdk-header-cell *cdkHeaderCellDef class="example-header-cell"> Bedrag </cdk-header-cell>
+        <cdk-cell *cdkCellDef="let row" class="example-cell"> {{row.amount}} </cdk-cell>
       </ng-container>
   
       <cdk-header-row *cdkHeaderRowDef="displayedColumns" class="example-header-row"></cdk-header-row>
