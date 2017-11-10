@@ -22,6 +22,8 @@ var Child = require('./server/app/models/child.js');
 var Invitee = require('./server/app/models/invitee.js');
 var Event = require('./server/app/models/event.js');
 var Category = require('./server/app/models/category.js');
+var Costs = require("./server/app/models/cost");
+var CostCategory = require("./server/app/models/costCategory");
 
 var PARENTS_COLLECTION = "parents";
 var USERS_COLLECTION = "users";
@@ -885,6 +887,124 @@ app.post("/api/finance", function(req, res, next) {
           res.json(parent.group);
         }
       });
+    }
+  });
+});
+
+//get all costs of user
+app.get("/api/costs/:email",function(req,res){
+  Parents.findOne({
+    email: req.params.email
+  }).populate({
+    path:'group',
+    model:'Group',
+    populate:{
+      path:'costs',
+      model:'Costs'
+    }
+  }).exec(function(err,parent){
+    if(err){
+      handleError(res, err.message, "could not get costs");
+    }else{
+      res.json(parent.group.costs);
+    }
+  });
+});
+
+//toevoegen kost
+app.post("/api/costs/addCost/:email",function(req,res){
+  Parents.findOne({
+    email: req.params.email
+  }).populate({
+    path: 'group',
+    model: 'Group',
+    populate:{
+      path: 'costs',
+      model: 'Costs'
+    }
+  }).exec(function(err,parent){
+    if(err){
+      handleError(res, err.message);
+    }else{
+     var cost = new Costs({
+      title: req.body.title,
+      description: req.body.description,
+      amount: req.body.amount,
+      date: req.body.date,
+      costCategory: req.body.costCategory
+     })
+      cost.save(function(err){
+        if(err){
+          handleError(res, err.message);
+        }
+      });
+      var group = parent.group;
+      group.costs.push(cost);
+      group.save(function(err){
+        if(err){
+          handleError(res, 'Category could not be added', err.message);
+        }
+      });
+      res.json(cost);
+    }
+  });
+});
+
+//get all categories of costs of user
+app.get("/api/costs/:email",function(req,res){
+  Parents.findOne({
+    email: req.params.email
+  }).populate({
+    path:'group',
+    model:'Group',
+    populate:{
+      path: 'costs',
+      model:'Cost',
+      populate:{
+        path: 'costCategory',
+        model: 'CostCategory'
+      }
+    }
+  }).exec(function(err,parent){
+    if(err){
+      handleError(res, "Could not retrieve parent");
+    }else{
+      res.json(parent.group.costs.costCategory);
+    }
+  });
+});
+
+//toevoegen kostCategorie
+app.post("/api/costs/addCategory/:email",function(req,res){
+  Parents.findOne({
+    email: req.params.email
+  }).populate({
+    path: 'group',
+    model: 'Group',
+    populate:{
+      path: 'costs',
+      model: 'Costs'
+    }
+  }).exec(function(err,parent){
+    if(err){
+      handleError(res, "parent could not be retrieved", err.message);
+    }else{
+      var category = new CostCategory({
+        type: req.body.type,
+      });
+      category.save(function(err){
+        if(err){
+          handleError(res, err.message);
+        }
+      });
+      var group = parent.group;
+      group.costs.costCategory = category;
+      group.save(function(err){
+        if(err){
+          handleError(res, 'Category could not be added', err.message);
+        }
+      });
+      res.json(category);
     }
   });
 });
