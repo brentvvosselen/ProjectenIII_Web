@@ -1,3 +1,27 @@
-<p>
-  costs works!
-</p>
+<div class="example-container mat-elevation-z8">
+    <cdk-table #table [dataSource]="dataSource" class="example-table">
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+  
+      <!-- Datum Column -->
+      <ng-container cdkColumnDef="date">
+        <cdk-header-cell *cdkHeaderCellDef class="example-header-cell"> Datum </cdk-header-cell>
+        <cdk-cell *cdkCellDef="let row" class="example-cell"> {{row.date}} </cdk-cell>
+      </ng-container>
+  
+      <!-- Beschrijving Column -->
+      <ng-container cdkColumnDef="description">
+        <cdk-header-cell *cdkHeaderCellDef class="example-header-cell"> Beschrijving </cdk-header-cell>
+        <cdk-cell *cdkCellDef="let row" class="example-cell"> {{row.description}} </cdk-cell>
+      </ng-container>
+  
+      <!-- Bedrag Column -->
+      <ng-container cdkColumnDef="amount">
+        <cdk-header-cell *cdkHeaderCellDef class="example-header-cell"> Bedrag </cdk-header-cell>
+        <cdk-cell *cdkCellDef="let row" class="example-cell"> {{row.amount}} </cdk-cell>
+      </ng-container>
+  
+      <cdk-header-row *cdkHeaderRowDef="displayedColumns" class="example-header-row"></cdk-header-row>
+      <cdk-row *cdkRowDef="let row; columns: displayedColumns;" class="example-row"></cdk-row>
+    </cdk-table>
+  </div>
