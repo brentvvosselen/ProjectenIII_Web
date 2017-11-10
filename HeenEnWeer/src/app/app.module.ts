@@ -94,6 +94,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
       { path: "costs", component:CostsComponent, canActivate: [AuthGuard]},
       { path: "setup", component:SetupComponent, canActivate: [AuthGuard]},
       { path: "", component:HomeComponent, canActivate: [AuthGuard]},
+      { path: "home", component:HomeComponent, canActivate: [AuthGuard]},      
       { path: "**", component:PageNotFoundComponent},
     ])
   ],
