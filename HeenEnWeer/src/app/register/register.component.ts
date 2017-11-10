@@ -32,6 +32,7 @@ export class RegisterComponent implements OnInit {
     }
 
     register() {
+      console.log("TEST");
         this.loading = true;
 
         this.model = {
