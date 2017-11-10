@@ -386,7 +386,7 @@ app.post("/api/setup", function(req,res,next){
         firstname: req.body.otherFirstname,
         lastname: req.body.otherLastname,
         //linken aan groep van de huidige parent
-        key: parent.group
+        key: parent.group._id
       });
 
       //put children in an array
