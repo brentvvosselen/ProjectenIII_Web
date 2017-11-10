@@ -38,6 +38,8 @@ import { CalendarAddComponent } from './calendar/calendar-add/calendar-add.compo
 import { ColorPickerModule } from 'ngx-color-picker';
 import { CostsComponent } from './costs/costs.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MatTableModule } from "@angular/material/table";
+import {CdkTableModule} from '@angular/cdk/table';
 
 @NgModule({
   declarations: [
@@ -80,6 +82,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     CalendarModule.forRoot(),
     DemoUtilsModule,
     ColorPickerModule,
+    MatTableModule,
+    CdkTableModule,
     RouterModule.forRoot([
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},

@@ -78,6 +78,14 @@ export class ParentService {
         return this.http.post("http://127.0.0.1:5000/api/category/add/" + email,category, this.jwt()).map((response: Response) => response.json());                 
     }
 
+    getCosts(email: string){
+        return this.http.get("http://127.0.0.1:5000/api/costs/" + email, this.jwt()).map((response: Response) => response.json());
+    }
+
+    addCost(cost: any, email:string){
+        return this.http.post("http://127.0.0.1:5000/api/category/add/" + email,cost, this.jwt()).map((response: Response) => response.json());                 
+    }
+
     // private helper methods
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
