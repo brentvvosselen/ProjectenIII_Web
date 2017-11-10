@@ -32,6 +32,10 @@
       <a routerLink="/calendar" routerLinkActive="active">Kalender</a>
     </li>
     <li>
+        <span *ngIf="router.url === '/costs'" class="current bg-blue-gradient"></span>
+        <a routerLink="/costs" routerLinkActive="active">Kosten</a>
+      </li>
+    <li>
       <a href="#" (click)="logout($event)">Logout</a>
     </li>
   </ul>

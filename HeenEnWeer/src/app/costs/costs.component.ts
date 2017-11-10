@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {DataSource} from '@angular/cdk/collections';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
@@ -13,7 +13,8 @@ import { getDate } from 'date-fns';
 @Component({
   selector: 'app-costs',
   templateUrl: './costs.component.html',
-  styleUrls: ['./costs.component.css']
+  styleUrls: ['./costs.component.css'],
+  encapsulation: ViewEncapsulation.None  
 })
 export class CostsComponent implements OnInit {
   displayedColumns = ['date', 'description', 'amount'];
