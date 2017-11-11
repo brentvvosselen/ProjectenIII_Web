@@ -614,7 +614,7 @@ app.get("/api/calendar/setup/:email",function(req,res,next){
             start: new Date(),
             end: new Date(2017,10,06),
             description: 'This is a test event',
-            category: category
+            categoryid: category
           });
           group.categories.push(category);
           group.events.push(event);
@@ -645,9 +645,9 @@ app.get("/api/calendar/getall/:email",function(req,res){
     populate:{
       path: 'events',
       model:'Events',
-      select: ['title','datetime','category', 'start', 'end'],
+      select: ['title','datetime','categoryid', 'start', 'end'],
       populate:{
-        path: 'category',
+        path: 'categoryid',
         model: 'Category'
       }
     }
@@ -670,7 +670,7 @@ app.get("/api/calendar/getall/:email",function(req,res){
 app.get("/api/calendar/event/:id",function(req,res){
   Event.findOne({
     _id: req.params.id
-  }).populate('category').exec(function(err,event){
+  }).populate('categoryid').exec(function(err,event){
     if(err){
       handleError(err)
     }else{
@@ -690,9 +690,9 @@ app.get("/api/calendar/event/next/:email",function(req,res){
     populate:{
       path:'events',
       model:'Events',
-      select: ['title','end','start','category'],
+      select: ['title','end','start','categoryid'],
       populate:{
-        path:'category',
+        path:'categoryid',
         model:'Category'
       }
     }
@@ -726,7 +726,7 @@ app.get("/api/calendar/event/date/:email/:date",function(req,res){
         model:'Events',
         select: ['title','end','start','category'],
         populate:{
-          path: 'category',
+          path: 'categoryid',
           model: 'Category'
         }
     }
@@ -753,7 +753,7 @@ app.put("/api/calendar/event/edit/:id",function(req,res){
     event.description = req.body.description;
     event.start = req.body.start;
     event.end = req.body.end;
-    event.category = req.body.categoryid;
+    event.categoryid = req.body.categoryid;
     event.save(function(err){
       if(err){
         handleError(err, "Could not save event");
@@ -775,7 +775,7 @@ app.post("/api/calendar/event/add/:email",function(req,res){
       path: 'events',
       model:'Events',
       populate:{
-        path: 'category',
+        path: 'categoryid',
         model: 'Category'
       }
     }
@@ -789,7 +789,7 @@ app.post("/api/calendar/event/add/:email",function(req,res){
           start: req.body.start,
           end: req.body.end,
           description: req.body.description,
-          category: req.body.categoryid
+          categoryid: req.body.categoryid
         });
         parent.group.events.push(event);
         //save event
@@ -817,7 +817,7 @@ app.post("/api/category/add/:email",function(req,res){
     path: 'group',
     model: 'Group',
     populate:{
-      path: 'category',
+      path: 'categoryid',
       model: 'Category'
     }
   }).exec(function(err,parent){
@@ -825,22 +825,23 @@ app.post("/api/category/add/:email",function(req,res){
       res.status(500).send("Parent could not be retrieved");
     }else{
       var category = new Category({
-        type: req.body.name,
+        type: req.body.type,
         color: req.body.color
       });
+      console.log(category);
       category.save(function(err){
         if(err){
           handleError(res, 'Category could not be saved');
         }
-      });
-      var group = parent.group;
-      group.categories.push(category);
-      group.save(function(err){
-        if(err){
-          handleError(res, 'Category could not be added', err.message);
-        }
-      });
-      res.json(category);
+        var group = parent.group;
+        group.categories.push(category);
+        group.save(function(err){
+          if(err){
+            handleError(res, 'Category could not be added', err.message);
+          }
+        });
+        res.json("successful");
+      });   
     }
   });
 });
@@ -982,7 +983,7 @@ app.post("/api/costs/addCost/:email",function(req,res){
 });
 
 //get all categories of costs of user
-app.get("/api/costs/:email",function(req,res){
+app.get("/api/costs/categories/:email",function(req,res){
   Parents.findOne({
     email: req.params.email
   }).populate({
