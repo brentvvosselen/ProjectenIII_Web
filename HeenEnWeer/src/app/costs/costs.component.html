@@ -1,7 +1,7 @@
 <h2 class="center page-title">Kosten</h2>
 <div *ngIf="datasource == null">
   <p>Er zijn nog geen kosten toegevoegd, begin nu met het toevoegen van kosten</p>
-  <button class="btn btn-default" ><a routerLink="/costs/add" routerLinkActive="active">Voeg kost toe</a></button>
+  <button class="btn btn-default" (click)="openDialog()">Voeg kost toe</button>
 </div>
 <div *ngIf="datasource">
   <div class="example-container mat-elevation-z8">

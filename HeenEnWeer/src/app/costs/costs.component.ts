@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, Inject } from '@angular/core';
 import {DataSource} from '@angular/cdk/collections';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
@@ -10,6 +10,10 @@ import { AuthenticationService } from '../services/authentication-service.servic
 import { User } from '../models/user';
 import { getDate } from 'date-fns';
 import {MatPaginator} from "@angular/material";
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { Cost } from '../models/cost';
+import { CostAddComponent } from './cost-add/cost-add.component';
+import { CostCategory } from '../models/costCategory';
 
 @Component({
   selector: 'app-costs',
@@ -23,6 +27,9 @@ export class CostsComponent implements OnInit {
   user: User;
   model : any [];
   length: Number;
+  costCategories: CostCategory[] = [];
+  cost: Cost;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   
     /**
@@ -33,13 +40,27 @@ export class CostsComponent implements OnInit {
       //this.dataSource.length = this.paginator;
     }
 
-  constructor(private parentService: ParentService, private authenticationSerivce: AuthenticationService){
+  constructor(private parentService: ParentService, private authenticationSerivce: AuthenticationService, public dialog: MatDialog){
     this.user = this.authenticationSerivce.getUser();
+  }
+
+  openDialog() {
+    this.cost = new Cost();
+    let dialogRef = this.dialog.open(CostAddComponent, {
+      data: {
+        title: this.cost.title, description: this.cost.description, amount: this.cost.amount, date: this.cost.date
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      this.cost = result;
+      console.log(this.cost);
+    });
   }
 
   ngOnInit() {
     this.dataSource = new ExampleDataSource(this.parentService, this.authenticationSerivce);
-    //console.log(this.dataSource.length);
+    
     console.log(this.parentService.getCosts(this.user.email).subscribe(data => this.length = data.length));    
   }
 }

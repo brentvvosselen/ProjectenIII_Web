@@ -41,6 +41,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { MatTableModule } from "@angular/material/table";
 import {CdkTableModule} from '@angular/cdk/table';
 import { CostAddComponent } from './costs/cost-add/cost-add.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -86,6 +90,11 @@ import { CostAddComponent } from './costs/cost-add/cost-add.component';
     ColorPickerModule,
     MatTableModule,
     CdkTableModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
     RouterModule.forRoot([
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},
