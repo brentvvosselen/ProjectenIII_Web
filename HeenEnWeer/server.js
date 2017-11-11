@@ -645,7 +645,7 @@ app.get("/api/calendar/getall/:email",function(req,res){
     populate:{
       path: 'events',
       model:'Events',
-      select: ['title','datetime','categoryid', 'start', 'end'],
+      select: ['title','start','end','categoryid'],
       populate:{
         path: 'categoryid',
         model: 'Category'
@@ -703,7 +703,7 @@ app.get("/api/calendar/event/next/:email",function(req,res){
       var events = parent.group.events;
       var ev2 = events.filter(e => e.start > moment(new Date()).toDate());
       ev2.sort(function(a,b){
-        return a.start < b.start;
+        return a.start > b.start;
       });
       res.json(ev2[0]);
      }
@@ -713,9 +713,11 @@ app.get("/api/calendar/event/next/:email",function(req,res){
 
 //get events from a date
 app.get("/api/calendar/event/date/:email/:date",function(req,res){
-  var startDate = moment(req.params.date).startOf('day');
-  var endDate = moment(startDate).add(1,'days');
-
+  console.log(req.params.date);
+  /*var startDate = moment(req.params.date).startOf('day');
+  var endDate = moment(startDate).add(1,'days');*/
+  var date = new Date(req.params.date);
+  console.log(date);
   Parents.findOne({
     email: req.params.email
   }).populate({
@@ -724,7 +726,7 @@ app.get("/api/calendar/event/date/:email/:date",function(req,res){
     populate:{
         path: 'events',
         model:'Events',
-        select: ['title','end','start','category'],
+        select: ['title','end','start','categoryid'],
         populate:{
           path: 'categoryid',
           model: 'Category'
@@ -734,7 +736,13 @@ app.get("/api/calendar/event/date/:email/:date",function(req,res){
     if(err){
       handleError(err,"Could not retrieve events");
     }
-    var events = parent.group.events.filter(e => e.stary <= startDate.toDate() && e.datetime >= endDate.toDate());
+    
+    //var events = parent.group.events.filter(e => moment(e.start) <= startDate.toDate() && moment(e.end) >= endDate.toDate());
+    var events = parent.group.events.filter(e => 
+      e.start.getFullYear() <= date.getFullYear() && e.end.getFullYear() >= date.getFullYear() 
+      && e.start.getMonth() <= date.getMonth() && e.end.getMonth() >= date.getMonth() 
+      && e.start.getDate() <= date.getDate() && e.end.getDate() >= date.getDate())
+      console.log(events);
     res.send(events.sort(function(a,b){
       return a.start > b.start;
     }));
