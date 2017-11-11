@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import {DataSource} from '@angular/cdk/collections';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
@@ -9,6 +9,7 @@ import { ParentService } from '../services/parent.service';
 import { AuthenticationService } from '../services/authentication-service.service';
 import { User } from '../models/user';
 import { getDate } from 'date-fns';
+import {MatPaginator} from "@angular/material";
 
 @Component({
   selector: 'app-costs',
@@ -20,11 +21,26 @@ export class CostsComponent implements OnInit {
   displayedColumns = ['date', 'description', 'amount'];
   dataSource: ExampleDataSource | null;
   user: User;
+  model : any [];
+  length: Number;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  
+    /**
+     * Set the paginator after the view init since this component will
+     * be able to query its view for the initialized paginator.
+     */
+    ngAfterViewInit() {
+      //this.dataSource.length = this.paginator;
+    }
 
-  constructor(private parentService: ParentService, private authenticationSerivce: AuthenticationService){}
+  constructor(private parentService: ParentService, private authenticationSerivce: AuthenticationService){
+    this.user = this.authenticationSerivce.getUser();
+  }
 
   ngOnInit() {
     this.dataSource = new ExampleDataSource(this.parentService, this.authenticationSerivce);
+    //console.log(this.dataSource.length);
+    console.log(this.parentService.getCosts(this.user.email).subscribe(data => this.length = data.length));    
   }
 }
 
@@ -43,6 +59,8 @@ export interface CostData {
  */
 export class ExampleDataSource extends DataSource<any> {
   user: User;
+  length: Number;
+  
   constructor(private parentService: ParentService, private authenticationService: AuthenticationService) {
     super();
     this.user = this.authenticationService.getUser();
@@ -50,9 +68,10 @@ export class ExampleDataSource extends DataSource<any> {
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
   connect(): Observable<CostData[]> {
-    console.log(this.parentService.getCosts(this.user.email).subscribe(data => console.log(data)));
+    console.log(this.parentService.getCosts(this.user.email).subscribe(data => this.length = data.length));
     return this.parentService.getCosts(this.user.email);
   }
+
 
   disconnect() {}
 }
