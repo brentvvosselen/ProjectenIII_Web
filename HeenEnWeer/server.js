@@ -741,6 +741,29 @@ app.get("/api/calendar/event/date/:email/:date",function(req,res){
   });
 });
 
+//wijzigen event
+app.put("/api/calendar/event/edit/:id",function(req,res){
+  Event.findOne({
+    _id : req.params.id
+  },function(err,event){
+    if(err){
+      handleError(err,"Could not retrieve event");
+    }
+    event.title = req.body.title;
+    event.description = req.body.description;
+    event.start = req.body.start;
+    event.end = req.body.end;
+    event.category = req.body.categoryid;
+    event.save(function(err){
+      if(err){
+        handleError(err, "Could not save event");
+      }
+      res.status(200).send("Event added");
+    });
+  });
+
+});
+
 //toevoegen event
 app.post("/api/calendar/event/add/:email",function(req,res){
   Parents.findOne({
