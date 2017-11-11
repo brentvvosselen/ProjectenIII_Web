@@ -899,6 +899,27 @@ app.post("/api/finance", function(req, res, next) {
   });
 });
 
+app.post("/api/finance/accept", function(req, res, next) {
+  console.log(req.body);
+
+  Parents.findOne({
+    email: req.body.email
+  }).populate({
+    path: 'group',
+    model: 'Group'
+  }).exec(function(err, parent) {
+    parent.group.finance.accepted.push(parent.id);
+    parent.group.finance.accepted = parent.group.finance.accepted.filter(function(n){ return (n != undefined && n != null)});
+
+    parent.group.save(function(err) {
+      if(err) { handleError(res, err.message) }
+      else {
+        res.json("Accepted succesful");
+      }
+    });
+  });
+});
+
 //get all costs of user
 app.get("/api/costs/:email",function(req,res){
   Parents.findOne({
