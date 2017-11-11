@@ -463,43 +463,51 @@ app.post("/api/invite",function(req,res){
   //verwijder uitgenodigde
   Invitee.findOneAndRemove({
     key : req.body.key
-  },function(err,res){
+  },function(err,invitee){
     if(err){
       handleError(res,err.message,"Could not remove invitee");
     }
   });
-  //maak nieuwe user aan
-  var newUser = new Users({
-    email: req.body.email,
-    password: req.body.password,
-    firstname: req.body.firstname,
-    lastname: req.body.lastname
+
+  Group.findOne({
+    _id: req.body.key
+  }, function(err, group) {
+    if(err) { handle(res, err.message, "Could not find group") }
+
+    //maak nieuwe user aan
+    var newUser = new Users({
+      email: req.body.email,
+      password: req.body.password,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname
+    });
+    //maak nieuwe parent aan
+    var newParent = new Parents({
+      email: req.body.email,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      group: group,
+      type: req.body.gender,
+      doneSetup: true
+    });
+
+    //save the user
+    newUser.save(function(err){
+      if(err){
+        handleError(res, "Email bestaat al", "Email already exists.");
+      }
+      console.log("user aangemaakt");
+    });
+    //save the parent
+    newParent.save(function(err){
+      if(err){
+        console.log("Nieuwe parent aanmaken niet gelukt");
+      }else{
+        console.log("Parent aangemaakt");
+      }
+    });
+    res.json("REGISTREERD");
   });
-  //maak nieuwe parent aan
-  var newParent = new Parents({
-    email: req.body.email,
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    group: req.body.key,
-    type: req.body.gender,
-    doneSetup: true
-  });
-  //save the user
-  newUser.save(function(err){
-    if(err){
-      handleError(res, "Email bestaat al", "Email already exists.");
-    }
-    console.log("user aangemaakt");
-  });
-  //save the parent
-  newParent.save(function(err){
-    if(err){
-      console.log("Nieuwe parent aanmaken niet gelukt");
-    }else{
-      console.log("Parent aangemaakt");
-    }
-  });
-  res.json("REGISTREERD");
 });
 
 app.post("/api/children/update", function(req, res) {
@@ -849,21 +857,21 @@ app.post("/api/finance", function(req, res, next) {
       handleError(res, err.message);
     } else {
       newFinType = {
-        fintype: req.body.fintype.fintype,
-        accepted: req.body.fintype.accepted,
+        fintype: req.body.finance.fintype,
+        accepted: req.body.finance.accepted,
         kindrekening: null,
         onderhoudsbijdrage: null
       }
 
-      if (req.body.fintype.fintype === 'kindrekening' && req.body.fintype.kindrekening.maxBedrag !== 0) {
+      if (req.body.finance.fintype === 'kindrekening' && req.body.finance.kindrekening.maxBedrag !== 0) {
         newFinType.kindrekening = {
-          maxBedrag: req.body.fintype.kindrekening.maxBedrag
+          maxBedrag: req.body.finance.kindrekening.maxBedrag
         }
-      } else if (req.body.fintype.fintype === 'onderhoudsbijdrage'){
+      } else if (req.body.finance.fintype === 'onderhoudsbijdrage'){
         newFinType.onderhoudsbijdrage = {
-          onderhoudsgerechtigde: req.body.fintype.onderhoudsbijdrage.onderhoudsgerechtigde,
-          onderhoudsplichtige: req.body.fintype.onderhoudsbijdrage.onderhoudsplichtige,
-          percentage: req.body.fintype.onderhoudsbijdrage.percentage
+          onderhoudsgerechtigde: req.body.finance.onderhoudsbijdrage.onderhoudsgerechtigde,
+          onderhoudsplichtige: req.body.finance.onderhoudsbijdrage.onderhoudsplichtige,
+          percentage: req.body.finance.onderhoudsbijdrage.percentage
         }
       }
 
