@@ -40,6 +40,7 @@ import { CostsComponent } from './costs/costs.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MatTableModule } from "@angular/material/table";
 import {CdkTableModule} from '@angular/cdk/table';
+import { CostAddComponent } from './costs/cost-add/cost-add.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import {CdkTableModule} from '@angular/cdk/table';
     CalendarAddComponent,
     CostsComponent,
     PageNotFoundComponent,
+    CostAddComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -96,6 +98,7 @@ import {CdkTableModule} from '@angular/cdk/table';
       { path: "calendar", component:CalendarComponent, canActivate: [AuthGuard]},
       { path: "calendar/add", component:CalendarAddComponent, canActivate: [AuthGuard]},
       { path: "costs", component:CostsComponent, canActivate: [AuthGuard]},
+      { path: "costs/add", component:CostAddComponent, canActivate: [AuthGuard]},
       { path: "setup", component:SetupComponent, canActivate: [AuthGuard]},
       { path: "", component:HomeComponent, canActivate: [AuthGuard]},
       { path: "home", component:HomeComponent, canActivate: [AuthGuard]},      
