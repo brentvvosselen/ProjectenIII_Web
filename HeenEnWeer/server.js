@@ -766,7 +766,7 @@ app.put("/api/calendar/event/edit/:id",function(req,res){
       if(err){
         handleError(err, "Could not save event");
       }
-      res.status(200).send("Event added");
+      res.json("event saved");
     });
   });
 
