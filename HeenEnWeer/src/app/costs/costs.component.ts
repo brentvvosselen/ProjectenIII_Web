@@ -52,16 +52,13 @@ export class CostsComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
       this.cost = result;
-      console.log(this.cost);
     });
   }
 
   ngOnInit() {
     this.dataSource = new ExampleDataSource(this.parentService, this.authenticationSerivce);
-    
-    console.log(this.parentService.getCosts(this.user.email).subscribe(data => this.length = data.length));    
+    this.parentService.getCosts(this.user.email).subscribe(data => this.length = data.length)    
   }
 }
 

@@ -3,7 +3,7 @@
   <p>Er zijn nog geen kosten toegevoegd, begin nu met het toevoegen van kosten</p>
   <button class="btn btn-default" (click)="openDialog()">Voeg kost toe</button>
 </div>
-<div *ngIf="datasource">
+
   <div class="example-container mat-elevation-z8">
     <mat-table #table [dataSource]="dataSource">
 
@@ -33,4 +33,3 @@
     <md-paginator #paginator [length]="length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25,50, 100]">
       </md-paginator>
   </div>
-</div>

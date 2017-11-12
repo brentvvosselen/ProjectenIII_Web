@@ -45,7 +45,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material';
-
+import {MatSelectModule} from '@angular/material';
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,6 +95,7 @@ import {MatInputModule} from '@angular/material';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
     RouterModule.forRoot([
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},

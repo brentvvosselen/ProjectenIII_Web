@@ -84,7 +84,7 @@ export class ParentService {
     }
 
     addCost(cost: any, email:string){
-        return this.http.post("http://127.0.0.1:5000/api/category/add/" + email,cost, this.jwt()).map((response: Response) => response.json());                 
+        return this.http.post("http://127.0.0.1:5000/api/costs/addCost/" + email,cost, this.jwt()).map((response: Response) => response.json());                 
     }
 
     getCostCategories(email: string){
