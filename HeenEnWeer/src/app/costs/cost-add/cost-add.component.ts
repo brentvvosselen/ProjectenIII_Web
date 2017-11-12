@@ -23,7 +23,7 @@ export class CostAddComponent implements OnInit {
 
   ngOnInit() {
     this.cost = new Cost();
-    this.parentService.getCostCategories(this.user.email).subscribe(data => {console.log(data), this.costCategories = data});
+    this.parentService.getCostCategories(this.user.email).subscribe(data => {this.costCategories = data});
   }
 
   save(){

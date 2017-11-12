@@ -58,7 +58,7 @@ export class CostsComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new ExampleDataSource(this.parentService, this.authenticationSerivce);
-    this.parentService.getCosts(this.user.email).subscribe(data => this.length = data.length)    
+    this.parentService.getCosts(this.user.email).subscribe(data => {this.length = data.length})    
   }
 }
 
@@ -86,7 +86,7 @@ export class ExampleDataSource extends DataSource<any> {
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
   connect(): Observable<CostData[]> {
-    console.log(this.parentService.getCosts(this.user.email).subscribe(data => this.length = data.length));
+    this.parentService.getCosts(this.user.email).subscribe(data => this.length = data.length)
     return this.parentService.getCosts(this.user.email);
   }
 
