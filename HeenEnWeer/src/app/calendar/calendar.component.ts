@@ -96,10 +96,11 @@ export class CalendarComponent implements OnInit{
     this.parentService.getEvents(this.user.email).subscribe(data => {
       //loop over alle evenementen in de data
       for(var event in data){
+        console.log(data);
         //maakt nieuw kleur type aan voor automatische display op agenda
         var _color  = {
-          primary: data[event]["category"]["color"],
-          secondary: data[event]["category"]["color"]
+          primary: data[event]["categoryid"]["color"],
+          secondary: data[event]["categoryid"]["color"]
         }
         //initialiseer een kalenderevenement om toe te voegen aan de kalender
         let calendarEvent : CalendarEvent = {

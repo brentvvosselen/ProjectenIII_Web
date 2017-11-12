@@ -848,7 +848,7 @@ app.post("/api/category/add/:email",function(req,res){
             handleError(res, 'Category could not be added', err.message);
           }
         });
-        res.json("successful");
+        res.json(category);
       });   
     }
   });

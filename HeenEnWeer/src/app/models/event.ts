@@ -5,7 +5,7 @@ export class Event {
     start: Date;
     end: Date;
     title: String;
-    category: Category;
+    categoryid: Category;
     constructor(){}
   }
   

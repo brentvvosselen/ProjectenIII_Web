@@ -17,7 +17,8 @@
       <!-- Name Column -->
       <ng-container matColumnDef="description">
         <mat-header-cell *matHeaderCellDef> Beschrijving </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+        <mat-cell *matCellDef="let element"> <i class="material-icons">search</i> <a routerLink="/costs/detail" routerLinkActive="active"><i class="material-icons">search</i></a>
+          {{element.description}} </mat-cell>
       </ng-container>
 
       <!-- Weight Column -->
@@ -25,7 +26,6 @@
         <mat-header-cell *matHeaderCellDef> Bedrag </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.amount}} </mat-cell>
       </ng-container>
-
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

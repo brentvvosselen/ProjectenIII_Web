@@ -103,7 +103,7 @@ export class CalendarAddComponent implements OnInit {
   addCategory(){
     console.log(this.category);
     var model : any = {
-      name: this.category.type,
+      type: this.category.type,
       color: this.category.color 
     }
     this.parentService.addCategory(model, this.user.email).subscribe(data => {
