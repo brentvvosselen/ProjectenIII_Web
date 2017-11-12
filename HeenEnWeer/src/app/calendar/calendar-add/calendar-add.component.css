@@ -23,3 +23,7 @@
 body{
     background:none !important;
 }
+
+#category-add{
+    cursor: pointer;
+}

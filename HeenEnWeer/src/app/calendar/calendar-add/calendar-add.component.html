@@ -52,50 +52,15 @@
                     <label>{{cat.type}}</label>
                   </option>
               </select>
-            </div>
+              <a id="category-add" (click)="openDialog()"><i class="material-icons">add_circle</i></a>              
+          </div>
           <button class="btn btn-primary pull-right" type="submit">
             Save
           </button>
         </div>
       
-      </form>
-
-
-     
+      </form>     
 </div>
-
-<div class="left">
-    <form>
-        <button
-        class="btn btn-primary"
-        (click)="newCategory()">
-        Voeg nieuwe categorie toe
-        </button>
-      
-        <div *ngIf="category">
-            <input 
-            type="text"
-            [(ngModel)]="category.type"    
-            name="type"
-            placeholder="naam categorie">
-        
-            <input
-            type="color"
-            [(ngModel)]="category.color"
-            (change)="refresh.next()"
-            name="color">
-      
-          <button
-            class="btn btn-primary"
-            (click)="addCategory()">
-            Ok
-          </button>
-        </div>
-        
-      </form>
-       
-</div>
-
 
 
   

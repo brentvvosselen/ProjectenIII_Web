@@ -10,6 +10,8 @@ import { AuthenticationService } from '../../services/authentication-service.ser
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { Category } from '../../models/category';
+import { CategoryAddComponent } from '../category-add/category-add.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-calendar-add',
@@ -51,7 +53,7 @@ export class CalendarAddComponent implements OnInit {
     }
   ];
 
-  constructor(private modal: NgbModal, private parentService: ParentService, private authenticationService: AuthenticationService, private router: Router) {
+  constructor(private modal: NgbModal, public dialog: MatDialog, private parentService: ParentService, private authenticationService: AuthenticationService, private router: Router) {
     this.user = authenticationService.getUser();
   }
 
@@ -118,5 +120,19 @@ export class CalendarAddComponent implements OnInit {
     let obj = this.categories.find(e => e.type === value);
     this.selectedCategory = obj;
     console.log(this.selectedCategory);
+  }
+
+  openDialog(): void {
+    this.category = new Category();
+    let dialogRef = this.dialog.open(CategoryAddComponent, {
+      width: '250px',
+      data: { type: this.category.type, color: this.category.color }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.category = result;
+      console.log(result);
+      this.categories.push(this.category);
+    });
   }
 }

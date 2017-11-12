@@ -27,6 +27,9 @@ import { ParentService } from '../services/parent.service';
 import { AuthenticationService } from '../services/authentication-service.service';
 import { User } from '../models/user';
 import { Parent } from '../models/parent';
+import { CategoryAddComponent } from './category-add/category-add.component';
+import { MatDialog } from '@angular/material';
+import { Category } from '../models/category';
 
 var colors: any = {
   red: {
