@@ -17,7 +17,7 @@
       <!-- Name Column -->
       <ng-container matColumnDef="description">
         <mat-header-cell *matHeaderCellDef> Beschrijving </mat-header-cell>
-        <mat-cell *matCellDef="let element"> <i class="material-icons">search</i> <a routerLink="/costs/detail" routerLinkActive="active"><i class="material-icons">search</i></a>
+        <mat-cell *matCellDef="let element"> <a routerLink="/costs/detail" routerLinkActive="active"><i class="material-icons">search</i></a>
           {{element.description}} </mat-cell>
       </ng-container>
 

@@ -24,6 +24,7 @@ import { CostCategory } from '../models/costCategory';
 export class CostsComponent implements OnInit {
   displayedColumns = ['date', 'description', 'amount'];
   dataSource: ExampleDataSource | null;
+  costDatabase;
   user: User;
   model : any [];
   length: Number;
@@ -42,6 +43,7 @@ export class CostsComponent implements OnInit {
 
   constructor(private parentService: ParentService, private authenticationSerivce: AuthenticationService, public dialog: MatDialog){
     this.user = this.authenticationSerivce.getUser();
+    this.costDatabase = new CostDatabase(this.parentService,this.authenticationSerivce);
   }
 
   openDialog() {
@@ -53,11 +55,13 @@ export class CostsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.cost = result;
+      this.costDatabase.addCost(result);
+      this.dataSource.connect();
     });
   }
 
   ngOnInit() {
-    this.dataSource = new ExampleDataSource(this.parentService, this.authenticationSerivce);
+    this.dataSource = new ExampleDataSource(this.costDatabase);
     this.parentService.getCosts(this.user.email).subscribe(data => {this.length = data.length})    
   }
 }
@@ -66,6 +70,22 @@ export interface CostData {
   date: Date;
   description: string;
   amount: string;
+}
+
+export class CostDatabase{
+  dataChange: BehaviorSubject<CostData[]> = new BehaviorSubject<CostData[]>([]);
+  get data(): CostData[] { return this.dataChange.value; }
+  user: User;
+  constructor(private parentService: ParentService, private authenticationService: AuthenticationService){
+    this.user = this.authenticationService.getUser();
+    this.parentService.getCosts(this.user.email).subscribe(data => {console.log(data), this.dataChange.next(data)});
+  }
+
+  addCost(cost: CostData){
+    const copiedData = this.data.slice();
+    copiedData.push(cost);
+    this.dataChange.next(copiedData);
+  }
 }
 
 /**
@@ -79,15 +99,13 @@ export class ExampleDataSource extends DataSource<any> {
   user: User;
   length: Number;
   
-  constructor(private parentService: ParentService, private authenticationService: AuthenticationService) {
+  constructor(private costDatabase: CostDatabase) {
     super();
-    this.user = this.authenticationService.getUser();
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
   connect(): Observable<CostData[]> {
-    this.parentService.getCosts(this.user.email).subscribe(data => this.length = data.length)
-    return this.parentService.getCosts(this.user.email);
+    return this.costDatabase.dataChange;
   }
 
 
