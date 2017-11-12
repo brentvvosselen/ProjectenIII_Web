@@ -848,7 +848,7 @@ app.post("/api/category/add/:email",function(req,res){
             handleError(res, 'Category could not be added', err.message);
           }
         });
-        res.json("successful");
+        res.json(category);
       });   
     }
   });
@@ -992,7 +992,7 @@ app.post("/api/costs/addCost/:email",function(req,res){
       description: req.body.description,
       amount: req.body.amount,
       date: req.body.date,
-      costCategory: req.body.costCategory
+      costCategoryid: req.body.costCategoryid
      })
       cost.save(function(err){
         if(err){
@@ -1011,45 +1011,23 @@ app.post("/api/costs/addCost/:email",function(req,res){
   });
 });
 
-//get all categories of costs of user
-app.get("/api/costs/categories/:email",function(req,res){
-  Parents.findOne({
-    email: req.params.email
-  }).populate({
-    path:'group',
-    model:'Group',
-    populate:{
-      path: 'costs',
-      model:'Cost',
-      populate:{
-        path: 'costCategory',
-        model: 'CostCategory'
-      }
-    }
-  }).exec(function(err,parent){
-    if(err){
-      handleError(res, "Could not retrieve parent");
-    }else{
-      res.json(parent.group.costs.costCategory);
-    }
-  });
-});
-
 //toevoegen kostCategorie
 app.post("/api/costs/addCategory/:email",function(req,res){
+  console.log(req.body.type);
   Parents.findOne({
     email: req.params.email
   }).populate({
     path: 'group',
     model: 'Group',
     populate:{
-      path: 'costs',
-      model: 'Costs'
+      path: 'costCategories',
+      model: 'CostCategory'
     }
   }).exec(function(err,parent){
     if(err){
       handleError(res, "parent could not be retrieved", err.message);
     }else{
+      console.log(req.body.type);
       var category = new CostCategory({
         type: req.body.type,
       });
@@ -1059,13 +1037,34 @@ app.post("/api/costs/addCategory/:email",function(req,res){
         }
       });
       var group = parent.group;
-      group.costs.costCategory = category;
+      group.costCategories.push(category);
+      //group.costs.costCategory = category;
       group.save(function(err){
         if(err){
           handleError(res, 'Category could not be added', err.message);
         }
       });
       res.json(category);
+    }
+  });
+});
+
+//get all costCategories
+app.get("/api/costs/categories/:email",function(req,res){
+  Parents.findOne({
+    email: req.params.email
+  }).populate({
+    path:'group',
+    model:'Group',
+    populate:{
+      path:'costCategories',
+      model:'CostCategory',
+    }
+  }).exec(function(err,parent){
+    if(err){
+      handleError(res, "Could not retrieve parent", err.message);
+    }else{
+      res.json(parent.group.costCategories);
     }
   });
 });

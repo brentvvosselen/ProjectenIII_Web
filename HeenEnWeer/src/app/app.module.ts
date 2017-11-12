@@ -45,7 +45,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material';
-
+import {MatSelectModule} from '@angular/material';
+import { CategoryAddComponent } from './calendar/category-add/category-add.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,6 +70,7 @@ import {MatInputModule} from '@angular/material';
     CostsComponent,
     PageNotFoundComponent,
     CostAddComponent,
+    CategoryAddComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -95,6 +97,7 @@ import {MatInputModule} from '@angular/material';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
     RouterModule.forRoot([
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},
@@ -115,6 +118,7 @@ import {MatInputModule} from '@angular/material';
     ])
   ],
   providers: [AuthenticationService, ParentService, UserService, AuthGuard, FormBuilder, ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CategoryAddComponent]  
 })
 export class AppModule { }

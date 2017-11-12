@@ -17,18 +17,20 @@ export class CostAddComponent implements OnInit {
   user: User;
   costCategories: CostCategory[] = [];
   
-  constructor(private authenticationService: AuthenticationService, private parentService: ParentService, @Inject(MAT_DIALOG_DATA) public data: any){
+  constructor(private authenticationService: AuthenticationService,
+     private parentService: ParentService,
+      @Inject(MAT_DIALOG_DATA) public data: any,
+      public dialogRef: MatDialogRef<CostAddComponent>){
     this.user = this.authenticationService.getUser();
   }
 
   ngOnInit() {
     this.cost = new Cost();
-    this.parentService.getCostCategories(this.user.email).subscribe(data => this.costCategories = data);
+    this.parentService.getCostCategories(this.user.email).subscribe(data => {this.costCategories = data});
   }
 
   save(){
-    console.log(this.cost);
-    //this.parentService.addCost(this.cost, this.user.email).subscribe(data => console.log(data));
+    this.parentService.addCost(this.cost, this.user.email).subscribe(data => {this.dialogRef.close(data)});
   }
 
 }

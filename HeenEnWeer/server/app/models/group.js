@@ -10,6 +10,7 @@ var GroupSchema = new Schema({
     events: [{type: Schema.ObjectId, ref: 'Event'}],
     categories: [{type: Schema.ObjectId, ref: 'Category'}],
     costs: [{type: Schema.ObjectId, ref:"Costs"}],
+    costCategories: [{type: Schema.ObjectId, ref:"CostCategory"}],
     finance: {
       fintype: {
         type: String,

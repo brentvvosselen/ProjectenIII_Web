@@ -19,7 +19,7 @@ var CostSchema = new Schema({
         type:Date,
         required: true
     },
-    costCategory:{type: Schema.ObjectId, ref: 'CostCategory', required: true}
+    costCategoryid:{type: Schema.ObjectId, ref: 'CostCategory', required: true}
 });
 
 module.exports = mongoose.model('Costs', CostSchema);
