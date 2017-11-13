@@ -58,7 +58,10 @@ export class CostsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.cost = result;
-      this.costDatabase.addCost(result);
+      console.log(result);
+      if(result != undefined){
+        this.costDatabase.addCost(result);        
+      }
       this.dataSource.connect();
     });
   }
