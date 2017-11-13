@@ -52,6 +52,7 @@ export class CostsComponent implements OnInit {
   openDialog() {
     this.cost = new Cost();
     let dialogRef = this.dialog.open(CostAddComponent, {
+      width: '400px',
       data: {
         title: this.cost.title, description: this.cost.description, amount: this.cost.amount, date: this.cost.date
       }
