@@ -124,6 +124,7 @@ export class CalendarAddComponent implements OnInit {
   openDialog(): void {
     this.category = new Category();
     let dialogRef = this.dialog.open(CategoryAddComponent, {
+      width: '450px',
       data: { type: this.category.type, color: this.category.color }
     });
 

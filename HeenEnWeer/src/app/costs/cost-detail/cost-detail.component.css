@@ -3,7 +3,7 @@ body{
 }
 
 .mat-dialog-container{
-    width:80%;
+    width:400px;
 }
 @media(min-width: 768px){
     .mat-dialog-container{
@@ -16,3 +16,6 @@ body{
     }
 }
 
+.detail{
+    padding-bottom: 10px;
+}

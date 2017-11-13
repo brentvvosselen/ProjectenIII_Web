@@ -1,19 +1,13 @@
-<form class="example-form" #categorieForm="ngForm">
+<form class="example-form col-10 center" #categorieForm="ngForm">
     <h2 class="center page-title">Categorie Toevoegen</h2>
-    <div class="row">
-        <mat-form-field class="example-full-width">
-            <input matInput placeholder="Titel" value="Titel" [(ngModel)]="category.type" name="type" required>
-        </mat-form-field>
-    </div>
-    <div class="row">
-            <input
-            type="color"
-            [(ngModel)]="category.color"
-            name="color"
-            required>
-    </div>
 
-    <mat-dialog-actions>
-        <button mat-button [mat-dialog-close]="category" (click)="save()" [disabled]="!categorieForm.valid">Save</button>
-    </mat-dialog-actions>
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Titel" value="Titel" [(ngModel)]="category.type" name="type" required>
+    </mat-form-field>
+
+    <input type="color" [(ngModel)]="category.color" name="color" required>
 </form>
+
+<mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="category" (click)="save()" [disabled]="!categorieForm.valid">Opslaan</button>
+</mat-dialog-actions>
