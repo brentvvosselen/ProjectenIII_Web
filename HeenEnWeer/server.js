@@ -133,11 +133,17 @@ app.get('/setup', function(req, res){
     }]
   });
 
+  var costCategory = new CostCategory({
+    type: "Kostcategorie1"
+  });
+
   var group1 = new Group({
     children: [],
+    costCategories: [],
   });
 
   group1.children.push(child1,child2);
+  group1.costCategories.push(costCategory);
 
   var newUser = new Users({
     firstname: "jess",
@@ -185,6 +191,13 @@ app.get('/setup', function(req, res){
   });
 
   child2.save(function(err) {
+    if (err) {
+      handleError(res, err.message, "Email already exists.");
+      console.log("Email bestaat al");
+    }
+  });
+
+  costCategory.save(function(err) {
     if (err) {
       handleError(res, err.message, "Email already exists.");
       console.log("Email bestaat al");
