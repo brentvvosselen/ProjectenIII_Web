@@ -47,6 +47,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material';
 import {MatSelectModule} from '@angular/material';
 import { CategoryAddComponent } from './calendar/category-add/category-add.component';
+import { CostDetailComponent } from './costs/cost-detail/cost-detail.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,6 +72,7 @@ import { CategoryAddComponent } from './calendar/category-add/category-add.compo
     PageNotFoundComponent,
     CostAddComponent,
     CategoryAddComponent,
+    CostDetailComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -119,6 +121,6 @@ import { CategoryAddComponent } from './calendar/category-add/category-add.compo
   ],
   providers: [AuthenticationService, ParentService, UserService, AuthGuard, FormBuilder, ],
   bootstrap: [AppComponent],
-  entryComponents: [CategoryAddComponent]  
+  entryComponents: [CategoryAddComponent, CostDetailComponent]  
 })
 export class AppModule { }

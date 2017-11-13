@@ -14,6 +14,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { Cost } from '../models/cost';
 import { CostAddComponent } from './cost-add/cost-add.component';
 import { CostCategory } from '../models/costCategory';
+import { CostDetailComponent } from './cost-detail/cost-detail.component';
 
 @Component({
   selector: 'app-costs',
@@ -30,6 +31,8 @@ export class CostsComponent implements OnInit {
   length: Number;
   costCategories: CostCategory[] = [];
   cost: Cost;
+  selectedCost: Cost;
+  searchValue: string = '';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   
@@ -60,6 +63,17 @@ export class CostsComponent implements OnInit {
     });
   }
 
+  openInfoDialog(cost: Cost){
+    let dialogRef = this.dialog.open(CostDetailComponent, {
+      data: {
+        title: cost.title, description: cost.description, amount: cost.amount, date: cost.date
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+  }
+
   ngOnInit() {
     this.dataSource = new ExampleDataSource(this.costDatabase);
     this.parentService.getCosts(this.user.email).subscribe(data => {this.length = data.length})    
@@ -67,6 +81,11 @@ export class CostsComponent implements OnInit {
 
   applyFilter(value: string){
     return this.costDatabase.applyFilter(value);
+  }
+
+  refresh(){
+    console.log("refreshing..");
+    this.dataSource = new ExampleDataSource(this.costDatabase);
   }
 }
 
@@ -93,16 +112,18 @@ export class CostDatabase{
   }
 
   applyFilter(filterValue: string){
-    console.log(filterValue);
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase(); 
-    var copiedData = this.data.slice();
+    var copiedData = this.initialData.slice();
     if(filterValue == ""){
       this.dataChange.next(this.initialData);
     }else{
       this.dataChange.next(copiedData.filter(e => e.description.includes(filterValue)));      
     }
-    //this.dataChange.next(data);
+  }
+
+  refresh(){
+    this.dataChange.next(this.initialData);    
   }
 }
 
