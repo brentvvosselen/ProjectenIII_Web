@@ -832,11 +832,29 @@ app.post("/api/calendar/event/add/:email",function(req,res){
 });
 
 //verwijderen event
-app.delete('/api/event/delete/:id', function (req, res, next) {
+app.delete('/api/event/delete/:email/:id', function (req, res, next) {
   Event.remove({ _id: req.params.id }, function (err) {
     if (err) return next(handleError(err));
     res.json("removed");
   });
+  Parents.findOne({
+    email: req.params.email
+  }).populate({
+    path: 'group',
+    model: 'Group',
+    populate:{
+      path: 'events',
+      model:'Events'}})
+      .exec(function(err,parent){
+        parent.group.events.remove(req.params.id);
+        parent.save(function(err){
+          if(err){
+            handleError(err,"Could not delete event");
+          }else{
+            res.json("event deleted");
+          }
+        })
+      });
 });
 
 //toevoegen categorie
