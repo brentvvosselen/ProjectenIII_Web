@@ -30,6 +30,7 @@ import { Parent } from '../models/parent';
 import { CategoryAddComponent } from './category-add/category-add.component';
 import { MatDialog } from '@angular/material';
 import { Category } from '../models/category';
+import { DayShowComponent } from './day-show/day-show.component';
 
 var colors: any = {
   red: {
@@ -90,7 +91,10 @@ export class CalendarComponent implements OnInit{
   user: User;
   currentUser: Parent;
 
-  constructor(private modal: NgbModal, private parentService: ParentService, private authenticationService: AuthenticationService) {
+  constructor(private modal: NgbModal,
+     private parentService: ParentService,
+      private authenticationService: AuthenticationService,
+      public dialog: MatDialog) {
     this.user = authenticationService.getUser();
   }
 
@@ -151,6 +155,17 @@ export class CalendarComponent implements OnInit{
     event.end = newEnd;
     this.handleEvent('Dropped or resized', event);
     this.refresh.next();
+  }
+
+  showDay(event: CalendarEvent) {
+    let dialogRef = this.dialog.open(DayShowComponent, {
+      data: {
+        title: event.title
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 
   handleEvent(action: string, event: CalendarEvent): void {

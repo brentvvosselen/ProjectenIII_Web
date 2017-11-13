@@ -33,7 +33,6 @@ export class CalendarAddComponent implements OnInit {
   currentUser: Parent;
 
   modalData: {
-    action: string;
     event: CalendarEvent;
   };
 
@@ -98,7 +97,7 @@ export class CalendarAddComponent implements OnInit {
   }
   
   handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
+    this.modalData = { event };
     this.modal.open(this.modalContent, { size: 'lg' });
   }
 
