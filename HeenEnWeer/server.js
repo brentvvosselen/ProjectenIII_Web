@@ -817,6 +817,15 @@ app.post("/api/calendar/event/add/:email",function(req,res){
     });
 });
 
+//verwijderen event
+app.delete('/api/event/delete/:title', function (req, res) {
+  Event.remove({ title: req.params.title }, function (err) {
+    if (err) return handleError(err);
+    // removed!
+    res.json("removed");
+  });
+});
+
 //toevoegen categorie
 app.post("/api/category/add/:email",function(req,res){
   Parents.findOne({
