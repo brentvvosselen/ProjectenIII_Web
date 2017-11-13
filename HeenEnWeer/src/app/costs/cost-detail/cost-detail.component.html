@@ -1,17 +1,10 @@
 <h1 mat-dialog-title>Kostdetail</h1>
 <div mat-dialog-content>
-  <ul>
-    <li>
-        <h3 mat-dialog-title>Beschrijving</h3>
-        <span>{{cost?.description}}</span> 
-    </li>
-    <li>
-        <h3 mat-dialog-title>Datum</h3>
-        <span>{{cost?.date | date: 'dd/MM/yyyy'}}</span>     
-    </li>
-    <li>
-        <h3 mat-dialog-title>Bedrag</h3>
-        <span>{{cost?.amount}}</span> 
-    </li>
-  </ul>
+
+    <p>Beschrijving: {{cost?.description}} </p>
+
+    <p>Datum: {{cost?.date | date: 'dd/MM/yyyy'}}</p>
+
+    <p>Bedrag: € {{cost?.amount}}</p>
+
 </div>

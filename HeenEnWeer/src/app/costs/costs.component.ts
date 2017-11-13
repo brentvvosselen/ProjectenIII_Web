@@ -52,6 +52,7 @@ export class CostsComponent implements OnInit {
   openDialog() {
     this.cost = new Cost();
     let dialogRef = this.dialog.open(CostAddComponent, {
+      width: '350',
       data: {
         title: this.cost.title, description: this.cost.description, amount: this.cost.amount, date: this.cost.date
       }
@@ -68,6 +69,7 @@ export class CostsComponent implements OnInit {
 
   openInfoDialog(cost: Cost){
     let dialogRef = this.dialog.open(CostDetailComponent, {
+      width: '400px',
       data: {
         title: cost.title, description: cost.description, amount: cost.amount, date: cost.date
       }

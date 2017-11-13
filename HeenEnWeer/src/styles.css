@@ -615,22 +615,3 @@ a{
 }
 
 
-/*COSTS*/
-.mat-dialog-container{
-    margin: 0 auto;
-}
-@media(min-width: 576px){
-    .mat-dialog-container{
-        width:80% !important;   
-    }
-}
-@media(min-width: 768px){
-    .mat-dialog-container{
-        width:60% !important;   
-    }
-}
-@media(min-width: 992px) {
-    .mat-dialog-container{
-        width:50% !important;
-    }
-}
