@@ -833,10 +833,7 @@ app.post("/api/calendar/event/add/:email",function(req,res){
 
 //verwijderen event
 app.delete('/api/event/delete/:email/:id', function (req, res, next) {
-  Event.remove({ _id: req.params.id }, function (err) {
-    if (err) return next(handleError(err));
-    res.json("removed");
-  });
+  
   Parents.findOne({
     email: req.params.email
   }).populate({
@@ -846,14 +843,26 @@ app.delete('/api/event/delete/:email/:id', function (req, res, next) {
       path: 'events',
       model:'Events'}})
       .exec(function(err,parent){
-        parent.group.events.remove(req.params.id);
-        parent.save(function(err){
-          if(err){
-            handleError(err,"Could not delete event");
-          }else{
-            res.json("event deleted");
-          }
-        })
+        if(err) return next(handleError(err,err.message));
+        Event.findOne({
+          _id : req.params.id
+        },function(err,event){
+          if(err) return next(handleError(err,err.message));
+          var index = parent.group.events.indexOf(event);
+          console.log(parent.group.events);
+          console.log(index);
+          parent.group.events.splice(index,1);
+          parent.group.save(function(err){
+            if(err) return next(handleError(err,err.message));
+              console.log("event removed from parent");
+            Event.remove({
+              _id : req.params.id
+            },function(err){
+              if (err) return next(handleError(err,err.message));
+              res.json("Event removed");
+            });
+          });
+        });   
       });
 });
 

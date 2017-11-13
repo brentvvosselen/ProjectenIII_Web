@@ -171,7 +171,7 @@ export class CalendarComponent implements OnInit{
       this.events = this.events.filter(item => item.title != result.title || item.start != result.start || item.end != result.end);     
       console.log(this.events); 
       console.log(event[0]._id);
-      this.parentService.deleteEvent(event[0]._id, this.user.email).subscribe(data => {this.refresh.next()});
+      this.parentService.deleteEvent(this.user.email ,event[0]._id).subscribe(data => {this.refresh.next()});
     });
   }
 
