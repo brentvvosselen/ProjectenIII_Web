@@ -4,8 +4,8 @@ export const colors: any = {
     secondary: '#FAE3E3'
   },
   blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF'
+    primary: '#48A9DD',
+    secondary: '#3E8DBC'
   },
   yellow: {
     primary: '#e3bc08',

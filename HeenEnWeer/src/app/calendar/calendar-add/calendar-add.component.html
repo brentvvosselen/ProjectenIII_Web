@@ -1,13 +1,13 @@
 <h2 class="center page-title">Evenement toevoegen</h2>
-<div class="center">
-    <form class="eventForm" (ngSubmit)="save()" #eventForm="ngForm">
+<div class="center container-fluid">
+    <form class="eventForm col-12 col-md-10 col-lg-8 col-xl-6 align-self-center" (ngSubmit)="save()" #eventForm="ngForm">
         <div>
     
           <div class="form-item">
             <label>Titel</label>
               <input
               type="text"
-              class="form-control"
+              class="form-control form-border"
               [(ngModel)]="event.title"
               (keyup)="refresh.next()"
               name="title">
@@ -38,7 +38,7 @@
             <label>Beschrijving</label>
               <input
               type="text"
-              class="form-control"
+              class="form-control form-border"
               [(ngModel)]="event.description"
               (keyup)="refresh.next()"
               name="description"
@@ -52,9 +52,9 @@
                     <label>{{cat.type}}</label>
                   </option>
               </select>
-              <a id="category-add" (click)="openDialog()"><i class="material-icons">add_circle</i></a>              
+              <a id="category-add" (click)="openDialog()"><i class="material-icons">add</i></a>              
           </div>
-          <button class="btn btn-primary pull-right" type="submit">
+          <button class="btn btn-blue-big btn-primary pull-right" type="submit">
             Save
           </button>
         </div>

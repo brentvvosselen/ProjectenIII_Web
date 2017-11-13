@@ -1,6 +1,7 @@
 body{
-  background:none !important;
+  background: #F9F9F9;
 }
+
 @media(min-width: 768px){
   div#wrapper{
     padding-left:250px;
@@ -14,4 +15,8 @@ body{
 }
 .login-overlay{
   visibility: hidden;
+}
+
+app-login{
+  display:none;
 }

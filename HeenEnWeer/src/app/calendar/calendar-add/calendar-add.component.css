@@ -1,3 +1,6 @@
+body{
+    background-color: #F9F9F9;
+}
 .eventForm{
     margin: 0 auto;
     display: inline-block;
@@ -10,14 +13,16 @@
 }
 
 .eventForm input{
-    width: 350px;
+    width:100%;
 }
 
 .eventForm button{
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-left: 10px;
     border: none !important;
+}
+.eventForm .input-group{
+    width:100%;
 }
 
 body{

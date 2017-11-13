@@ -1,9 +1,9 @@
 body{
-  background-color: none !important;
+  background-color: #F9F9F9;
 }
 
 h3 {
-    margin: 0 0 10px;
+    margin: .5em 0;
   }
   
   pre {
@@ -12,6 +12,12 @@ h3 {
   }
 
   .cal-month-view .cal-open-day-events{
-    background-color:#00C6FF!important
+    box-shadow: none;
+    background-color:#ccc;
   }
+
+.action-right{
+  position: absolute;
+  right: 1em;
+}
 

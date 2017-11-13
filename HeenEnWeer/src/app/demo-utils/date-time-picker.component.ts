@@ -30,7 +30,7 @@ export const DATE_TIME_PICKER_CONTROL_VALUE_ACCESSOR: any = {
         <div class="input-group">
           <input
             readonly
-            class="form-control"
+            class="form-control form-border"
             [placeholder]="placeholder"
             name="date"
             [(ngModel)]="dateStruct"
@@ -38,7 +38,7 @@ export const DATE_TIME_PICKER_CONTROL_VALUE_ACCESSOR: any = {
             ngbDatepicker
             #datePicker="ngbDatepicker">
             <div class="input-group-addon" (click)="datePicker.toggle()" >
-              <i class="material-icons">perm_contact_calendar</i>
+              <i class="material-icons">today</i>
             </div>
         </div>
       </div>

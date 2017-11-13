@@ -1,6 +1,6 @@
 body{
-    background:none !important;
-  }
+  background-color: #F9F9F9;
+}
   .example-container {
     display: flex;
     flex-direction: column;
