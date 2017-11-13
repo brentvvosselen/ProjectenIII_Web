@@ -33,7 +33,6 @@ export class CalendarAddComponent implements OnInit {
   currentUser: Parent;
 
   modalData: {
-    action: string;
     event: CalendarEvent;
   };
 
@@ -98,7 +97,7 @@ export class CalendarAddComponent implements OnInit {
   }
   
   handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
+    this.modalData = { event };
     this.modal.open(this.modalContent, { size: 'lg' });
   }
 
@@ -110,7 +109,7 @@ export class CalendarAddComponent implements OnInit {
     }
     this.parentService.addCategory(model, this.user.email).subscribe(data => {
       console.log(data),
-      this.categories.push(data);      
+      this.categories.push(data);     
       }
     );
     this.category = null;
@@ -130,9 +129,12 @@ export class CalendarAddComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.category = result;
-      console.log(result);
-      this.categories.push(this.category);
+      if(result != undefined){
+        this.category = result;
+        console.log(result);
+        this.selectedCategory = result;
+        this.categories.push(this.category);
+      }
     });
   }
 }

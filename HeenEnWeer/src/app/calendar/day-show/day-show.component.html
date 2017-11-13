@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>Event</h1>
+<div mat-dialog-content>
+  <ul>
+    <li>
+        <h3 mat-dialog-title>Titel</h3>
+        <span>{{data?.title}}</span> 
+    </li>
+    <li>
+        <h3 mat-dialog-title>Start</h3>
+        <span>{{data?.start}}</span> 
+    </li>
+    <li>
+        <h3 mat-dialog-title>Einde</h3>
+        <span>{{data?.end}}</span> 
+    </li>
+    <li>
+        <h3 mat-dialog-title>Kleur</h3>
+        <span>{{data?.color.primary}}</span> 
+    </li>
+  </ul>
+
+  <mat-dialog-actions>
+    <button class="btn btn-danger" (click)="remove($data)">Verwijder</button>
+  </mat-dialog-actions>
+</div>

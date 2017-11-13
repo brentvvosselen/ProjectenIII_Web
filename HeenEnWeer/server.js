@@ -55,6 +55,7 @@ require('./server/config/passport')(passport);
 // Resolves the Access-Control-Allow-Origin error in the console
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   next();
 });
@@ -132,11 +133,17 @@ app.get('/setup', function(req, res){
     }]
   });
 
+  var costCategory = new CostCategory({
+    type: "Kostcategorie1"
+  });
+
   var group1 = new Group({
     children: [],
+    costCategories: [],
   });
 
   group1.children.push(child1,child2);
+  group1.costCategories.push(costCategory);
 
   var newUser = new Users({
     firstname: "jess",
@@ -184,6 +191,13 @@ app.get('/setup', function(req, res){
   });
 
   child2.save(function(err) {
+    if (err) {
+      handleError(res, err.message, "Email already exists.");
+      console.log("Email bestaat al");
+    }
+  });
+
+  costCategory.save(function(err) {
     if (err) {
       handleError(res, err.message, "Email already exists.");
       console.log("Email bestaat al");
@@ -815,6 +829,14 @@ app.post("/api/calendar/event/add/:email",function(req,res){
         })
       }
     });
+});
+
+//verwijderen event
+app.delete('/api/event/delete/:id', function (req, res, next) {
+  Event.remove({ _id: req.params.id }, function (err) {
+    if (err) return next(handleError(err));
+    res.json("removed");
+  });
 });
 
 //toevoegen categorie

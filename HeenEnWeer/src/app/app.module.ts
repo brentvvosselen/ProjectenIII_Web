@@ -48,6 +48,7 @@ import {MatInputModule} from '@angular/material';
 import {MatSelectModule} from '@angular/material';
 import { CategoryAddComponent } from './calendar/category-add/category-add.component';
 import { CostDetailComponent } from './costs/cost-detail/cost-detail.component';
+import { DayShowComponent } from './calendar/day-show/day-show.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,6 +74,7 @@ import { CostDetailComponent } from './costs/cost-detail/cost-detail.component';
     CostAddComponent,
     CategoryAddComponent,
     CostDetailComponent,
+    DayShowComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -121,6 +123,6 @@ import { CostDetailComponent } from './costs/cost-detail/cost-detail.component';
   ],
   providers: [AuthenticationService, ParentService, UserService, AuthGuard, FormBuilder, ],
   bootstrap: [AppComponent],
-  entryComponents: [CategoryAddComponent, CostDetailComponent]  
+  entryComponents: [CategoryAddComponent, CostDetailComponent, DayShowComponent]  
 })
 export class AppModule { }

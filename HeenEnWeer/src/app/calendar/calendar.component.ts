@@ -30,7 +30,9 @@ import { Parent } from '../models/parent';
 import { CategoryAddComponent } from './category-add/category-add.component';
 import { MatDialog } from '@angular/material';
 import { Category } from '../models/category';
-
+import { DayShowComponent } from './day-show/day-show.component';
+import {Event} from "../models/event";
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 var colors: any = {
   red: {
     primary: '#ad2121',
@@ -84,19 +86,24 @@ export class CalendarComponent implements OnInit{
   refresh: Subject<any> = new Subject();
 
   events: CalendarEvent[] = [];
-
   activeDayIsOpen: boolean = true;
 
   user: User;
   currentUser: Parent;
 
-  constructor(private modal: NgbModal, private parentService: ParentService, private authenticationService: AuthenticationService) {
+  data: Event[];
+
+  constructor(private modal: NgbModal,
+     private parentService: ParentService,
+      private authenticationService: AuthenticationService,
+      public dialog: MatDialog) {
     this.user = authenticationService.getUser();
   }
 
   ngOnInit(){
     this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
     this.parentService.getEvents(this.user.email).subscribe(data => {
+      this.data = data;
       //loop over alle evenementen in de data
       for(var event in data){
         console.log(data);
@@ -116,7 +123,7 @@ export class CalendarComponent implements OnInit{
           resizable: {
             beforeStart: true,
             afterEnd: true
-          }
+          },
         }
         //push van event
         this.events.push(calendarEvent);
@@ -151,6 +158,21 @@ export class CalendarComponent implements OnInit{
     event.end = newEnd;
     this.handleEvent('Dropped or resized', event);
     this.refresh.next();
+  }
+
+  showDay(event: CalendarEvent) {
+    let dialogRef = this.dialog.open(DayShowComponent, {
+      data: {
+        title: event.title, end: event.end, start: event.start, color: event.color
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      let event = this.data.filter(item => item.title == result.title);
+      this.events = this.events.filter(item => item.title != result.title || item.start != result.start || item.end != result.end);     
+      console.log(this.events); 
+      console.log(event[0]._id);
+      this.parentService.deleteEvent(event[0]._id).subscribe(data => {this.refresh.next()});
+    });
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
