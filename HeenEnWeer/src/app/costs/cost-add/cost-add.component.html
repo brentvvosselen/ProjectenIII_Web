@@ -25,13 +25,13 @@
         </mat-form-field>
     </div>
     <div class="row">
-            <mat-form-field>
-                <mat-select placeholder="Categorie" [(ngModel)]="cost.costCategoryid" name="costCategory">
-                  <mat-option *ngFor="let cat of costCategories" [value]="cat._id">
-                    {{cat._id}}
-                  </mat-option>
-                </mat-select>
-            </mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="Categorie" [(ngModel)]="cost.costCategoryid" name="costCategory">
+                <mat-option *ngFor="let cat of costCategories" [value]="cat._id">
+                    {{cat.type}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
     <mat-dialog-actions>
         <button mat-button [mat-dialog-close]="cost" (click)="save()" [disabled]="!kostForm.valid">Save</button>

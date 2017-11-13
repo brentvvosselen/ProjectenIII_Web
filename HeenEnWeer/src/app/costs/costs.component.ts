@@ -64,6 +64,10 @@ export class CostsComponent implements OnInit {
     this.dataSource = new ExampleDataSource(this.costDatabase);
     this.parentService.getCosts(this.user.email).subscribe(data => {this.length = data.length})    
   }
+
+  applyFilter(value: string){
+    return this.costDatabase.applyFilter(value);
+  }
 }
 
 export interface CostData {
@@ -75,16 +79,34 @@ export interface CostData {
 export class CostDatabase{
   dataChange: BehaviorSubject<CostData[]> = new BehaviorSubject<CostData[]>([]);
   get data(): CostData[] { return this.dataChange.value; }
+  initialData: CostData[];
   user: User;
   constructor(private parentService: ParentService, private authenticationService: AuthenticationService){
     this.user = this.authenticationService.getUser();
-    this.parentService.getCosts(this.user.email).subscribe(data => {console.log(data), this.dataChange.next(data)});
+    this.parentService.getCosts(this.user.email).subscribe(data => {console.log(data), this.dataChange.next(data), this.initialData = data});
+  }
+
+  getCosts(){
+    this.parentService.getCosts(this.user.email).subscribe(data => {console.log(data), this.dataChange.next(data)});    
   }
 
   addCost(cost: CostData){
     const copiedData = this.data.slice();
     copiedData.push(cost);
     this.dataChange.next(copiedData);
+  }
+
+  applyFilter(filterValue: string){
+    console.log(filterValue);
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase(); 
+    var copiedData = this.data.slice();
+    if(filterValue == ""){
+      this.dataChange.next(this.initialData);
+    }else{
+      this.dataChange.next(copiedData.filter(e => e.description.includes(filterValue)));      
+    }
+    //this.dataChange.next(data);
   }
 }
 
@@ -108,6 +130,9 @@ export class ExampleDataSource extends DataSource<any> {
     return this.costDatabase.dataChange;
   }
 
+  applyFilter(value: string){
+    return this.costDatabase.applyFilter(value);
+  }
 
   disconnect() {}
 }
