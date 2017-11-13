@@ -32,6 +32,7 @@ import { MatDialog } from '@angular/material';
 import { Category } from '../models/category';
 import { DayShowComponent } from './day-show/day-show.component';
 import {Event} from "../models/event";
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 var colors: any = {
   red: {
     primary: '#ad2121',
@@ -85,7 +86,6 @@ export class CalendarComponent implements OnInit{
   refresh: Subject<any> = new Subject();
 
   events: CalendarEvent[] = [];
-
   activeDayIsOpen: boolean = true;
 
   user: User;
@@ -167,7 +167,9 @@ export class CalendarComponent implements OnInit{
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      let event = this.data.filter(item => item.title == result.title);      
+      let event = this.data.filter(item => item.title == result.title);
+      this.events = this.events.filter(item => item.title != result.title || item.start != result.start || item.end != result.end);     
+      console.log(this.events); 
       console.log(event[0]._id);
       this.parentService.deleteEvent(event[0]._id).subscribe(data => {this.refresh.next()});
     });
