@@ -818,10 +818,9 @@ app.post("/api/calendar/event/add/:email",function(req,res){
 });
 
 //verwijderen event
-app.delete('/api/event/delete/:title', function (req, res) {
-  Event.remove({ title: req.params.title }, function (err) {
-    if (err) return handleError(err);
-    // removed!
+app.delete('/api/event/delete/:id', function (req, res, next) {
+  Event.remove({ _id: req.params.id }, function (err) {
+    if (err) return next(handleError(err));
     res.json("removed");
   });
 });
