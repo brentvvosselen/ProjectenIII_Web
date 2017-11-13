@@ -129,10 +129,12 @@ export class CalendarAddComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.category = result;
-      console.log(result);
-      this.selectedCategory = result;
-      this.categories.push(this.category);
+      if(result != undefined){
+        this.category = result;
+        console.log(result);
+        this.selectedCategory = result;
+        this.categories.push(this.category);
+      }
     });
   }
 }

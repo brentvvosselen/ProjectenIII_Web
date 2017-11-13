@@ -31,7 +31,7 @@ import { CategoryAddComponent } from './category-add/category-add.component';
 import { MatDialog } from '@angular/material';
 import { Category } from '../models/category';
 import { DayShowComponent } from './day-show/day-show.component';
-
+import {Event} from "../models/event";
 var colors: any = {
   red: {
     primary: '#ad2121',
@@ -91,6 +91,8 @@ export class CalendarComponent implements OnInit{
   user: User;
   currentUser: Parent;
 
+  data: Event[];
+
   constructor(private modal: NgbModal,
      private parentService: ParentService,
       private authenticationService: AuthenticationService,
@@ -101,6 +103,7 @@ export class CalendarComponent implements OnInit{
   ngOnInit(){
     this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
     this.parentService.getEvents(this.user.email).subscribe(data => {
+      this.data = data;
       //loop over alle evenementen in de data
       for(var event in data){
         console.log(data);
@@ -120,7 +123,7 @@ export class CalendarComponent implements OnInit{
           resizable: {
             beforeStart: true,
             afterEnd: true
-          }
+          },
         }
         //push van event
         this.events.push(calendarEvent);
@@ -160,11 +163,13 @@ export class CalendarComponent implements OnInit{
   showDay(event: CalendarEvent) {
     let dialogRef = this.dialog.open(DayShowComponent, {
       data: {
-        title: event.title
+        title: event.title, end: event.end, start: event.start, color: event.color
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      let event = this.data.filter(item => item.title == result.title);      
+      console.log(event[0]._id);
+      this.parentService.deleteEvent(event[0]._id).subscribe(data => {this.refresh.next()});
     });
   }
 

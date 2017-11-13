@@ -15,4 +15,8 @@ export class DayShowComponent implements OnInit {
   ngOnInit() {
   }
 
+  remove(){
+    console.log("i want to remove you")
+    this.dialogRef.close(this.data);
+  }
 }

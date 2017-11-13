@@ -95,6 +95,10 @@ export class ParentService {
         return this.http.post("http://127.0.0.1:5000/api/costs/addCategory/" + email,category, this.jwt()).map((response: Response) => response.json());                 
     }
 
+    deleteEvent(id: number){
+        return this.http.delete("http://127.0.0.1:5000/api/event/delete/" + id, this.jwt()).map((response: Response) => response.json());
+    }
+
     // private helper methods
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
