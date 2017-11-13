@@ -86,10 +86,6 @@ export class CostDatabase{
     this.parentService.getCosts(this.user.email).subscribe(data => {console.log(data), this.dataChange.next(data), this.initialData = data});
   }
 
-  getCosts(){
-    this.parentService.getCosts(this.user.email).subscribe(data => {console.log(data), this.dataChange.next(data)});    
-  }
-
   addCost(cost: CostData){
     const copiedData = this.data.slice();
     copiedData.push(cost);
