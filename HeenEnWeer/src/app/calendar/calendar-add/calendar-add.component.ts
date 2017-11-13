@@ -109,7 +109,7 @@ export class CalendarAddComponent implements OnInit {
     }
     this.parentService.addCategory(model, this.user.email).subscribe(data => {
       console.log(data),
-      this.categories.push(data);      
+      this.categories.push(data);     
       }
     );
     this.category = null;
@@ -131,6 +131,7 @@ export class CalendarAddComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.category = result;
       console.log(result);
+      this.selectedCategory = result;
       this.categories.push(this.category);
     });
   }
