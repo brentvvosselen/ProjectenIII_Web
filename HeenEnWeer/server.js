@@ -750,11 +750,11 @@ app.get("/api/calendar/event/date/:email/:date",function(req,res){
     if(err){
       handleError(err,"Could not retrieve events");
     }
-    
+
     //var events = parent.group.events.filter(e => moment(e.start) <= startDate.toDate() && moment(e.end) >= endDate.toDate());
-    var events = parent.group.events.filter(e => 
-      e.start.getFullYear() <= date.getFullYear() && e.end.getFullYear() >= date.getFullYear() 
-      && e.start.getMonth() <= date.getMonth() && e.end.getMonth() >= date.getMonth() 
+    var events = parent.group.events.filter(e =>
+      e.start.getFullYear() <= date.getFullYear() && e.end.getFullYear() >= date.getFullYear()
+      && e.start.getMonth() <= date.getMonth() && e.end.getMonth() >= date.getMonth()
       && e.start.getDate() <= date.getDate() && e.end.getDate() >= date.getDate())
       console.log(events);
     res.send(events.sort(function(a,b){
@@ -833,7 +833,7 @@ app.post("/api/calendar/event/add/:email",function(req,res){
 
 //verwijderen event
 app.delete('/api/event/delete/:email/:id', function (req, res, next) {
-  
+
   Parents.findOne({
     email: req.params.email
   }).populate({
@@ -862,7 +862,7 @@ app.delete('/api/event/delete/:email/:id', function (req, res, next) {
               res.json("Event removed");
             });
           });
-        });   
+        });
       });
 });
 
@@ -898,7 +898,7 @@ app.post("/api/category/add/:email",function(req,res){
           }
         });
         res.json(category);
-      });   
+      });
     }
   });
 });
@@ -1010,7 +1010,11 @@ app.get("/api/costs/:email",function(req,res){
     model:'Group',
     populate:{
       path:'costs',
-      model:'Costs'
+      model:'Costs',
+      populate: {
+        path: 'costCategoryid',
+        model: 'CostCategory'
+      }
     }
   }).exec(function(err,parent){
     if(err){
@@ -1030,7 +1034,11 @@ app.post("/api/costs/addCost/:email",function(req,res){
     model: 'Group',
     populate:{
       path: 'costs',
-      model: 'Costs'
+      model: 'Costs',
+      populate: {
+        path: 'costCategoryid',
+        model: 'CostCategory'
+      }
     }
   }).exec(function(err,parent){
     if(err){
