@@ -33,6 +33,7 @@ import { Category } from '../models/category';
 import { DayShowComponent } from './day-show/day-show.component';
 import {Event} from "../models/event";
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Child } from '../models/child';
 var colors: any = {
   red: {
     primary: '#ad2121',
@@ -86,12 +87,15 @@ export class CalendarComponent implements OnInit{
   refresh: Subject<any> = new Subject();
 
   events: CalendarEvent[] = [];
+  filteredEvents: CalendarEvent[] = [];
+  initialEvents: CalendarEvent[] = [];
   activeDayIsOpen: boolean = true;
 
   user: User;
   currentUser: Parent;
 
-  data: Event[];
+  data: any = [];
+  children: Child[];
 
   constructor(private modal: NgbModal,
      private parentService: ParentService,
@@ -101,7 +105,7 @@ export class CalendarComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
+    this.parentService.getByEmail(this.user.email).subscribe(user => {this.currentUser = user});
     this.parentService.getEvents(this.user.email).subscribe(data => {
       this.data = data;
       //loop over alle evenementen in de data
@@ -127,6 +131,7 @@ export class CalendarComponent implements OnInit{
         }
         //push van event
         this.events.push(calendarEvent);
+        this.initialEvents.push(calendarEvent);
       }
       console.log(this.events);
       this.refresh.next();
@@ -194,4 +199,47 @@ export class CalendarComponent implements OnInit{
     });
     this.refresh.next();
   }
+
+  filter(value: string){
+    let events : Event[];
+    this.filteredEvents = [];
+    if(value === "All"){
+      this.events = this.initialEvents
+      this.refresh.next();
+    }else{
+      for(var event in this.data){
+        for(var child in this.data[event]["children"]){ 
+          if(value == this.data[event]["children"][child]["firstname"]){
+            var _color  = {
+              primary: this.data[event]["categoryid"]["color"],
+              secondary: this.data[event]["categoryid"]["color"]
+            }
+            //initialiseer een kalenderevenement om toe te voegen aan de kalender
+            let calendarEvent : CalendarEvent = {
+              start : new Date(this.data[event]["start"]),
+              end : new Date(this.data[event]["end"]),
+              actions: this.actions,
+              title : this.data[event]["title"],
+              color: _color,
+              draggable: true,
+              resizable: {
+                beforeStart: true,
+                afterEnd: true
+              },
+            }
+            this.filteredEvents.push(calendarEvent);
+          }
+        }
+      }
+      if(this.filteredEvents.length > 0){
+        this.events = this.filteredEvents;
+        this.refresh.next();
+      }else{
+       // this.events = this.initialEvents;
+       this.events = [];
+      }  
+    }
+  }
+
 }
+

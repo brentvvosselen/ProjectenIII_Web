@@ -1,6 +1,14 @@
 <h2 class="center page-title"><span>Kalender</span><a class="action-right" routerLink="/calendar/add" routerLinkActive="active"><i class="material-icons">add</i></a></h2>
-
 <div *ngIf="events">
+  <p>test</p>
+  <div *ngIf="currentUser">
+      <select #selectElem (change)="filter(selectElem.value)">
+          <option [ngValue]="0" selected>All</option>
+          <option *ngFor="let ch of currentUser.group.children" [value]="ch.firstname">
+            <label>{{ch.firstname}}</label>
+          </option>
+      </select>
+  </div>
     <ng-template #modalContent let-close="close">
         <div class="modal-header">
           <h5 class="modal-title">Event action occurred</h5>
