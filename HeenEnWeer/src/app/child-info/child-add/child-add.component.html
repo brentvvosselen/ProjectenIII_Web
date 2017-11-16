@@ -1,44 +1,40 @@
-<div class="container">
-  <h2 class="center">Kind Toevoegen</h2>
-  <br>
-  <form id="childAddForm" name="childForm" (ngSubmit)="addChild()" #f="ngForm">
-      <div class="card card-form">
-          <div class="form-item" [ngClass]="{ 'has-error': f.submitted && !firstname.valid }">
+<h2 class="center page-title">Kind toevoegen</h2>
+<div class="center container-fluid">
+    <form class="childForm col-12 col-md-10 col-lg-8 col-xl-6 align-self-center" id="childAddForm" name="childForm" (ngSubmit)="addChild()"
+        #f="ngForm">
+        <div>
+            <div class="form-item">
+                <label>Voornaam</label>
+                <input class="form-control form-border" type="firstname" name="firstname" placeholder="Voornaam" [(ngModel)]="model.firstname"
+                    #firstname="ngModel" required>
+                <div *ngIf="f.submitted && !firstname.valid" class="help-block">Voornaam is verplicht</div>
+            </div>
+            <div class="form-item">
+                <label>Achternaam</label>
+                <input class="form-control form-border" type="lastname" name="lastname" placeholder="Achternaam" [(ngModel)]="model.lastname"
+                    #lastname="ngModel" required>
+                <div *ngIf="f.submitted && !lastname.valid" class="help-block">Achternaam is verplicht</div>
+            </div>
+            <div class="form-item">
+                <label>Geslacht</label>
+                    <select class="form-control form-border" [(ngModel)]="model.gender"  type="gender" name="gender"  required>
+                            <option hidden>Sex</option>
+                            <option *ngFor="let gen of genders" [value]="gen.value"  ng-init="gen.value='F'">
+                                <label>{{gen.display}}</label>
+                            </option>
+                    </select>    
+                <div *ngIf="f.submitted && !gender.valid" class="help-block">Geslacht is verplicht</div>
+            </div>
+            <div class="form-item">
+                <label>Geboortedatum</label>
+                <input class="form-control form-border" type="date" name="date" placeholder="Geslacht" [(ngModel)]="model.birthdate" #date="ngModel"
+                    required>
+                <div *ngIf="f.submitted && !date.valid" class="help-block">Geboortedatum is verplicht</div>
+            </div>
+        </div>
 
-              <input class="form-control" type="firstname" name="firstname" placeholder="Voornaam"[(ngModel)]="model.firstname" #firstname="ngModel" required>
-
-              <div *ngIf="f.submitted && !firstname.valid" class="help-block">Voornaam is verplicht</div>
-
-          </div>
-
-          <div class="form-item" [ngClass]="{ 'has-error': f.submitted && !lastname.valid }">
-
-              <input class="form-control" type="lastname" name="lastname" placeholder="Achternaam" [(ngModel)]="model.lastname" #lastname="ngModel" required>
-
-              <div *ngIf="f.submitted && !password.valid" class="help-block">Achternaam is verplicht</div>
-
-          </div>
-
-          <div class="form-item" [ngClass]="{ 'has-error': f.submitted && !gender.valid }">
-              
-            <input class="form-control" type="gender" name="gender" placeholder="Geslacht" [(ngModel)]="model.gender" #gender="ngModel" required>
-              
-            <div *ngIf="f.submitted && !gender.valid" class="help-block">Geslacht is verplicht</div>
-              
-          </div>
-
-          <div class="form-item" [ngClass]="{ 'has-error': f.submitted && !birthdate.valid }">
-              
-            <input class="form-control" type="birthdate" name="birthdate" placeholder="Geboortedatum" [(ngModel)]="model.birthdate" #birthdate="ngModel" required>
-              
-            <div *ngIf="f.submitted && !birthdate.valid" class="help-block">Geboortedatum is verplicht</div>
-              
-          </div>
-
-      </div>
-
-      <div class="button-login">
-          <input type="submit" value="Voeg toe" />
-      </div>
-  </form>
+        <button class="btn btn-blue-big btn-primary pull-right" type="submit">
+            Voeg toe
+        </button>
+    </form>
 </div>

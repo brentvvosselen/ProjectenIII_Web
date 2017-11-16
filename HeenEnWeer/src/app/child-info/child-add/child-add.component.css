@@ -1,3 +1,31 @@
 body{
     background-color: #F9F9F9;
 }
+
+.childForm{
+    margin: 0 auto;
+}
+
+.childForm{
+    margin: 0 auto;
+    display: inline-block;
+    text-align: left;
+}
+
+.childForm label{
+    color: grey;
+    margin-top: 20px;
+}
+
+.childForm input{
+    width:100%;
+}
+
+.childForm button{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: none !important;
+}
+.childForm .input-group{
+    width:100%;
+}

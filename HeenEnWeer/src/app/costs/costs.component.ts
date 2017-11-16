@@ -64,6 +64,7 @@ export class CostsComponent implements OnInit {
         this.costDatabase.addCost(result);        
       }
       this.dataSource.connect();
+      this.costDatabase.dataChange.next(this.dataSource);
     });
   }
 

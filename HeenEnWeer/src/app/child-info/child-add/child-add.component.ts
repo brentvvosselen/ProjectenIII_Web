@@ -12,9 +12,9 @@ import { Router } from '@angular/router';
 })
 export class ChildAddComponent implements OnInit {
 
-  public genders = [
-    { value: 'F', display: 'Female' },
-    { value: 'M', display: 'Male' }
+  genders = [
+    { value: 'F', display: 'Miesje' },
+    { value: 'M', display: 'Jongen' }
   ];
 
   user: User;
@@ -26,10 +26,11 @@ export class ChildAddComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);    
+    this.parentService.getByEmail(this.user.email).subscribe(user => {this.currentUser = user});    
   }
 
   addChild(){
+    console.log(this.model);
     this.parentService.addChild(this.model, this.currentUser).subscribe(data => console.log(data));
     this.router.navigate(["/children"]);
   }
