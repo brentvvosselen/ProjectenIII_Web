@@ -666,6 +666,17 @@ app.get("/api/calendar/getall/:email",function(req,res){
         model: 'Category',
       },
     },
+  }).populate({
+    path: 'group',
+    model: 'Group',
+    populate:{
+      path: 'events',
+      model:'Events',    
+      populate:{
+        path: 'children',
+        model: 'Child',
+      },
+    },
   })
   .exec(function(err,parent){
     if(err){
