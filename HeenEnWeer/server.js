@@ -628,8 +628,10 @@ app.get("/api/calendar/setup/:email",function(req,res,next){
             start: new Date(),
             end: new Date(2017,10,06),
             description: 'This is a test event',
-            categoryid: category
+            categoryid: category,
+            children: [],
           });
+          event.children.push(group.children[0]);
           group.categories.push(category);
           group.events.push(event);
           event.save(function(err){
@@ -642,7 +644,7 @@ app.get("/api/calendar/setup/:email",function(req,res,next){
               handleError(err,"group could not be saved");
             }
           });
-          res.send("succes");
+          res.send(group);
         }
       });
     }
@@ -658,13 +660,12 @@ app.get("/api/calendar/getall/:email",function(req,res){
     model: 'Group',
     populate:{
       path: 'events',
-      model:'Events',
-      select: ['title','start','end','categoryid'],
+      model:'Events',    
       populate:{
         path: 'categoryid',
-        model: 'Category'
-      }
-    }
+        model: 'Category',
+      },
+    },
   })
   .exec(function(err,parent){
     if(err){

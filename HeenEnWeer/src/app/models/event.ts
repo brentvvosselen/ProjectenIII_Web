@@ -1,4 +1,5 @@
 import { Category } from "./category";
+import { Child } from "./child";
 
 export class Event {
     _id: number;
@@ -6,6 +7,7 @@ export class Event {
     end: Date;
     title: String;
     categoryid: Category;
+    children: Child[];
     constructor(){}
   }
   

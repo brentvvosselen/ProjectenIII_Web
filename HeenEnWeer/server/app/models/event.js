@@ -19,7 +19,8 @@ var EventSchema = new Schema({
         type: Date,
         required: true
     },
-    categoryid:{type: Schema.ObjectId, ref: 'Category', required: true}
+    categoryid:{type: Schema.ObjectId, ref: 'Category', required: true},
+    children:[{type: Schema.ObjectId, ref:"Child"}]
 });
 
 module.exports = mongoose.model('Events',EventSchema);
