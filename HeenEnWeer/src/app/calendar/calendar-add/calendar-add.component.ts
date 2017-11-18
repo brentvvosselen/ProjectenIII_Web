@@ -60,6 +60,7 @@ export class CalendarAddComponent implements OnInit {
     this.parentService.getCategories(this.user.email).subscribe(data => {
       this.categories = data;
       console.log(this.categories);
+      this.selectedCategory = this.categories[0];
     });
     this.newEvent();
   }
