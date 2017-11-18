@@ -49,6 +49,7 @@ import {MatSelectModule} from '@angular/material';
 import { CategoryAddComponent } from './calendar/category-add/category-add.component';
 import { CostDetailComponent } from './costs/cost-detail/cost-detail.component';
 import { DayShowComponent } from './calendar/day-show/day-show.component';
+import {MatRadioModule} from '@angular/material/radio';
 @NgModule({
   declarations: [
     AppComponent,
@@ -102,6 +103,7 @@ import { DayShowComponent } from './calendar/day-show/day-show.component';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatRadioModule,
     RouterModule.forRoot([
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},

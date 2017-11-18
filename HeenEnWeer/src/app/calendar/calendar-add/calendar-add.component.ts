@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { Category } from '../../models/category';
 import { CategoryAddComponent } from '../category-add/category-add.component';
 import { MatDialog } from '@angular/material';
+import { Child } from '../../models/child';
 
 @Component({
   selector: 'app-calendar-add',
@@ -26,7 +27,8 @@ export class CalendarAddComponent implements OnInit {
   categories: Category[] = [];
   category: Category;
   selectedCategory: Category;
-
+  selectedChildren: Child[];
+  allChildren: Child[];
   refresh: Subject<any> = new Subject();
   
   user: User;
@@ -62,6 +64,10 @@ export class CalendarAddComponent implements OnInit {
       console.log(this.categories);
       this.selectedCategory = this.categories[0];
     });
+    this.parentService.getByEmail(this.user.email).subscribe(user => {
+      this.currentUser = user;
+      this.allChildren = user.group.children;
+    });
     this.newEvent();
   }
 
@@ -76,6 +82,7 @@ export class CalendarAddComponent implements OnInit {
         beforeStart: true,
         afterEnd: true
       },
+      children: [],
     };
     this.refresh.next();
   }
@@ -91,7 +98,8 @@ export class CalendarAddComponent implements OnInit {
       end: this.event.end,
       start: this.event.start,
       title: this.event.title,
-      description:  this.event.description
+      description:  this.event.description,
+      children: this.selectedChildren
     }
     this.parentService.addEvent(model,this.user.email).subscribe(data => this.router.navigate(["/calendar"]));
     this.refresh.next();
@@ -120,6 +128,18 @@ export class CalendarAddComponent implements OnInit {
     let obj = this.categories.find(e => e.type === value);
     this.selectedCategory = obj;
     console.log(this.selectedCategory);
+  }
+
+  setChild(value: number){
+    console.log(value);
+    if(value === 0){
+      this.selectedChildren === this.allChildren;
+      console.log("geraak k ier?");
+      console.log(this.allChildren);
+    }else{
+      this.selectedChildren = this.currentUser.group.children.filter(elem => elem._id == value);
+      console.log(this.selectedChildren);
+    } 
   }
 
   openDialog(): void {

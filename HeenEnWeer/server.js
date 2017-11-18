@@ -823,7 +823,8 @@ app.post("/api/calendar/event/add/:email",function(req,res){
           start: req.body.start,
           end: req.body.end,
           description: req.body.description,
-          categoryid: req.body.categoryid
+          categoryid: req.body.categoryid,
+          children: req.body.children,
         });
         parent.group.events.push(event);
         //save event
