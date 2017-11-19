@@ -24,6 +24,9 @@ var Event = require('./server/app/models/event.js');
 var Category = require('./server/app/models/category.js');
 var Costs = require("./server/app/models/cost");
 var CostCategory = require("./server/app/models/costCategory");
+var HeenEnWeerBoek = require('./server/app/models/HeenEnWeerBoek.js');
+var HeenEnWeerDag = require('./server/app/models/HeenEnWeerDag');
+var HeenEnWeerItem = require('./server/app/models/HeenEnWeerItem');
 
 var PARENTS_COLLECTION = "parents";
 var USERS_COLLECTION = "users";
@@ -426,6 +429,17 @@ app.post("/api/setup", function(req,res,next){
           }
         });
         tempChildren.push(tempChild);
+
+        //create new book
+        var newBook = new HeenEnWeerBoek({
+          child: tempChild
+        });
+        parent.group.heenEnWeerBoekjes.push(newBook);
+        newBook.save(function(err){
+          if(err) next(handleError(res,err.message,"Could not add a Heen en weer boekje"));
+          console.log("BOEKJE ADDED");
+        })
+
       });
 
       parent.group.children = tempChildren;
@@ -439,6 +453,11 @@ app.post("/api/setup", function(req,res,next){
       invitee.save(function(err){
         if(err) next(handleError(res,err.message,"Could not invite other parent"));
         console.log("INVITEE ADDED");
+      });
+
+      parent.group.save(function(err){
+        if(err) next(handleError(res,err.message,"Could not update group"));
+        console.log("GROUP SAVED");
       });
 
       //send a mail to the invitee
@@ -548,6 +567,15 @@ app.post("/api/children/update", function(req, res) {
   });
 });
 
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!VERANDEREN SIGNATUUR NODIG!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!toevoegen kind!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 app.post("/api/child/:id", function(req, res, next){
   console.log(req.params.id);
   Parents.findOne({
@@ -581,6 +609,16 @@ app.post("/api/child/:id", function(req, res, next){
       });
 
       group.children.push(newChild);
+      var heenEnWeerBoekje = new HeenEnWeerBoek({
+        child: newChild
+      });
+      heenEnWeerBoekje.save(function(err){
+        if(err){
+          next(handleError(res,"Boekje could not be added"));
+        }
+        console.log("BOEKJE ADDED");
+      });
+      group.heenEnWeerBoekjes.push(heenEnWeerBoekje);
 
       group.save(function(err){
         if(err){
@@ -1138,6 +1176,8 @@ app.get("/api/costs/categories/:email",function(req,res){
     }
   });
 });
+
+//toevoegen heen en weer
 
 //VOORBEELD VOOR JWT AUTHENTICATED ROUTE
 app.get("/api/secret", passport.authenticate('jwt', { session: false }), function(req, res){
