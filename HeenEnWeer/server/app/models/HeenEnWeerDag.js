@@ -10,7 +10,7 @@ var HeenEnWeerDagSchema = new Schema({
     },
     description:{
         type: String,
-        required: true
+        required: false
     },
     items: [{type: Schema.ObjectId, ref:"HeenEnWeerItem"}],
     child:{

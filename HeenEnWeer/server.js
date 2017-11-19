@@ -1177,7 +1177,107 @@ app.get("/api/costs/categories/:email",function(req,res){
   });
 });
 
-//toevoegen heen en weer
+//toevoegen heen en weerdag
+app.post("/api/heenenweer/day/add/:date",function(req,res){
+  HeenEnWeerBoek.findOne({
+    child: req.body.childid
+  },function(err,boek){
+    if(err) next(handleError(res,err.message,"Could not find book"));
+    var day = new HeenEnWeerDag({
+      date: req.params.date,
+      child: req.body.childid
+    });
+    boek.days.push(day);
+    day.save(function(err){
+      if(err){
+        next(handleError(res,err.message,"Could not save day"));
+      }else{
+        boek.save(function(err){
+          if(err) next(handleError(res,err.message,"Could not save book"));
+          console.log("book saved");
+          res.json("Day added");
+        });
+      }
+    })
+  });
+})
+
+//toevoegen heen en weer item
+app.post("/api/heenenweer/item/add/:dayid",function(req,res){
+  HeenEnWeerDag.findOne({
+    _id: req.params.dayid
+  },function(err,day){
+    if(err) next(handleError(res,err.message,"Could not retrieve day"));
+
+    var newItem = new HeenEnWeerItem({
+      category: req.body.category,
+      value: req.body.value
+    });
+    day.items.push(newItem);
+    newItem.save(function(err){
+      if(err)next(handleError(res,err.message,"Could not save new item"));
+        day.save(function(err){
+          if(err)next(handleError(res,err.message,"Could not save day"));
+          console.log("ITEM ADDED");
+          res.json("successfully added item");
+        })
+    })
+  });
+});
+
+//opvragen alle boekjes met datum dagen en beschrijvenen en kind
+app.get("/api/heenenweer/getAll/:email",function(req,res){
+  Parents.findOne({
+    email: req.params.email
+  }).populate({
+    path:'group',
+    model:'Group',
+    populate:{
+      path:'heenEnWeerBoekjes',
+      model:'HeenEnWeerBoek',
+      populate:[
+        {
+          path:'child',
+          model:'Child',
+          select:['firstname','lastname']
+        },
+        {
+          path:'days',
+          model:'HeenEnWeerDag',
+          select:['date','description']
+        }
+      ]
+    }
+  }).exec(function(err,parent){
+    if(err) next(handleError(res,err.message,"Could not retrieve parent"));
+    res.json(parent.group);
+  })
+
+});
+
+//opvragen informatie heen en weer voor bepaalde dag
+app.get("/api/heenenweer/day/:id",function(req,res){
+ HeenEnWeerDag.findOne({
+   _id: req.params.id
+ }).populate([
+   {
+     path:'child',
+     model:'Child',
+     select:['firstname','lastname']
+   },
+   {
+     path:'items',
+     model:'HeenEnWeerItem',
+     populate:{
+       path:'category',
+       model:'Category'
+     }
+   }
+ ]).exec(function(err,day){
+   if(err)next(handleError(res,err.message,"Could not find day"));
+   res.json(day);
+ })
+});
 
 //VOORBEELD VOOR JWT AUTHENTICATED ROUTE
 app.get("/api/secret", passport.authenticate('jwt', { session: false }), function(req, res){
