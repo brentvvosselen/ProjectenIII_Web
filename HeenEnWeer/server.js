@@ -343,7 +343,8 @@ app.get("/api/parents/:email",function(req,res){
     res.json(user);
   }).populate({
     path: 'group',
-    populate: { path: 'children' }
+    select:['children','events','categories','costs','costCategories','finance'],
+    populate: { path: 'children', model:'Child' }
   });
 });
 
@@ -1250,7 +1251,8 @@ app.get("/api/heenenweer/getAll/:email",function(req,res){
     }
   }).exec(function(err,parent){
     if(err) next(handleError(res,err.message,"Could not retrieve parent"));
-    res.json(parent.group);
+    console.log(parent.group.heenEnWeerBoekjes);
+    res.json(parent.group.heenEnWeerBoekjes);
   })
 
 });
