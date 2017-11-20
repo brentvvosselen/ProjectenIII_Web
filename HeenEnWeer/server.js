@@ -24,6 +24,9 @@ var Event = require('./server/app/models/event.js');
 var Category = require('./server/app/models/category.js');
 var Costs = require("./server/app/models/cost");
 var CostCategory = require("./server/app/models/costCategory");
+var HeenEnWeerBoek = require('./server/app/models/HeenEnWeerBoek.js');
+var HeenEnWeerDag = require('./server/app/models/HeenEnWeerDag');
+var HeenEnWeerItem = require('./server/app/models/HeenEnWeerItem');
 
 var PARENTS_COLLECTION = "parents";
 var USERS_COLLECTION = "users";
@@ -340,7 +343,8 @@ app.get("/api/parents/:email",function(req,res){
     res.json(user);
   }).populate({
     path: 'group',
-    populate: { path: 'children' }
+    select:['children','events','categories','costs','costCategories','finance'],
+    populate: { path: 'children', model:'Child' }
   });
 });
 
@@ -426,6 +430,17 @@ app.post("/api/setup", function(req,res,next){
           }
         });
         tempChildren.push(tempChild);
+
+        //create new book
+        var newBook = new HeenEnWeerBoek({
+          child: tempChild
+        });
+        parent.group.heenEnWeerBoekjes.push(newBook);
+        newBook.save(function(err){
+          if(err) next(handleError(res,err.message,"Could not add a Heen en weer boekje"));
+          console.log("BOEKJE ADDED");
+        })
+
       });
 
       parent.group.children = tempChildren;
@@ -439,6 +454,11 @@ app.post("/api/setup", function(req,res,next){
       invitee.save(function(err){
         if(err) next(handleError(res,err.message,"Could not invite other parent"));
         console.log("INVITEE ADDED");
+      });
+
+      parent.group.save(function(err){
+        if(err) next(handleError(res,err.message,"Could not update group"));
+        console.log("GROUP SAVED");
       });
 
       //send a mail to the invitee
@@ -548,6 +568,15 @@ app.post("/api/children/update", function(req, res) {
   });
 });
 
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!VERANDEREN SIGNATUUR NODIG!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!toevoegen kind!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 app.post("/api/child/:id", function(req, res, next){
   console.log(req.params.id);
   Parents.findOne({
@@ -581,6 +610,16 @@ app.post("/api/child/:id", function(req, res, next){
       });
 
       group.children.push(newChild);
+      var heenEnWeerBoekje = new HeenEnWeerBoek({
+        child: newChild
+      });
+      heenEnWeerBoekje.save(function(err){
+        if(err){
+          next(handleError(res,"Boekje could not be added"));
+        }
+        console.log("BOEKJE ADDED");
+      });
+      group.heenEnWeerBoekjes.push(heenEnWeerBoekje);
 
       group.save(function(err){
         if(err){
@@ -1137,6 +1176,109 @@ app.get("/api/costs/categories/:email",function(req,res){
       res.json(parent.group.costCategories);
     }
   });
+});
+
+//toevoegen heen en weerdag
+app.post("/api/heenenweer/day/add/:date",function(req,res){
+  HeenEnWeerBoek.findOne({
+    child: req.body.childid
+  },function(err,boek){
+    if(err) next(handleError(res,err.message,"Could not find book"));
+    var day = new HeenEnWeerDag({
+      date: req.params.date,
+      child: req.body.childid
+    });
+    boek.days.push(day);
+    day.save(function(err){
+      if(err){
+        next(handleError(res,err.message,"Could not save day"));
+      }else{
+        boek.save(function(err){
+          if(err) next(handleError(res,err.message,"Could not save book"));
+          console.log("book saved");
+          res.json("Day added");
+        });
+      }
+    })
+  });
+})
+
+//toevoegen heen en weer item
+app.post("/api/heenenweer/item/add/:dayid",function(req,res){
+  HeenEnWeerDag.findOne({
+    _id: req.params.dayid
+  },function(err,day){
+    if(err) next(handleError(res,err.message,"Could not retrieve day"));
+
+    var newItem = new HeenEnWeerItem({
+      category: req.body.category,
+      value: req.body.value
+    });
+    day.items.push(newItem);
+    newItem.save(function(err){
+      if(err)next(handleError(res,err.message,"Could not save new item"));
+        day.save(function(err){
+          if(err)next(handleError(res,err.message,"Could not save day"));
+          console.log("ITEM ADDED");
+          res.json("successfully added item");
+        })
+    })
+  });
+});
+
+//opvragen alle boekjes met datum dagen en beschrijvenen en kind
+app.get("/api/heenenweer/getAll/:email",function(req,res){
+  Parents.findOne({
+    email: req.params.email
+  }).populate({
+    path:'group',
+    model:'Group',
+    populate:{
+      path:'heenEnWeerBoekjes',
+      model:'HeenEnWeerBoek',
+      populate:[
+        {
+          path:'child',
+          model:'Child',
+          select:['firstname','lastname']
+        },
+        {
+          path:'days',
+          model:'HeenEnWeerDag',
+          select:['date','description']
+        }
+      ]
+    }
+  }).exec(function(err,parent){
+    if(err) next(handleError(res,err.message,"Could not retrieve parent"));
+    console.log(parent.group.heenEnWeerBoekjes);
+    res.json(parent.group.heenEnWeerBoekjes);
+  })
+
+});
+
+//opvragen informatie heen en weer voor bepaalde dag
+app.get("/api/heenenweer/day/:id",function(req,res){
+ HeenEnWeerDag.findOne({
+   _id: req.params.id
+ }).populate([
+   {
+     path:'child',
+     model:'Child',
+     select:['firstname','lastname']
+   },
+   {
+     path:'items',
+     model:'HeenEnWeerItem',
+     populate:{
+       path:'category',
+       model:'Category'
+     }
+   }
+ ]).exec(function(err,day){
+   if(err)next(handleError(res,err.message,"Could not find day"));
+   res.json(day);
+ })
 });
 
 //VOORBEELD VOOR JWT AUTHENTICATED ROUTE

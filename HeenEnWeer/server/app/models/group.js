@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 var Child = require("./child");
 var Event = require("./event");
 var Category = require("./category");
+var HeenEnWeerBoek = require('./HeenEnWeerBoek');
 
 var GroupSchema = new Schema({
   
@@ -27,7 +28,8 @@ var GroupSchema = new Schema({
         onderhoudsplichtige: {type: Schema.ObjectId, ref: 'Parent'},
         percentage: { type: Number }
       }
-    }
+    },
+    heenEnWeerBoekjes: [{type: Schema.ObjectId,ref:'HeenEnWeerBoek'}]
   });
 
 module.exports = mongoose.model('Group',GroupSchema);
