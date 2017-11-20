@@ -44,7 +44,7 @@
               name="description"
               placeholder="beschrijving">
           </div>
-
+          <br>
           <div class="form-item">
               <label>Categorie</label>
               <select #selectElem (change)="setCat(selectElem.value)">
@@ -54,17 +54,7 @@
               </select>
               <a id="category-add" (click)="openDialog()"><i class="material-icons">add</i></a>              
           </div>
-          <div *ngIf="currentUser">
-            <div class="form-item">
-              <label>Voor kind</label>
-              <select #selectElem (change)="setChild(selectElem.value)">
-                  <option *ngFor="let ch of currentUser.group.children" [value]="ch._id">
-                    <label>{{ch.firstname}}</label>
-                  </option>
-              </select>             
-            </div>
-          </div>
-
+          <br>
           <div *ngIf="currentUser">
             <mat-radio-group  [(ngModel)]="event.children"  name="children">
               <mat-radio-button value="{{currentUser.group.children}}" (change)="setChild(0)">Voor alle kinderen</mat-radio-button>
