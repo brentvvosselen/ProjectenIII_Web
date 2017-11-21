@@ -77,7 +77,6 @@ export class CalendarAddComponent implements OnInit {
       start: new Date(),
       end: new Date(),
       until: new Date(),
-      freq: "",
       color: colors.red,
       draggable: true,
       resizable: {

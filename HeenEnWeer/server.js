@@ -861,8 +861,7 @@ app.post("/api/calendar/event/add/:email",function(req,res){
       if(err){
         handleError(err,"Could not retrieve parent");
       }else{
-        if(req.body.freq != ""){
-          console.log("lijn 865!!!!!!!!!!!!!!" + req.body.interval);
+        if(req.body.freq != "" && req.body.until > new Date() && !req.body.interval){
           var freq;
           if(req.body.freq == "weekly"){
             freq = RRule.WEEKLY
@@ -883,7 +882,6 @@ app.post("/api/calendar/event/add/:email",function(req,res){
           })
   
           for(var ev in rule.all()){
-            console.log("lijn 886:" + rule.all()[ev]);
             var event = new Event({
               title: req.body.title,
               start: new Date(rule.all()[ev]),
