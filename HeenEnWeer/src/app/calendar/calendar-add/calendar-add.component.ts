@@ -165,8 +165,6 @@ export class CalendarAddComponent implements OnInit {
   }
 
   setFreq(value: string){
-    console.log(value);
     this.event.freq = value;
-    console.log(this.event.freq);
   }
 }

@@ -81,6 +81,9 @@
           <div class="form-item">
               <label>Tijdspanne</label>
               <select #selectElem (change)="setFreq(selectElem.value)">
+                  <option [value]="''" disabled>
+                      <label>-- Kies optie -- </label>
+                    </option>
                   <option [value]="'daily'">
                     <label>Dagelijks</label>
                   </option>
