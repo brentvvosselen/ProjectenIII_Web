@@ -30,7 +30,7 @@ export class CalendarAddComponent implements OnInit {
   selectedChildren: Child[];
   allChildren: Child[];
   refresh: Subject<any> = new Subject();
-  
+  returning: boolean;
   user: User;
   currentUser: Parent;
 
@@ -69,6 +69,7 @@ export class CalendarAddComponent implements OnInit {
       this.allChildren = user.group.children;
     });
     this.newEvent();
+    this.returning = false;
   }
 
   newEvent(){
@@ -76,6 +77,7 @@ export class CalendarAddComponent implements OnInit {
       title: "test",
       start: new Date(),
       end: new Date(),
+      until: new Date(),
       color: colors.red,
       draggable: true,
       resizable: {
@@ -99,8 +101,12 @@ export class CalendarAddComponent implements OnInit {
       start: this.event.start,
       title: this.event.title,
       description:  this.event.description,
-      children: this.selectedChildren
+      children: this.selectedChildren,
+      freq: this.event.freq,
+      until: this.event.until,
+      interval: this.event.interval,
     }
+    console.log(model);
     this.parentService.addEvent(model,this.user.email).subscribe(data => this.router.navigate(["/calendar"]));
     this.refresh.next();
   }
@@ -157,5 +163,24 @@ export class CalendarAddComponent implements OnInit {
         this.categories.push(this.category);
       }
     });
+  }
+
+  setFreq(value: string){
+    console.log(value);
+    this.event.freq = value;
+    console.log(this.event.freq);
+  }
+
+  setInterval(value: number){
+    this.event.interval = value;
+  }
+  
+  setReturning(){
+    if(!this.returning){
+      this.returning = true;
+    }else{
+      this.returning = false;
+    }
+    console.log(this.returning);
   }
 }

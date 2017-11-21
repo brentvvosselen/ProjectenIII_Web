@@ -50,6 +50,8 @@ import { CategoryAddComponent } from './calendar/category-add/category-add.compo
 import { CostDetailComponent } from './costs/cost-detail/cost-detail.component';
 import { DayShowComponent } from './calendar/day-show/day-show.component';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -104,6 +106,7 @@ import {MatRadioModule} from '@angular/material/radio';
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
+    MatCheckboxModule,
     RouterModule.forRoot([
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},

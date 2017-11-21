@@ -33,6 +33,10 @@ var USERS_COLLECTION = "users";
 var CHILDREN_COLLECTION = "children";
 var GROUP_COLLECTION = "groups";
 
+var RRule = require('rrule').RRule
+var RRuleSet = require('rrule').RRuleSet
+var rrulestr = require('rrule').rrulestr
+
 var nodemailer = require('nodemailer');
 var transport = nodemailer.createTransport({
     service: 'gmail',
@@ -857,20 +861,59 @@ app.post("/api/calendar/event/add/:email",function(req,res){
       if(err){
         handleError(err,"Could not retrieve parent");
       }else{
-        var event = new Event({
-          title: req.body.title,
-          start: req.body.start,
-          end: req.body.end,
-          description: req.body.description,
-          categoryid: req.body.categoryid,
-          children: req.body.children,
-        });
-        parent.group.events.push(event);
-        //save event
-        event.save(function(err){
-          if(err) handleError(res, "Could not save event", err.message);
-        });
+        if(req.body.freq != "" && req.body.until > new Date() && !req.body.interval){
+          var freq;
+          if(req.body.freq == "weekly"){
+            freq = RRule.WEEKLY
+          }else if(req.body.freq == "daily"){
+            freq = RRule.DAILY
+          }else if(req.body.freq == "monthly"){
+            freq = RRule.MONTHLY
+          }
+          var until = new Date(req.body.until);
+          var start = new Date(req.body.start);
+          var interval = parseInt(req.body.interval);
+          var rule = new RRule({
+            freq: freq,
+            //byweekday: [RRule.MO, RRule.FR],
+            interval: interval,
+            dtstart: start,
+            until: until
+          })
+  
+          for(var ev in rule.all()){
+            var event = new Event({
+              title: req.body.title,
+              start: new Date(rule.all()[ev]),
+              end: new Date(rule.all()[ev]),
+              description: req.body.description,
+              categoryid: req.body.categoryid,
+              children: req.body.children,
+            });
+            parent.group.events.push(event);
+  
+            //save event
+            event.save(function(err){
+              if(err) handleError(res, "Could not save event", err.message);
+            });
+          }
+        }else{
+          var event = new Event({
+            title: req.body.title,
+            start: req.body.start,
+            end: req.body.end,
+            description: req.body.description,
+            categoryid: req.body.categoryid,
+            children: req.body.children,
+          });
+          parent.group.events.push(event);
 
+          //save event
+          event.save(function(err){
+            if(err) handleError(res, "Could not save event", err.message);
+          });
+        }
+        
         parent.group.save(function(err){
           if(err){
             handleError(res, "Could not save group");
