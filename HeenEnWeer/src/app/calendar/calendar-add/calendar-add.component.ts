@@ -76,6 +76,8 @@ export class CalendarAddComponent implements OnInit {
       title: "test",
       start: new Date(),
       end: new Date(),
+      until: new Date(),
+      freq: "",
       color: colors.red,
       draggable: true,
       resizable: {
@@ -99,8 +101,11 @@ export class CalendarAddComponent implements OnInit {
       start: this.event.start,
       title: this.event.title,
       description:  this.event.description,
-      children: this.selectedChildren
+      children: this.selectedChildren,
+      freq: this.event.freq,
+      until: this.event.until,
     }
+    console.log(model);
     this.parentService.addEvent(model,this.user.email).subscribe(data => this.router.navigate(["/calendar"]));
     this.refresh.next();
   }
@@ -157,5 +162,11 @@ export class CalendarAddComponent implements OnInit {
         this.categories.push(this.category);
       }
     });
+  }
+
+  setFreq(value: string){
+    console.log(value);
+    this.event.freq = value;
+    console.log(this.event.freq);
   }
 }

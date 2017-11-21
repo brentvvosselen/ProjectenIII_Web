@@ -63,7 +63,35 @@
               </div>     
             </mat-radio-group>
           </div>
-          
+          <br>
+          <div>
+            <h4>Opties voor wederkerende events</h4>
+          </div>
+
+          <div class="form-item">
+              <label>Tot wanneer</label>
+              <mwl-demo-utils-date-time-picker
+                [(ngModel)]="event.until"
+                (ngModelChange)="refresh.next()"
+                placeholder="Not set"
+                name="untilDate">
+              </mwl-demo-utils-date-time-picker>
+          </div>
+
+          <div class="form-item">
+              <label>Tijdspanne</label>
+              <select #selectElem (change)="setFreq(selectElem.value)">
+                  <option [value]="'daily'">
+                    <label>Dagelijks</label>
+                  </option>
+                  <option [value]="'weekly'">
+                    <label>Wekelijks</label>
+                  </option>
+                  <option [value]="'monthly'">
+                    <label>Maandelijks</label>
+                  </option>
+              </select>
+          </div>
 
           <button class="btn btn-blue-big btn-primary pull-right" type="submit">
             Opslaan
