@@ -1186,7 +1186,8 @@ app.post("/api/heenenweer/day/add/:date",function(req,res){
     if(err) next(handleError(res,err.message,"Could not find book"));
     var day = new HeenEnWeerDag({
       date: req.params.date,
-      child: req.body.childid
+      child: req.body.childid,
+      description: req.body.description
     });
     boek.days.push(day);
     day.save(function(err){
@@ -1245,7 +1246,12 @@ app.get("/api/heenenweer/getAll/:email",function(req,res){
         {
           path:'days',
           model:'HeenEnWeerDag',
-          select:['date','description']
+          select:['child','description','date'],
+          populate:{
+            path:'child',
+            model:'Child',
+            select: ['firstname']
+          }
         }
       ]
     }
