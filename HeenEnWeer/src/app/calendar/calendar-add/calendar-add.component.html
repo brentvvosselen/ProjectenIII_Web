@@ -1,129 +1,110 @@
 <h2 class="center page-title">Evenement toevoegen</h2>
 <div class="center container-fluid">
-    <form class="eventForm col-12 col-md-10 col-lg-8 col-xl-6 align-self-center" (ngSubmit)="save()" #eventForm="ngForm">
+  <form class="eventForm col-12 col-md-10 col-lg-8 col-xl-6 align-self-center" (ngSubmit)="save()" #eventForm="ngForm">
+    <div>
+
+      <div class="form-item">
+        <label>Titel</label>
+        <input type="text" class="form-control form-border" [(ngModel)]="event.title" (keyup)="refresh.next()" name="title">
+      </div>
+
+      <div class="form-item">
+        <label>Start datum</label>
+        <mwl-demo-utils-date-time-picker [(ngModel)]="event.start" (ngModelChange)="refresh.next()" placeholder="Not set" name="startDate">
+        </mwl-demo-utils-date-time-picker>
+      </div>
+
+
+      <div class="form-item">
+        <label>Eind datum</label>
+        <mwl-demo-utils-date-time-picker [(ngModel)]="event.end" (ngModelChange)="refresh.next()" placeholder="Not set" name="endDate">
+        </mwl-demo-utils-date-time-picker>
+      </div>
+
+      <div class="form-item">
+        <label>Beschrijving</label>
+        <input type="text" class="form-control form-border" [(ngModel)]="event.description" (keyup)="refresh.next()" name="description"
+          placeholder="beschrijving">
+      </div>
+      <br>
+      <div class="form-item">
+        <label>Categorie</label>
+        <select #selectElem (change)="setCat(selectElem.value)">
+          <option *ngFor="let cat of categories" [value]="cat.type">
+            <label>{{cat.type}}</label>
+          </option>
+        </select>
+        <a id="category-add" (click)="openDialog()">
+          <i class="material-icons">add</i>
+        </a>
+      </div>
+      <br>
+      <div *ngIf="currentUser">
+        <mat-radio-group [(ngModel)]="event.children" name="children">
+          <mat-radio-button value="{{currentUser.group.children}}" (change)="setChild(0)">Voor alle kinderen</mat-radio-button>
+          <div *ngFor="let ch of currentUser.group.children">
+            <mat-radio-button value="{{ch}}" (change)="setChild(ch._id)">{{ch.firstname}}</mat-radio-button>
+          </div>
+        </mat-radio-group>
+      </div>
+      <br>
+      <mat-checkbox (change)="setReturning()">Maak wederkerend</mat-checkbox>
+      <div *ngIf="returning">
         <div>
-    
-          <div class="form-item">
-            <label>Titel</label>
-              <input
-              type="text"
-              class="form-control form-border"
-              [(ngModel)]="event.title"
-              (keyup)="refresh.next()"
-              name="title">
-          </div>
-    
-          <div class="form-item">
-            <label>Start datum</label>
-            <mwl-demo-utils-date-time-picker 
-              [(ngModel)]="event.start" 
-              (ngModelChange)="refresh.next()"
-              placeholder="Not set" 
-              name="startDate">
-            </mwl-demo-utils-date-time-picker>
-          </div>
-
-    
-          <div class="form-item">
-            <label>Eind datum</label>
-            <mwl-demo-utils-date-time-picker
-              [(ngModel)]="event.end"
-              (ngModelChange)="refresh.next()"
-              placeholder="Not set"
-              name="endDate">
-            </mwl-demo-utils-date-time-picker>
-          </div>
-    
-          <div class="form-item">
-            <label>Beschrijving</label>
-              <input
-              type="text"
-              class="form-control form-border"
-              [(ngModel)]="event.description"
-              (keyup)="refresh.next()"
-              name="description"
-              placeholder="beschrijving">
-          </div>
-          <br>
-          <div class="form-item">
-              <label>Categorie</label>
-              <select #selectElem (change)="setCat(selectElem.value)">
-                  <option *ngFor="let cat of categories" [value]="cat.type">
-                    <label>{{cat.type}}</label>
-                  </option>
-              </select>
-              <a id="category-add" (click)="openDialog()"><i class="material-icons">add</i></a>              
-          </div>
-          <br>
-          <div *ngIf="currentUser">
-            <mat-radio-group  [(ngModel)]="event.children"  name="children">
-              <mat-radio-button value="{{currentUser.group.children}}" (change)="setChild(0)">Voor alle kinderen</mat-radio-button>
-              <div *ngFor="let ch of currentUser.group.children">
-                <mat-radio-button value="{{ch}}" (change)="setChild(ch._id)" >{{ch.firstname}}</mat-radio-button>
-              </div>     
-            </mat-radio-group>
-          </div>
-          <br>
-          <div>
-            <h4>Opties voor wederkerende events</h4>
-          </div>
-
-          <div class="form-item">
-              <label>Tot wanneer</label>
-              <mwl-demo-utils-date-time-picker
-                [(ngModel)]="event.until"
-                (ngModelChange)="refresh.next()"
-                placeholder="Not set"
-                name="untilDate">
-              </mwl-demo-utils-date-time-picker>
-          </div>
-
-          <div class="form-item">
-              <label>Tijdspanne</label>
-              <select #selectElem2 (change)="setFreq(selectElem2.value)">
-                  <option [value]="''" disabled>
-                      <label>-- Kies optie -- </label>
-                    </option>
-                  <option [value]="'daily'">
-                    <label>Dagelijks</label>
-                  </option>
-                  <option [value]="'weekly'">
-                    <label>Wekelijks</label>
-                  </option>
-                  <option [value]="'monthly'">
-                    <label>Maandelijks</label>
-                  </option>
-              </select>
-          </div>
-
-          <div class="form-item">
-              <label>Terugkerend</label>
-              <select #selectElem3 (change)="setInterval(selectElem3.value)">
-                  <option [value]="''" disabled>
-                      <label>-- Kies optie -- </label>
-                    </option>
-                  <option [value]="1">
-                    <label>1</label>
-                  </option>
-                  <option [value]="2">
-                    <label>2</label>
-                  </option>
-                  <option [value]="3">
-                    <label>3</label>
-                  </option>
-                  <option [value]="4">
-                    <label>4</label>
-                  </option>
-              </select>
-          </div>
-
-          <button class="btn btn-blue-big btn-primary pull-right" type="submit">
-            Opslaan
-          </button>
+          <h4>Opties voor wederkerende events</h4>
         </div>
-      
-      </form>     
+
+        <div class="form-item">
+          <label>Tot wanneer</label>
+          <mwl-demo-utils-date-time-picker [(ngModel)]="event.until" (ngModelChange)="refresh.next()" placeholder="Not set" name="untilDate">
+          </mwl-demo-utils-date-time-picker>
+        </div>
+
+        <div class="form-item">
+          <label>Tijdspanne</label>
+          <select #selectElem2 (change)="setFreq(selectElem2.value)">
+            <option [value]="''" disabled>
+              <label>-- Kies optie -- </label>
+            </option>
+            <option [value]="'daily'">
+              <label>Dagelijks</label>
+            </option>
+            <option [value]="'weekly'">
+              <label>Wekelijks</label>
+            </option>
+            <option [value]="'monthly'">
+              <label>Maandelijks</label>
+            </option>
+          </select>
+        </div>
+
+        <div class="form-item">
+          <label>Terugkerend</label>
+          <select #selectElem3 (change)="setInterval(selectElem3.value)">
+            <option [value]="''" disabled>
+              <label>-- Kies optie -- </label>
+            </option>
+            <option [value]="1">
+              <label>1</label>
+            </option>
+            <option [value]="2">
+              <label>2</label>
+            </option>
+            <option [value]="3">
+              <label>3</label>
+            </option>
+            <option [value]="4">
+              <label>4</label>
+            </option>
+          </select>
+        </div>
+      </div>
+
+
+      <button class="btn btn-blue-big btn-primary pull-right" type="submit">
+        Opslaan
+      </button>
+    </div>
+
+  </form>
 </div>
-
-
-  

@@ -30,7 +30,7 @@ export class CalendarAddComponent implements OnInit {
   selectedChildren: Child[];
   allChildren: Child[];
   refresh: Subject<any> = new Subject();
-  
+  returning: boolean;
   user: User;
   currentUser: Parent;
 
@@ -69,6 +69,7 @@ export class CalendarAddComponent implements OnInit {
       this.allChildren = user.group.children;
     });
     this.newEvent();
+    this.returning = false;
   }
 
   newEvent(){
@@ -172,5 +173,14 @@ export class CalendarAddComponent implements OnInit {
 
   setInterval(value: number){
     this.event.interval = value;
+  }
+  
+  setReturning(){
+    if(!this.returning){
+      this.returning = true;
+    }else{
+      this.returning = false;
+    }
+    console.log(this.returning);
   }
 }
