@@ -861,31 +861,48 @@ app.post("/api/calendar/event/add/:email",function(req,res){
       if(err){
         handleError(err,"Could not retrieve parent");
       }else{
-        console.log(req.body);
-        var freq;
-        if(req.body.freq == "weekly"){
-          freq = RRule.WEEKLY
-        }else if(req.body.freq == "daily"){
-          freq = RRule.DAILY
-        }else if(req.body.freq == "monthly"){
-          freq = RRule.MONTHLY
-        }
-        var until = new Date(req.body.until);
-        var start = new Date(req.body.start);
-
-        var rule = new RRule({
-          freq: freq,
-          //byweekday: [RRule.MO, RRule.FR],
-          dtstart: start,
-          until: until
-        })
-
-        for(var ev in rule.all()){
-          console.log("lijn 886:" + rule.all()[ev]);
+        if(req.body.freq != ""){
+          console.log(req.body);
+          var freq;
+          if(req.body.freq == "weekly"){
+            freq = RRule.WEEKLY
+          }else if(req.body.freq == "daily"){
+            freq = RRule.DAILY
+          }else if(req.body.freq == "monthly"){
+            freq = RRule.MONTHLY
+          }
+          var until = new Date(req.body.until);
+          var start = new Date(req.body.start);
+  
+          var rule = new RRule({
+            freq: freq,
+            //byweekday: [RRule.MO, RRule.FR],
+            dtstart: start,
+            until: until
+          })
+  
+          for(var ev in rule.all()){
+            console.log("lijn 886:" + rule.all()[ev]);
+            var event = new Event({
+              title: req.body.title,
+              start: new Date(rule.all()[ev]),
+              end: new Date(rule.all()[ev]),
+              description: req.body.description,
+              categoryid: req.body.categoryid,
+              children: req.body.children,
+            });
+            parent.group.events.push(event);
+  
+            //save event
+            event.save(function(err){
+              if(err) handleError(res, "Could not save event", err.message);
+            });
+          }
+        }else{
           var event = new Event({
             title: req.body.title,
-            start: new Date(rule.all()[ev]),
-            end: new Date(rule.all()[ev]),
+            start: req.body.start,
+            end: req.body.end,
             description: req.body.description,
             categoryid: req.body.categoryid,
             children: req.body.children,
@@ -897,10 +914,7 @@ app.post("/api/calendar/event/add/:email",function(req,res){
             if(err) handleError(res, "Could not save event", err.message);
           });
         }
-
         
-        
-
         parent.group.save(function(err){
           if(err){
             handleError(res, "Could not save group");
