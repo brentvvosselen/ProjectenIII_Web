@@ -104,6 +104,7 @@ export class CalendarAddComponent implements OnInit {
       children: this.selectedChildren,
       freq: this.event.freq,
       until: this.event.until,
+      interval: this.event.interval,
     }
     console.log(model);
     this.parentService.addEvent(model,this.user.email).subscribe(data => this.router.navigate(["/calendar"]));
@@ -165,6 +166,12 @@ export class CalendarAddComponent implements OnInit {
   }
 
   setFreq(value: string){
+    console.log(value);
     this.event.freq = value;
+    console.log(this.event.freq);
+  }
+
+  setInterval(value: number){
+    this.event.interval = value;
   }
 }
