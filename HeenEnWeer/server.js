@@ -857,11 +857,14 @@ app.post("/api/calendar/event/add/:email",function(req,res){
       }
     }
     }).exec(function(err,parent){
-      console.log(parent);
       if(err){
         handleError(err,"Could not retrieve parent");
       }else{
+<<<<<<< HEAD
         if(req.body.freq != "" && !req.body.interval){
+=======
+        if(req.body.freq != "" && req.body.interval){
+>>>>>>> 759287d1e1bdb502c4738f61602ae2b7477bc298
           var freq;
           if(req.body.freq == "weekly"){
             freq = RRule.WEEKLY
@@ -874,6 +877,7 @@ app.post("/api/calendar/event/add/:email",function(req,res){
           var start = new Date(req.body.start);
           var end = new Date(req.body.end);
           var interval = parseInt(req.body.interval);
+          var endDate = new Date(req.body.end);
           var rule = new RRule({
             freq: freq,
             //byweekday: [RRule.MO, RRule.FR],
@@ -883,10 +887,19 @@ app.post("/api/calendar/event/add/:email",function(req,res){
           })
   
           for(var ev in rule.all()){
+            var year = rule.all()[ev].getFullYear();
+            var month = rule.all()[ev].getMonth();
+            var day = rule.all()[ev].getDate();
+            var hours = endDate.getHours();
+            var minutes = endDate.getMinutes();
             var event = new Event({
               title: req.body.title,
               start: new Date(rule.all()[ev]),
+<<<<<<< HEAD
               end: new Date(rule.all()[ev].getFullYear, rule.all()[ev].getMonth, rule.all()[ev].getDay, end.getHours, end.getMinutes),
+=======
+              end: new Date(year, month, day, hours, minutes),
+>>>>>>> 759287d1e1bdb502c4738f61602ae2b7477bc298
               description: req.body.description,
               categoryid: req.body.categoryid,
               children: req.body.children,
@@ -1230,7 +1243,8 @@ app.post("/api/heenenweer/day/add/:date",function(req,res){
     if(err) next(handleError(res,err.message,"Could not find book"));
     var day = new HeenEnWeerDag({
       date: req.params.date,
-      child: req.body.childid
+      child: req.body.childid,
+      description: req.body.description
     });
     boek.days.push(day);
     day.save(function(err){
@@ -1289,7 +1303,12 @@ app.get("/api/heenenweer/getAll/:email",function(req,res){
         {
           path:'days',
           model:'HeenEnWeerDag',
-          select:['date','description']
+          select:['child','description','date'],
+          populate:{
+            path:'child',
+            model:'Child',
+            select: ['firstname']
+          }
         }
       ]
     }
