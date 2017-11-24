@@ -860,11 +860,7 @@ app.post("/api/calendar/event/add/:email",function(req,res){
       if(err){
         handleError(err,"Could not retrieve parent");
       }else{
-<<<<<<< HEAD
-        if(req.body.freq != "" && !req.body.interval){
-=======
         if(req.body.freq != "" && req.body.interval){
->>>>>>> 759287d1e1bdb502c4738f61602ae2b7477bc298
           var freq;
           if(req.body.freq == "weekly"){
             freq = RRule.WEEKLY
@@ -895,11 +891,7 @@ app.post("/api/calendar/event/add/:email",function(req,res){
             var event = new Event({
               title: req.body.title,
               start: new Date(rule.all()[ev]),
-<<<<<<< HEAD
-              end: new Date(rule.all()[ev].getFullYear, rule.all()[ev].getMonth, rule.all()[ev].getDay, end.getHours, end.getMinutes),
-=======
               end: new Date(year, month, day, hours, minutes),
->>>>>>> 759287d1e1bdb502c4738f61602ae2b7477bc298
               description: req.body.description,
               categoryid: req.body.categoryid,
               children: req.body.children,
