@@ -79,6 +79,8 @@ export class CalendarAddComponent implements OnInit {
       end: new Date(),
       until: new Date(),
       color: colors.red,
+      interval: 1,
+      freq: "",
       draggable: true,
       resizable: {
         beforeStart: true,
@@ -96,18 +98,42 @@ export class CalendarAddComponent implements OnInit {
 
   save(){
     var model = {
-      categoryid: this.selectedCategory._id,
-      end: this.event.end,
-      start: this.event.start,
-      title: this.event.title,
-      description:  this.event.description,
-      children: this.selectedChildren,
-      freq: this.event.freq,
-      until: this.event.until,
-      interval: this.event.interval,
+      freq: "",
+      until: "",
+      interval: "",
+      categoryid: 0,
+      end: "",
+      start: "",
+      title: "",
+      description: "",
+      children: [],
+    };
+
+    if(this.returning = true){
+      console.log(this.event.freq);
+      switch(this.event.freq){
+        case "dagen" : this.event.freq = "daily";
+        break;
+        case "weken" : this.event.freq = "weekly";
+        break;
+        case "maanden" : this.event.freq = "montly";
+        break;
+      }
+
+      model.freq = this.event.freq;
+      model.until = this.event.until;
+      model.interval = this.event.interval;
     }
+    
+    model.categoryid = this.selectedCategory._id;
+    model.end = this.event.end;
+    model.start = this.event.start;
+    model.title = this.event.title;
+    model.description = this.event.description;
+    model.children = this.selectedChildren;
+
     console.log(model);
-    this.parentService.addEvent(model,this.user.email).subscribe(data => this.router.navigate(["/calendar"]));
+    //this.parentService.addEvent(model,this.user.email).subscribe(data => this.router.navigate(["/calendar"]));
     this.refresh.next();
   }
   
@@ -166,9 +192,7 @@ export class CalendarAddComponent implements OnInit {
   }
 
   setFreq(value: string){
-    console.log(value);
     this.event.freq = value;
-    console.log(this.event.freq);
   }
 
   setInterval(value: number){

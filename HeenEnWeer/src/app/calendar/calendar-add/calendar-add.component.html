@@ -66,38 +66,40 @@
             <option [value]="''" disabled>
               <label>-- Kies optie -- </label>
             </option>
-            <option [value]="'daily'">
+            <option [value]="'dagen'">
               <label>Dagelijks</label>
             </option>
-            <option [value]="'weekly'">
+            <option [value]="'weken'">
               <label>Wekelijks</label>
             </option>
-            <option [value]="'monthly'">
+            <option [value]="'maanden'">
               <label>Maandelijks</label>
             </option>
           </select>
         </div>
-
-        <div class="form-item">
-          <label>Terugkerend</label>
-          <select #selectElem3 (change)="setInterval(selectElem3.value)">
-            <option [value]="''" disabled>
-              <label>-- Kies optie -- </label>
-            </option>
-            <option [value]="1">
-              <label>1</label>
-            </option>
-            <option [value]="2">
-              <label>2</label>
-            </option>
-            <option [value]="3">
-              <label>3</label>
-            </option>
-            <option [value]="4">
-              <label>4</label>
-            </option>
-          </select>
+        <div *ngIf="event.freq">
+          <div class="form-item">
+            <label>Terugkerend</label>
+            <select #selectElem3 (change)="setInterval(selectElem3.value)">
+              <option [value]="''" disabled>
+                <label>-- Kies optie -- </label>
+              </option>
+              <option [value]="1">
+                <label>alle {{event.freq}}</label>
+              </option>
+              <option [value]="2">
+                <label>om de 2 {{event.freq}}</label>
+              </option>
+              <option [value]="3">
+                <label>om de 3 {{event.freq}}</label>
+              </option>
+              <option [value]="4">
+                <label>om de 4 {{event.freq}}</label>
+              </option>
+            </select>
+          </div>
         </div>
+        
       </div>
 
 
