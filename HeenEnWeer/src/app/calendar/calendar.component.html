@@ -1,13 +1,15 @@
 <h2 class="center page-title"><span>Kalender</span><a class="action-right" routerLink="/calendar/add" routerLinkActive="active"><i class="material-icons">add</i></a></h2>
 <div *ngIf="events">
-  <p>test</p>
   <div *ngIf="currentUser">
-      <select #selectElem (change)="filter(selectElem.value)">
-          <option [ngValue]="0" selected>All</option>
-          <option *ngFor="let ch of currentUser.group.children" [value]="ch.firstname">
-            <label>{{ch.firstname}}</label>
-          </option>
-      </select>
+      <div class="filter-child">
+          <mat-radio-group>
+              <mat-radio-button value="0" (change)="filter('All')">Alle events</mat-radio-button>
+              <mat-radio-group *ngFor="let ch of currentUser.group.children">
+                <mat-radio-button value="ch.firstname" (change)="filter(ch.firstname)">{{ch.firstname}}</mat-radio-button>          
+              </mat-radio-group>
+            </mat-radio-group>
+      </div>
+      <br>
   </div>
     <ng-template #modalContent let-close="close">
         <div class="modal-header">
