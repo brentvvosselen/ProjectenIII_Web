@@ -217,7 +217,7 @@ app.get('/setup', function(req, res){
 //register with our app
 app.post('/api/signup', function(req, res, next) {
   if (!req.body.email || !req.body.password) {
-    handleError(res, 'No email in body', 'Password or Email not valid', 400);
+    next(handleError(res, 'No email in body', 'Password or Email not valid', 400));
   } else {
     //create a new group for sharing childinfo
     var newGroup = new Group({
@@ -294,7 +294,7 @@ app.post("/api/login", function(req,res, next){
           });
           console.log("User logged in");
         } else {
-          handleError(res, "Wrong password", 400);
+          next(handleError(res, "Wrong password", 400));
         }
       });
     }
@@ -302,17 +302,17 @@ app.post("/api/login", function(req,res, next){
 });
 
 //get all the users
-app.get("/api/users", function(req,res){
+app.get("/api/users", passport.authenticate('jwt', { session: false }), function(req,res){
   Users.find({}, function(err,users){
     res.json(users);
   });
 });
 
 //GET PARENTS
-app.get("/api/parents", function(req, res) {
+app.get("/api/parents", passport.authenticate('jwt', { session: false }), function(req, res, next) {
   db.collection(PARENTS_COLLECTION).find({}).toArray(function(err, parents) {
     if (err) {
-      handleError(res, err.message, "Failed to get parents.");
+      next(handleError(res, err.message, "Failed to get parents."));
     } else {
       res.json(parents);
     }
@@ -320,16 +320,16 @@ app.get("/api/parents", function(req, res) {
 });
 
 //POST PARENTS
-app.post("/api/parents", function(req, res) {
+app.post("/api/parents", passport.authenticate('jwt', { session: false }), function(req, res, next) {
   var newParent = req.body;
 
   if (!req.body.name) {
-    handleError(res, "Invalid user input", "Must provide a name.", 400);
+    next(handleError(res, "Invalid user input", "Must provide a name.", 400));
   }
 
   db.collection(PARENTS_COLLECTION).insertOne(newParent, function(err, parents) {
     if (err) {
-      handleError(res, err.message, "Failed to create a new parent.");
+      next(handleError(res, err.message, "Failed to create a new parent."));
     } else {
       res.json(parents);
     }
@@ -337,11 +337,11 @@ app.post("/api/parents", function(req, res) {
 });
 
 //GET PARENT BY EMAIL
-app.get("/api/parents/:email",function(req,res){
+app.get("/api/parents/:email", passport.authenticate('jwt', { session: false }), function(req,res, next){
   //virtual werkt hier niet
   Parents.findOne({email:req.params.email},function(err,user){
     if(err){
-      handleError(res, err.message, "could not find parent");
+      next(handleError(res, err.message, "could not find parent"));
     }
     console.log(user);
     res.json(user);
@@ -353,15 +353,14 @@ app.get("/api/parents/:email",function(req,res){
 });
 
 //EDIT PARENTS
-app.post("/api/parents/edit", function(req,res){
+app.post("/api/parents/edit", passport.authenticate('jwt', { session: false }), function(req,res, next){
   //update valideert niet
-
   Parents.findOne({
     email: req.body.email
   },function(err,parent){
     if(err) throw err;
     if(!parent){
-      handleError(res, "Updating failed", "Updating failed. Could not find parent.");
+      next(handleError(res, "Updating failed", "Updating failed. Could not find parent."));
     }else{
 
       parent.firstname = req.body.firstname;
@@ -375,14 +374,8 @@ app.post("/api/parents/edit", function(req,res){
       parent.workNumber = req.body.workNumber;
       parent.children = req.body.children;
       parent.type = req.body.type;
-
-      //console.log(parent);
-      console.log("telefoonnummer"+parent.telephoneNumber);
-
       parent.save(function(err){
-        if (err) throw err;
-        console.log("PARENT SAVED");
-        console.log(parent.telephoneNumber);
+        if (err) next(handleError(res, "Updating failed", "Updating failed. Could not find parent."));
         res.json(parent);
       });
     }
@@ -391,7 +384,7 @@ app.post("/api/parents/edit", function(req,res){
 
 
 //setup
-app.post("/api/setup", function(req,res,next){
+app.post("/api/setup", passport.authenticate('jwt', { session: false }), function(req,res,next){
   Parents.findOne({
     email: req.body.email
   }, function(err,parent){
@@ -468,8 +461,6 @@ app.post("/api/setup", function(req,res,next){
       //send a mail to the invitee
       sendMail(invitee);
 
-      console.log("PARENT: " + parent);
-
       res.json("Succesfull");
     }
   }).populate({
@@ -479,12 +470,12 @@ app.post("/api/setup", function(req,res,next){
 });
 
 //vraag invitee op adhv key
-app.get("/api/invitee/:key",function(req,res){
+app.get("/api/invitee/:key", passport.authenticate('jwt', { session: false }), function(req,res, next){
   Invitee.findOne({
     key: req.params.key
   },function(err,invitee){
     if(err){
-      handleError(res,err.message,"Could not find invitee");
+      next(handleError(res,err.message,"Could not find invitee"));
     }else{
       res.json(invitee);
     }
@@ -496,21 +487,21 @@ app.get("/api/invitee/:key",function(req,res){
  * een nieuwe user aanmaken, met een nieuwe parent met alle values
  * groep aan parent toevoegen
  */
-app.post("/api/invite",function(req,res){
+app.post("/api/invite", passport.authenticate('jwt', { session: false }), function(req,res, next){
   console.log(req.body);
   //verwijder uitgenodigde
   Invitee.findOneAndRemove({
     key : req.body.key
   },function(err,invitee){
     if(err){
-      handleError(res,err.message,"Could not remove invitee");
+      next(handleError(res,err.message,"Could not remove invitee"));
     }
   });
 
   Group.findOne({
     _id: req.body.key
   }, function(err, group) {
-    if(err) { handle(res, err.message, "Could not find group") }
+    if(err) { next(handleError(res, err.message, "Could not find group")) }
 
     //maak nieuwe user aan
     var newUser = new Users({
@@ -532,14 +523,14 @@ app.post("/api/invite",function(req,res){
     //save the user
     newUser.save(function(err){
       if(err){
-        handleError(res, "Email bestaat al", "Email already exists.");
+        next(handleError(res, "Email bestaat al", "Email already exists."));
       }
       console.log("user aangemaakt");
     });
     //save the parent
     newParent.save(function(err){
       if(err){
-        console.log("Nieuwe parent aanmaken niet gelukt");
+        next(handleError(res, "Email bestaat al", "Email already exists."));
       }else{
         console.log("Parent aangemaakt");
       }
@@ -548,13 +539,13 @@ app.post("/api/invite",function(req,res){
   });
 });
 
-app.post("/api/children/update", function(req, res) {
+app.post("/api/children/update", passport.authenticate('jwt', { session: false }), function(req, res, next) {
   Child.findOne({
     _id: req.body._id
   }, function(err, child){
     if(err) throw err;
     if(!child){
-      handleError(res, "Updating failed", "Updating failed. Could not find child.");
+      next(handleError(res, "Updating failed", "Updating failed. Could not find child."));
     } else{
       child.firstname = req.body.firstname;
       child.lastname = req.body.lastname;
@@ -564,7 +555,7 @@ app.post("/api/children/update", function(req, res) {
 
 
       child.save(function(err){
-        if (err) throw err;
+        if (err) next(handleError(res, "Updating failed", "Updating failed. Could not find child."));
         console.log("CHILD SAVED");
         res.json(child);
       });
@@ -581,7 +572,7 @@ app.post("/api/children/update", function(req, res) {
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //!!!!!!!!!!!!!!!!!!!!!!!!toevoegen kind!!!!!!!!!!!!!!!!!!!!!!!!
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-app.post("/api/child/:id", function(req, res, next){
+app.post("/api/child/:id", passport.authenticate('jwt', { session: false }), function(req, res, next){
   console.log(req.params.id);
   Parents.findOne({
     _id : req.params.id
@@ -639,19 +630,19 @@ app.post("/api/child/:id", function(req, res, next){
 
 
 //fake aanmaken van een agenda om te testen, email meegeven als param
-app.get("/api/calendar/setup/:email",function(req,res,next){
+app.get("/api/calendar/setup/:email", passport.authenticate('jwt', { session: false }), function(req,res,next){
   Parents.findOne({
     email: req.params.email
   },function(err,parent){
     if(err){
-      handleError(err,"Could not find parent");
+      next(handleError(err,"Could not find parent"));
     }else{
       console.log(parent);
       Group.findOne({
         _id : parent.group
       },function(err,group){
         if(err){
-          handleError(err, "Could not find group of parent");
+          next(handleError(err, "Could not find group of parent"));
         }else{
 
           //create category
@@ -662,7 +653,7 @@ app.get("/api/calendar/setup/:email",function(req,res,next){
           //save category
           category.save(function(err){
             if(err){
-              handleError(err,"Category could not be saved");
+              next(handleError(err,"Category could not be saved"));
             }
           });
           //create test event
@@ -679,12 +670,12 @@ app.get("/api/calendar/setup/:email",function(req,res,next){
           group.events.push(event);
           event.save(function(err){
             if(err){
-              handleError(err,"event could not be saved");
+              next(handleError(err,"event could not be saved"));
             }
           });
           group.save(function(err){
             if(err){
-              handleError(err,"group could not be saved");
+              next(handleError(err,"group could not be saved"));
             }
           });
           res.send(group);
@@ -695,7 +686,7 @@ app.get("/api/calendar/setup/:email",function(req,res,next){
 });
 
 //get all the events from a user with categories (date, title, category color, category name)
-app.get("/api/calendar/getall/:email",function(req,res){
+app.get("/api/calendar/getall/:email", passport.authenticate('jwt', { session: false }), function(req,res, next){
   Parents.findOne({
     email: req.params.email
   }).populate({
@@ -723,11 +714,8 @@ app.get("/api/calendar/getall/:email",function(req,res){
   })
   .exec(function(err,parent){
     if(err){
-      res.status(500).send("Parent could not be retrieved");
-      //handleError(err,"parent could not be retrieved");
+      next(handleError(res, err,"parent could not be retrieved"));
     }else{
-      console.log(parent.group.events);
-      //return the events in order of date,
       res.json(parent.group.events.sort(function(a,b){
         return a.start > b.start;
       }));
@@ -736,12 +724,12 @@ app.get("/api/calendar/getall/:email",function(req,res){
 });
 
 //get one event with all the data
-app.get("/api/calendar/event/:id",function(req,res){
+app.get("/api/calendar/event/:id", passport.authenticate('jwt', { session: false }), function(req,res, next){
   Event.findOne({
     _id: req.params.id
   }).populate('categoryid').exec(function(err,event){
     if(err){
-      handleError(err)
+      next(handleError(err));
     }else{
       res.json(event);
     }
@@ -749,7 +737,7 @@ app.get("/api/calendar/event/:id",function(req,res){
 });
 
 //get next event
-app.get("/api/calendar/event/next/:email",function(req,res){
+app.get("/api/calendar/event/next/:email", passport.authenticate('jwt', { session: false }), function(req,res, next){
 
   Parents.findOne({
     email: req.params.email
@@ -767,7 +755,7 @@ app.get("/api/calendar/event/next/:email",function(req,res){
     }
   }).exec(function(err,parent){
     if(err){
-      handleError(err,"Could not retrieve events");
+      next(handleError(err,"Could not retrieve events"));
     }else{
       var events = parent.group.events;
       var ev2 = events.filter(e => e.start > moment(new Date()).toDate());
@@ -781,12 +769,8 @@ app.get("/api/calendar/event/next/:email",function(req,res){
 });
 
 //get events from a date
-app.get("/api/calendar/event/date/:email/:date",function(req,res){
-  console.log(req.params.date);
-  /*var startDate = moment(req.params.date).startOf('day');
-  var endDate = moment(startDate).add(1,'days');*/
+app.get("/api/calendar/event/date/:email/:date", passport.authenticate('jwt', { session: false }), function(req,res, next){
   var date = new Date(req.params.date);
-  console.log(date);
   Parents.findOne({
     email: req.params.email
   }).populate({
@@ -803,15 +787,12 @@ app.get("/api/calendar/event/date/:email/:date",function(req,res){
     }
   }).exec(function(err,parent){
     if(err){
-      handleError(err,"Could not retrieve events");
+      next(handleError(err,"Could not retrieve events"));
     }
-
-    //var events = parent.group.events.filter(e => moment(e.start) <= startDate.toDate() && moment(e.end) >= endDate.toDate());
     var events = parent.group.events.filter(e =>
       e.start.getFullYear() <= date.getFullYear() && e.end.getFullYear() >= date.getFullYear()
       && e.start.getMonth() <= date.getMonth() && e.end.getMonth() >= date.getMonth()
       && e.start.getDate() <= date.getDate() && e.end.getDate() >= date.getDate())
-      console.log(events);
     res.send(events.sort(function(a,b){
       return a.start > b.start;
     }));
@@ -819,12 +800,12 @@ app.get("/api/calendar/event/date/:email/:date",function(req,res){
 });
 
 //wijzigen event
-app.put("/api/calendar/event/edit/:id",function(req,res){
+app.put("/api/calendar/event/edit/:id", passport.authenticate('jwt', { session: false }), function(req,res,next){
   Event.findOne({
     _id : req.params.id
   },function(err,event){
     if(err){
-      handleError(err,"Could not retrieve event");
+      next(handleError(err,"Could not retrieve event"));
     }
     event.title = req.body.title;
     event.description = req.body.description;
@@ -833,7 +814,7 @@ app.put("/api/calendar/event/edit/:id",function(req,res){
     event.categoryid = req.body.categoryid;
     event.save(function(err){
       if(err){
-        handleError(err, "Could not save event");
+        next(handleError(err, "Could not save event"));
       }
       res.json("event saved");
     });
@@ -842,7 +823,7 @@ app.put("/api/calendar/event/edit/:id",function(req,res){
 });
 
 //toevoegen event
-app.post("/api/calendar/event/add/:email",function(req,res){
+app.post("/api/calendar/event/add/:email", passport.authenticate('jwt', { session: false }), function(req,res,next){
   Parents.findOne({
     email: req.params.email
   }).populate({
@@ -858,7 +839,7 @@ app.post("/api/calendar/event/add/:email",function(req,res){
     }
     }).exec(function(err,parent){
       if(err){
-        handleError(err,"Could not retrieve parent");
+        next(handleError(err,"Could not retrieve parent"));
       }else{
         if(req.body.freq != "" && req.body.interval){
           var freq;
@@ -900,7 +881,7 @@ app.post("/api/calendar/event/add/:email",function(req,res){
   
             //save event
             event.save(function(err){
-              if(err) handleError(res, "Could not save event", err.message);
+              if(err) next(handleError(res, "Could not save event", err.message));
             });
           }
         }else{
@@ -916,13 +897,13 @@ app.post("/api/calendar/event/add/:email",function(req,res){
 
           //save event
           event.save(function(err){
-            if(err) handleError(res, "Could not save event", err.message);
+            if(err) next(handleError(res, "Could not save event", err.message));
           });
         }
         
         parent.group.save(function(err){
           if(err){
-            handleError(res, "Could not save group");
+            next(handleError(res, "Could not save group"));
           }
           else {
             res.json("event added");
@@ -933,7 +914,7 @@ app.post("/api/calendar/event/add/:email",function(req,res){
 });
 
 //verwijderen event
-app.delete('/api/event/delete/:email/:id', function (req, res, next) {
+app.delete('/api/event/delete/:email/:id', passport.authenticate('jwt', { session: false }), function (req, res, next) {
 
   Parents.findOne({
     email: req.params.email
@@ -950,12 +931,9 @@ app.delete('/api/event/delete/:email/:id', function (req, res, next) {
         },function(err,event){
           if(err) return next(handleError(err,err.message));
           var index = parent.group.events.indexOf(event);
-          console.log(parent.group.events);
-          console.log(index);
           parent.group.events.splice(index,1);
           parent.group.save(function(err){
             if(err) return next(handleError(err,err.message));
-              console.log("event removed from parent");
             Event.remove({
               _id : req.params.id
             },function(err){
@@ -968,7 +946,7 @@ app.delete('/api/event/delete/:email/:id', function (req, res, next) {
 });
 
 //toevoegen categorie
-app.post("/api/category/add/:email",function(req,res){
+app.post("/api/category/add/:email", passport.authenticate('jwt', { session: false }), function(req,res,next){
   Parents.findOne({
     email: req.params.email
   }).populate({
@@ -980,22 +958,21 @@ app.post("/api/category/add/:email",function(req,res){
     }
   }).exec(function(err,parent){
     if(err){
-      res.status(500).send("Parent could not be retrieved");
+      return next(handleError(err,err.message));
     }else{
       var category = new Category({
         type: req.body.type,
         color: req.body.color
       });
-      console.log(category);
       category.save(function(err){
         if(err){
-          handleError(res, 'Category could not be saved');
+          return next(handleError(err,err.message));
         }
         var group = parent.group;
         group.categories.push(category);
         group.save(function(err){
           if(err){
-            handleError(res, 'Category could not be added', err.message);
+            return next(handleError(err,err.message));
           }
         });
         res.json(category);
@@ -1005,7 +982,7 @@ app.post("/api/category/add/:email",function(req,res){
 });
 
 //get all categories of user
-app.get("/api/category/:email",function(req,res){
+app.get("/api/category/:email", passport.authenticate('jwt', { session: false }), function(req,res,next){
   Parents.findOne({
     email: req.params.email
   }).populate({
@@ -1017,7 +994,7 @@ app.get("/api/category/:email",function(req,res){
     }
   }).exec(function(err,parent){
     if(err){
-      handleError(res, "Could not retrieve parent");
+      next(handleError(res, "Could not retrieve parent"));
     }else{
       res.json(parent.group.categories);
     }
@@ -1025,7 +1002,7 @@ app.get("/api/category/:email",function(req,res){
 });
 
 // Add financial information
-app.post("/api/finance", function(req, res, next) {
+app.post("/api/finance", passport.authenticate('jwt', { session: false }), function(req, res, next) {
   console.log(req.body);
 
   Parents.findOne({
@@ -1036,7 +1013,7 @@ app.post("/api/finance", function(req, res, next) {
   })
   .exec(function(err, parent) {
     if(err || !parent) {
-      handleError(res, err.message);
+      next(handleError(res, err.message));
     } else {
       newFinType = {
         fintype: req.body.finance.fintype,
@@ -1057,8 +1034,6 @@ app.post("/api/finance", function(req, res, next) {
         }
       }
 
-      console.log(newFinType);
-
       parent.group.finance = newFinType;
 
       parent.group.save(function(err) {
@@ -1071,7 +1046,7 @@ app.post("/api/finance", function(req, res, next) {
 
       parent.save(function(err) {
         if(err) {
-          handleError(res, 'Error while saving parent');
+          next(handleError(res, 'Error while saving parent'));
         } else {
           console.log("Saving parent");
           res.json(parent.group);
@@ -1081,7 +1056,7 @@ app.post("/api/finance", function(req, res, next) {
   });
 });
 
-app.post("/api/finance/accept", function(req, res, next) {
+app.post("/api/finance/accept", passport.authenticate('jwt', { session: false }), function(req, res, next) {
   console.log(req.body);
 
   Parents.findOne({
@@ -1094,7 +1069,7 @@ app.post("/api/finance/accept", function(req, res, next) {
     parent.group.finance.accepted = parent.group.finance.accepted.filter(function(n){ return (n != undefined && n != null)});
 
     parent.group.save(function(err) {
-      if(err) { handleError(res, err.message) }
+      if(err) { next(handleError(res, err.message)) }
       else {
         res.json("Accepted succesful");
       }
@@ -1103,7 +1078,7 @@ app.post("/api/finance/accept", function(req, res, next) {
 });
 
 //get all costs of user
-app.get("/api/costs/:email",function(req,res){
+app.get("/api/costs/:email", passport.authenticate('jwt', { session: false }), function(req,res,next){
   Parents.findOne({
     email: req.params.email
   }).populate({
@@ -1119,7 +1094,7 @@ app.get("/api/costs/:email",function(req,res){
     }
   }).exec(function(err,parent){
     if(err){
-      handleError(res, err.message, "could not get costs");
+      next(handleError(res, err.message, "could not get costs"));
     }else{
       res.json(parent.group.costs);
     }
@@ -1127,7 +1102,7 @@ app.get("/api/costs/:email",function(req,res){
 });
 
 //toevoegen kost
-app.post("/api/costs/addCost/:email",function(req,res){
+app.post("/api/costs/addCost/:email", passport.authenticate('jwt', { session: false }), function(req,res,next){
   Parents.findOne({
     email: req.params.email
   }).populate({
@@ -1143,7 +1118,7 @@ app.post("/api/costs/addCost/:email",function(req,res){
     }
   }).exec(function(err,parent){
     if(err){
-      handleError(res, err.message);
+      next(handleError(res, err.message));
     }else{
      var cost = new Costs({
       title: req.body.title,
@@ -1154,14 +1129,14 @@ app.post("/api/costs/addCost/:email",function(req,res){
      })
       cost.save(function(err){
         if(err){
-          handleError(res, err.message);
+          next(handleError(res, err.message));
         }
       });
       var group = parent.group;
       group.costs.push(cost);
       group.save(function(err){
         if(err){
-          handleError(res, 'Category could not be added', err.message);
+          next(handleError(res, 'Category could not be added', err.message));
         }
       });
       res.json(cost);
@@ -1170,8 +1145,7 @@ app.post("/api/costs/addCost/:email",function(req,res){
 });
 
 //toevoegen kostCategorie
-app.post("/api/costs/addCategory/:email",function(req,res){
-  console.log(req.body.type);
+app.post("/api/costs/addCategory/:email", passport.authenticate('jwt', { session: false }), function(req,res,next){
   Parents.findOne({
     email: req.params.email
   }).populate({
@@ -1183,15 +1157,14 @@ app.post("/api/costs/addCategory/:email",function(req,res){
     }
   }).exec(function(err,parent){
     if(err){
-      handleError(res, "parent could not be retrieved", err.message);
+      next(handleError(res, "parent could not be retrieved", err.message));
     }else{
-      console.log(req.body.type);
       var category = new CostCategory({
         type: req.body.type,
       });
       category.save(function(err){
         if(err){
-          handleError(res, err.message);
+          next(handleError(res, err.message));
         }
       });
       var group = parent.group;
@@ -1199,7 +1172,7 @@ app.post("/api/costs/addCategory/:email",function(req,res){
       //group.costs.costCategory = category;
       group.save(function(err){
         if(err){
-          handleError(res, 'Category could not be added', err.message);
+          next(handleError(res, 'Category could not be added', err.message));
         }
       });
       res.json(category);
@@ -1208,7 +1181,7 @@ app.post("/api/costs/addCategory/:email",function(req,res){
 });
 
 //get all costCategories
-app.get("/api/costs/categories/:email",function(req,res){
+app.get("/api/costs/categories/:email", passport.authenticate('jwt', { session: false }), function(req,res,next){
   Parents.findOne({
     email: req.params.email
   }).populate({
@@ -1220,7 +1193,7 @@ app.get("/api/costs/categories/:email",function(req,res){
     }
   }).exec(function(err,parent){
     if(err){
-      handleError(res, "Could not retrieve parent", err.message);
+      next(handleError(res, "Could not retrieve parent", err.message));
     }else{
       res.json(parent.group.costCategories);
     }
@@ -1228,7 +1201,7 @@ app.get("/api/costs/categories/:email",function(req,res){
 });
 
 //toevoegen heen en weerdag
-app.post("/api/heenenweer/day/add/:date",function(req,res){
+app.post("/api/heenenweer/day/add/:date", passport.authenticate('jwt', { session: false }), function(req,res,next){
   HeenEnWeerBoek.findOne({
     child: req.body.childid
   },function(err,boek){
@@ -1254,7 +1227,7 @@ app.post("/api/heenenweer/day/add/:date",function(req,res){
 })
 
 //toevoegen heen en weer item
-app.post("/api/heenenweer/item/add/:dayid",function(req,res){
+app.post("/api/heenenweer/item/add/:dayid", passport.authenticate('jwt', { session: false }), function(req,res,next){
   HeenEnWeerDag.findOne({
     _id: req.params.dayid
   },function(err,day){
@@ -1277,7 +1250,7 @@ app.post("/api/heenenweer/item/add/:dayid",function(req,res){
 });
 
 //opvragen alle boekjes met datum dagen en beschrijvenen en kind
-app.get("/api/heenenweer/getAll/:email",function(req,res){
+app.get("/api/heenenweer/getAll/:email", passport.authenticate('jwt', { session: false }), function(req,res,next){
   Parents.findOne({
     email: req.params.email
   }).populate({
@@ -1313,7 +1286,7 @@ app.get("/api/heenenweer/getAll/:email",function(req,res){
 });
 
 //opvragen informatie heen en weer voor bepaalde dag
-app.get("/api/heenenweer/day/:id",function(req,res){
+app.get("/api/heenenweer/day/:id", passport.authenticate('jwt', { session: false }), function(req,res,next){
  HeenEnWeerDag.findOne({
    _id: req.params.id
  }).populate([

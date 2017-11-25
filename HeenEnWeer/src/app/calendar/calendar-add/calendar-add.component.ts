@@ -133,7 +133,7 @@ export class CalendarAddComponent implements OnInit {
     model.children = this.selectedChildren;
 
     console.log(model);
-    //this.parentService.addEvent(model,this.user.email).subscribe(data => this.router.navigate(["/calendar"]));
+    this.parentService.addEvent(model,this.user.email).subscribe(data => this.router.navigate(["/calendar"]));
     this.refresh.next();
   }
   
