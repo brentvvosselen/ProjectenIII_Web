@@ -110,7 +110,6 @@ export class CalendarComponent implements OnInit{
       this.data = data;
       //loop over alle evenementen in de data
       for(var event in data){
-        console.log(data);
         //maakt nieuw kleur type aan voor automatische display op agenda
         var _color  = {
           primary: data[event]["categoryid"]["color"],
@@ -201,6 +200,7 @@ export class CalendarComponent implements OnInit{
   }
 
   filter(value: string){
+    console.log(value);
     let events : Event[];
     this.filteredEvents = [];
     if(value === "All"){
