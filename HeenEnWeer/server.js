@@ -1222,14 +1222,15 @@ app.get("/api/costs/categories/:email",function(req,res){
 });
 
 //toevoegen heen en weerdag
-app.post("/api/heenenweer/day/add/:date",function(req,res){
+app.post("/api/heenenweer/day/add",function(req,res,next){
+  console.log(req.body);
   HeenEnWeerBoek.findOne({
-    child: req.body.childid
+    child: req.body.child._id
   },function(err,boek){
     if(err) next(handleError(res,err.message,"Could not find book"));
     var day = new HeenEnWeerDag({
-      date: req.params.date,
-      child: req.body.childid,
+      date: req.body.date,
+      child: req.body.child,
       description: req.body.description
     });
     boek.days.push(day);
@@ -1307,7 +1308,7 @@ app.get("/api/heenenweer/getAll/:email",function(req,res){
 });
 
 //opvragen informatie heen en weer voor bepaalde dag
-app.get("/api/heenenweer/day/:id",function(req,res){
+app.get("/api/heenenweer/day/:id",function(req,res,next){
  HeenEnWeerDag.findOne({
    _id: req.params.id
  }).populate([
@@ -1328,6 +1329,22 @@ app.get("/api/heenenweer/day/:id",function(req,res){
    if(err)next(handleError(res,err.message,"Could not find day"));
    res.json(day);
  })
+});
+
+//edit heenenweer item
+app.put("/api/heenenweer/item/edit/:id",function(req,res,next){
+  HeenEnWeerItem.findOne({
+    _id: req.params.id
+  },function(err,item){
+    if(err)next(handleError(res,err.message,"Could not find item"));
+    item.category = req.body.category;
+    item.value = req.body.value;
+    item.save(function(err){
+      if(err)next(handleError(res,err.message,"Could not save item"));
+      res.json("Item saved");
+    })
+  });
+
 });
 
 //VOORBEELD VOOR JWT AUTHENTICATED ROUTE
