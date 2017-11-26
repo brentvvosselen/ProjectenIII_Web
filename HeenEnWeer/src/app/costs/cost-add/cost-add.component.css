@@ -5,7 +5,7 @@ body{
     display: flex;
     flex-direction: column;
   }
-  
+
   .example-container > * {
     width: 100%;
   }
@@ -21,16 +21,23 @@ body{
 }
 @media(min-width: 576px){
   .mat-dialog-container{
-      width:80% !important;   
+      width:80% !important;
   }
 }
 @media(min-width: 768px){
   .mat-dialog-container{
-      width:60% !important;   
+      width:60% !important;
   }
 }
 @media(min-width: 992px) {
   .mat-dialog-container{
       width:50% !important;
   }
+}
+
+img {
+  height: 200px;
+  width: 200px;
+  object-fit: scale-down;
+  padding: 10px;
 }

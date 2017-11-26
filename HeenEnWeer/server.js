@@ -1186,6 +1186,10 @@ app.get("/api/costs/:email", passport.authenticate('jwt', { session: false }), f
       populate: {
         path: 'costCategoryid',
         model: 'CostCategory'
+      },
+      populate: {
+        path: 'picture',
+        model: 'Image'
       }
     }
   }).exec(function(err,parent){
@@ -1213,16 +1217,42 @@ app.post("/api/costs/addCost/:email", passport.authenticate('jwt', { session: fa
       }
     }
   }).exec(function(err,parent){
+    console.log(req.body);
+
     if(err){
       next(handleError(res, err.message));
     }else{
-     var cost = new Costs({
-      title: req.body.title,
-      description: req.body.description,
-      amount: req.body.amount,
-      date: req.body.date,
-      costCategoryid: req.body.costCategoryid
-     })
+      if(!req.body.filename || !req.body.filetype || !req.body.value) {
+        var newImage = new Image({
+          filename: req.body.picture.filename,
+          filetype: req.body.picture.filetype,
+          value: req.body.picture.value
+        });
+
+        newImage.save(function(err) {
+          if(err) {
+            next(handleError(res, err.message, "Could not save picture"));
+          }
+        });
+
+        var cost = new Costs({
+          title: req.body.title,
+          description: req.body.description,
+          amount: req.body.amount,
+          date: req.body.date,
+          costCategoryid: req.body.costCategoryid,
+          picture: newImage
+        });
+      } else {
+        var cost = new Costs({
+          title: req.body.title,
+          description: req.body.description,
+          amount: req.body.amount,
+          date: req.body.date,
+          costCategoryid: req.body.costCategoryid
+        });
+      }
+
       cost.save(function(err){
         if(err){
           next(handleError(res, err.message));

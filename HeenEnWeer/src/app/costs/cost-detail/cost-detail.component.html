@@ -7,4 +7,6 @@
 
     <p>Bedrag: € {{cost?.amount}}</p>
 
+    <img *ngIf="cost?.picture" src="data:{{cost.picture.filetype}};base64,{{cost.picture.value}}" alt="{{cost.picture.filename}}" #preview/>
+
 </div>

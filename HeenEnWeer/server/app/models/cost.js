@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Category = require("./category");
+var Image = require("./image");
 
 var CostSchema = new Schema({
     title: {
@@ -19,7 +20,8 @@ var CostSchema = new Schema({
         type:Date,
         required: true
     },
-    costCategoryid:{type: Schema.ObjectId, ref: 'CostCategory', required: true}
+    costCategoryid:{type: Schema.ObjectId, ref: 'CostCategory', required: true},
+    picture: {type: Schema.ObjectId, ref: 'Image'},
 });
 
 module.exports = mongoose.model('Costs', CostSchema);

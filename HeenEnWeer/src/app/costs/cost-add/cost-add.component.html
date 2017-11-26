@@ -33,6 +33,12 @@
             </mat-select>
         </mat-form-field>
     </div>
+    <div class="row">
+      <input type="file" id="file" name="file" (change)="showPreview()" #fileInput/>
+    </div>
+    <div class="row">
+      <img *ngIf="codedFile" src="data:{{codedFile.filetype}};base64,{{codedFile.value}}" alt="{{codedFile.filename}}" #preview/>
+    </div>
     <mat-dialog-actions>
         <button mat-button [mat-dialog-close]="cost" (click)="save()" [disabled]="!kostForm.valid">Opslaan</button>
     </mat-dialog-actions>

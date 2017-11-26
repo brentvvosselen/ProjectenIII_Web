@@ -1,4 +1,5 @@
 import { CostCategory } from "./costCategory";
+import { Image } from "./image";
 
 export class Cost {
     _id: number;
@@ -7,6 +8,6 @@ export class Cost {
     amount: number;
     date: Date;
     costCategory: CostCategory;
+    picture: Image;
     constructor(){}
   }
-  

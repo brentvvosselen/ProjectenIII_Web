@@ -20,7 +20,7 @@ import { CostDetailComponent } from './cost-detail/cost-detail.component';
   selector: 'app-costs',
   templateUrl: './costs.component.html',
   styleUrls: ['./costs.component.css'],
-  encapsulation: ViewEncapsulation.None  
+  encapsulation: ViewEncapsulation.None
 })
 export class CostsComponent implements OnInit {
   displayedColumns = ['date', 'description', 'amount'];
@@ -35,7 +35,7 @@ export class CostsComponent implements OnInit {
   searchValue: string = '';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  
+
     /**
      * Set the paginator after the view init since this component will
      * be able to query its view for the initialized paginator.
@@ -54,14 +54,17 @@ export class CostsComponent implements OnInit {
     let dialogRef = this.dialog.open(CostAddComponent, {
       width: '350',
       data: {
-        title: this.cost.title, description: this.cost.description, amount: this.cost.amount, date: this.cost.date
+        title: this.cost.title,
+        description: this.cost.description,
+        amount: this.cost.amount,
+        date: this.cost.date
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       this.cost = result;
       console.log(result);
       if(result != undefined){
-        this.costDatabase.addCost(result);        
+        this.costDatabase.addCost(result);
       }
       this.dataSource.connect();
       this.costDatabase.dataChange.next(this.dataSource);
@@ -72,7 +75,11 @@ export class CostsComponent implements OnInit {
     let dialogRef = this.dialog.open(CostDetailComponent, {
       width: '400px',
       data: {
-        title: cost.title, description: cost.description, amount: cost.amount, date: cost.date
+        title: cost.title,
+        description: cost.description,
+        amount: cost.amount,
+        date: cost.date,
+        picture: cost.picture
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -82,7 +89,7 @@ export class CostsComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new ExampleDataSource(this.costDatabase);
-    this.parentService.getCosts(this.user.email).subscribe(data => {this.length = data.length})    
+    this.parentService.getCosts(this.user.email).subscribe(data => {this.length = data.length})
   }
 
   applyFilter(value: string){
@@ -119,17 +126,17 @@ export class CostDatabase{
 
   applyFilter(filterValue: string){
     filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase(); 
+    filterValue = filterValue.toLowerCase();
     var copiedData = this.initialData.slice();
     if(filterValue == ""){
       this.dataChange.next(this.initialData);
     }else{
-      this.dataChange.next(copiedData.filter(e => e.description.includes(filterValue)));      
+      this.dataChange.next(copiedData.filter(e => e.description.includes(filterValue)));
     }
   }
 
   refresh(){
-    this.dataChange.next(this.initialData);    
+    this.dataChange.next(this.initialData);
   }
 }
 
@@ -143,7 +150,7 @@ export class CostDatabase{
 export class ExampleDataSource extends DataSource<any> {
   user: User;
   length: Number;
-  
+
   constructor(private costDatabase: CostDatabase) {
     super();
   }
