@@ -82,3 +82,7 @@
   a.active {
       padding-right: 25px;
   }
+
+  .overlay-container{
+    width: auto;
+  }

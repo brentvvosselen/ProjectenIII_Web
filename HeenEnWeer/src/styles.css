@@ -499,6 +499,12 @@ h1,h2{
 a{
     color: var(--color-mid-blue);
     text-decoration: none;
+    cursor: pointer;
+}
+.btn:hover{
+    background:#ccc;
+    color:white;
+    transition:.2s ease-in-out;
 }
 /*all*/
 .page-title{
@@ -617,6 +623,13 @@ a{
     }
     .card-profile .card-content{
         margin-left:0;
+    }
+}
+
+@media(min-width:1200px){
+
+    #menu-toggle{
+        visibility:hidden;
     }
 }
 

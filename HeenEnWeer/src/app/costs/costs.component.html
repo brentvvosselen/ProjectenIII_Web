@@ -5,7 +5,7 @@
   </div>
   <div *ngIf="dataSource">
       <button class="btn" (click)="openDialog()">Voeg kost toe</button>
-      <div class="example-container mat-elevation-z8">
+      <div class="example-container">
         <div class="example-header">
           <mat-form-field>
             <input ([ngModel])="searchValue" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
