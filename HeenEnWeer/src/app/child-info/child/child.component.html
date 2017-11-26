@@ -1,6 +1,13 @@
 <div>
   <br>
   <div class="card">
+    <div class="card-img-left">
+        <img *ngIf="!model?.picture" class="img img-responsive" src="../../assets/noPicture.jpg"/>
+        <img *ngIf="model?.picture" src="data:{{model.picture.filetype}};base64,{{model.picture.value}}" alt="{{model.picture.filename}}"/>
+    </div>
+
+    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Voeg profielfoto toe</button>
+
     <h3>{{model?.firstname}} {{model?.lastname}}</h3>
     <div *ngFor="let c of categories; let ci = index">
       <h5>{{c.name}}</h5>
@@ -17,4 +24,25 @@
     </div>
   </div>
  <br>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Voeg profielfoto toe</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <input type="file" id="file" name="file" (change)="showPreview()" #fileInput/>
+        <img *ngIf="codedFile" src="data:{{codedFile.filetype}};base64,{{codedFile.value}}" alt="{{codedFile.filename}}" #preview/>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Terug</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addPicture()">Toevoegen</button>
+      </div>
+    </div>
+  </div>
 </div>

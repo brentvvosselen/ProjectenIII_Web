@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Parent } from '../../../app/models/parent';
 import { Child } from '../../../app/models/child';
+import { Image } from '../../../app/models/image';
 import { ParentService } from '../../services/parent.service';
 
 
@@ -14,21 +15,25 @@ export class ChildComponent implements OnInit {
 
   categories = new Array<category>();
 
+  @ViewChild('fileInput') fileInput;
+  @ViewChild('preview') preview;
+  codedFile: Image;
+
   constructor(private parentService: ParentService) {
 
   }
 
   ngOnInit() {
     console.log(this.model);
+
     var date = new Date(this.model.birthdate);
-    console.log(date);
     var day = date.getDate();
     var month = date.getMonth();
     var year = date.getFullYear();
     var myFormattedDate = day + " - " + month + " - " + year;
     this.model.birthdate = myFormattedDate;
+
     this.categories = this.model.categories;
-    console.log(this.categories);
   }
 
   addInfoNode(index: number, name: string, value: string) {
@@ -64,6 +69,22 @@ export class ChildComponent implements OnInit {
     };
     this.categories.push(node);
     this.saveChanges();
+  }
+
+  showPreview() {
+    var file = this.fileInput.nativeElement.files[0];
+    console.log(file);
+    var reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      this.codedFile = new Image(file.name, file.type, reader.result.split(',')[1]);
+    };
+  }
+
+  addPicture() {
+    this.parentService.addPictureChild(this.model._id, this.codedFile).subscribe(item => console.log(item));
   }
 }
 

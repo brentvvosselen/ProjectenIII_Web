@@ -37,6 +37,7 @@ var ChildSchema = new Schema({
         type: Date,
         required:true
       },
+      picture: {type: Schema.ObjectId, ref: 'Image'},
       categories: [categorySchema]
   });
 

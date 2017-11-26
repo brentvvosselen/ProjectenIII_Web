@@ -338,13 +338,18 @@ app.get("/api/parents/:email", passport.authenticate('jwt', { session: false }),
     if(err){
       next(handleError(res, err.message, "could not find parent"));
     }
+    console.log(user);
     res.json(user);
   }).populate({
     path: 'group',
     select:['children','events','categories','costs','costCategories','finance'],
     populate: {
       path: 'children',
-      model:'Child'
+      model:'Child',
+      populate: {
+        path: 'picture',
+        model: 'Image'
+      }
     }
   }).populate({
     path: 'picture',
@@ -395,14 +400,9 @@ app.post("/api/parents/picture/:email", passport.authenticate('jwt', {session: f
       }
 
       if(parent.picture) {
-        console.log("Removing picture");
-        console.log(parent.picture);
-
         Image.remove({_id: parent.picture}, function(err) {
           if(err) {
             next(handleError(res, "Could not remove image"))
-          } else {
-            console.log("Image removed");
           }
         });
       }
@@ -611,6 +611,51 @@ app.post("/api/children/update", passport.authenticate('jwt', { session: false }
       });
     }
   });
+});
+
+// add picture to child
+app.post("/api/children/picture/:id", passport.authenticate('jwt', {session: false}), function(req, res, next) {
+  if(!req.body.filename || !req.body.filetype || !req.body.value) {
+    next(handleError(res, "Filename, filetype and value must be provided"));
+  } else {
+    Child.findOne({
+      _id: req.params.id
+    }, function(err, child) {
+      if(err) {
+        next(handleError(res, err.message, "Could not find Child"));
+      }
+
+      if(child.picture) {
+        Image.remove({_id: child.picture}, function(err) {
+          if(err) {
+            next(handleError(res, "Could not remove image"))
+          }
+        });
+      }
+
+      var newImage = new Image({
+        filename: req.body.filename,
+        filetype: req.body.filetype,
+        value: req.body.value
+      });
+
+      child.picture = newImage;
+
+      newImage.save(function(err) {
+        if(err) {
+          next(handleError(res, err.message, "Could not save picture"));
+        }
+      });
+
+      child.save(function(err) {
+        if(err) {
+          next(handleError(res, err.message, "Could not add picture"));
+        } else {
+          res.json(child);
+        }
+      });
+    })
+  }
 });
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
