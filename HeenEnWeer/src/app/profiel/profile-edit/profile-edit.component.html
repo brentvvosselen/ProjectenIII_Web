@@ -1,5 +1,8 @@
 <div *ngIf="model">
     <h2 class="center page-title">Wijzig profiel</h2>
+    <div class="left-back">
+       <a><i (click)="back()" class="material-icons">arrow_back</i> terug</a>
+    </div>
     <div class="center container-fluid">
         <form class="profielForm col-12 col-md-10 col-lg-8 col-xl-6 align-self-center" id="profielForm" name="profielForm" (ngSubmit)="edit()" #profielForm="ngForm">
                 <!--straat-->

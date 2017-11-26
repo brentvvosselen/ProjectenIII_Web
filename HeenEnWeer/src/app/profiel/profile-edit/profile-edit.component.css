@@ -29,3 +29,16 @@ body{
 .profielForm .input-group{
   width:100%;
 }
+
+.left-back{
+  margin-left: 25px;
+}
+
+.left-back i {
+  font-size: 60px;
+  color: grey;
+}
+
+.left-back a {
+  color: grey;
+}
