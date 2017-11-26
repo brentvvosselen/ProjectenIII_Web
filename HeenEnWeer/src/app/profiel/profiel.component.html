@@ -10,17 +10,17 @@
   </div>
   <div class="card card-profile col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
       <div class="card-img-left overlay-container">
-          <div>
-            <img *ngIf="!currentUser?.picture" class="img img-responsive" src="../../assets/noPicture.jpg"/>
+          <div class="container">
+            <img *ngIf="!currentUser?.picture" class="img img-responsive image" src="../../assets/noPicture.jpg"/>
             <img *ngIf="currentUser?.picture" src="data:{{currentUser.picture.filetype}};base64,{{currentUser.picture.value}}" alt="{{currentUser.picture.filename}}"/>
             <div class="overlay">
-              <div class="text">Aanpassen</div>
+              <div class="text"><button  data-toggle="modal" data-target="#myModal"><i class="material-icons">mode_edit</i></button>
+              </div>
             </div>
           </div>
       </div>
 
-      <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Voeg profielfoto toe</button>
-
+      
       <div class="card-content">
             <h2>{{currentUser?.firstname}}</h2>
             <h4>{{currentUser?.lastname}}</h4>
