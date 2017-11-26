@@ -23,6 +23,6 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);
+        this.parentService.getByEmail(this.user.email).subscribe(user => {this.currentUser = user, console.log(this.currentUser.doneSetup)});
     }
 }

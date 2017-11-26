@@ -1,7 +1,5 @@
 <div class="container-fluid">
-
-    <h2 class="center page-title">Home</h2>
-   <!-- <div class="center">
+    <!-- <div class="center">
         <br>
         <div class="jumbotron">
             <a href="#" class="visible-xs" data-toggle="offcanvas">
@@ -11,35 +9,24 @@
             <p>Dit is een platform speciaal gemaakt voor co-ouderschap.</p>
         </div>
     -->
-        <!--display all homepage templates if user has done setup-->
-        <div *ngIf="currentUser?.doneSetup == true">
-            <div class="row">
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <div class="card">
-                        <div class="card-content">
-                                <h2>Kindinfo</h2>
-                                <p>Bekijk of wijzig hier de informatie van je kind of kinderen.</p>
-                                <p>
-                                    <a class="btn btn-default" routerLink="/children" routerLinkActive="active">Bekijk »</a>
-                                </p>
-                    
-                        </div>
-                           
-                    
-                </div>
-            </div>
-        </div>
-
-        <!--Force user to do Setup-->
-        <div class="center" *ngIf="currentUser?.doneSetup == false">
-            <h2>Doorloop de Setup</h2>
-            <button class="btn btn-default" routerLink="/setup" routerLinkActive="active">Setup</button>
-        </div>
-
-
-        <!--/row-->
+    <!--Force user to do Setup-->
+    <div class="center" *ngIf="currentUser?.doneSetup == false">
+        <h2>Doorloop de Setup</h2>
+        <button class="btn btn-default" routerLink="/setup" routerLinkActive="active">Setup</button>
+    </div>
+    <div class="content">
+            <app-profiel></app-profiel>            
     </div>
     <!--/span-->
+    <!--display all homepage templates if user has done setup-->
+    <div class="content" *ngIf="currentUser?.doneSetup == true">
+        <div *ngIf="currentUser?.group.children">
+                <app-child-info></app-child-info>
+            </div>
 
 
-</div>
+            <!--/row-->
+        </div>
+
+
+    </div>

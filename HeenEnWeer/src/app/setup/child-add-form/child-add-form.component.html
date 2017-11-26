@@ -6,11 +6,9 @@
   [(ngModel)]="child.firstname" required>
   <input type="text" class="form-control" id="achternaam" name="achternaam" aria-describedby="achternaam" placeholder="Achternaam"
   [(ngModel)]="child.lastname" required>
-  <input type="text" class="form-control" id="leeftijd" name="leeftijd" aria-describedby="leeftijd" placeholder="Leeftijd"
-  [(ngModel)]="child.birthdate" required>
 
   <mat-form-field>
-    <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+    <input matInput [matDatepicker]="picker" class="form-control" placeholder="Geboortedatum" [(ngModel)]="child.birthdate"  name="leeftijd" required>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
