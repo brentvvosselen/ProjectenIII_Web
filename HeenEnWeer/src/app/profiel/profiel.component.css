@@ -2,10 +2,25 @@ body{
   background-color: #F9F9F9;
 }
 
-img {
-  width: 100%;
+.image {
+  display: block;
+  width: 125px;
+  margin:0;
+  height: auto;
 }
 
+.overlay-container{
+  width:125px;
+}
+
+.overlay-container .container{
+  padding:0;
+  width:125px;
+}
+
+.container{
+  position: relative;
+}
 .overlay {
   position: absolute;
   top: 0;
@@ -16,14 +31,24 @@ img {
   width: 100%;
   opacity: 0;
   transition: .5s ease;
-  background-color: #008CBA;
+  background-color: rgba(177, 177, 177, 0.7);
 }
 
-.overlay-container:hover .overlay {
+.container:hover .overlay {
   opacity: 1;
+
+}
+
+.overlay button{
+  background: none;
+  border: none;
+  color: white;
+  cursor:pointer;
 }
 
 .text {
+  color: white;
+  font-size: 20px;
   position: absolute;
   top: 50%;
   left: 50%;

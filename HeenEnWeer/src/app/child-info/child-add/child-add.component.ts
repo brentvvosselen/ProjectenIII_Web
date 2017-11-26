@@ -35,5 +35,7 @@ export class ChildAddComponent implements OnInit {
     this.router.navigate(["/children"]);
   }
 
-
+  setGender(value: string){
+    this.model.gender = value;
+  }
 }

@@ -17,8 +17,10 @@
             </div>
             <div class="form-item">
                 <label>Geslacht</label>
-                    <select class="form-control form-border" [(ngModel)]="model.gender"  type="gender" name="gender"  required>
-                            <option hidden>Sex</option>
+                    <select #selectElem class="form-control form-border" (change)="setGender(selectElem.value)" type="gender" name="gender"  required>
+                            <option [value]="''" disabled>
+                                <label>-- Kies optie -- </label>
+                            </option>
                             <option *ngFor="let gen of genders" [value]="gen.value"  ng-init="gen.value='F'">
                                 <label>{{gen.display}}</label>
                             </option>
