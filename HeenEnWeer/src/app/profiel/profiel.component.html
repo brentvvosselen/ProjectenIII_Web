@@ -5,14 +5,17 @@
           <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
                 <a div class="action-button" routerLink="/profiel/edit" routerLinkActive="active"><i class="material-icons">mode_edit</i></a>
           </div>
-            
       </div>
-      
+
   </div>
   <div class="card card-profile col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
       <div class="card-img-left">
-          <img class="img img-responsive" src="../../assets/img_man.jpg"/>
+          <img *ngIf="!currentUser?.picture" class="img img-responsive" src="../../assets/noPicture.jpg"/>
+          <img *ngIf="currentUser?.picture" src="data:{{currentUser.picture.filetype}};base64,{{currentUser.picture.value}}" alt="{{currentUser.picture.filename}}"/>
       </div>
+
+      <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Voeg profielfoto toe</button>
+
       <div class="card-content">
             <h2>{{currentUser?.firstname}}</h2>
             <h4>{{currentUser?.lastname}}</h4>
@@ -28,10 +31,31 @@
             <h4 *ngIf="currentUser?.telephoneNumber">Telefoonnummer</h4>
             <p *ngIf="currentUser?.telephoneNumber">{{currentUser?.telephoneNumber}}</p>
             <h4 *ngIf="currentUser?.workName || currentUser?.workNumber">Werkgegevens</h4>
-            <p *ngIf="currentUser?.workName || currentUser?.workNumber">{{currentUser?.workName}} <br> {{currentUser?.workNumber}}</p>  
+            <p *ngIf="currentUser?.workName || currentUser?.workNumber">{{currentUser?.workName}} <br> {{currentUser?.workNumber}}</p>
 
       </div>
-      
+
   </div>
-  
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Voeg profielfoto toe</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <input type="file" id="file" name="file" (change)="showPreview()" #fileInput/>
+        <img *ngIf="codedFile" src="data:{{codedFile.filetype}};base64,{{codedFile.value}}" alt="{{codedFile.filename}}" #preview/>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancle</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addPicture()">Toevoegen</button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,4 +1,5 @@
 import { Group } from './group';
+import { Image } from './image';
 
 export class Parent {
     _id: number;
@@ -16,6 +17,7 @@ export class Parent {
     group: Group;
     doneSetup: boolean;
     type: type;
+    picture: Image;
     //constructor(firstname: string, lastname: string, email: string){}
     constructor(){};
 }

@@ -28,11 +28,11 @@ export class ProfileEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.parentService.getByEmail(this.user.email).subscribe(user => 
+    this.parentService.getByEmail(this.user.email).subscribe(user =>
       {
         this.currentUser = user,
         this.model = user;
-      });   
+      });
   }
 
   edit(){

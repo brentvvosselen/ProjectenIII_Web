@@ -27,11 +27,7 @@ var CostCategory = require("./server/app/models/costCategory");
 var HeenEnWeerBoek = require('./server/app/models/HeenEnWeerBoek.js');
 var HeenEnWeerDag = require('./server/app/models/HeenEnWeerDag');
 var HeenEnWeerItem = require('./server/app/models/HeenEnWeerItem');
-
-var PARENTS_COLLECTION = "parents";
-var USERS_COLLECTION = "users";
-var CHILDREN_COLLECTION = "children";
-var GROUP_COLLECTION = "groups";
+var Image = require('./server/app/models/image');
 
 var RRule = require('rrule').RRule
 var RRuleSet = require('rrule').RRuleSet
@@ -166,7 +162,6 @@ app.get('/setup', function(req, res){
     lastname: "Aarschot",
     group: group1,
     doneSetup: true,
-
   });
 
   newUser.save(function(err) {
@@ -343,12 +338,17 @@ app.get("/api/parents/:email", passport.authenticate('jwt', { session: false }),
     if(err){
       next(handleError(res, err.message, "could not find parent"));
     }
-    console.log(user);
     res.json(user);
   }).populate({
     path: 'group',
     select:['children','events','categories','costs','costCategories','finance'],
-    populate: { path: 'children', model:'Child' }
+    populate: {
+      path: 'children',
+      model:'Child'
+    }
+  }).populate({
+    path: 'picture',
+    model: 'Image'
   });
 });
 
@@ -380,6 +380,56 @@ app.post("/api/parents/edit", passport.authenticate('jwt', { session: false }), 
       });
     }
   });
+});
+
+// add picture to parent
+app.post("/api/parents/picture/:email", passport.authenticate('jwt', {session: false}), function(req, res, next) {
+  if(!req.body.filename || !req.body.filetype || !req.body.value) {
+    next(handleError(res, "Filename, filetype and value must be provided"));
+  } else {
+    Parents.findOne({
+      email: req.params.email
+    }, function(err, parent) {
+      if(err) {
+        next(handleError(res, err.message, "Could not find parent"));
+      }
+
+      if(parent.picture) {
+        console.log("Removing picture");
+        console.log(parent.picture);
+
+        Image.remove({_id: parent.picture}, function(err) {
+          if(err) {
+            next(handleError(res, "Could not remove image"))
+          } else {
+            console.log("Image removed");
+          }
+        });
+      }
+
+      var newImage = new Image({
+        filename: req.body.filename,
+        filetype: req.body.filetype,
+        value: req.body.value
+      });
+
+      parent.picture = newImage;
+
+      newImage.save(function(err) {
+        if(err) {
+          next(handleError(res, err.message, "Could not save picture"));
+        }
+      });
+
+      parent.save(function(err) {
+        if(err) {
+          next(handleError(res, err.message, "Could not add picture"));
+        } else {
+          res.json(parent);
+        }
+      });
+    })
+  }
 });
 
 
@@ -694,7 +744,7 @@ app.get("/api/calendar/getall/:email", passport.authenticate('jwt', { session: f
     model: 'Group',
     populate:{
       path: 'events',
-      model:'Events',    
+      model:'Events',
       populate:{
         path: 'categoryid',
         model: 'Category',
@@ -705,7 +755,7 @@ app.get("/api/calendar/getall/:email", passport.authenticate('jwt', { session: f
     model: 'Group',
     populate:{
       path: 'events',
-      model:'Events',    
+      model:'Events',
       populate:{
         path: 'children',
         model: 'Child',
@@ -862,7 +912,7 @@ app.post("/api/calendar/event/add/:email", passport.authenticate('jwt', { sessio
             dtstart: start,
             until: until
           })
-  
+
           for(var ev in rule.all()){
             var year = rule.all()[ev].getFullYear();
             var month = rule.all()[ev].getMonth();
@@ -878,7 +928,7 @@ app.post("/api/calendar/event/add/:email", passport.authenticate('jwt', { sessio
               children: req.body.children,
             });
             parent.group.events.push(event);
-  
+
             //save event
             event.save(function(err){
               if(err) next(handleError(res, "Could not save event", err.message));
@@ -900,7 +950,7 @@ app.post("/api/calendar/event/add/:email", passport.authenticate('jwt', { sessio
             if(err) next(handleError(res, "Could not save event", err.message));
           });
         }
-        
+
         parent.group.save(function(err){
           if(err){
             next(handleError(res, "Could not save group"));
@@ -1056,6 +1106,7 @@ app.post("/api/finance", passport.authenticate('jwt', { session: false }), funct
   });
 });
 
+// Accept finance info other parent
 app.post("/api/finance/accept", passport.authenticate('jwt', { session: false }), function(req, res, next) {
   console.log(req.body);
 

@@ -7,11 +7,12 @@ import { Observable } from 'rxjs/Observable';
 import { CalendarEvent } from 'angular-calendar';
 import { Category } from '../models/category';
 import { CostData } from '../costs/costs.component';
+import { Image } from '../models/image';
 
 @Injectable()
 export class ParentService {
   private headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
-      
+
     constructor(private http: Http) {
     }
 
@@ -76,7 +77,7 @@ export class ParentService {
     }
 
     addCategory(category: any, email:string){
-        return this.http.post("http://127.0.0.1:5000/api/category/add/" + email,category, this.jwt()).map((response: Response) => response.json());                 
+        return this.http.post("http://127.0.0.1:5000/api/category/add/" + email,category, this.jwt()).map((response: Response) => response.json());
     }
 
     getCosts(email: string): Observable<CostData[]>{
@@ -84,7 +85,7 @@ export class ParentService {
     }
 
     addCost(cost: any, email:string){
-        return this.http.post("http://127.0.0.1:5000/api/costs/addCost/" + email,cost, this.jwt()).map((response: Response) => response.json());                 
+        return this.http.post("http://127.0.0.1:5000/api/costs/addCost/" + email,cost, this.jwt()).map((response: Response) => response.json());
     }
 
     getCostCategories(email: string){
@@ -92,11 +93,15 @@ export class ParentService {
     }
 
     addCostCategory(category: any, email:string){
-        return this.http.post("http://127.0.0.1:5000/api/costs/addCategory/" + email,category, this.jwt()).map((response: Response) => response.json());                 
+        return this.http.post("http://127.0.0.1:5000/api/costs/addCategory/" + email,category, this.jwt()).map((response: Response) => response.json());
     }
 
     deleteEvent(email:string, id:number){
         return this.http.delete("http://127.0.0.1:5000/api/event/delete/" + email + "/"+ id , this.jwt()).map((response: Response) => response.json());
+    }
+
+    addPicture(email: string, picture: Image) {
+      return this.http.post("http://127.0.0.1:5000/api/parents/picture/" + email, picture, this.jwt()).map((response: Response) => response.json());
     }
 
     // private helper methods

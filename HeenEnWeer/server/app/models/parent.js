@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
-var Group = require("./group")
+var Group = require("./group");
+var Image = require("./image");
 
 var ParentSchema = new Schema({
   email: {
@@ -54,7 +55,8 @@ var ParentSchema = new Schema({
     type:Boolean,
     required: false
   },
-  group: {type: Schema.ObjectId, ref: 'Group'}
+  group: {type: Schema.ObjectId, ref: 'Group'},
+  picture: {type: Schema.ObjectId, ref: 'Image'},
 });
 
 module.exports = mongoose.model('Parents',ParentSchema);
