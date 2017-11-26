@@ -11,6 +11,11 @@
         <img *ngIf="currentUser?.picture" src="data:{{currentUser.picture.filetype}};base64,{{currentUser.picture.value}}" alt="{{currentUser.picture.filename}}"/>
       </div>
       <div class="sidebar-account-content">
+          <a routerLink="/profiel/edit" routerLinkActive="active">
+            <i class="material-icons">settings</i> 
+          </a>         
+      </div>
+      <div class="sidebar-account-content">
         <h3>{{user?.firstname}} {{user?.lastname}}</h3>
         <p *ngIf="currentUser?.type == 'M' ">Moeder</p>
         <p *ngIf="currentUser?.type == 'F' ">Father</p>

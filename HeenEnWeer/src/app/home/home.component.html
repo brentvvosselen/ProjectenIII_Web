@@ -14,9 +14,6 @@
         <h2>Doorloop de Setup</h2>
         <button class="btn btn-default" routerLink="/setup" routerLinkActive="active">Setup</button>
     </div>
-    <div class="content">
-            <app-profiel></app-profiel>            
-    </div>
     <!--/span-->
     <!--display all homepage templates if user has done setup-->
     <div class="content" *ngIf="currentUser?.doneSetup == true">
