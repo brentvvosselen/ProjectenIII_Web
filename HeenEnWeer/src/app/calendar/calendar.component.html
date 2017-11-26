@@ -3,10 +3,10 @@
   <div *ngIf="currentUser">
       <div class="filter-child">
           <mat-radio-group>
-              <mat-radio-button value="0" (change)="filter('All')">Alle events</mat-radio-button>
-              <mat-radio-group *ngFor="let ch of currentUser.group.children">
-                <mat-radio-button value="ch.firstname" (change)="filter(ch.firstname)">{{ch.firstname}}</mat-radio-button>          
-              </mat-radio-group>
+              <mat-radio-button class="left" value="0" (change)="filter('All')">Alle events</mat-radio-button>
+              <div class="left" *ngFor="let ch of currentUser.group.children">
+                <mat-radio-button value="ch.firstname" (change)="filter(ch.firstname)">{{ch.firstname}}</mat-radio-button>
+              </div>
             </mat-radio-group>
       </div>
       <br>
@@ -32,7 +32,7 @@
           <button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>
         </div>
       </ng-template>
-      
+
       <div class="row text-center">
         <div class="col-lg-4">
           <div class="btn-group">
@@ -119,5 +119,3 @@
 
 
 <br><br><br>
-
-
