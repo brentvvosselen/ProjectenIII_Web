@@ -29,7 +29,7 @@
     </li>
     <li>
       <div *ngIf="router.url === '/home' || router.url === '/'" class="current bg-blue-gradient"></div>
-      <a routerLink="/home" routerLinkActive="active">Home</a>
+      <a routerLink="/home" routerLinkActive="active">Home <i class="material-icons">home</i></a>
     </li>
     <!--
     <li>
@@ -43,14 +43,14 @@
     -->
     <li>
       <span *ngIf="router.url === '/calendar'" class="current bg-blue-gradient"></span>
-      <a routerLink="/calendar" routerLinkActive="active">Kalender</a>
+      <a routerLink="/calendar" routerLinkActive="active">Kalender <i class="material-icons">today</i></a>
     </li>
     <li>
         <span *ngIf="router.url === '/costs'" class="current bg-blue-gradient"></span>
-        <a routerLink="/costs" routerLinkActive="active">Kosten</a>
+        <a routerLink="/costs" routerLinkActive="active">Kosten <i class="material-icons">account_balance_wallet</i></a>
       </li>
     <li>
-      <a href="#" (click)="logout($event)">Logout</a>
+      <a href="#" (click)="logout($event)">Logout <i class="material-icons">exit_to_app</i></a>
     </li>
   </ul>
 </div>

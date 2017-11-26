@@ -424,6 +424,12 @@ body {
 .sidebar-nav li a.current {
     border-color: var(--color-mid-blue);
 }
+
+.sidebar-nav li a i {
+    float:right;
+    padding-top: 7px;
+}
+
 .sidebar-nav li a:hover {
     text-decoration: none;
     color: #000;
