@@ -6,6 +6,10 @@
     <p>test</p>
 </div>
 
-<app-child *ngFor="let child of currentUser?.group.children"
-    [model] = "child">
-</app-child>
+<div class="container">
+    <div class="row justify-content-around">
+            <app-child *ngFor="let child of currentUser?.group.children"
+            [model] = "child">
+        </app-child>  
+    </div>
+</div>

@@ -2,6 +2,10 @@ body{
     background-color: #F9F9F9;
 }
 
+.container{
+    width: 450px;
+}
+
 .image {
     display: block;
     width: 125px;

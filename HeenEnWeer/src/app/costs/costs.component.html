@@ -1,50 +1,52 @@
 <div class="container-fluid">
   <h2 class="center page-title">Kosten</h2>
-  <div *ngIf="length == 0">
+  <div *ngIf="length == '0'">
     <p>Er zijn nog geen kosten toegevoegd, begin nu met het toevoegen van kosten</p>
-    <button class="btn btn-default" (click)="openDialog()">Voeg kost toe</button>
   </div>
-    <button class="btn" (click)="openDialog()">Voeg kost toe</button>
-    <div class="example-container mat-elevation-z8">
-      <div class="example-header">
-        <mat-form-field>
-          <input ([ngModel])="searchValue" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-        </mat-form-field>
-        <div>
-          <a id="refresh" (click)="refresh()">
-            <i class="material-icons">autorenew</i>
-          </a>
-        </div>
-      </div>
-
-      <mat-table #table [dataSource]="dataSource">
-        <!-- Position Column -->
-        <ng-container matColumnDef="date">
-          <mat-header-cell *matHeaderCellDef> Datum </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.date | date: 'dd/MM/yyyy'}} </mat-cell>
-        </ng-container>
-
-        <!-- Name Column -->
-        <ng-container matColumnDef="description">
-          <mat-header-cell *matHeaderCellDef> Beschrijving </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            <a (click)="openInfoDialog(element)">
-              <i class="material-icons">search</i>
+  <div *ngIf="dataSource">
+      <button class="btn" (click)="openDialog()">Voeg kost toe</button>
+      <div class="example-container mat-elevation-z8">
+        <div class="example-header">
+          <mat-form-field>
+            <input ([ngModel])="searchValue" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+          </mat-form-field>
+          <div>
+            <a id="refresh" (click)="refresh()">
+              <i class="material-icons">autorenew</i>
             </a>
-            {{element.description}} </mat-cell>
-        </ng-container>
-
-        <!-- Weight Column -->
-        <ng-container matColumnDef="amount">
-          <mat-header-cell *matHeaderCellDef> Bedrag </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.amount}} </mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
-
-      <md-paginator #paginator [length]="length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25,50, 100]">
-      </md-paginator>
-    </div>
+          </div>
+        </div>
+  
+        <mat-table #table [dataSource]="dataSource">
+          <!-- Position Column -->
+          <ng-container matColumnDef="date">
+            <mat-header-cell *matHeaderCellDef> Datum </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.date | date: 'dd/MM/yyyy'}} </mat-cell>
+          </ng-container>
+  
+          <!-- Name Column -->
+          <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef> Beschrijving </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <a (click)="openInfoDialog(element)">
+                <i class="material-icons">search</i>
+              </a>
+              {{element.description}} </mat-cell>
+          </ng-container>
+  
+          <!-- Weight Column -->
+          <ng-container matColumnDef="amount">
+            <mat-header-cell *matHeaderCellDef> Bedrag </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.amount}} </mat-cell>
+          </ng-container>
+  
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+  
+        <md-paginator #paginator [length]="length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25,50, 100]">
+        </md-paginator>
+      </div>
+  </div>
+    
   </div>
