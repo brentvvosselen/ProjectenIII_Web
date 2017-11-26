@@ -10,12 +10,11 @@ import { Cost } from '../../models/cost';
   styleUrls: ['./cost-detail.component.css']
 })
 export class CostDetailComponent implements OnInit {
-
-
   constructor(private authenticationService: AuthenticationService,
     private parentService: ParentService,
     @Inject(MAT_DIALOG_DATA) public cost: Cost,
-    public dialogRef: MatDialogRef<CostDetailComponent>) { }
+    public dialogRef: MatDialogRef<CostDetailComponent>) {
+    }
 
   ngOnInit() {
   }
