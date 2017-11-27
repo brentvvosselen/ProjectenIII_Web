@@ -52,6 +52,7 @@ import { DayShowComponent } from './calendar/day-show/day-show.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CostsPayComponent } from './costs/costs-pay/costs-pay.component';
+import { CostSettingsComponent } from './costs/cost-settings/cost-settings.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { CostsPayComponent } from './costs/costs-pay/costs-pay.component';
     CostDetailComponent,
     DayShowComponent,
     CostsPayComponent,
+    CostSettingsComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -122,6 +124,7 @@ import { CostsPayComponent } from './costs/costs-pay/costs-pay.component';
       { path: "calendar/add", component:CalendarAddComponent, canActivate: [AuthGuard]},
       { path: "costs", component:CostsComponent, canActivate: [AuthGuard]},
       { path: "costs/add", component:CostAddComponent, canActivate: [AuthGuard]},
+      { path: "costs/settings", component:CostSettingsComponent, canActivate: [AuthGuard]},
       { path: "setup", component:SetupComponent, canActivate: [AuthGuard]},
       { path: "", component:HomeComponent, canActivate: [AuthGuard]},
       { path: "home", component:HomeComponent, canActivate: [AuthGuard]},      
