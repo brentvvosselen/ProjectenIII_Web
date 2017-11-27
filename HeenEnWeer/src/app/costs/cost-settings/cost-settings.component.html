@@ -17,7 +17,7 @@
     <div *ngIf="currentUser.group.finance.fintype == 'kindrekening'">
       <div class="form-item">
         <label>Max bedrag: </label>
-        <input class="form-control" (change)="log()" type="number" class="form-control form-border" #maxbedrag="ngModel"
+        <input class="form-control" type="number" class="form-control form-border" #maxbedrag="ngModel"
           name="maxbedrag" minlength="4" [(ngModel)]="currentUser.group.finance.kindrekening.maxBedrag" placeholder="maxbedrag">
       </div>
       <div>
@@ -35,7 +35,7 @@
       </div>
       <div class="form-item">
         <label>Percentage </label>
-        <input class="form-control form-border" (change)="log2()" type="number" class="form-control form-border" #percentage="ngModel"
+        <input class="form-control form-border" type="number" class="form-control form-border" #percentage="ngModel"
           name="percentage" minlength="4" [(ngModel)]="currentUser.group.finance.onderhoudsBijdrage.percentage" placeholder="percentage"
           required>
         <div *ngIf="percentage.errors">

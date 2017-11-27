@@ -24,14 +24,10 @@ export class CostSettingsComponent implements OnInit {
   ngOnInit() {
     this.parentService.getByEmail(this.user.email).subscribe(data => {
       this.currentUser = data;
-      console.log(this.model);
-      console.log(this.currentUser.group);
       if(this.currentUser.group.finance.accepted.length == 0){
         this.mustCompleteSetup = true;
-        console.log(this.mustCompleteSetup);
       }else{
-        this.mustCompleteSetup = false;
-        console.log(this.mustCompleteSetup);        
+        this.mustCompleteSetup = false;     
       }
     });
   }
@@ -55,33 +51,16 @@ export class CostSettingsComponent implements OnInit {
       }
       break;
     }
-
-    console.log(this.currentUser.group.finance.fintype);
-  }
-
-  log(){
-    console.log(this.currentUser.group.finance.kindrekening.maxBedrag);
-  }
-
-  log2(){
-    console.log(this.currentUser.group.finance.onderhoudsBijdrage.percentage);
   }
 
   setOnderhoudsbijdrage(onderhoudsbijdrage: string){
     switch(onderhoudsbijdrage){
       case "onderhoudsgerechtigde": {
         this.currentUser.group.finance.onderhoudsBijdrage.onderhoudsgerechtigde = this.currentUser._id.toString();
-        //this.model.group.finance.onderhoudsBijdrage.onderhoudsplichtige = {};
-        //this.model.group.finance.onderhoudsBijdrage.onderhoudsgerechtigde._id = this.currentUser._id;
-        //this.currentUser.group.finance.onderhoudsBijdrage.onderhoudsplichtige._id = this.currentUser._id;
       };
       break;
       case "onderhoudsplichtige": {
-        this.currentUser.group.finance.onderhoudsBijdrage.onderhoudsplichtige = this.currentUser._id.toString();
-        //this.model.group.finance.onderhoudsBijdrage.onderhoudsgerechtigde = {};
-        //this.model.group.finance.onderhoudsBijdrage.onderhoudsplichtige._id = this.currentUser._id;
-        //this.currentUser.group.finance.onderhoudsBijdrage.onderhoudsgerechtigde._id = this.currentUser._id; 
-        console.log(this.model);       
+        this.currentUser.group.finance.onderhoudsBijdrage.onderhoudsplichtige = this.currentUser._id.toString();    
       }
       break;
     }
@@ -133,9 +112,7 @@ export class CostSettingsComponent implements OnInit {
         
       }break;
     }
-    console.log(this.model);
-    //console.log(this.currentUser);
-    this.parentService.costSetup(this.model).subscribe(data => {console.log(data), this.mustCompleteSetup = false});
+    this.parentService.costSetup(this.model).subscribe(data => {this.mustCompleteSetup = false});
   }
 
   back(){
