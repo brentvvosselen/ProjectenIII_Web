@@ -13,7 +13,7 @@
 body{
     /*background: var(--color-mid-blue);*/
     font-family: 'Poppins', sans-serif;
-    
+
 }
 
 /*@media(min-width: 768px){
@@ -40,7 +40,7 @@ p,h1,h2,h3,h4,h5,h6{
     border: none;
     outline: none;
     box-shadow: none !important;
-    
+
 }
 
 .bg-blue-gradient{
@@ -75,7 +75,7 @@ p,h1,h2,h3,h4,h5,h6{
 
 .material-icons{
     vertical-align: middle;
-    
+
 }
 
 
@@ -118,7 +118,7 @@ p,h1,h2,h3,h4,h5,h6{
 }
 .card-form-title{
     width:80%;
-    
+
 }
 
 .card .form-item input {
@@ -578,24 +578,28 @@ a{
 
 .card-profile .card-content{
     margin-top: 2em;
-    margin-left:25px;
+}
+
+.card-profile .card-content h2 {
+    margin-left: 25px;
 }
 
 .card-profile .card-content h4{
-    margin-top:0;
+    margin-top: 0;
+    margin-left: 25px;
 }
 
 .card-profile .card-content p{
     font-weight: 200;
-    margin: 0 0 10px;
+    margin: 0 0 10px 25px;
     text-transform: uppercase;
     letter-spacing: .2em;
     font-size: 2rem;
     color: var(--color-mid-blue);
 }
 
-.card-profile-info{
-    margin-top: 3em;
+.card-profile-info {
+    padding-top: 25px;
 }
 
 .card-profile-info .card-content{

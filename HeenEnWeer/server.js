@@ -164,10 +164,40 @@ app.get('/setup', function(req, res){
     doneSetup: true,
   });
 
+  var otherUser = new Users({
+    firstname: "ine",
+    lastname: "van achteren",
+    email: "ine@vanachteren.be",
+    password: "test"
+  });
+
+  var otherParent = new Parents({
+    type: "F",
+    email: "ine@vanachteren.be",
+    firstname: "Ine",
+    lastname: "Van Achteren",
+    group: group1,
+    doneSetup: true,
+  });
+
   newUser.save(function(err) {
     if (err) {
       handleError(res, err.message, "Bla");
       console.log("new user failed");
+    }
+  });
+
+  otherUser.save(function(err) {
+    if (err) {
+      handleError(res, err.message, "Bla");
+      console.log("new user failed");
+    }
+  });
+
+  otherParent.save(function(err) {
+    if (err) {
+      handleError(res, err.message, "Bla");
+      console.log("Email bestaat al");
     }
   });
 
@@ -1107,8 +1137,11 @@ app.post("/api/finance", passport.authenticate('jwt', { session: false }), funct
     model: 'Group'
   })
   .exec(function(err, parent) {
-    if(err || !parent) {
-      next(handleError(res, err.message));
+    if(err) {
+      next(handleError(res, err));
+    }
+    if(!parent) {
+      next(handleError(res, "vindt parent niet"));
     } else {
       newFinType = {
         fintype: req.body.finance.fintype,
@@ -1127,6 +1160,7 @@ app.post("/api/finance", passport.authenticate('jwt', { session: false }), funct
           onderhoudsplichtige: req.body.finance.onderhoudsbijdrage.onderhoudsplichtige,
           percentage: req.body.finance.onderhoudsbijdrage.percentage
         }
+        console.log(newFinType.onderhoudsbijdrage);
       }
 
       parent.group.finance = newFinType;
@@ -1201,6 +1235,29 @@ app.get("/api/costs/:email", passport.authenticate('jwt', { session: false }), f
   });
 });
 
+// get all costs this month
+app.get("/api/costs/month/:email", function(req, res, next) {
+  Parents.findOne({
+    email: req.params.email
+  }).populate({
+    path:'group',
+    model:'Group',
+    populate:{
+      path:'costs',
+      model:'Costs'
+    }
+  }).exec(function(err, parent) {
+    if(err || !parent) {
+      next(handleError(res, err.message, "Could nog get parent"));
+    } else {
+      var month = new Date().getMonth();
+      var year = new Date().getFullYear();
+      var costsFiltered = parent.group.costs.filter(e => e.date.getMonth() == month && e.date.getFullYear() == year);
+      return res.json(costsFiltered);
+    }
+  });
+});
+
 //toevoegen kost
 app.post("/api/costs/addCost/:email", passport.authenticate('jwt', { session: false }), function(req,res,next){
   Parents.findOne({
@@ -1222,7 +1279,7 @@ app.post("/api/costs/addCost/:email", passport.authenticate('jwt', { session: fa
     if(err){
       next(handleError(res, err.message));
     }else{
-      if(!req.body.filename || !req.body.filetype || !req.body.value) {
+      if(req.body.filename && req.body.filetype && req.body.value) {
         var newImage = new Image({
           filename: req.body.picture.filename,
           filetype: req.body.picture.filetype,

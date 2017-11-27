@@ -1,0 +1,58 @@
+<div *ngIf="currentUser">
+  <h2 class="center page-title">Kosten instellingen</h2>
+<div class="left-back">
+    <a><i (click)="back()" class="material-icons">arrow_back</i> terug</a>
+ </div>
+<div class="center" *ngIf="mustCompleteSetup">
+  <h3>Configureer de kostverdeling</h3>
+  <form class="costForm col-12 col-md-10 col-lg-8 col-xl-6 align-self-center" id="costform" name="costform" (ngSubmit)="edit()"
+    #costform="ngForm">
+    <div class="form-item">
+      <label>U kiest voor: </label>
+      <mat-radio-group class="form-control">
+        <mat-radio-button value="kindrekening" (change)="setType('kindrekening')">Kindrekening</mat-radio-button>
+        <mat-radio-button value="onderhoudsbijdrage" (change)="setType('onderhoudsbijdrage')">Onderhoudsbijdrage</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div *ngIf="currentUser.group.finance.fintype == 'kindrekening'">
+      <div class="form-item">
+        <label>Max bedrag: </label>
+        <input class="form-control" (change)="log()" type="number" class="form-control form-border" #maxbedrag="ngModel"
+          name="maxbedrag" minlength="4" [(ngModel)]="currentUser.group.finance.kindrekening.maxBedrag" placeholder="maxbedrag">
+      </div>
+      <div>
+        <button type="submit" class="btn btn-primary">Opslaan</button>
+      </div>
+    </div>
+
+    <div *ngIf="currentUser.group.finance.fintype == 'onderhoudsbijdrage'">
+      <div class="form-item">
+        <label>U bent </label>
+        <mat-radio-group class="form-control">
+          <mat-radio-button value="onderhoudsgerechtigde" (change)="setOnderhoudsbijdrage('onderhoudsgerechtigde')">Onderhoudsgerechtigde</mat-radio-button>
+          <mat-radio-button value="onderhoudsplichtige" (change)="setOnderhoudsbijdrage('onderhoudsplichtige')">Onderhoudsplichtige</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="form-item">
+        <label>Percentage </label>
+        <input class="form-control form-border" (change)="log2()" type="number" class="form-control form-border" #percentage="ngModel"
+          name="percentage" minlength="4" [(ngModel)]="currentUser.group.finance.onderhoudsBijdrage.percentage" placeholder="percentage"
+          required>
+        <div *ngIf="percentage.errors">
+          <div *ngIf="percentage.errors.required && (percentage.dirty || percentage.touched)">
+            Percentage is verplicht
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-primary" [disabled]="!costform.valid">Opslaan</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+<div class="center" *ngIf="!mustCompleteSetup">
+  <h3>U heeft uw settings geconfigureerd, de andere ouder moet deze nog goedkeuren!</h3>
+</div>
+</div>

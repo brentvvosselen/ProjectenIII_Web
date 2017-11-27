@@ -2,46 +2,43 @@
   <div *ngIf="currentUser">
       <h2 class="center page-title">Profiel</h2>
       <div class="row action-row">
-          <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+          <div class="col">
                 <a div class="action-button" routerLink="/profiel/edit" routerLinkActive="active"><i class="material-icons">mode_edit</i></a>
           </div>
       </div>
-
   </div>
-  <div class="card card-profile col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
-      <div class="card-img-left overlay-container">
-          <div class="container">
-            <img *ngIf="!currentUser?.picture" class="img img-responsive image" src="../../assets/noPicture.jpg"/>
-            <img *ngIf="currentUser?.picture" src="data:{{currentUser.picture.filetype}};base64,{{currentUser.picture.value}}" alt="{{currentUser.picture.filename}}"/>
-            <div class="overlay">
-              <div class="text"><button  data-toggle="modal" data-target="#myModal"><i class="material-icons">mode_edit</i></button>
+
+  <div class="row justify-content-around">
+    <div class="card card-profile col-md-5 col-md-offset-2 col-lg-5 col-lg-offset-2">
+        <div class="card-img-left overlay-container">
+            <div class="container">
+              <img *ngIf="!currentUser?.picture" class="img img-responsive image" src="../../assets/noPicture.jpg"/>
+              <img *ngIf="currentUser?.picture" src="data:{{currentUser.picture.filetype}};base64,{{currentUser.picture.value}}" alt="{{currentUser.picture.filename}}"/>
+              <div class="overlay">
+                <div class="text"><button  data-toggle="modal" data-target="#myModal"><i class="material-icons">mode_edit</i></button>
+                </div>
               </div>
             </div>
-          </div>
-      </div>
+        </div>
 
-      
-      <div class="card-content">
-            <h2>{{currentUser?.firstname}}</h2>
-            <h4>{{currentUser?.lastname}}</h4>
-            <p>{{currentUser?.type}}</p>
-      </div>
+        <div class="card-content">
+              <h2>{{currentUser?.firstname}}</h2>
+              <h4>{{currentUser?.lastname}}</h4>
+        </div>
+    </div>
+    <div class="card card-profile-info col-md-5 col-md-offset-1 col-lg-5 col-lg-offset-2" *ngIf="currentUser?.addressStreet">
+        <div class="card-content">
+              <h2>Persoonlijke info</h2>
+              <h4>Adres</h4>
+              <p  *ngIf="currentUser?.addressStreet || currentUser?.addressNumber || currentUser?.addressPostalcode || currentUser?.addressCity">{{currentUser?.addressStreet}} {{currentUser?.addressNumber}}<br>
+                  {{currentUser?.addressPostalcode}} {{currentUser?.addressCity}}</p>
+              <h4 *ngIf="currentUser?.telephoneNumber">Telefoonnummer</h4>
+              <p *ngIf="currentUser?.telephoneNumber">{{currentUser?.telephoneNumber}}</p>
+              <h4 *ngIf="currentUser?.workName || currentUser?.workNumber">Werkgegevens</h4>
+              <p *ngIf="currentUser?.workName || currentUser?.workNumber">{{currentUser?.workName}} <br> {{currentUser?.workNumber}}</p>
+        </div>
+    </div>
   </div>
-  <div class="card card-profile-info col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2" *ngIf="currentUser?.addressStreet">
-      <div class="card-content">
-            <h2>Persoonlijke info</h2>
-            <h4>Adres</h4>
-            <p  *ngIf="currentUser?.addressStreet || currentUser?.addressNumber || currentUser?.addressPostalcode || currentUser?.addressCity">{{currentUser?.addressStreet}} {{currentUser?.addressNumber}}<br>
-                {{currentUser?.addressPostalcode}} {{currentUser?.addressCity}}</p>
-            <h4 *ngIf="currentUser?.telephoneNumber">Telefoonnummer</h4>
-            <p *ngIf="currentUser?.telephoneNumber">{{currentUser?.telephoneNumber}}</p>
-            <h4 *ngIf="currentUser?.workName || currentUser?.workNumber">Werkgegevens</h4>
-            <p *ngIf="currentUser?.workName || currentUser?.workNumber">{{currentUser?.workName}} <br> {{currentUser?.workNumber}}</p>
-
-      </div>
-
-  </div>
-
 </div>
 
 <!-- Modal -->
@@ -54,7 +51,7 @@
       </div>
       <div class="modal-body">
         <input type="file" id="file" name="file" (change)="showPreview()" #fileInput/>
-        <img *ngIf="codedFile" src="data:{{codedFile.filetype}};base64,{{codedFile.value}}" alt="{{codedFile.filename}}" #preview/>
+        <img *ngIf="codedFile" class="preview" src="data:{{codedFile.filetype}};base64,{{codedFile.value}}" alt="{{codedFile.filename}}" #preview/>
 
       </div>
       <div class="modal-footer">

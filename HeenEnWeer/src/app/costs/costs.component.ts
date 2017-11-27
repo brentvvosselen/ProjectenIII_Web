@@ -15,6 +15,8 @@ import { Cost } from '../models/cost';
 import { CostAddComponent } from './cost-add/cost-add.component';
 import { CostCategory } from '../models/costCategory';
 import { CostDetailComponent } from './cost-detail/cost-detail.component';
+import { CostsPayComponent } from './costs-pay/costs-pay.component';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-costs',
@@ -33,6 +35,7 @@ export class CostsComponent implements OnInit {
   cost: Cost;
   selectedCost: Cost;
   searchValue: string = '';
+  total: number;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -65,6 +68,8 @@ export class CostsComponent implements OnInit {
       console.log(result);
       if(result != undefined){
         this.costDatabase.addCost(result);
+        this.total = this.costDatabase.getTotal();
+        console.log(this.total);
       }
     });
   }
@@ -85,9 +90,22 @@ export class CostsComponent implements OnInit {
     });
   }
 
+  pay(){
+    let dialogRef = this.dialog.open(CostsPayComponent, {
+      width: '400px',
+      data: {
+        message: "U heeft betaald!"
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+  }
+
   ngOnInit() {
     this.dataSource = new ExampleDataSource(this.costDatabase);
-    this.parentService.getCosts(this.user.email).subscribe(data => {this.length = data.length})
+    this.parentService.getCosts(this.user.email).subscribe(data => {this.length = data.length, this.total = this.costDatabase.getTotal(), console.log(this.total)});
+    
   }
 
   applyFilter(value: string){
@@ -103,7 +121,7 @@ export class CostsComponent implements OnInit {
 export interface CostData {
   date: Date;
   description: string;
-  amount: string;
+  amount: number;
 }
 
 export class CostDatabase{
@@ -111,6 +129,8 @@ export class CostDatabase{
   get data(): CostData[] { return this.dataChange.value; }
   initialData: CostData[];
   user: User;
+  total: number = 0;
+  
   constructor(private parentService: ParentService, private authenticationService: AuthenticationService){
     this.user = this.authenticationService.getUser();
     this.parentService.getCosts(this.user.email).subscribe(data => {console.log(data), this.dataChange.next(data), this.initialData = data});
@@ -129,8 +149,17 @@ export class CostDatabase{
     if(filterValue == ""){
       this.dataChange.next(this.initialData);
     }else{
-      this.dataChange.next(copiedData.filter(e => e.description.includes(filterValue)));
+      this.dataChange.next(copiedData.filter(e => e.description.includes(filterValue) || e.amount == parseInt(filterValue)));
     }
+  }
+
+  getTotal(): number{
+    this.total = 0;
+    const copiedData = this.data;
+    copiedData.forEach(elem => {
+      this.total += elem.amount;
+    });
+    return this.total;
   }
 
   refresh(){

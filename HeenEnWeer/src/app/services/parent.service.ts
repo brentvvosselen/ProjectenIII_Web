@@ -8,6 +8,7 @@ import { CalendarEvent } from 'angular-calendar';
 import { Category } from '../models/category';
 import { CostData } from '../costs/costs.component';
 import { Image } from '../models/image';
+import { Group } from '../models/group';
 
 @Injectable()
 export class ParentService {
@@ -101,11 +102,15 @@ export class ParentService {
     }
 
     addPicture(email: string, picture: Image) {
-      return this.http.post("http://127.0.0.1:5000/api/parents/picture/" + email, picture, this.jwt()).map((response: Response) => response.json());
+        return this.http.post("http://127.0.0.1:5000/api/parents/picture/" + email, picture, this.jwt()).map((response: Response) => response.json());
     }
 
     addPictureChild(id: string, picture: Image) {
-      return this.http.post("http://127.0.0.1:5000/api/children/picture/" + id, picture, this.jwt()).map((response: Response) => response.json());
+        return this.http.post("http://127.0.0.1:5000/api/children/picture/" + id, picture, this.jwt()).map((response: Response) => response.json());
+    }
+
+    costSetup(group: any){
+        return this.http.post("http://127.0.0.1:5000/api/finance/", group, this.jwt()).map((response: Response) => response.json());
     }
 
     // private helper methods
