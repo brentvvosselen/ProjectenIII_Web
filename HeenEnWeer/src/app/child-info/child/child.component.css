@@ -6,6 +6,10 @@ body{
     width: 450px;
 }
 
+.card {
+  padding-right: 25px;
+}
+
 .image {
     display: block;
     width: 125px;
@@ -21,12 +25,12 @@ body{
     width:125px;
     margin: 0;
   }
-  
+
   .overlay-container .container{
     padding:0;
     width:125px;
   }
-  
+
   .container{
     position: relative;
   }
@@ -43,12 +47,12 @@ body{
     transition: .5s ease;
     background-color: rgba(177, 177, 177, 0.7);
   }
-  
+
   .container:hover .overlay {
     opacity: 1;
-  
+
   }
-  
+
   .overlay button{
     background: none;
     border: none;
@@ -65,3 +69,9 @@ body{
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
   }
+
+.preview {
+  width: 250px;
+  padding: 20px;
+  margin: 0 auto;
+}

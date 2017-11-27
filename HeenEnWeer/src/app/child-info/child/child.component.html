@@ -32,7 +32,7 @@
         <label>Geboortedatum: {{model?.birthdate}}</label>
       </div>
     </div>
-    
+
   </div>
  <br>
 </div>
@@ -47,7 +47,7 @@
       </div>
       <div class="modal-body">
         <input type="file" id="file" name="file" (change)="showPreview()" #fileInput/>
-        <img *ngIf="codedFile" src="data:{{codedFile.filetype}};base64,{{codedFile.value}}" alt="{{codedFile.filename}}" #preview/>
+        <img *ngIf="codedFile" class="preview" src="data:{{codedFile.filetype}};base64,{{codedFile.value}}" alt="{{codedFile.filename}}" #preview/>
 
       </div>
       <div class="modal-footer">
