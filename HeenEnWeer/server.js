@@ -1137,8 +1137,11 @@ app.post("/api/finance", passport.authenticate('jwt', { session: false }), funct
     model: 'Group'
   })
   .exec(function(err, parent) {
-    if(err || !parent) {
-      next(handleError(res, err.message));
+    if(err) {
+      next(handleError(res, err));
+    }
+    if(!parent) {
+      next(handleError(res, "vindt parent niet"));
     } else {
       newFinType = {
         fintype: req.body.finance.fintype,

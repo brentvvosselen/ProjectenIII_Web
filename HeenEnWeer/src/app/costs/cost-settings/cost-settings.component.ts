@@ -86,30 +86,30 @@ export class CostSettingsComponent implements OnInit {
     switch(this.currentUser.group.finance.fintype){
       case "kindrekening": {
         this.model = {
-          id: this.currentUser.group["_id"],
+          _id: this.currentUser.group["_id"],
           finance: {
             fintype: this.currentUser.group.finance.fintype,
-            accepted: this.currentUser.group.finance.accepted,
+            accepted: [this.currentUser._id],
             kindrekening: {
               maxBedrag: this.currentUser.group.finance.kindrekening.maxBedrag
             },
           }
         };
-      }
+      }break;
       case "onderhoudsbijdrage": {
         this.model = {
-          id: this.currentUser.group["_id"],
+          _id: this.currentUser.group["_id"],
           finance: {
             fintype: this.currentUser.group.finance.fintype,
-            accepted: this.currentUser.group.finance.accepted,
+            accepted: [this.currentUser._id],
             onderhoudsbijdrage: {
-              onderhoudsgerechtigde: this.currentUser.group.finance.onderhoudsBijdrage.onderhoudsgerechtigde,
-              onderhoudsplichtige: this.currentUser.group.finance.onderhoudsBijdrage.onderhoudsplichtige,
+              onderhoudsgerechtigde: this.currentUser._id,
+              onderhoudsplichtige: this.currentUser._id,
               percentage: this.currentUser.group.finance.onderhoudsBijdrage.percentage
             }
           }
         };
-      }
+      }break;
     }
     console.log(this.model);
     this.parentService.costSetup(this.model).subscribe(data => console.log(data));
