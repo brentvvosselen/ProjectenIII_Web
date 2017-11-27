@@ -10,7 +10,7 @@ export class Group {
 
 class Fintype {
     fintype: string;
-    accepted: Parent[];
+    accepted: string[];
     kindrekening: Kindrekening;
     onderhoudsBijdrage: Onderhoudsbijdrage;
 }
@@ -20,7 +20,7 @@ class Kindrekening {
 }
 
 class Onderhoudsbijdrage {
-    onderhoudsgerechtigde: Parent;
-    onderhoudsplichtige: Parent;
+    onderhoudsgerechtigde: string;
+    onderhoudsplichtige: string;
     percentage: number;
 }
