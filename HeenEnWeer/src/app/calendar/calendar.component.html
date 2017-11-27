@@ -1,7 +1,7 @@
 <h2 class="center page-title"><span>Kalender</span><a class="action-right" routerLink="/calendar/add" routerLinkActive="active"><i class="material-icons">add</i></a></h2>
 <div *ngIf="events">
   <div *ngIf="currentUser">
-      <div class="filter-child">
+      <div class="row filter-child">
           <mat-radio-group>
               <mat-radio-button class="left" value="0" (change)="filter('All')">Alle events</mat-radio-button>
               <div class="left" *ngFor="let ch of currentUser.group.children">

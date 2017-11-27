@@ -105,36 +105,40 @@ export class CalendarComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.parentService.getByEmail(this.user.email).subscribe(user => {this.currentUser = user});
-    this.parentService.getEvents(this.user.email).subscribe(data => {
-      this.data = data;
-      //loop over alle evenementen in de data
-      for(var event in data){
-        //maakt nieuw kleur type aan voor automatische display op agenda
-        var _color  = {
-          primary: data[event]["categoryid"]["color"],
-          secondary: data[event]["categoryid"]["color"]
+    this.parentService.getByEmail(this.user.email).subscribe(dat => {
+      this.currentUser = dat;
+      console.log(this.currentUser);
+      this.parentService.getEvents(this.user.email).subscribe(data => {
+        this.data = data;
+        //loop over alle evenementen in de data
+        for(var event in data){
+          //maakt nieuw kleur type aan voor automatische display op agenda
+          var _color  = {
+            primary: data[event]["categoryid"]["color"],
+            secondary: data[event]["categoryid"]["color"]
+          }
+          //initialiseer een kalenderevenement om toe te voegen aan de kalender
+          let calendarEvent : CalendarEvent = {
+            start : new Date(data[event]["start"]),
+            end : new Date(data[event]["end"]),
+            actions: this.actions,
+            title : data[event]["title"],
+            color: _color,
+            draggable: true,
+            resizable: {
+              beforeStart: true,
+              afterEnd: true
+            },
+          }
+          //push van event
+          this.events.push(calendarEvent);
+          this.initialEvents.push(calendarEvent);
         }
-        //initialiseer een kalenderevenement om toe te voegen aan de kalender
-        let calendarEvent : CalendarEvent = {
-          start : new Date(data[event]["start"]),
-          end : new Date(data[event]["end"]),
-          actions: this.actions,
-          title : data[event]["title"],
-          color: _color,
-          draggable: true,
-          resizable: {
-            beforeStart: true,
-            afterEnd: true
-          },
-        }
-        //push van event
-        this.events.push(calendarEvent);
-        this.initialEvents.push(calendarEvent);
-      }
-      console.log(this.events);
-      this.refresh.next();
-    });
+        console.log(this.events);
+        this.refresh.next();
+      });
+    })
+    
     this.refresh.subscribe();
   }
 
