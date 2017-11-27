@@ -35,7 +35,9 @@ export class CostAddComponent implements OnInit {
   }
 
   save() {
-    this.cost.picture = this.codedFile;
+    if(this.codedFile != undefined){
+      this.cost.picture = this.codedFile;      
+    }
     this.parentService.addCost(this.cost, this.user.email).subscribe(data => {this.dialogRef.close(data)});
   }
 
