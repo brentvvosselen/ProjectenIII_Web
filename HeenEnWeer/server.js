@@ -1222,7 +1222,7 @@ app.post("/api/costs/addCost/:email", passport.authenticate('jwt', { session: fa
     if(err){
       next(handleError(res, err.message));
     }else{
-      if(!req.body.filename || !req.body.filetype || !req.body.value) {
+      if(req.body.filename && req.body.filetype && req.body.value) {
         var newImage = new Image({
           filename: req.body.picture.filename,
           filetype: req.body.picture.filetype,

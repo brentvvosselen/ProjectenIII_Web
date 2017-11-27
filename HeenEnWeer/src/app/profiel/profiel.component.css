@@ -2,6 +2,12 @@ body{
   background-color: #F9F9F9;
 }
 
+.preview {
+  width: 250px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
 .image {
   display: block;
   width: 125px;
