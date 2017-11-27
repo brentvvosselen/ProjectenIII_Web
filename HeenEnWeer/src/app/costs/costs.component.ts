@@ -69,6 +69,7 @@ export class CostsComponent implements OnInit {
       if(result != undefined){
         this.costDatabase.addCost(result);
         this.total = this.costDatabase.getTotal();
+        console.log(this.total);
       }
     });
   }
@@ -154,12 +155,9 @@ export class CostDatabase{
 
   getTotal(): number{
     this.total = 0;
-    const copiedData = this.initialData.slice();
+    const copiedData = this.data;
     copiedData.forEach(elem => {
-      //total += parseInt(elem.amount);
-      console.log(elem.amount);
       this.total += elem.amount;
-      console.log(this.total);
     });
     return this.total;
   }
