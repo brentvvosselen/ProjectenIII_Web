@@ -20,3 +20,7 @@ body{
 app-login{
   display:none;
 }
+
+.content{
+  padding: 25px 25px 25px 25px;
+}

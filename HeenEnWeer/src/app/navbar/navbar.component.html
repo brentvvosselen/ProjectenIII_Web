@@ -6,9 +6,20 @@
       </a>
     </li>
     <li class="sidebar-account">
-      <div class="sidebar-account-img text-center">
-        <img *ngIf="!currentUser?.picture" class="img img-responsive" src="../../assets/noPicture.jpg"/>
-        <img *ngIf="currentUser?.picture" src="data:{{currentUser.picture.filetype}};base64,{{currentUser.picture.value}}" alt="{{currentUser.picture.filename}}"/>
+      <div class="sidebar-account-img text-center overlay-container">
+          <div class="container">
+              <img *ngIf="!currentUser?.picture" class="img img-responsive image" src="../../assets/noPicture.jpg"/>
+              <img *ngIf="currentUser?.picture" src="data:{{currentUser.picture.filetype}};base64,{{currentUser.picture.value}}" alt="{{currentUser.picture.filename}}"/>
+              <div class="overlay">
+                <div class="text"><button  data-toggle="modal" data-target="#myModal"><i class="material-icons">mode_edit</i></button>
+                </div>
+              </div>
+            </div>
+      </div>
+      <div class="sidebar-account-content">
+          <a routerLink="/profiel/edit" routerLinkActive="active">
+            <i class="material-icons">settings</i> 
+          </a>         
       </div>
       <div class="sidebar-account-content">
         <h3>{{user?.firstname}} {{user?.lastname}}</h3>
@@ -17,9 +28,10 @@
       </div>
     </li>
     <li>
-      <div *ngIf="router.url === '/'" class="current bg-blue-gradient"></div>
-      <a routerLink="/home" routerLinkActive="active">Home</a>
+      <div *ngIf="router.url === '/home' || router.url === '/'" class="current bg-blue-gradient"></div>
+      <a routerLink="/home" routerLinkActive="active">Home <i class="material-icons">home</i></a>
     </li>
+    <!--
     <li>
       <span *ngIf="router.url === '/profiel'" class="current bg-blue-gradient"></span>
       <a routerLink="/profiel" routerLinkActive="active">Profiel</a>
@@ -28,20 +40,41 @@
       <span *ngIf="router.url === '/children'" class="current bg-blue-gradient"></span>
       <a routerLink="/children" routerLinkActive="active">Kindinfo</a>
     </li>
+    -->
     <li>
       <span *ngIf="router.url === '/calendar'" class="current bg-blue-gradient"></span>
-      <a routerLink="/calendar" routerLinkActive="active">Kalender</a>
+      <a routerLink="/calendar" routerLinkActive="active">Kalender <i class="material-icons">today</i></a>
     </li>
     <li>
         <span *ngIf="router.url === '/costs'" class="current bg-blue-gradient"></span>
-        <a routerLink="/costs" routerLinkActive="active">Kosten</a>
+        <a routerLink="/costs" routerLinkActive="active">Kosten <i class="material-icons">account_balance_wallet</i></a>
       </li>
     <li>
-      <a href="#" (click)="logout($event)">Logout</a>
+      <a href="#" (click)="logout($event)">Logout <i class="material-icons">exit_to_app</i></a>
     </li>
   </ul>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Voeg profielfoto toe</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <input type="file" id="file" name="file" (change)="showPreview()" #fileInput/>
+          <img *ngIf="codedFile" src="data:{{codedFile.filetype}};base64,{{codedFile.value}}" alt="{{codedFile.filename}}" #preview/>
+  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Terug</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addPicture()">Toevoegen</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
   crossorigin="anonymous"></script>

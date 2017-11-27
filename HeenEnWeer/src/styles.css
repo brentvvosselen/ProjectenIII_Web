@@ -424,6 +424,12 @@ body {
 .sidebar-nav li a.current {
     border-color: var(--color-mid-blue);
 }
+
+.sidebar-nav li a i {
+    float:right;
+    padding-top: 7px;
+}
+
 .sidebar-nav li a:hover {
     text-decoration: none;
     color: #000;
@@ -493,6 +499,12 @@ h1,h2{
 a{
     color: var(--color-mid-blue);
     text-decoration: none;
+    cursor: pointer;
+}
+.btn:hover{
+    background:#ccc;
+    color:white;
+    transition:.2s ease-in-out;
 }
 /*all*/
 .page-title{
@@ -617,3 +629,15 @@ a{
         margin-left:0;
     }
 }
+<<<<<<< HEAD
+=======
+
+@media(min-width:1200px){
+
+    #menu-toggle{
+        visibility:hidden;
+    }
+}
+
+
+>>>>>>> d6adf8a18b926847b963c311dcbd7a2358323a5a

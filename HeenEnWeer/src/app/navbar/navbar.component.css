@@ -4,7 +4,6 @@
     text-indent: 0;
 }
 .sidebar-account .sidebar-account-img img{
-    object-fit: cover;
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -17,3 +16,73 @@
     margin-bottom: 0;
     margin-top:1em;
 }
+
+.image {
+    display: block;
+    width: 125px;
+    margin:0;
+    height: auto;
+  }
+  
+  .overlay-container{
+    width:125px;
+
+  }
+  
+  .overlay-container .container{
+    padding:0;
+    width:125px;
+    
+  }
+  
+  .container{
+    position: relative;
+    margin-left: 20%;
+  }
+  .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    width: 150px;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: rgba(177, 177, 177, 0.7);
+    border-radius: 50%;
+  }
+  
+  .container:hover .overlay {
+    opacity: 1;
+  
+  }
+  
+  .overlay button{
+    background: none;
+    border: none;
+    color: white;
+    cursor:pointer;
+  }
+  
+  .text {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+  }
+
+  li a i {
+      margin: 0 auto;
+  }
+
+  a.active {
+      padding-right: 25px;
+  }
+
+  .overlay-container{
+    width: auto;
+  }

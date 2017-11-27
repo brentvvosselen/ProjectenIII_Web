@@ -38,7 +38,8 @@ export class SetupComponent implements OnInit {
     this.model.children = this.children;
     this.model.email = this.user.email;
     this.model.currentType = this.model.type;
-    this.parentService.saveSetup(this.model).subscribe(data => console.log(data));
+    console.log(this.model);
+    //this.parentService.saveSetup(this.model).subscribe(data => console.log(data));
   }
 
   onComplete($event){

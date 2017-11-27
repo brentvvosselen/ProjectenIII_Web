@@ -51,6 +51,8 @@ import { CostDetailComponent } from './costs/cost-detail/cost-detail.component';
 import { DayShowComponent } from './calendar/day-show/day-show.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { CostsPayComponent } from './costs/costs-pay/costs-pay.component';
+import { CostSettingsComponent } from './costs/cost-settings/cost-settings.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +80,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     CategoryAddComponent,
     CostDetailComponent,
     DayShowComponent,
+    CostsPayComponent,
+    CostSettingsComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -120,6 +124,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
       { path: "calendar/add", component:CalendarAddComponent, canActivate: [AuthGuard]},
       { path: "costs", component:CostsComponent, canActivate: [AuthGuard]},
       { path: "costs/add", component:CostAddComponent, canActivate: [AuthGuard]},
+      { path: "costs/settings", component:CostSettingsComponent, canActivate: [AuthGuard]},
       { path: "setup", component:SetupComponent, canActivate: [AuthGuard]},
       { path: "", component:HomeComponent, canActivate: [AuthGuard]},
       { path: "home", component:HomeComponent, canActivate: [AuthGuard]},      
@@ -128,6 +133,6 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
   ],
   providers: [AuthenticationService, ParentService, UserService, AuthGuard, FormBuilder, ],
   bootstrap: [AppComponent],
-  entryComponents: [CategoryAddComponent, CostDetailComponent, DayShowComponent]  
+  entryComponents: [CategoryAddComponent, CostDetailComponent, DayShowComponent, CostsPayComponent]  
 })
 export class AppModule { }

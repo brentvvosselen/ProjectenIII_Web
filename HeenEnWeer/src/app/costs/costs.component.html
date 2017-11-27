@@ -1,16 +1,23 @@
 <div class="container-fluid">
   <h2 class="center page-title">Kosten</h2>
+  <div class="left">
+      <a routerLink="/costs/settings" routerLinkActive="active">
+        <i class="material-icons">settings</i> 
+      </a> 
+  </div>
+
   <div *ngIf="length == '0'">
     <p>Er zijn nog geen kosten toegevoegd, begin nu met het toevoegen van kosten</p>
   </div>
   <div *ngIf="dataSource">
-      <button class="btn" (click)="openDialog()">Voeg kost toe</button>
-      <div class="example-container mat-elevation-z8">
+      
+      <div class="example-container">
         <div class="example-header">
-          <mat-form-field>
+            <a class="addcost"  ><i (click)="openDialog()" class="material-icons">add</i></a>
+          <mat-form-field class="search">
             <input ([ngModel])="searchValue" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
           </mat-form-field>
-          <div>
+          <div class="refreshbutton">
             <a id="refresh" (click)="refresh()">
               <i class="material-icons">autorenew</i>
             </a>
@@ -37,7 +44,7 @@
           <!-- Weight Column -->
           <ng-container matColumnDef="amount">
             <mat-header-cell *matHeaderCellDef> Bedrag </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.amount}} </mat-cell>
+            <mat-cell *matCellDef="let element">€ {{element.amount}} </mat-cell>
           </ng-container>
   
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -46,6 +53,13 @@
   
         <md-paginator #paginator [length]="length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25,50, 100]">
         </md-paginator>
+      </div>
+      <div class="table-footer-info">
+          <p>Totaal: </p><p class="bold">€ {{total}}</p>
+      </div>
+      <div class="table-footer row">
+        
+          <button class="btn-betalen btn btn-primary" (click)="pay()">Betalen</button>          
       </div>
   </div>
     

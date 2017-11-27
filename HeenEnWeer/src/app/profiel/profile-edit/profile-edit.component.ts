@@ -6,6 +6,7 @@ import { ParentService } from '../../services/parent.service';
 import { AuthenticationService } from '../../services/authentication-service.service';
 import { Router } from '@angular/router';
 import { ViewEncapsulation } from '@angular/core';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class ProfileEditComponent implements OnInit {
 
   profielForm : FormGroup;
 
-  constructor(private fb: FormBuilder, private authenticationService: AuthenticationService, private parentService: ParentService,private router: Router) {
+  constructor(private fb: FormBuilder, private authenticationService: AuthenticationService, private parentService: ParentService,private router: Router, private location: Location) {
     this.user = authenticationService.getUser();
   }
 
@@ -52,5 +53,9 @@ export class ProfileEditComponent implements OnInit {
     });
 
     this.router.navigate(["/profiel"]);
+  }
+
+  back(){
+    this.location.back();
   }
 }
