@@ -85,6 +85,10 @@ export class ParentService {
         return this.http.get("http://127.0.0.1:5000/api/costs/" + email, this.jwt()).map((response: Response) => response.json());
     }
 
+    getCostsMonth(email: string): Observable<CostData[]> {
+      return this.http.get("http://127.0.0.1:5000/api/costs/month/" + email, this.jwt()).map((response: Response) => response.json());
+    }
+
     addCost(cost: any, email:string){
         return this.http.post("http://127.0.0.1:5000/api/costs/addCost/" + email,cost, this.jwt()).map((response: Response) => response.json());
     }
