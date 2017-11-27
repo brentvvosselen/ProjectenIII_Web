@@ -51,6 +51,7 @@ import { CostDetailComponent } from './costs/cost-detail/cost-detail.component';
 import { DayShowComponent } from './calendar/day-show/day-show.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { CostsPayComponent } from './costs/costs-pay/costs-pay.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     CategoryAddComponent,
     CostDetailComponent,
     DayShowComponent,
+    CostsPayComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -128,6 +130,6 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
   ],
   providers: [AuthenticationService, ParentService, UserService, AuthGuard, FormBuilder, ],
   bootstrap: [AppComponent],
-  entryComponents: [CategoryAddComponent, CostDetailComponent, DayShowComponent]  
+  entryComponents: [CategoryAddComponent, CostDetailComponent, DayShowComponent, CostsPayComponent]  
 })
 export class AppModule { }
