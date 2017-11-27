@@ -3,7 +3,7 @@ import { ParentService } from '../../services/parent.service';
 import { Parent } from '../../models/parent';
 import { AuthenticationService } from '../../services/authentication-service.service';
 import { User } from '../../models/user';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-cost-settings',
   templateUrl: './cost-settings.component.html',
@@ -17,7 +17,7 @@ export class CostSettingsComponent implements OnInit {
   mustCompleteSetup: boolean;
   model: any = {};
 
-  constructor(private parentService: ParentService, private authenticationService: AuthenticationService) {
+  constructor(private parentService: ParentService, private authenticationService: AuthenticationService, private location: Location) {
     this.user = this.authenticationService.getUser();
   }
 
@@ -113,5 +113,9 @@ export class CostSettingsComponent implements OnInit {
     }
     console.log(this.model);
     this.parentService.costSetup(this.model).subscribe(data => console.log(data));
+  }
+
+  back(){
+    this.location.back();
   }
 }
