@@ -24,13 +24,10 @@ export class CostSettingsComponent implements OnInit {
   ngOnInit() {
     this.parentService.getByEmail(this.user.email).subscribe(data => {
       this.currentUser = data;
-      console.log(this.currentUser.group);
       if(this.currentUser.group.finance.accepted.length == 0){
         this.mustCompleteSetup = true;
-        console.log(this.mustCompleteSetup);
       }else{
-        this.mustCompleteSetup = false;
-        console.log(this.mustCompleteSetup);        
+        this.mustCompleteSetup = false;     
       }
     });
   }
@@ -44,36 +41,26 @@ export class CostSettingsComponent implements OnInit {
       break;
       case "onderhoudsbijdrage": {
         this.currentUser.group.finance.fintype = "onderhoudsbijdrage";
+
+        console.log(this.model);
         this.currentUser.group.finance.onderhoudsBijdrage = {
-          onderhoudsgerechtigde: null,
-          onderhoudsplichtige: null,
+          onderhoudsgerechtigde: "",
+          onderhoudsplichtige: "",
           percentage: null
         };
       }
       break;
     }
-
-    console.log(this.currentUser.group.finance.fintype);
-  }
-
-  log(){
-    console.log(this.currentUser.group.finance.kindrekening.maxBedrag);
-  }
-
-  log2(){
-    console.log(this.currentUser.group.finance.onderhoudsBijdrage.percentage);
   }
 
   setOnderhoudsbijdrage(onderhoudsbijdrage: string){
     switch(onderhoudsbijdrage){
       case "onderhoudsgerechtigde": {
-        this.currentUser.group.finance.onderhoudsBijdrage.onderhoudsgerechtigde._id = this.currentUser._id
-        this.currentUser.group.finance.onderhoudsBijdrage.onderhoudsplichtige._id = this.currentUser._id;
+        this.currentUser.group.finance.onderhoudsBijdrage.onderhoudsgerechtigde = this.currentUser._id.toString();
       };
       break;
       case "onderhoudsplichtige": {
-        this.currentUser.group.finance.onderhoudsBijdrage.onderhoudsplichtige._id = this.currentUser._id;
-        this.currentUser.group.finance.onderhoudsBijdrage.onderhoudsgerechtigde._id = this.currentUser._id;        
+        this.currentUser.group.finance.onderhoudsBijdrage.onderhoudsplichtige = this.currentUser._id.toString();    
       }
       break;
     }
@@ -82,7 +69,7 @@ export class CostSettingsComponent implements OnInit {
 
   edit(){
     console.log(this.currentUser.group);
-    this.currentUser.group.finance.accepted.push(this.currentUser);
+    this.currentUser.group.finance.accepted.push(this.currentUser._id.toString());
     switch(this.currentUser.group.finance.fintype){
       case "kindrekening": {
         this.model = {
@@ -97,22 +84,35 @@ export class CostSettingsComponent implements OnInit {
         };
       }break;
       case "onderhoudsbijdrage": {
-        this.model = {
-          _id: this.currentUser.group["_id"],
-          finance: {
-            fintype: this.currentUser.group.finance.fintype,
-            accepted: [this.currentUser._id],
-            onderhoudsbijdrage: {
-              onderhoudsgerechtigde: this.currentUser._id,
-              onderhoudsplichtige: this.currentUser._id,
-              percentage: this.currentUser.group.finance.onderhoudsBijdrage.percentage
+        if(this.currentUser.group.finance.onderhoudsBijdrage.onderhoudsgerechtigde == ""){
+          this.model = {
+            _id: this.currentUser.group["_id"],
+            finance: {
+              fintype: this.currentUser.group.finance.fintype,
+              accepted: [this.currentUser._id],
+              onderhoudsbijdrage: {
+                onderhoudsplichtige: this.currentUser.group.finance.onderhoudsBijdrage.onderhoudsplichtige,
+                percentage: this.currentUser.group.finance.onderhoudsBijdrage.percentage
+              }
             }
-          }
-        };
+          };
+        }else if(this.currentUser.group.finance.onderhoudsBijdrage.onderhoudsplichtige == ""){
+          this.model = {
+            _id: this.currentUser.group["_id"],
+            finance: {
+              fintype: this.currentUser.group.finance.fintype,
+              accepted: [this.currentUser._id],
+              onderhoudsbijdrage: {
+                onderhoudsgerechtigde: this.currentUser.group.finance.onderhoudsBijdrage.onderhoudsgerechtigde,
+                percentage: this.currentUser.group.finance.onderhoudsBijdrage.percentage
+              }
+            }
+          };
+        } 
+        
       }break;
     }
-    console.log(this.model);
-    this.parentService.costSetup(this.model).subscribe(data => console.log(data));
+    this.parentService.costSetup(this.model).subscribe(data => {this.mustCompleteSetup = false});
   }
 
   back(){
