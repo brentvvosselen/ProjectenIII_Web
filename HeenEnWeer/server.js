@@ -164,6 +164,22 @@ app.get('/setup', function(req, res){
     doneSetup: true,
   });
 
+  var otherUser = new Users({
+    firstname: "ine",
+    lastname: "van achteren",
+    email: "ine@vanachteren.be",
+    password: "test"
+  });
+
+  var otherParent = new Parents({
+    type: "F",
+    email: "ine@vanachteren.be",
+    firstname: "Ine",
+    lastname: "Van Achteren",
+    group: group1,
+    doneSetup: true,
+  });
+
   newUser.save(function(err) {
     if (err) {
       handleError(res, err.message, "Bla");
@@ -171,6 +187,20 @@ app.get('/setup', function(req, res){
     }
   });
 
+  otherUser.save(function(err) {
+    if (err) {
+      handleError(res, err.message, "Bla");
+      console.log("new user failed");
+    }
+  });
+
+  otherParent.save(function(err) {
+    if (err) {
+      handleError(res, err.message, "Bla");
+      console.log("Email bestaat al");
+    }
+  });
+  
   newParent.save(function(err) {
     if (err) {
       handleError(res, err.message, "Bla");

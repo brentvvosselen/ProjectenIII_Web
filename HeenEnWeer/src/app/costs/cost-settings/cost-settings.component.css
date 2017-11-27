@@ -1,0 +1,44 @@
+.costForm{
+    margin: 0 auto;
+  }
+  
+  .costForm{
+    margin: 0 auto;
+    display: inline-block;
+    text-align: left;
+  }
+  
+  .costForm label{
+    color: grey;
+    margin-top: 20px;
+  }
+  
+  .costForm input{
+    width:100%;
+  }
+  
+  .costForm button{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: none !important;
+  }
+  .costForm .input-group{
+    width:100%;
+  }
+  
+  .left-back{
+    margin-left: 25px;
+  }
+  
+  .left-back i {
+    font-size: 60px;
+    color: grey;
+  }
+  
+  .left-back a {
+    color: grey;
+  }
+
+  .center{
+      margin-top: 15px;
+  }
