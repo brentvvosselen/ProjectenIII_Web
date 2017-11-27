@@ -1157,6 +1157,7 @@ app.post("/api/finance", passport.authenticate('jwt', { session: false }), funct
           onderhoudsplichtige: req.body.finance.onderhoudsbijdrage.onderhoudsplichtige,
           percentage: req.body.finance.onderhoudsbijdrage.percentage
         }
+        console.log(newFinType.onderhoudsbijdrage);
       }
 
       parent.group.finance = newFinType;
