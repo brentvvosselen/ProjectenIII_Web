@@ -149,7 +149,7 @@ export class CostDatabase{
     if(filterValue == ""){
       this.dataChange.next(this.initialData);
     }else{
-      this.dataChange.next(copiedData.filter(e => e.description.includes(filterValue)));
+      this.dataChange.next(copiedData.filter(e => e.description.includes(filterValue) || e.amount == parseInt(filterValue)));
     }
   }
 
