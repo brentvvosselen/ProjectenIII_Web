@@ -200,7 +200,7 @@ app.get('/setup', function(req, res){
       console.log("Email bestaat al");
     }
   });
-  
+
   newParent.save(function(err) {
     if (err) {
       handleError(res, err.message, "Bla");
@@ -1231,6 +1231,29 @@ app.get("/api/costs/:email", passport.authenticate('jwt', { session: false }), f
       next(handleError(res, err.message, "could not get costs"));
     }else{
       res.json(parent.group.costs);
+    }
+  });
+});
+
+// get all costs this month
+app.get("/api/costs/month/:email", function(req, res, next) {
+  Parents.findOne({
+    email: req.params.email
+  }).populate({
+    path:'group',
+    model:'Group',
+    populate:{
+      path:'costs',
+      model:'Costs'
+    }
+  }).exec(function(err, parent) {
+    if(err || !parent) {
+      next(handleError(res, err.message, "Could nog get parent"));
+    } else {
+      var month = new Date().getMonth();
+      var year = new Date().getFullYear();
+      var costsFiltered = parent.group.costs.filter(e => e.date.getMonth() == month && e.date.getFullYear() == year);
+      return res.json(costsFiltered);
     }
   });
 });
