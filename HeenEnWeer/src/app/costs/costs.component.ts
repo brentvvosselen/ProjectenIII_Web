@@ -67,7 +67,11 @@ export class CostsComponent implements OnInit {
       this.cost = result;
       console.log(result);
       if(result != undefined){
-        this.costDatabase.addCost(result);
+        var month = new Date().getMonth();
+        var year = new Date().getFullYear();
+        if(result.date.getMonth() == month && result.date.getFullYear() == year) {
+            this.costDatabase.addCost(result);
+        }
         this.total = this.costDatabase.getTotal();
         console.log(this.total);
       }
@@ -105,7 +109,7 @@ export class CostsComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new ExampleDataSource(this.costDatabase);
     this.parentService.getCosts(this.user.email).subscribe(data => {this.length = data.length, this.total = this.costDatabase.getTotal(), console.log(this.total)});
-    
+
   }
 
   applyFilter(value: string){
@@ -130,10 +134,11 @@ export class CostDatabase{
   initialData: CostData[];
   user: User;
   total: number = 0;
-  
+
   constructor(private parentService: ParentService, private authenticationService: AuthenticationService){
     this.user = this.authenticationService.getUser();
-    this.parentService.getCosts(this.user.email).subscribe(data => {console.log(data), this.dataChange.next(data), this.initialData = data});
+    // this.parentService.getCosts(this.user.email).subscribe(data => {console.log(data), this.dataChange.next(data), this.initialData = data});
+    this.parentService.getCostsMonth(this.user.email).subscribe(data => {console.log(data), this.dataChange.next(data), this.initialData = data});
   }
 
   addCost(cost: CostData){
