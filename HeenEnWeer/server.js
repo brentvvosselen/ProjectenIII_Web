@@ -469,7 +469,9 @@ app.post("/api/setup", passport.authenticate('jwt', { session: false }), functio
   }, function(err,parent){
     if(err){
       next(handleError(res,err.message,"Could not find parent"));
-    }else{
+    } else if(!parent) {
+      next(handleError(res,err.message,"Could not find parent"));
+    } else{
       //type parent instellen
       var currentType = req.body.currentType;
       if(currentType != "F" && currentType != "M"){
@@ -549,13 +551,18 @@ app.post("/api/setup", passport.authenticate('jwt', { session: false }), functio
 });
 
 //vraag invitee op adhv key
-app.get("/api/invitee/:key", passport.authenticate('jwt', { session: false }), function(req,res, next){
+app.get("/api/invitee/:key", function(req,res, next){
+  console.log()
+
   Invitee.findOne({
     key: req.params.key
   },function(err,invitee){
     if(err){
       next(handleError(res,err.message,"Could not find invitee"));
-    }else{
+    } else if(!invitee) {
+      next(handleError(res, "Could not find invitee"));
+    } else{
+      console.log(invitee);
       res.json(invitee);
     }
   });
@@ -566,7 +573,7 @@ app.get("/api/invitee/:key", passport.authenticate('jwt', { session: false }), f
  * een nieuwe user aanmaken, met een nieuwe parent met alle values
  * groep aan parent toevoegen
  */
-app.post("/api/invite", passport.authenticate('jwt', { session: false }), function(req,res, next){
+app.post("/api/invite", function(req,res, next){
   console.log(req.body);
   //verwijder uitgenodigde
   Invitee.findOneAndRemove({
@@ -582,6 +589,8 @@ app.post("/api/invite", passport.authenticate('jwt', { session: false }), functi
   }, function(err, group) {
     if(err) { next(handleError(res, err.message, "Could not find group")) }
 
+    if(!group) { next(handleError(res, "Could not find group")) }
+
     //maak nieuwe user aan
     var newUser = new Users({
       email: req.body.email,
@@ -589,6 +598,7 @@ app.post("/api/invite", passport.authenticate('jwt', { session: false }), functi
       firstname: req.body.firstname,
       lastname: req.body.lastname
     });
+
     //maak nieuwe parent aan
     var newParent = new Parents({
       email: req.body.email,
@@ -1384,6 +1394,7 @@ app.get("/api/costs/categories/:email", passport.authenticate('jwt', { session: 
       model:'CostCategory',
     }
   }).exec(function(err,parent){
+    console.log(parent);
     if(err){
       next(handleError(res, "Could not retrieve parent", err.message));
     }else{

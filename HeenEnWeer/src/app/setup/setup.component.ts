@@ -17,13 +17,13 @@ export class SetupComponent implements OnInit {
   model : any = {};
   user: User;
   parent: Parent;
-  
+
   constructor(private parentService: ParentService, private authenticationSerivce: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
     this.children.push(new Child ());
     this.user = this.authenticationSerivce.getUser();
-    this.parentService.getByEmail(this.user.email).subscribe(user => this.parent = user)  
+    this.parentService.getByEmail(this.user.email).subscribe(user => this.parent = user)
   }
 
   onStep1Next($event){
@@ -39,7 +39,7 @@ export class SetupComponent implements OnInit {
     this.model.email = this.user.email;
     this.model.currentType = this.model.type;
     console.log(this.model);
-    //this.parentService.saveSetup(this.model).subscribe(data => console.log(data));
+    this.parentService.saveSetup(this.model).subscribe(data => console.log(data));
   }
 
   onComplete($event){

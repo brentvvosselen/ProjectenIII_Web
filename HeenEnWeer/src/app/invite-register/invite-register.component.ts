@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Invitee } from '../models/invitee';
 import { NgModel, Validators, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ParentService } from '../services/parent.service';
-import { UserService } from '../services/user-service.service'; 
-import { Router } from '@angular/router'; 
+import { UserService } from '../services/user-service.service';
+import { Router } from '@angular/router';
 import { ViewEncapsulation } from '@angular/core';
 
 @Component({
@@ -22,19 +22,23 @@ export class InviteRegisterComponent implements OnInit {
   model: any = {};
   inviteRegisterForm: FormGroup;
 
-  
 
-  constructor(private route: ActivatedRoute, private parentService: ParentService, private userService: UserService, private router: Router) { 
+
+  constructor(private route: ActivatedRoute, private parentService: ParentService, private userService: UserService, private router: Router) {
     this.route.params.subscribe(params => this.key = params.key);
+    console.log(this.key);
 
      this.parentService.getInvitee(this.key).subscribe(data => {
+       console.log(data);
       //we halen de values die nodig zijn op uit de data en plaatsen deze in het model
       this.model.email = data.email;
       this.model.firstname = data.firstname;
       this.model.lastname = data.lastname;
-      this.model.key = data.key;
+      this.model.key = this.key;
+
+      console.log(this.model.key);
      });
-    
+
   }
 
   ngOnInit() {
