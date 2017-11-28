@@ -368,7 +368,6 @@ app.get("/api/parents/:email", passport.authenticate('jwt', { session: false }),
     if(err){
       next(handleError(res, err.message, "could not find parent"));
     }
-    console.log(user);
     res.json(user);
   }).populate({
     path: 'group',
@@ -852,10 +851,17 @@ app.get("/api/calendar/getall/:email", passport.authenticate('jwt', { session: f
 app.get("/api/calendar/event/:id", passport.authenticate('jwt', { session: false }), function(req,res, next){
   Event.findOne({
     _id: req.params.id
-  }).populate('categoryid').exec(function(err,event){
+  }).populate([{
+    path:'categoryid',
+    model:'Category'},{
+      path:'children',
+      model:'Child'
+    }
+  ]).exec(function(err,event){
     if(err){
       next(handleError(err));
     }else{
+      console.log(event);
       res.json(event);
     }
   });
@@ -937,6 +943,7 @@ app.put("/api/calendar/event/edit/:id", passport.authenticate('jwt', { session: 
     event.start = req.body.start;
     event.end = req.body.end;
     event.categoryid = req.body.categoryid;
+    event.children = req.body.children;
     event.save(function(err){
       if(err){
         next(handleError(err, "Could not save event"));
@@ -949,6 +956,8 @@ app.put("/api/calendar/event/edit/:id", passport.authenticate('jwt', { session: 
 
 //toevoegen event
 app.post("/api/calendar/event/add/:email", passport.authenticate('jwt', { session: false }), function(req,res,next){
+  console.log(req.body.children);
+  console.log(req.body);
   Parents.findOne({
     email: req.params.email
   }).populate({
