@@ -18,10 +18,15 @@
 }
 
 .image {
+    object-fit: cover;
     display: block;
     width: 125px;
     margin:0;
     height: auto;
+  }
+
+  .sidebar-account-img img{
+    object-fit: cover;
   }
   
   .overlay-container{

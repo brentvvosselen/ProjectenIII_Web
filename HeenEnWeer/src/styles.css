@@ -63,11 +63,14 @@ p,h1,h2,h3,h4,h5,h6{
 .action-right{
    float: right;
 }
-.action-right .material-icons{
+.action-left{
+    float: left;
+}
+.action-right .material-icons, .action-left .material-icons{
     font-size: 2rem;
     color: var(--color-title-gray);
 }
-.action-right:hover .material-icons{
+.action-right:hover .material-icons, .action-left .material-icons{
     color: var(--color-mid-gray);
     transition: .2s ease-in-out;
 }
@@ -619,6 +622,10 @@ a{
     transition: .2s ease-in-out;
 }
 
+.gray-icon-link{
+    color: var(--color-text-gray);
+}
+
 
 
 @media(min-width:576px){
@@ -635,6 +642,14 @@ a{
     #menu-toggle{
         visibility:hidden;
     }
+}
+
+.vertical-baseline{
+    vertical-align: baseline !important;
+}
+.action-title{
+    position: absolute;
+    padding-left: .5em;
 }
 
 

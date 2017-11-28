@@ -1,9 +1,7 @@
 <div class="container-fluid">
-  <h2 class="center page-title">Kosten</h2>
+  <h2 class="center page-title"> <span>Kosten</span><a  class="gray-icon-link action-title" routerLink="/costs/settings" routerLinkActive="active"><i class="material-icons vertical-baseline">settings</i></a><a class="action-right" (click)="openDialog()"><i  class="material-icons">add</i></a></h2>
   <div class="left">
-      <a routerLink="/costs/settings" routerLinkActive="active">
-        <i class="material-icons">settings</i> 
-      </a> 
+      
   </div>
 
   <div *ngIf="length == '0'">
@@ -13,15 +11,24 @@
       
       <div class="example-container">
         <div class="example-header">
-            <a class="addcost"  ><i (click)="openDialog()" class="material-icons">add</i></a>
-          <mat-form-field class="search">
-            <input ([ngModel])="searchValue" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-          </mat-form-field>
-          <div class="refreshbutton">
-            <a id="refresh" (click)="refresh()">
-              <i class="material-icons">autorenew</i>
-            </a>
+          <div class="row">
+              <div class="refreshbutton">
+                  <a id="refresh" (click)="refresh()">
+                    <i class="material-icons">autorenew</i>
+                  </a>
+                </div>
+ 
+                <div class="cost-header-title">
+                    <p>Te betalen: €{{total}}</p>
+                  </div>
+        
+                  <div class="cost-header-search">
+                      <input class="form-control form-border"([ngModel])="searchValue" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                      
+                  </div>
           </div>
+        
+          
         </div>
   
         <mat-table #table [dataSource]="dataSource">
@@ -54,9 +61,7 @@
         <md-paginator #paginator [length]="length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25,50, 100]">
         </md-paginator>
       </div>
-      <div class="table-footer-info">
-          <p>Totaal: </p><p class="bold">€ {{total}}</p>
-      </div>
+      
       <div class="table-footer row">
         
           <button class="btn-betalen btn btn-primary" (click)="pay()">Betalen</button>          

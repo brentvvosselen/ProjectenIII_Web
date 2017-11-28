@@ -53,6 +53,18 @@ body{
     border: 2px black;
   }
 
+  .cost-header-title p{
+    color:white;
+    font-size: 1.5rem;
+    line-height: 3rem;
+  }
+  .cost-header-title{
+    position:absolute;
+    left:0;
+    width:100%;
+    text-align: center;
+  }
+
   .search{
     float: right;
   }
@@ -72,8 +84,10 @@ body{
   }
 
   .refreshbutton{
-    float: right;
-    margin-top: 18px;
+    z-index: 5;
+    margin-left: 2em;
+    margin-top: .5em;
+    margin-bottom: .5em;
     color:white;
   }
 
@@ -114,4 +128,25 @@ body{
 
   .left{
     margin-bottom: 20px;
+  }
+
+  .cost-header-search{
+    margin-left: auto;
+    margin-right: 2em;
+    margin-top: .4rem;
+    z-index: 5;
+  }
+  .cost-header-search input{
+    color: white;
+    border-color: white;
+    padding-bottom: 0;
+    padding-left:.2em;
+  }
+  .cost-header-search input::placeholder,.cost-header-search input::-ms-input-placeholder,.cost-header-search input:-ms-input-placeholder,.cost-header-search input::-moz-placeholder,.cost-header-search input:-moz-placeholder,.cost-header-search input::-webkit-input-placeholder {
+    color:white;
+  }
+  .cost-header-search input:focus{
+    background:none;
+    color:white;
+    border-color: lightgray;
   }
