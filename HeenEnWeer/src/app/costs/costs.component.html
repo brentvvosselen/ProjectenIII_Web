@@ -9,9 +9,9 @@
               <mat-radio-group>
                   <mat-radio-button class="left" value="0" (change)="selectChild('0')">Kosten van alle kinderen</mat-radio-button>
                   <div class="left" *ngFor="let ch of currentUser.group.children">
-                    <mat-radio-button value="ch.firstname" (change)="selectChild(ch)">{{ch.firstname}}</mat-radio-button>
+                    <mat-radio-button [value]="ch.firstname" (change)="selectChild(ch)">{{ch.firstname}}</mat-radio-button>
                   </div>
-                </mat-radio-group>
+              </mat-radio-group>
           <br>
       </div>
       <div class="example-container">

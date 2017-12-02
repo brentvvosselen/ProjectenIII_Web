@@ -132,6 +132,7 @@ export class CostsComponent implements OnInit {
   }
 
   selectChild(value: number){
+    console.log(value);
     if(value == 0){
       this.costDatabase.refresh();
     }else{
@@ -144,7 +145,7 @@ export interface CostData {
   date: Date;
   description: string;
   amount: number;
-  children: number[];
+  children: Child[];
 }
 
 export class CostDatabase{
@@ -164,6 +165,7 @@ export class CostDatabase{
     const copiedData = this.data.slice();
     copiedData.push(cost);
     this.dataChange.next(copiedData);
+    this.initialData.push(cost);
   }
 
   applyFilter(filterValue: string){
@@ -178,8 +180,11 @@ export class CostDatabase{
   }
 
   filterChild(value: Child){
+    console.log(value);
     var copiedData = this.initialData.slice();
-    this.dataChange.next(copiedData.filter(e => e.children.includes(value._id)));
+    console.log(copiedData);
+    console.log(copiedData.filter(e => e.children.filter(z => z.firstname = value.firstname).length == 1));
+    this.dataChange.next(copiedData.filter(e => e.children.filter(z => z.firstname = value.firstname)));
   }
 
   getTotal(): number{
