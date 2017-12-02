@@ -27,6 +27,8 @@ export class CostSettingsComponent implements OnInit {
   ngOnInit() {
     this.parentService.getByEmail(this.user.email).subscribe(data => {
       this.currentUser = data;
+      console.log(this.currentUser.group.finance);
+      
       if(this.currentUser.group.finance.accepted.length > 0 && this.currentUser.group.finance.accepted.length < 2 && !this.currentUser.group.finance.accepted.includes(this.currentUser)){
         console.log(this.currentUser.group.finance);
         this.mustAcceptSetup = true;
@@ -144,5 +146,24 @@ export class CostSettingsComponent implements OnInit {
 
   declineFinanceSetup(){
     console.log("geweigerd")
+  }
+
+  editFinance(){
+    //this.currentUser.group.finance = null;
+    this.currentUser.group.finance = {
+      fintype : "",
+      accepted: [this.currentUser],
+      onderhoudsBijdrage: {
+        onderhoudsgerechtigde: null,
+        onderhoudsplichtige: null,
+        percentage: 0
+      },
+      kindrekening: {
+        maxBedrag: 0
+      }
+    };
+    this.mustAcceptSetup = false;
+    this.everythingCompleted = false;
+    this.mustCompleteSetup = true;
   }
 }
