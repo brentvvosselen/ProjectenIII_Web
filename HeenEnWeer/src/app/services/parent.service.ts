@@ -117,6 +117,10 @@ export class ParentService {
         return this.http.post("http://127.0.0.1:5000/api/finance/", group, this.jwt()).map((response: Response) => response.json());
     }
 
+    costSetupAccept(parent: any){
+        return this.http.post("http://127.0.0.1:5000/api/finance/accept", parent, this.jwt()).map((response: Response) => response.json());
+    }
+
     // private helper methods
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only

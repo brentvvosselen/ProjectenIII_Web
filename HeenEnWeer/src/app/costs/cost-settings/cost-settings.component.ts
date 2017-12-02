@@ -4,6 +4,7 @@ import { Parent } from '../../models/parent';
 import { AuthenticationService } from '../../services/authentication-service.service';
 import { User } from '../../models/user';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-cost-settings',
   templateUrl: './cost-settings.component.html',
@@ -15,20 +16,30 @@ export class CostSettingsComponent implements OnInit {
   user: User;
   currentUser: Parent;
   mustCompleteSetup: boolean;
+  mustAcceptSetup: boolean;
   model: any = {};
 
-  constructor(private parentService: ParentService, private authenticationService: AuthenticationService, private location: Location) {
+  constructor(private parentService: ParentService, private authenticationService: AuthenticationService, private location: Location, private router: Router) {
     this.user = this.authenticationService.getUser();
   }
 
   ngOnInit() {
     this.parentService.getByEmail(this.user.email).subscribe(data => {
       this.currentUser = data;
+      if(this.currentUser.group.finance.accepted.length > 0 && this.currentUser.group.finance.accepted.length < 3 && !this.currentUser.group.finance.accepted.includes(this.currentUser)){
+        console.log(this.currentUser.group.finance);
+        this.mustAcceptSetup = true;
+      }else{
+        this.mustAcceptSetup = false;
+      }
       if(this.currentUser.group.finance.accepted.length == 0){
         this.mustCompleteSetup = true;
       }else{
         this.mustCompleteSetup = false;     
       }
+
+      console.log(this.mustAcceptSetup);
+      console.log(this.mustCompleteSetup);
     });
   }
 
@@ -69,7 +80,7 @@ export class CostSettingsComponent implements OnInit {
 
   edit(){
     console.log(this.currentUser.group);
-    this.currentUser.group.finance.accepted.push(this.currentUser._id.toString());
+    this.currentUser.group.finance.accepted.push(this.currentUser);
     switch(this.currentUser.group.finance.fintype){
       case "kindrekening": {
         this.model = {
@@ -117,5 +128,14 @@ export class CostSettingsComponent implements OnInit {
 
   back(){
     this.location.back();
+  }
+
+  acceptFinanceSetup(){
+    console.log("aanvaard");
+    this.parentService.costSetupAccept(this.currentUser).subscribe(data => {console.log(data), this.router.navigate(["/costs"])});
+  }
+
+  declineFinanceSetup(){
+    console.log("geweigerd")
   }
 }

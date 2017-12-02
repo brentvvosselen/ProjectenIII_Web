@@ -3,7 +3,24 @@
 <div class="left-back">
     <a><i (click)="back()" class="material-icons">arrow_back</i> terug</a>
  </div>
-<div class="center" *ngIf="mustCompleteSetup">
+ <div class="center" *ngIf="mustAcceptSetup">
+   <h4>andere ouder heeft de instelling voorlopig ingesteld, aanvaard je dit?</h4>
+   <h5>Details:</h5>
+   <br>
+   <div *ngIf="currentUser.group.finance.kindrekening">
+      <p>De andere ouder heeft gekozen voor: {{currentUser.group.finance.fintype}}</p>
+      
+    <p>Systeem: Kindrekening met max bedrag van {{currentUser.group.finance.kindrekening.maxbedrag}}</p>
+    </div>
+   <div *ngIf="currentUser.group.finance.onderhoudsbijdrage">
+      <p>De andere ouder heeft gekozen voor: {{currentUser.group.finance.fintype}}</p>
+      
+     <p>Systeem: Onderhoudsbijdrage met percentage {{currentUser.group.finance.onderhoudsbijdrage.percentage}}</p>
+   </div>
+   <button (click)="acceptFinanceSetup()" class="btn btn-primary">Aanvaard</button>
+   <button (click)="declineFinanceSetup()" class="btn btn-danger">Verwerp</button>
+ </div>
+<div class="center" *ngIf="mustCompleteSetup && !mustAcceptSetup">
   <h3>Configureer de kostverdeling</h3>
   <form class="costForm col-12 col-md-10 col-lg-8 col-xl-6 align-self-center" id="costform" name="costform" (ngSubmit)="edit()"
     #costform="ngForm">
@@ -52,7 +69,23 @@
 
   </form>
 </div>
-<div class="center" *ngIf="!mustCompleteSetup">
+<div class="center" *ngIf="!mustCompleteSetup && mustAcceptSetup">
   <h3>U heeft uw settings geconfigureerd, de andere ouder moet deze nog goedkeuren!</h3>
+</div>
+
+<div class="center" *ngIf="!mustAcceptSetup && !mustCompleteSetup">
+  <h5>Details:</h5>
+  <br>
+  <div *ngIf="currentUser.group.finance.kindrekening">
+     <p>Jullie hebben gekozen voor: {{currentUser.group.finance.fintype}}</p>
+     
+   <p>Systeem: Kindrekening met max bedrag van {{currentUser.group.finance.kindrekening.maxbedrag}}</p>
+   </div>
+  <div *ngIf="currentUser.group.finance.onderhoudsbijdrage">
+     <p>Jullie hebben gekozen voor: {{currentUser.group.finance.fintype}}</p>
+     
+    <p>Systeem: Onderhoudsbijdrage met percentage {{currentUser.group.finance.onderhoudsbijdrage.percentage}}</p>
+  </div>
+  <button (click)="acceptFinanceSetup()" class="btn btn-primary">Wijzig</button>
 </div>
 </div>
