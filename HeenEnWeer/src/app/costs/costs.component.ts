@@ -17,6 +17,8 @@ import { CostCategory } from '../models/costCategory';
 import { CostDetailComponent } from './cost-detail/cost-detail.component';
 import { CostsPayComponent } from './costs-pay/costs-pay.component';
 import { forEach } from '@angular/router/src/utils/collection';
+import { Parent } from '../models/parent';
+import { Child } from '../models/child';
 
 @Component({
   selector: 'app-costs',
@@ -29,6 +31,7 @@ export class CostsComponent implements OnInit {
   dataSource: ExampleDataSource | null;
   costDatabase;
   user: User;
+  currentUser: Parent;
   model : any [];
   length: Number;
   costCategories: CostCategory[] = [];
@@ -110,8 +113,12 @@ export class CostsComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new ExampleDataSource(this.costDatabase);
-    this.parentService.getCosts(this.user.email).subscribe(data => {this.length = data.length, this.total = this.costDatabase.getTotal(), console.log(this.total)});
-
+    this.parentService.getCosts(this.user.email).subscribe(data => {
+      this.length = data.length,
+      this.total = this.costDatabase.getTotal(),
+      console.log(this.total)
+      this.parentService.getByEmail(this.user.email).subscribe(data => this.currentUser = data);
+    });
   }
 
   applyFilter(value: string){
@@ -122,12 +129,21 @@ export class CostsComponent implements OnInit {
     console.log("refreshing..");
     this.dataSource = new ExampleDataSource(this.costDatabase);
   }
+
+  selectChild(value: number){
+    if(value == 0){
+      this.costDatabase.refresh();
+    }else{
+      this.costDatabase.filterChild(value);
+    }
+  }
 }
 
 export interface CostData {
   date: Date;
   description: string;
   amount: number;
+  children: number[];
 }
 
 export class CostDatabase{
@@ -158,6 +174,11 @@ export class CostDatabase{
     }else{
       this.dataChange.next(copiedData.filter(e => e.description.includes(filterValue) || e.amount == parseInt(filterValue)));
     }
+  }
+
+  filterChild(value: Child){
+    var copiedData = this.initialData.slice();
+    this.dataChange.next(copiedData.filter(e => e.children.includes(value._id)));
   }
 
   getTotal(): number{

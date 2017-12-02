@@ -1,12 +1,19 @@
 <div class="container-fluid">
   <h2 class="center page-title"> <span>Kosten</span><a  class="gray-icon-link action-title" routerLink="/costs/settings" routerLinkActive="active"><i class="material-icons vertical-baseline">settings</i></a><a class="action-right" (click)="openDialog()"><i  class="material-icons">add</i></a></h2>
-  <div class="left">
-  </div>
 
   <div *ngIf="length == '0'">
     <p>Er zijn nog geen kosten toegevoegd, begin nu met het toevoegen van kosten</p>
   </div>
   <div *ngIf="dataSource">
+      <div *ngIf="currentUser" class="row">
+              <mat-radio-group>
+                  <mat-radio-button class="left" value="0" (change)="selectChild('0')">Kosten van alle kinderen</mat-radio-button>
+                  <div class="left" *ngFor="let ch of currentUser.group.children">
+                    <mat-radio-button value="ch.firstname" (change)="selectChild(ch)">{{ch.firstname}}</mat-radio-button>
+                  </div>
+                </mat-radio-group>
+          <br>
+      </div>
       <div class="example-container">
         <div class="example-header">
           <div class="row">

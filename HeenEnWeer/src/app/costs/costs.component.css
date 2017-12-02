@@ -1,6 +1,11 @@
 body{
   background-color: #F9F9F9;
 }
+
+.left {
+  float: left;
+  padding-left: 10px;
+}
 /* Structure */
 .example-container {
     display: flex;
