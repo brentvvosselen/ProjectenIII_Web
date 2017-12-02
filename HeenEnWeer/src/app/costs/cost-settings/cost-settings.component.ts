@@ -17,6 +17,7 @@ export class CostSettingsComponent implements OnInit {
   currentUser: Parent;
   mustCompleteSetup: boolean;
   mustAcceptSetup: boolean;
+  everythingCompleted: boolean;
   model: any = {};
 
   constructor(private parentService: ParentService, private authenticationService: AuthenticationService, private location: Location, private router: Router) {
@@ -26,7 +27,7 @@ export class CostSettingsComponent implements OnInit {
   ngOnInit() {
     this.parentService.getByEmail(this.user.email).subscribe(data => {
       this.currentUser = data;
-      if(this.currentUser.group.finance.accepted.length > 0 && this.currentUser.group.finance.accepted.length < 3 && !this.currentUser.group.finance.accepted.includes(this.currentUser)){
+      if(this.currentUser.group.finance.accepted.length > 0 && this.currentUser.group.finance.accepted.length < 2 && !this.currentUser.group.finance.accepted.includes(this.currentUser)){
         console.log(this.currentUser.group.finance);
         this.mustAcceptSetup = true;
       }else{
@@ -38,6 +39,12 @@ export class CostSettingsComponent implements OnInit {
         this.mustCompleteSetup = false;     
       }
 
+      if(this.currentUser.group.finance.accepted.length == 2){
+        this.everythingCompleted = true;
+      }else{
+        this.everythingCompleted = false;
+      }
+      console.log(this.everythingCompleted);
       console.log(this.mustAcceptSetup);
       console.log(this.mustCompleteSetup);
     });

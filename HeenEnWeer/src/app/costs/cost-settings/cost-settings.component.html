@@ -10,7 +10,7 @@
    <div *ngIf="currentUser.group.finance.kindrekening">
       <p>De andere ouder heeft gekozen voor: {{currentUser.group.finance.fintype}}</p>
       
-    <p>Systeem: Kindrekening met max bedrag van {{currentUser.group.finance.kindrekening.maxbedrag}}</p>
+    <p>Systeem: Kindrekening met max bedrag van {{currentUser.group.finance.kindrekening.maxBedrag}}</p>
     </div>
    <div *ngIf="currentUser.group.finance.onderhoudsbijdrage">
       <p>De andere ouder heeft gekozen voor: {{currentUser.group.finance.fintype}}</p>
@@ -69,17 +69,17 @@
 
   </form>
 </div>
-<div class="center" *ngIf="!mustCompleteSetup && mustAcceptSetup">
+<div class="center" *ngIf="!everythingCompleted && !mustCompleteSetup && !mustAcceptSetup">
   <h3>U heeft uw settings geconfigureerd, de andere ouder moet deze nog goedkeuren!</h3>
 </div>
 
-<div class="center" *ngIf="!mustAcceptSetup && !mustCompleteSetup">
+<div class="center" *ngIf="everythingCompleted">
   <h5>Details:</h5>
   <br>
   <div *ngIf="currentUser.group.finance.kindrekening">
      <p>Jullie hebben gekozen voor: {{currentUser.group.finance.fintype}}</p>
      
-   <p>Systeem: Kindrekening met max bedrag van {{currentUser.group.finance.kindrekening.maxbedrag}}</p>
+   <p>Systeem: Kindrekening met max bedrag van {{currentUser.group.finance.kindrekening.maxBedrag}}</p>
    </div>
   <div *ngIf="currentUser.group.finance.onderhoudsbijdrage">
      <p>Jullie hebben gekozen voor: {{currentUser.group.finance.fintype}}</p>
