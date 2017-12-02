@@ -69,17 +69,14 @@ export class CostsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.cost = result;
-      console.log(result);
       if(result != undefined){
         var month = new Date().getMonth();
         var year = new Date().getFullYear();
         var dateResult = new Date(result.date);
-        console.log(dateResult);
         if(dateResult.getMonth() == month && dateResult.getFullYear() == year) {
             this.costDatabase.addCost(result);
         }
         this.total = this.costDatabase.getTotal();
-        console.log(this.total);
       }
     });
   }
@@ -118,7 +115,6 @@ export class CostsComponent implements OnInit {
     this.parentService.getCosts(this.user.email).subscribe(data => {
       this.length = data.length,
       this.total = this.costDatabase.getTotal(),
-      console.log(this.total)
       this.parentService.getByEmail(this.user.email).subscribe(data => this.currentUser = data);
     });
   }
@@ -133,7 +129,6 @@ export class CostsComponent implements OnInit {
   }
 
   selectChild(value: number){
-    console.log(value);
     if(value == 0){
       this.costDatabase.refresh();
     }else{
@@ -159,7 +154,7 @@ export class CostDatabase{
   constructor(private parentService: ParentService, private authenticationService: AuthenticationService){
     this.user = this.authenticationService.getUser();
     // this.parentService.getCosts(this.user.email).subscribe(data => {console.log(data), this.dataChange.next(data), this.initialData = data});
-    this.parentService.getCostsMonth(this.user.email).subscribe(data => {console.log(data), this.dataChange.next(data), this.initialData = data});
+    this.parentService.getCostsMonth(this.user.email).subscribe(data => {this.dataChange.next(data), this.initialData = data});
   }
 
   addCost(cost: CostData){
@@ -182,19 +177,13 @@ export class CostDatabase{
 
   filterChild(value: Child){
     var filtered = [];
-    console.log(filtered);
-    // filtered = copiedData.filter(e => e.children.includes(value));
-
     for(var i = 0; i < this.initialData.length; i++) {
-      console.log(this.initialData[i]);
       for(var j = 0; j < this.initialData[i].children.length; j++) {
         if(this.initialData[i].children[j]._id == value._id) {
           filtered.push(this.initialData[i]);
         }
       }
     }
-
-    console.log(filtered);
     this.dataChange.next(filtered);
   }
 
