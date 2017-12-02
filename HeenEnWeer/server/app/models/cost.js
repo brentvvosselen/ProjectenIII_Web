@@ -22,6 +22,7 @@ var CostSchema = new Schema({
     },
     costCategoryid:{type: Schema.ObjectId, ref: 'CostCategory', required: true},
     picture: {type: Schema.ObjectId, ref: 'Image'},
+    children: [{type: Schema.ObjectId, ref:'Child'}]
 });
 
 module.exports = mongoose.model('Costs', CostSchema);

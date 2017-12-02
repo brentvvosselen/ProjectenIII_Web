@@ -33,6 +33,17 @@
             </mat-select>
         </mat-form-field>
     </div>
+    <div *ngIf="currentUser">
+        <div class="row">
+            <mat-radio-group>
+                <mat-radio-button class="left" value="0" (change)="selectChild('All')">Kost voor alle kinderen</mat-radio-button>
+                <div class="left" *ngFor="let ch of currentUser.group.children">
+                  <mat-radio-button value="ch.firstname" (change)="selectChild(ch.firstname)">{{ch.firstname}}</mat-radio-button>
+                </div>
+              </mat-radio-group>
+        </div>
+        <br>
+    </div>
     <div class="row">
       <input type="file" id="file" name="file" (change)="showPreview()" #fileInput/>
     </div>

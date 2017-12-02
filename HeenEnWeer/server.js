@@ -1233,7 +1233,7 @@ app.get("/api/costs/:email", passport.authenticate('jwt', { session: false }), f
   }).populate({
     path:'group',
     model:'Group',
-    populate:{
+    populate: {
       path:'costs',
       model:'Costs',
       populate: {
@@ -1243,6 +1243,10 @@ app.get("/api/costs/:email", passport.authenticate('jwt', { session: false }), f
       populate: {
         path: 'picture',
         model: 'Image'
+      },
+      populate: {
+        path: 'children',
+        model: 'Child'
       }
     }
   }).exec(function(err,parent){
@@ -1317,7 +1321,8 @@ app.post("/api/costs/addCost/:email", passport.authenticate('jwt', { session: fa
           amount: req.body.amount,
           date: req.body.date,
           costCategoryid: req.body.costCategoryid,
-          picture: newImage
+          picture: newImage,
+          children: req.body.children
         });
       } else {
         var cost = new Costs({
@@ -1325,7 +1330,8 @@ app.post("/api/costs/addCost/:email", passport.authenticate('jwt', { session: fa
           description: req.body.description,
           amount: req.body.amount,
           date: req.body.date,
-          costCategoryid: req.body.costCategoryid
+          costCategoryid: req.body.costCategoryid,
+          children: req.body.children
         });
       }
 

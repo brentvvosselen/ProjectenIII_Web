@@ -6,6 +6,7 @@ import { ParentService } from '../../services/parent.service';
 import { User } from '../../models/user';
 import { Image } from '../../models/image';
 import { CostCategory } from '../../models/costCategory';
+import { Parent } from '../../models/parent';
 
 @Component({
   selector: 'app-cost-add',
@@ -17,7 +18,7 @@ export class CostAddComponent implements OnInit {
   cost: Cost;
   user: User;
   costCategories: CostCategory[] = [];
-
+  currentUser: Parent;
   @ViewChild('fileInput') fileInput;
   @ViewChild('preview') preview;
   codedFile: Image;
@@ -31,7 +32,10 @@ export class CostAddComponent implements OnInit {
 
   ngOnInit() {
     this.cost = new Cost();
-    this.parentService.getCostCategories(this.user.email).subscribe(data => {this.costCategories = data});
+    this.parentService.getCostCategories(this.user.email).subscribe(data => {
+      this.costCategories = data;
+      this.parentService.getByEmail(this.user.email).subscribe(data => this.currentUser = data);
+    });
   }
 
   save() {
@@ -51,5 +55,15 @@ export class CostAddComponent implements OnInit {
     reader.onload = () => {
       this.codedFile = new Image(file.name, file.type, reader.result.split(',')[1]);
     };
+  }
+
+  selectChild(value: string){
+    switch(value){
+      case "All": this.cost.children = this.currentUser.group.children;
+      break;
+      default: this.cost.children = this.currentUser.group.children.filter(e => e.firstname == value);
+      break;
+    }
+    console.log(this.cost);
   }
 }

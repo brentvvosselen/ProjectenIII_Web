@@ -69,7 +69,9 @@ export class CostsComponent implements OnInit {
       if(result != undefined){
         var month = new Date().getMonth();
         var year = new Date().getFullYear();
-        if(result.date.getMonth() == month && result.date.getFullYear() == year) {
+        var dateResult = new Date(result.date);
+        console.log(dateResult);
+        if(dateResult.getMonth() == month && dateResult.getFullYear() == year) {
             this.costDatabase.addCost(result);
         }
         this.total = this.costDatabase.getTotal();
