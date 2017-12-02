@@ -91,7 +91,8 @@ export class CostsComponent implements OnInit {
         description: cost.description,
         amount: cost.amount,
         date: cost.date,
-        picture: cost.picture
+        picture: cost.picture,
+        children: cost.children
       }
     });
     dialogRef.afterClosed().subscribe(result => {

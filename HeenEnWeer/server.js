@@ -1267,7 +1267,19 @@ app.get("/api/costs/month/:email", function(req, res, next) {
     model:'Group',
     populate:{
       path:'costs',
-      model:'Costs'
+      model:'Costs',
+      populate: {
+        path: 'costCategoryid',
+        model: 'CostCategory'
+      },
+      populate: {
+        path: 'picture',
+        model: 'Image'
+      },
+      populate: {
+        path: 'children',
+        model: 'Child'
+      }
     }
   }).exec(function(err, parent) {
     if(err || !parent) {

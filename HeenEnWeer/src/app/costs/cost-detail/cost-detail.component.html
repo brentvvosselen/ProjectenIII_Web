@@ -9,4 +9,10 @@
 
     <img *ngIf="cost?.picture" src="data:{{cost.picture.filetype}};base64,{{cost.picture.value}}" alt="{{cost.picture.filename}}" #preview/>
 
+    <div *ngIf="cost.children.length > 0">
+        <p>Kost voor kinderen:</p>
+        <ul *ngFor="let child of cost.children">
+            <li>{{child.firstname}}</li>
+        </ul>            
+    </div>
 </div>
