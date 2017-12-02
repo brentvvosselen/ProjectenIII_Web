@@ -20,7 +20,8 @@
         <mwl-demo-utils-date-time-picker [(ngModel)]="event.end" (ngModelChange)="refresh.next()" placeholder="Not set" name="endDate">
         </mwl-demo-utils-date-time-picker>
       </div>
-
+      <mat-checkbox (change)="setFullDay()">Maak event volledige dag</mat-checkbox>
+      
       <div class="form-item">
         <label>Beschrijving</label>
         <input type="text" class="form-control form-border" [(ngModel)]="event.description" (keyup)="refresh.next()" name="description"

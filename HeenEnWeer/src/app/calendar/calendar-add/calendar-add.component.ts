@@ -207,4 +207,11 @@ export class CalendarAddComponent implements OnInit {
     }
     console.log(this.returning);
   }
+
+  setFullDay(){
+    this.event.start = new Date(this.event.start);
+    this.event.start.setHours(0,0,0,0);
+    this.event.end = new Date(this.event.end);
+    this.event.end.setHours(23,59,59,59);
+  }
 }
