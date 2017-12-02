@@ -128,7 +128,7 @@ export class CalendarComponent implements OnInit{
             actions: this.actions,
             title : data[event]["title"],
             color: _color,
-            draggable: true,
+            draggable: false,
             resizable: {
               beforeStart: true,
               afterEnd: true
