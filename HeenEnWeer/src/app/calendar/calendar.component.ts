@@ -21,7 +21,8 @@ import { NgbModal, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import {
   CalendarEvent,
   CalendarEventAction,
-  CalendarEventTimesChangedEvent
+  CalendarEventTimesChangedEvent,
+  DAYS_OF_WEEK
 } from 'angular-calendar';
 import { ParentService } from '../services/parent.service';
 import { AuthenticationService } from '../services/authentication-service.service';
@@ -58,9 +59,12 @@ var colors: any = {
 })
 export class CalendarComponent implements OnInit{
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
-
+  locale: string = "nl";
   view: string = 'month';
 
+  weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
+  
+    weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
   viewDate: Date = new Date();
 
   modalData: {

@@ -42,13 +42,13 @@
               [view]="view"
               [(viewDate)]="viewDate"
               (viewDateChange)="activeDayIsOpen = false">
-              Previous
+              Vorige
             </div>
             <div
               class="btn btn-outline-secondary"
               mwlCalendarToday
               [(viewDate)]="viewDate">
-              Today
+              Vandaag
             </div>
             <div
               class="btn btn-primary"
@@ -56,7 +56,7 @@
               [view]="view"
               [(viewDate)]="viewDate"
               (viewDateChange)="activeDayIsOpen = false">
-              Next
+              Volgende
             </div>
           </div>
         </div>
@@ -69,7 +69,7 @@
               class="btn btn-primary"
               (click)="view = 'month'"
               [class.active]="view === 'month'">
-              Month
+              Maand
             </div>
             <div
               class="btn btn-primary"
@@ -81,7 +81,7 @@
               class="btn btn-primary"
               (click)="view = 'day'"
               [class.active]="view === 'day'">
-              Day
+              Dag
             </div>
           </div>
         </div>
@@ -92,6 +92,8 @@
           *ngSwitchCase="'month'"
           [viewDate]="viewDate"
           [events]="events"
+          [locale]="locale"
+          [weekStartsOn]="weekStartsOn"          
           [refresh]="refresh"
           [activeDayIsOpen]="activeDayIsOpen"
           (dayClicked)="dayClicked($event.day)"
@@ -102,6 +104,8 @@
           *ngSwitchCase="'week'"
           [viewDate]="viewDate"
           [events]="events"
+          [locale]="locale" 
+          [weekStartsOn]="weekStartsOn"          
           [refresh]="refresh"
           (eventClicked)="handleEvent('Clicked', $event.event)"
           (eventTimesChanged)="eventTimesChanged($event)">
@@ -110,6 +114,8 @@
           *ngSwitchCase="'day'"
           [viewDate]="viewDate"
           [events]="events"
+          [locale]="locale" 
+          [weekStartsOn]="weekStartsOn"                    
           [refresh]="refresh"
           (eventClicked)="handleEvent('Clicked', $event.event)"
           (eventTimesChanged)="eventTimesChanged($event)">
