@@ -19,6 +19,7 @@ import { CostsPayComponent } from './costs-pay/costs-pay.component';
 import { forEach } from '@angular/router/src/utils/collection';
 import { Parent } from '../models/parent';
 import { Child } from '../models/child';
+import { filter } from 'rxjs/operator/filter';
 
 @Component({
   selector: 'app-costs',
@@ -180,11 +181,21 @@ export class CostDatabase{
   }
 
   filterChild(value: Child){
-    console.log(value);
-    var copiedData = this.initialData.slice();
-    console.log(copiedData);
-    console.log(copiedData.filter(e => e.children.filter(z => z.firstname = value.firstname).length == 1));
-    this.dataChange.next(copiedData.filter(e => e.children.filter(z => z.firstname = value.firstname)));
+    var filtered = [];
+    console.log(filtered);
+    // filtered = copiedData.filter(e => e.children.includes(value));
+
+    for(var i = 0; i < this.initialData.length; i++) {
+      console.log(this.initialData[i]);
+      for(var j = 0; j < this.initialData[i].children.length; j++) {
+        if(this.initialData[i].children[j]._id == value._id) {
+          filtered.push(this.initialData[i]);
+        }
+      }
+    }
+
+    console.log(filtered);
+    this.dataChange.next(filtered);
   }
 
   getTotal(): number{
