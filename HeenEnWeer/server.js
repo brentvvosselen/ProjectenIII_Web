@@ -1503,7 +1503,59 @@ app.get("/api/heenenweer/getAll/:email", passport.authenticate('jwt', { session:
     console.log(parent.group.heenEnWeerBoekjes);
     res.json(parent.group.heenEnWeerBoekjes);
   })
+});
 
+
+//get children who have a book from date
+app.get("/api/calendar/heenenweer/day/:email/:date", passport.authenticate('jwt', { session: false }),function(req,res,next){
+  var date = new Date(req.params.date);
+  Parents.findOne({
+    email: req.params.email
+  }).populate({
+    path:'group',
+    model:'Group',
+    populate:{
+      path:'heenEnWeerBoekjes',
+      model:'HeenEnWeerBoek',
+      populate:[
+        {
+          path:'child',
+          model:'Child',
+          select:['firstname','lastname']
+        },
+        {
+          path:'days',
+          model:'HeenEnWeerDag',
+          select:['child','description','date'],
+          populate:{
+            path:'child',
+            model:'Child',
+            select: ['firstname']
+          }
+        }
+      ]
+    }
+  }).exec(function(err,parent){
+    if(err) next(handleError(res,err.message,"Could not retrieve parent"));
+    var boekjes = parent.group.heenEnWeerBoekjes;
+    var dagen = [];
+    boekjes.forEach(e => e.days.forEach(f => dagen.push(f)));
+    var result = dagen.filter(e =>
+      e.date.getFullYear() == date.getFullYear()
+      && e.date.getMonth() == date.getMonth()
+      && e.date.getDate() == date.getDate())
+    res.json(result);
+    
+    /*var children = [];
+    dagen.forEach(e => children.push(e.child));
+    var result = [];
+    children.forEach(e => {
+      if (result.indexOf(e) < 0){
+        result.push(e);
+      }
+    });
+    res.json(result);*/
+});
 });
 
 //opvragen informatie heen en weer voor bepaalde dag
