@@ -9,20 +9,20 @@
    </div>
    <div class="container form-container login-overlay">
         <div class="row">
-            <form class="loginForm" name="form" (ngSubmit)="f.form.valid" #f="ngForm" xt-form novalidate>
+            <form class="loginForm" name="form" (ngSubmit)="login()" #f="ngForm" [formGroup]="loginForm" xt-form novalidate>
                 <div class="card card-form">
-                    <div class="form-item" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
-                        <input class="form-control" type="email" name="email" placeholder="Email"[(ngModel)]="model.email" #email="ngModel" xt-validate  required>
-                        <div *ngIf="f.submitted && !password.valid" class="help-block">Email is required</div>
+                    <div class="form-item">
+                        <input class="form-control" id="email" type="email" name="email" placeholder="Email" formControlName="email" xt-validate  required>
+                        <div *ngIf="f.submitted && !loginForm.get('email').valid" class="alert alert-danger">Email is required</div>
                     </div>
-                    <div class="form-item" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-                        <input class="form-control" type="password" name="password" placeholder="Password" [(ngModel)]="model.password" #password="ngModel" required>
-                        <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
-                      </div>
+                    <div class="form-item">
+                        <input class="form-control" id="password" type="password" name="password" placeholder="Password" formControlName="password" required>
+                        <div *ngIf="f.submitted && !loginForm.get('password').valid" class="alert alert-danger">Password is required</div>
+                    </div>
                 </div>
 
                 <div class="button-login">
-                    <input type="submit" value="Log in" (click)="login(email.value, password.value)" />
+                    <input type="submit" value="Log in" />
                 </div>
 
                 <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
@@ -32,38 +32,4 @@
             </form>
         </div>
     </div>
-<script>
-    $(document).ready(function() {
-        $('#registrationForm').formValidation({
-            framework: 'bootstrap',
-            icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            err: {
-                // You can set it to popover
-                // The message then will be shown in Bootstrap popover
-                container: 'tooltip'
-            },
-            fields: {
-                email: {
-                    row: '.col-xs-4',
-                    validators: {
-                        notEmpty: {
-                            message: 'Email is required'
-                        }
-                    }
-                },
-                password: {
-                    row: '.col-xs-4',
-                    validators: {
-                        notEmpty: {
-                            message: 'Password is required'
-                        }
-                    }
-                }
-            }
-        });
-    });
-    </script>
+
