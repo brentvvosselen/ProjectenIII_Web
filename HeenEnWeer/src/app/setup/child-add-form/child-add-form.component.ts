@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Child } from '../../models/child';
+import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-child-add-form',
@@ -9,9 +10,25 @@ import { Child } from '../../models/child';
 export class ChildAddFormComponent implements OnInit {
 
   @Input() child: Child;
-  constructor() { }
+  @Input() public form: NgForm;
+  childAddForm: FormGroup;
+  constructor( private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.childAddForm = this.fb.group({
+      gender: ['', [Validators.required]],
+      firstname: ['', [Validators.required]],
+      lastname: ['', [Validators.required]],
+      birthdate: ['', [Validators.required]],
+    });
+  }
+
+  fillChild(){
+    this.child.gender = this.childAddForm.get("gender").value;
+    this.child.firstname = this.childAddForm.get("firstname").value;
+    this.child.lastname = this.childAddForm.get("lastname").value;
+    this.child.birthdate = this.childAddForm.get("birthdate").value;    
+    console.log(this.child);
   }
 
 }

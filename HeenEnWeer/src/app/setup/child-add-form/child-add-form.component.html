@@ -1,16 +1,21 @@
-<br>
-<form>
-  <input type="radio" value="F" name="gender"  [(ngModel)]="child.gender" required> Meisje
-  <input type="radio" value="M" name="gender"  [(ngModel)]="child.gender" required> Jongen
-  <input type="text" class="form-control" id="voornaam" name="voornaam" aria-describedby="voornaam" placeholder="Voornaam"
-  [(ngModel)]="child.firstname" required>
-  <input type="text" class="form-control" id="achternaam" name="achternaam" aria-describedby="achternaam" placeholder="Achternaam"
-  [(ngModel)]="child.lastname" required>
+<form form="ngForm" [formGroup]="childAddForm">
+    <mat-radio-group class="form-control" formControlName="gender" required (change)="fillChild()" >
+        <mat-radio-button value="F" >Meisje</mat-radio-button>
+        <mat-radio-button value="M" >Jongen</mat-radio-button>
+        <div *ngIf="form.submitted &&  !childAddForm.get('gender').valid" class="alert alert-danger">Geslacht is verplicht</div>      
+        
+    </mat-radio-group>
 
-  <mat-form-field>
-    <input matInput [matDatepicker]="picker" class="form-control" placeholder="Geboortedatum" [(ngModel)]="child.birthdate"  name="leeftijd">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
+    <input type="text" class="form-control" id="voornaam" name="voornaam" aria-describedby="voornaam" placeholder="Voornaam"  formControlName="firstname" required (change)="fillChild()">
+    <div *ngIf="form.submitted && !childAddForm.get('firstname').valid" class="alert alert-danger">Voornaam is verplicht</div>      
+    <input type="text" class="form-control" id="achternaam" name="achternaam" aria-describedby="achternaam" placeholder="Achternaam"  formControlName="lastname" required (change)="fillChild()">
+    <div *ngIf="form.submitted && !childAddForm.get('lastname').valid" class="alert alert-danger">Achternaam is verplicht</div>          
+  
+    <mat-form-field (change)="fillChild()" >
+      <input matInput [matDatepicker]="picker" class="form-control" placeholder="Geboortedatum" formControlName="birthdate"  name="leeftijd" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
 </form>
+
 <br>
