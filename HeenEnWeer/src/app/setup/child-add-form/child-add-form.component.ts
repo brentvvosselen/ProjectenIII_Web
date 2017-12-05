@@ -27,7 +27,11 @@ export class ChildAddFormComponent implements OnInit {
     this.child.gender = this.childAddForm.get("gender").value;
     this.child.firstname = this.childAddForm.get("firstname").value;
     this.child.lastname = this.childAddForm.get("lastname").value;
-    this.child.birthdate = this.childAddForm.get("birthdate").value;    
+    console.log(this.child);
+  }
+
+  updateDate($event){
+    this.child.birthdate = $event;
     console.log(this.child);
   }
 
