@@ -45,7 +45,10 @@ export class SetupComponent implements OnInit {
         children: this.children
       };
       console.log(this.model);
-      //this.router.navigate(["/home"]);
+      this.parentService.saveSetup(this.model).subscribe(data => {
+        console.log(data)
+        this.router.navigate(["/home"]);        
+      });
     }else{
       console.log("not valid");
     }
