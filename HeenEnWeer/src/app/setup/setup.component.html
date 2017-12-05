@@ -1,49 +1,38 @@
 <div class="container-fluid">
-  <form-wizard>
-    <wizard-step [title]="'Jij bent'" [isValid]="genderForm.form.valid" (onNext)="onStep1Next($event)">
-      <h2>Step1</h2>
-      <form #genderForm="ngForm">
-        <div class="form-group">
-          <label for="Gender">Bent u vader of moeder?
-          </label>
-          <input type="radio" value="M" name="type"  [(ngModel)]="model.type" required> Moeder
-          <input type="radio" value="F" name="type"  [(ngModel)]="model.type" required> Vader
-        </div>
-      </form>
-    </wizard-step>
-    <wizard-step [title]="'Info over andere ouder'"  [isValid]="otherParent.form.valid" (onNext)="onStep2Next($event)">
-      <h2>Geef ons wat meer info over de andere ouder</h2>
+  <h2 class="center page-title">Configureer jouw gezin.</h2>
   
-      <form #otherParent="ngForm">
-        <input type="email" class="form-control" id="email" name="email" aria-describedby="email" placeholder="email"
-        [(ngModel)]="model.otherEmail" required>
-        <input type="text" class="form-control" id="voornaam" name="voornaam" aria-describedby="voornaam" placeholder="Voornaam"
-        [(ngModel)]="model.otherFirstname" required>
-        <input type="text" class="form-control" id="achternaam" name="achternaam" aria-describedby="achternaam" placeholder="Achternaam"
-        [(ngModel)]="model.otherLastname" required>
+  <form #f="ngForm" (ngSubmit)="submit()" [formGroup]="setupForm">
 
-        
-      </form>
+    <div class="form-group">
+      <label for="Gender">Bent u vader of moeder?</label>
+      <mat-radio-group class="form-control" formControlName="gender" required>
+        <mat-radio-button value="M" >Moeder</mat-radio-button>
+        <mat-radio-button value="F" >Vader</mat-radio-button>
+      </mat-radio-group>
+      <div *ngIf="f.submitted && !setupForm.get('gender').valid" class="alert alert-danger">Geslacht is verplicht</div>      
+    </div>
+
+    <div class="form-group">
+      <h2>Geef ons wat meer info over de andere ouder</h2>
+      <input type="email" class="form-control" id="email" name="email" aria-describedby="email" placeholder="email" formControlName="otheremail" required>
+      <div *ngIf="f.submitted && !setupForm.get('otheremail').valid" class="alert alert-danger">Andere ouder email is verplicht</div>      
       
-    </wizard-step>
-    <wizard-step [title]="'Info over de kinderen'" (onNext)="onStep3Next($event)">
+      <input type="text" class="form-control" id="voornaam" name="voornaam" aria-describedby="voornaam" placeholder="Voornaam" formControlName="otherfirstname" required>
+      <div *ngIf="f.submitted && !setupForm.get('otherfirstname').valid" class="alert alert-danger">Voornaam is verplicht</div>      
       
+      <input type="text" class="form-control" id="achternaam" name="achternaam" aria-describedby="achternaam" placeholder="Achternaam" formControlName="otherlastname" required>
+      <div *ngIf="f.submitted && !setupForm.get('otherlastname').valid" class="alert alert-danger">Achternaam is verplicht</div>      
+    </div>
+   
+    <div class="form-group">
       <h2>Geef ons wat informatie over je kind(eren)</h2>  
       <i class="material-icons" (click)="addChild()">person_add</i>
       <app-child-add-form  *ngFor="let child of children"
-        [child] = "child"
-      >   
+        [child] = "child">   
       </app-child-add-form>
-    </wizard-step>
-    <wizard-step [title]="'Step4'" (onComplete)="onComplete($event)">
-      <div [ngSwitch]="isCompleted">
-        <div *ngSwitchDefault>
-          <h1>Step4</h1>
-        </div>
-        <div *ngSwitchCase="true">
-          <h4>Thank you! You have completed all the steps.</h4>
-        </div>
-      </div>
-    </wizard-step>
-  </form-wizard>
+    </div>
+  
+    <button type="submit" class="btn btn-info">Verzend</button>
+    
+  </form>
 </div>

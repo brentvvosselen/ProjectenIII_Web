@@ -5,6 +5,7 @@ import { User } from '../models/user';
 import { AuthenticationService } from '../services/authentication-service.service';
 import { Parent } from '../models/parent';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -17,33 +18,36 @@ export class SetupComponent implements OnInit {
   model : any = {};
   user: User;
   parent: Parent;
+  setupForm: FormGroup;
+  
 
-  constructor(private parentService: ParentService, private authenticationSerivce: AuthenticationService, private router: Router) { }
+  constructor(private parentService: ParentService, private authenticationSerivce: AuthenticationService, private router: Router, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.children.push(new Child ());
     this.user = this.authenticationSerivce.getUser();
-    this.parentService.getByEmail(this.user.email).subscribe(user => this.parent = user)
+    this.parentService.getByEmail(this.user.email).subscribe(user => this.parent = user);
+    this.setupForm = this.fb.group({
+      gender: ['', [Validators.required]],
+      otheremail: ['', [Validators.required, Validators.minLength(3)]],
+      otherfirstname: ['', [Validators.required, Validators.minLength(3)]],
+      otherlastname: ['', [Validators.required, Validators.minLength(3)]],
+    });
   }
 
-  onStep1Next($event){
-    this.parent.type = this.model.type;
-    this.parentService.update(this.parent).subscribe(data => console.log(data));
-  }
-
-  onStep2Next($event){
-  }
-
-  onStep3Next($event){
-    this.model.children = this.children;
-    this.model.email = this.user.email;
-    this.model.currentType = this.model.type;
-    console.log(this.model);
-    this.parentService.saveSetup(this.model).subscribe(data => console.log(data));
-  }
-
-  onComplete($event){
-    this.router.navigate(["/home"]);
+  submit(){
+    if(this.setupForm.valid){
+      this.model = {
+        gender: this.setupForm.get('gender').value,
+        otheremail: this.setupForm.get('otheremail').value,
+        otherfirstname: this.setupForm.get('otherfirstname').value,
+        otherlastname: this.setupForm.get('otherlastname').value
+      };
+      console.log(this.model);
+      //this.router.navigate(["/home"]);
+    }else{
+      console.log("not valid");
+    }
   }
 
   addChild(){

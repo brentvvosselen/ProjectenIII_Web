@@ -8,7 +8,7 @@
   [(ngModel)]="child.lastname" required>
 
   <mat-form-field>
-    <input matInput [matDatepicker]="picker" class="form-control" placeholder="Geboortedatum" [(ngModel)]="child.birthdate"  name="leeftijd" required>
+    <input matInput [matDatepicker]="picker" class="form-control" placeholder="Geboortedatum" [(ngModel)]="child.birthdate"  name="leeftijd">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
