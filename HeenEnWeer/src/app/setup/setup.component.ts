@@ -29,7 +29,7 @@ export class SetupComponent implements OnInit {
     this.parentService.getByEmail(this.user.email).subscribe(user => this.parent = user);
     this.setupForm = this.fb.group({
       gender: ['', [Validators.required]],
-      otheremail: ['', [Validators.required, Validators.minLength(3)]],
+      otheremail: ['', [Validators.required, Validators.minLength(3),  Validators.pattern('[a-z0-9._%+-]+@[a-z0-9]+\\.[a-z]{2,3}')]],
       otherfirstname: ['', [Validators.required, Validators.minLength(3)]],
       otherlastname: ['', [Validators.required, Validators.minLength(3)]],
     });
@@ -41,7 +41,8 @@ export class SetupComponent implements OnInit {
         gender: this.setupForm.get('gender').value,
         otheremail: this.setupForm.get('otheremail').value,
         otherfirstname: this.setupForm.get('otherfirstname').value,
-        otherlastname: this.setupForm.get('otherlastname').value
+        otherlastname: this.setupForm.get('otherlastname').value,
+        children: this.children
       };
       console.log(this.model);
       //this.router.navigate(["/home"]);

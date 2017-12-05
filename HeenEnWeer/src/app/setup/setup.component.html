@@ -15,8 +15,16 @@
     <div class="form-group">
       <h2>Geef ons wat meer info over de andere ouder</h2>
       <input type="email" class="form-control" id="email" name="email" aria-describedby="email" placeholder="email" formControlName="otheremail" required>
-      <div *ngIf="f.submitted && !setupForm.get('otheremail').valid" class="alert alert-danger">Andere ouder email is verplicht</div>      
-      
+
+      <div *ngIf="f.submitted && !setupForm.get('otheremail').valid" class="alert alert-danger">
+          <div *ngIf="setupForm.get('otheremail').errors.required">
+            Email is verplicht
+          </div>
+          <div *ngIf="setupForm.get('otheremail').errors.pattern">
+            Geef een geldig email in
+          </div>
+      </div>
+
       <input type="text" class="form-control" id="voornaam" name="voornaam" aria-describedby="voornaam" placeholder="Voornaam" formControlName="otherfirstname" required>
       <div *ngIf="f.submitted && !setupForm.get('otherfirstname').valid" class="alert alert-danger">Voornaam is verplicht</div>      
       
