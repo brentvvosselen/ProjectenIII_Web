@@ -53,6 +53,8 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CostsPayComponent } from './costs/costs-pay/costs-pay.component';
 import { CostSettingsComponent } from './costs/cost-settings/cost-settings.component';
+import { CostBillShowComponent } from './costs/cost-bill-show/cost-bill-show.component';
+import { PdfmakeModule } from 'ng-pdf-make';
 
 @NgModule({
   declarations: [
@@ -82,6 +84,7 @@ import { CostSettingsComponent } from './costs/cost-settings/cost-settings.compo
     DayShowComponent,
     CostsPayComponent,
     CostSettingsComponent,
+    CostBillShowComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -111,6 +114,7 @@ import { CostSettingsComponent } from './costs/cost-settings/cost-settings.compo
     MatSelectModule,
     MatRadioModule,
     MatCheckboxModule,
+    PdfmakeModule,
     RouterModule.forRoot([
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},
@@ -124,6 +128,7 @@ import { CostSettingsComponent } from './costs/cost-settings/cost-settings.compo
       { path: "calendar/add", component:CalendarAddComponent, canActivate: [AuthGuard]},
       { path: "costs", component:CostsComponent, canActivate: [AuthGuard]},
       { path: "costs/add", component:CostAddComponent, canActivate: [AuthGuard]},
+      { path: "costs/costBill", component:CostBillShowComponent, canActivate: [AuthGuard]},      
       { path: "costs/settings", component:CostSettingsComponent, canActivate: [AuthGuard]},
       { path: "setup", component:SetupComponent, canActivate: [AuthGuard]},
       { path: "", component:HomeComponent, canActivate: [AuthGuard]},
@@ -131,7 +136,7 @@ import { CostSettingsComponent } from './costs/cost-settings/cost-settings.compo
       { path: "**", component:PageNotFoundComponent},
     ])
   ],
-  providers: [AuthenticationService, ParentService, UserService, AuthGuard, FormBuilder, ],
+  providers: [AuthenticationService, ParentService, UserService, AuthGuard, FormBuilder ],
   bootstrap: [AppComponent],
   entryComponents: [CategoryAddComponent, CostDetailComponent, DayShowComponent, CostsPayComponent]  
 })

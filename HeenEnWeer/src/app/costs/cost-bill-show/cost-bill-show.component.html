@@ -1,0 +1,32 @@
+<div class="container-fluid">
+    <h2 class="center page-title">Kostenafrekening</h2>
+    <div>
+      <br>
+      <p>Afrekening van {{currentDate  | date: 'MM/yyyy'}}</p>
+      <h3>Totale bedrag van de kosten deze maand:  € {{totalCost}}</h3>
+      <br>
+      <h4>Detail van alle kosten</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Titel</th>
+            <th>Beschrijving</th>
+            <th>Datum</th>
+            <th>Bedrag</th>
+          </tr>
+        </thead>
+       
+        <tbody>
+          <tr *ngFor="let cost of costBill.costs">
+            <td>{{cost.title}}</td>     
+            <td>{{cost.description}}</td> 
+            <td>{{cost.date | date: 'dd/MM/yyyy'}}</td> 
+            <td>{{cost.amount}}</td> 
+          </tr>
+        </tbody>  
+      </table>
+      <div class="table-footer-left row">
+          <button class="btn-betalen btn btn-primary" (click)="downloadPdf()" >Download naar pdf</button>
+      </div>
+    </div>
+</div>

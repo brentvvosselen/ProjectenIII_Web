@@ -113,6 +113,12 @@ body{
     float: right;
   }
 
+  .table-footer-left{
+    margin-top: 25px;
+    margin-left:5px;
+    float: left;
+  }
+
   .table-footer-info{
     float:left;
     margin-top:25px;

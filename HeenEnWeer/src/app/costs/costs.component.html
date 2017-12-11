@@ -70,8 +70,8 @@
       <div class="table-footer row">
           <button class="btn-betalen btn btn-primary" (click)="pay()">Betalen</button>
       </div>
-      <div class="table-footer row">
-        <button class="btn-betalen btn btn-primary" >Bereken kostenverdeling</button>
+      <div class="table-footer-left row">
+        <button class="btn-betalen btn btn-primary" [routerLink]="['/costs/costBill']"  >Bereken kostenverdeling</button>
       </div>
   </div>
 

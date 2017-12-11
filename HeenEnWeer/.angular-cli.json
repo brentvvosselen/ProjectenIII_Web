@@ -23,6 +23,8 @@
         "../node_modules/angular-calendar/dist/css/angular-calendar.css"
       ],
       "scripts": [
+        "../node_modules/pdfmake/build/pdfmake.js",
+        "../node_modules/pdfmake/build/vfs_fonts.js",
         "../node_modules/jquery/dist/jquery.min.js",
         "../node_modules/bootstrap/dist/js/bootstrap.min.js"
       ],
