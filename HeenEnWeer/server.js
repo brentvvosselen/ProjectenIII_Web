@@ -1265,21 +1265,9 @@ app.get("/api/costs/month/:email", function(req, res, next) {
   }).populate({
     path:'group',
     model:'Group',
-    populate:{
+    populate: {
       path:'costs',
       model:'Costs',
-      populate: {
-        path: 'costCategoryid',
-        model: 'CostCategory'
-      },
-      populate: {
-        path: 'picture',
-        model: 'Image'
-      },
-      populate: {
-        path: 'children',
-        model: 'Child'
-      }
     }
   }).exec(function(err, parent) {
     if(err || !parent) {
@@ -1289,6 +1277,54 @@ app.get("/api/costs/month/:email", function(req, res, next) {
       var year = new Date().getFullYear();
       var costsFiltered = parent.group.costs.filter(e => e.date.getMonth() == month && e.date.getFullYear() == year);
       return res.json(costsFiltered);
+    }
+  });
+});
+
+app.get("/api/costs/bill/:email", function(req, res, next){
+  Parents.findOne({
+    email: req.params.email
+  }).populate({
+    path:'group',
+    model:'Group',
+    populate:{
+      path:'costs',
+      model:'Costs',
+    },
+  }).exec(function(err, parent){
+    if(!parent) {
+      next(handleError(res, "Could nog get parent"));
+    }else{
+      var percentage = 0;
+      var maxbedrag = 0;
+      var system = parent.group.finance.fintype;
+      console.log(system);
+      var month = new Date().getMonth();
+      var year = new Date().getFullYear();
+      var costsFiltered = parent.group.costs.filter(e => e.date.getMonth() == month && e.date.getFullYear() == year);
+      switch(system){
+        case "onderhoudsbijdrage": percentage = parent.group.finance.onderhoudsbijdrage.percentage;
+        break;
+        case "kindrekening": maxbedrag = parent.group.finance.kindrekening.maxBedrag;
+        break;
+      }
+      if(percentage > 0){
+        if(parent.group.finance.onderhoudsbijdrage.onderhoudsgerechtigde){
+          let total = 0;
+          costsFiltered.forEach(e => total += e.amount);
+          let totalCost = total * (1 - (percentage/100));
+          res.json(totalCost);
+        }else{
+          let total = 0;
+          costsFiltered.forEach(e => total += e.amount);
+          let totalCost = total * (percentage/100);
+          res.json(totalCost);
+        }
+      }else{
+        let total = 0;
+        costsFiltered.forEach(e => total += e.amount)
+        res.json(total/2);
+      }
     }
   });
 });
@@ -1555,7 +1591,7 @@ app.get("/api/calendar/heenenweer/day/:email/:date", passport.authenticate('jwt'
       }
     });
     res.json(result);*/
-});
+  });
 });
 
 //opvragen informatie heen en weer voor bepaalde dag
@@ -1583,7 +1619,7 @@ app.get("/api/heenenweer/day/:id", passport.authenticate('jwt', { session: false
 });
 
 //edit heenenweer item
-app.put("/api/heenenweer/item/edit/:id",function(req,res,next){
+app.put("/api/heenenweer/item/edit/:id", passport.authenticate('jwt', { session: false }), function(req,res,next){
   HeenEnWeerItem.findOne({
     _id: req.params.id
   },function(err,item){
@@ -1595,7 +1631,6 @@ app.put("/api/heenenweer/item/edit/:id",function(req,res,next){
       res.json("Item saved");
     })
   });
-
 });
 
 //VOORBEELD VOOR JWT AUTHENTICATED ROUTE
