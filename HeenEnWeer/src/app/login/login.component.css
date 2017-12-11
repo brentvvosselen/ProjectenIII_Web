@@ -31,6 +31,11 @@ body{
   font-size: 1.5rem !important
 }
 
+.alert{
+  color: darkred;
+  font-weight: 500;
+}
+
 @media(min-width: 768px){
   body{
     background: -webkit-linear-gradient(left, #00C6FF, #3E8DBC);
@@ -54,4 +59,8 @@ body{
 
 .title-login{
   margin-top: 50px !important
+}
+
+.btn-else{
+  text-decoration: underline;
 }
