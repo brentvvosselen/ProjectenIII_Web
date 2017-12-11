@@ -1370,7 +1370,8 @@ app.post("/api/costs/addCost/:email", passport.authenticate('jwt', { session: fa
           date: req.body.date,
           costCategoryid: req.body.costCategoryid,
           picture: newImage,
-          children: req.body.children
+          children: req.body.children,
+          payedBy: parent
         });
       } else {
         var cost = new Costs({
@@ -1379,7 +1380,8 @@ app.post("/api/costs/addCost/:email", passport.authenticate('jwt', { session: fa
           amount: req.body.amount,
           date: req.body.date,
           costCategoryid: req.body.costCategoryid,
-          children: req.body.children
+          children: req.body.children,
+          payedBy: parent
         });
       }
 
