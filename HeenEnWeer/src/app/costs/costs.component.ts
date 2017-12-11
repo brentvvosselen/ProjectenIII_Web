@@ -40,6 +40,7 @@ export class CostsComponent implements OnInit {
   selectedCost: Cost;
   searchValue: string = '';
   total: number;
+  costBill: any = {};
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -116,6 +117,7 @@ export class CostsComponent implements OnInit {
       this.length = data.length,
       this.total = this.costDatabase.getTotal(),
       this.parentService.getByEmail(this.user.email).subscribe(data => this.currentUser = data);
+      this.getCostBill();
     });
   }
 
@@ -134,6 +136,13 @@ export class CostsComponent implements OnInit {
     }else{
       this.costDatabase.filterChild(value);
     }
+  }
+
+  getCostBill(){
+    this.parentService.getCostBill(this.user.email).subscribe(data => {
+      this.costBill = data
+      console.log(this.costBill);
+    });
   }
 }
 

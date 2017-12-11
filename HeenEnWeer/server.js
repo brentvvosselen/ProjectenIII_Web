@@ -1308,22 +1308,29 @@ app.get("/api/costs/bill/:email", function(req, res, next){
         case "kindrekening": maxbedrag = parent.group.finance.kindrekening.maxBedrag;
         break;
       }
+      var model = {
+        totalCostToPay: "",
+        costs: costsFiltered
+      }
       if(percentage > 0){
         if(parent.group.finance.onderhoudsbijdrage.onderhoudsgerechtigde){
           let total = 0;
           costsFiltered.forEach(e => total += e.amount);
           let totalCost = total * (1 - (percentage/100));
-          res.json(totalCost);
+          model.totalCostToPay = totalCost;
+          res.json(model);
         }else{
           let total = 0;
           costsFiltered.forEach(e => total += e.amount);
           let totalCost = total * (percentage/100);
-          res.json(totalCost);
+          model.totalCostToPay = totalCost;
+          res.json(model);
         }
       }else{
         let total = 0;
         costsFiltered.forEach(e => total += e.amount)
-        res.json(total/2);
+        model.totalCostToPay = total / 2;
+        res.json(model);
       }
     }
   });
