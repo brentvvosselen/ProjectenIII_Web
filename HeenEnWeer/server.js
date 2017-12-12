@@ -1236,23 +1236,24 @@ app.get("/api/costs/:email", passport.authenticate('jwt', { session: false }), f
     populate: {
       path:'costs',
       model:'Costs',
-      populate: {
+      populate: [{
         path: 'costCategoryid',
         model: 'CostCategory'
       },
-      populate: {
+      {
         path: 'picture',
         model: 'Image'
       },
-      populate: {
+      {
         path: 'children',
         model: 'Child'
-      }
+      }]
     }
   }).exec(function(err,parent){
     if(err){
       next(handleError(res, err.message, "could not get costs"));
     }else{
+      console.log(parent.group.costs);
       res.json(parent.group.costs);
     }
   });

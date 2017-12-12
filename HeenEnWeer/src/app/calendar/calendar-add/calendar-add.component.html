@@ -10,15 +10,13 @@
 
       <div class="form-item">
         <label>Start datum</label>
-        <mwl-demo-utils-date-time-picker [(ngModel)]="event.start" (ngModelChange)="refresh.next()" placeholder="Not set" name="startDate">
-        </mwl-demo-utils-date-time-picker>
+        <owl-date-time [(ngModel)]="event.start" (ngModelChange)="refresh.next()" placeholder="Not set" name="startDate"></owl-date-time>
       </div>
 
 
       <div class="form-item">
         <label>Eind datum</label>
-        <mwl-demo-utils-date-time-picker [(ngModel)]="event.end" (ngModelChange)="refresh.next()" placeholder="Not set" name="endDate">
-        </mwl-demo-utils-date-time-picker>
+        <owl-date-time [(ngModel)]="event.end" (ngModelChange)="refresh.next()" placeholder="Not set" name="endDate"></owl-date-time>
       </div>
       <mat-checkbox (change)="setFullDay()">Maak event volledige dag</mat-checkbox>
       
@@ -38,6 +36,9 @@
         <a id="category-add" (click)="openDialog()">
           <i class="material-icons">add</i>
         </a>
+        <div *ngIf="eventForm.submitted && selectElem.valid">
+          <p>required</p>
+        </div>
       </div>
       <br>
       <div *ngIf="currentUser">

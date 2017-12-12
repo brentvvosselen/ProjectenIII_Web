@@ -55,6 +55,7 @@ import { CostsPayComponent } from './costs/costs-pay/costs-pay.component';
 import { CostSettingsComponent } from './costs/cost-settings/cost-settings.component';
 import { CostBillShowComponent } from './costs/cost-bill-show/cost-bill-show.component';
 import { PdfmakeModule, PdfmakeService } from 'ng-pdf-make';
+import { DateTimePickerModule } from 'ng-pick-datetime';
 
 @NgModule({
   declarations: [
@@ -114,6 +115,7 @@ import { PdfmakeModule, PdfmakeService } from 'ng-pdf-make';
     MatSelectModule,
     MatRadioModule,
     MatCheckboxModule,
+    DateTimePickerModule,
     RouterModule.forRoot([
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},
