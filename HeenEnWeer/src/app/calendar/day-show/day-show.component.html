@@ -7,11 +7,11 @@
     </li>
     <li>
         <h3 mat-dialog-title>Start</h3>
-        <span>{{data?.start}}</span> 
+        <span>{{data?.start | date: 'dd/MM/yyyy'}}</span> 
     </li>
     <li>
         <h3 mat-dialog-title>Einde</h3>
-        <span>{{data?.end}}</span> 
+        <span>{{data?.end | date: 'dd/MM/yyyy'}}</span> 
     </li>
     <li>
         <h3 mat-dialog-title>Kleur</h3>

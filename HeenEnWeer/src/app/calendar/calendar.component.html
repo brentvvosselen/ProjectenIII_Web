@@ -61,7 +61,7 @@
           </div>
         </div>
         <div class="col-lg-4">
-          <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+          <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'nl' }}</h3>
         </div>
         <div class="col-lg-4">
           <div class="btn-group">
@@ -109,7 +109,7 @@
           [weekStartsOn]="weekStartsOn"
           [weekendDays]="weekendDays"          
           [refresh]="refresh"
-          (eventClicked)="handleEvent('Clicked', $event.event)"
+          (eventClicked)="showDay($event.event)"
           (eventTimesChanged)="eventTimesChanged($event)">
         </mwl-calendar-week-view>
         <mwl-calendar-day-view
@@ -120,7 +120,7 @@
           [weekStartsOn]="weekStartsOn"  
           [weekendDays]="weekendDays"                  
           [refresh]="refresh"
-          (eventClicked)="handleEvent('Clicked', $event.event)"
+          (eventClicked)="showDay($event.event)"
           (eventTimesChanged)="eventTimesChanged($event)">
         </mwl-calendar-day-view>
       </div>
