@@ -54,7 +54,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CostsPayComponent } from './costs/costs-pay/costs-pay.component';
 import { CostSettingsComponent } from './costs/cost-settings/cost-settings.component';
 import { CostBillShowComponent } from './costs/cost-bill-show/cost-bill-show.component';
-import { PdfmakeModule } from 'ng-pdf-make';
+import { PdfmakeModule, PdfmakeService } from 'ng-pdf-make';
 
 @NgModule({
   declarations: [
@@ -114,7 +114,6 @@ import { PdfmakeModule } from 'ng-pdf-make';
     MatSelectModule,
     MatRadioModule,
     MatCheckboxModule,
-    PdfmakeModule,
     RouterModule.forRoot([
       { path: "login", component:LoginComponent},
       { path: "register", component:RegisterComponent},
@@ -136,7 +135,7 @@ import { PdfmakeModule } from 'ng-pdf-make';
       { path: "**", component:PageNotFoundComponent},
     ])
   ],
-  providers: [AuthenticationService, ParentService, UserService, AuthGuard, FormBuilder ],
+  providers: [AuthenticationService, ParentService, UserService, AuthGuard, FormBuilder,     PdfmakeService, ],
   bootstrap: [AppComponent],
   entryComponents: [CategoryAddComponent, CostDetailComponent, DayShowComponent, CostsPayComponent]  
 })
