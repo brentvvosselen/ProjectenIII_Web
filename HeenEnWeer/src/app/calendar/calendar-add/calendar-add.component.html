@@ -5,18 +5,33 @@
 
       <div class="form-item">
         <label>Titel</label>
-        <input type="text" class="form-control form-border" [(ngModel)]="event.title" (keyup)="refresh.next()" name="title">
+        <input type="text" class="form-control form-border" [(ngModel)]="event.title" (keyup)="refresh.next()" name="title" required placeholder="titel"  #title="ngModel">
+        <div *ngIf="title.invalid && eventForm.submitted" class="alert alert-danger">
+          <div *ngIf="title.errors.required">
+            Titel is verplicht
+          </div>
+        </div>
       </div>
 
       <div class="form-item">
         <label>Start datum</label>
-        <owl-date-time [(ngModel)]="event.start" (ngModelChange)="refresh.next()" placeholder="Not set" name="startDate"></owl-date-time>
+        <owl-date-time [(ngModel)]="event.start" (ngModelChange)="refresh.next()" placeholder="Not set" name="startDate" #start="ngModel"  ></owl-date-time>
+        <div *ngIf="(event.start < yesterday || event.start == yesterday) && eventForm.submitted" class="alert alert-danger">
+            <div>
+              Startdatum is mag niet in het verleden liggen
+            </div>
+        </div>
       </div>
 
 
       <div class="form-item">
         <label>Eind datum</label>
         <owl-date-time [(ngModel)]="event.end" (ngModelChange)="refresh.next()" placeholder="Not set" name="endDate"></owl-date-time>
+        <div *ngIf="event.end < event.start && eventForm.submitted" class="alert alert-danger">
+            <div>
+              Einddatum moet groter zijn als startdatum
+            </div>
+        </div>
       </div>
       <mat-checkbox (change)="setFullDay()">Maak event volledige dag</mat-checkbox>
       
@@ -28,7 +43,7 @@
       <br>
       <div class="form-item">
         <label>Categorie</label>
-        <select #selectElem (change)="setCat(selectElem.value)">
+        <select #selectElem (change)="setCat(selectElem.value)" required>
           <option *ngFor="let cat of categories" [value]="cat.type">
             <label>{{cat.type}}</label>
           </option>
@@ -36,8 +51,10 @@
         <a id="category-add" (click)="openDialog()">
           <i class="material-icons">add</i>
         </a>
-        <div *ngIf="eventForm.submitted && selectElem.valid">
-          <p>required</p>
+        <div *ngIf="selectedCategory == null && eventForm.submitted" class="alert alert-danger">
+            <div>
+              Categorie en kleur zijn verplicht!
+            </div>
         </div>
       </div>
       <br>

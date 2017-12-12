@@ -33,6 +33,7 @@ export class CalendarAddComponent implements OnInit {
   returning: boolean;
   user: User;
   currentUser: Parent;
+  yesterday: Date;
 
   modalData: {
     event: CalendarEvent;
@@ -67,6 +68,9 @@ export class CalendarAddComponent implements OnInit {
     this.parentService.getByEmail(this.user.email).subscribe(user => {
       this.currentUser = user;
       this.allChildren = user.group.children;
+      this.yesterday = new Date();
+      this.yesterday.setDate(this.yesterday.getDate() -1);
+      console.log(this.yesterday);
     });
     this.newEvent();
     this.returning = false;
@@ -74,7 +78,7 @@ export class CalendarAddComponent implements OnInit {
 
   newEvent(){
     this.event = {
-      title: "test",
+      title: "",
       start: new Date(),
       end: new Date(),
       until: new Date(),
@@ -133,8 +137,12 @@ export class CalendarAddComponent implements OnInit {
     model.children = this.selectedChildren;
 
     console.log(model);
-    this.parentService.addEvent(model,this.user.email).subscribe(data => this.router.navigate(["/calendar"]));
-    this.refresh.next();
+    if(model.title != ""){
+      this.parentService.addEvent(model,this.user.email).subscribe(data => this.router.navigate(["/calendar"]));   
+      this.refresh.next();   
+    }else{
+      this.returning = false;
+    }
   }
   
   handleEvent(action: string, event: CalendarEvent): void {
