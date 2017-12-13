@@ -35,7 +35,6 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { DemoUtilsModule } from './demo-utils/module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarAddComponent } from './calendar/calendar-add/calendar-add.component'; 
-import { ColorPickerModule } from 'ngx-color-picker';
 import { CostsComponent } from './costs/costs.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MatTableModule } from "@angular/material/table";
@@ -56,6 +55,7 @@ import { CostSettingsComponent } from './costs/cost-settings/cost-settings.compo
 import { CostBillShowComponent } from './costs/cost-bill-show/cost-bill-show.component';
 import { PdfmakeModule, PdfmakeService } from 'ng-pdf-make';
 import { DateTimePickerModule } from 'ng-pick-datetime';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   declarations: [

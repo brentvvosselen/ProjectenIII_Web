@@ -39,6 +39,10 @@ export class CalendarAddComponent implements OnInit {
     event: CalendarEvent;
   };
 
+  alertStyles = {
+    'color': "red"
+  };
+
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fa fa-fw fa-pencil"></i>',

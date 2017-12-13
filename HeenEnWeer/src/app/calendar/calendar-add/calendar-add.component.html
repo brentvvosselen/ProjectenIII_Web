@@ -4,7 +4,7 @@
     <div>
 
       <div class="form-item">
-        <label>Titel</label>
+        <label>Titel *</label>
         <input type="text" class="form-control form-border" [(ngModel)]="event.title" (keyup)="refresh.next()" name="title" required placeholder="titel"  #title="ngModel">
         <div *ngIf="title.invalid && eventForm.submitted" class="alert alert-danger">
           <div *ngIf="title.errors.required">
@@ -42,10 +42,10 @@
       </div>
       <br>
       <div class="form-item">
-        <label>Categorie</label>
+        <label>Categorie en kleur *</label>
         <select #selectElem (change)="setCat(selectElem.value)" required>
           <option *ngFor="let cat of categories" [value]="cat.type">
-            <label>{{cat.type}}</label>
+            <label ng-style="alertStyles">{{cat.type}}</label>
           </option>
         </select>
         <a id="category-add" (click)="openDialog()">
