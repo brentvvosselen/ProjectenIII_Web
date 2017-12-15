@@ -494,7 +494,7 @@ app.post("/api/setup", passport.authenticate('jwt', { session: false }), functio
       req.body.children.forEach(function(child){
         //if the gender is not F or M give an error
         if(child.gender != "F" && child.gender != "M"){
-          next(handleError(res, "Could not update parent: F/M fout child", "Usertype does not exist. must be 'F' or 'M'", 400));
+          next(handleError(res, "Could not update parent: F/M fout child", 400));
         }
         var tempChild = new Child({
           firstname: child.firstname,

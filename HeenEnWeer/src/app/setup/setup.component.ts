@@ -37,14 +37,17 @@ export class SetupComponent implements OnInit {
 
   submit(){
     if(this.setupForm.valid){
+      var childrenFiltered = this.children.filter(e => e.firstname != null);
+      console.log(childrenFiltered);
       this.model = {
         currentType: this.setupForm.get('gender').value,
         otherEmail: this.setupForm.get('otheremail').value,
         otherFirstname: this.setupForm.get('otherfirstname').value,
         otherLastname: this.setupForm.get('otherlastname').value,
-        children: this.children
+        children: childrenFiltered
       };
       this.model.email = this.parent.email;
+      console.log(this.model);
       this.parentService.saveSetup(this.model).subscribe(data => {
         this.router.navigate(["/home"]);        
       });
