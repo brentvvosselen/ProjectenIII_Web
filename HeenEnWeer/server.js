@@ -1529,7 +1529,11 @@ app.get("/api/heenenweer/getAll/:email", passport.authenticate('jwt', { session:
         {
           path:'child',
           model:'Child',
-          select:['firstname','lastname']
+          select:['firstname','lastname','picture'],
+          populate:{
+            path:'picture',
+            model:'Image'
+          }
         },
         {
           path:'days',
@@ -1575,7 +1579,11 @@ app.get("/api/calendar/heenenweer/day/:email/:date", passport.authenticate('jwt'
           populate:{
             path:'child',
             model:'Child',
-            select: ['firstname']
+            select: ['firstname','picture'],
+            populate:{
+              path:'picture',
+              model:'Image'
+            }
           }
         }
       ]
