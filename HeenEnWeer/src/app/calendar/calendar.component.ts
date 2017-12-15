@@ -64,7 +64,7 @@ export class CalendarComponent implements OnInit{
 
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
   
-    weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
+  weekendDays: number[] = [DAYS_OF_WEEK.SATURDAY, DAYS_OF_WEEK.SUNDAY];
   viewDate: Date = new Date();
 
   modalData: {
@@ -176,7 +176,9 @@ export class CalendarComponent implements OnInit{
     let dialogRef = this.dialog.open(DayShowComponent, {
       data: {
         title: event.title, end: event.end, start: event.start, color: event.color
-      }
+      },
+      height: '400px',
+      width: '600px',
     });
     dialogRef.afterClosed().subscribe(result => {
       let event = this.data.filter(item => item.title == result.title);

@@ -24,15 +24,18 @@ export class CategoryAddComponent implements OnInit {
 
   ngOnInit(){
     this.category = new Category();
+    this.category.color = "#ff0303";
   }
 
   closeDialog() {
-    console.log("close");
     this.dialogRef.close("test");
   }
 
   save(){
-    this.parentService.addCategory(this.category,this.user.email).subscribe(data => {this.category = data, console.log(data), this.dialogRef.close(data)});
+    this.parentService.addCategory(this.category,this.user.email).subscribe(data => {this.category = data, this.dialogRef.close(data)});
   }
 
+  setColor(value :string){
+    this.category.color = value;
+  }
 }

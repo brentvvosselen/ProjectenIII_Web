@@ -5,7 +5,8 @@
         <input matInput placeholder="Titel" value="Titel" [(ngModel)]="category.type" name="type" required>
     </mat-form-field>
 
-    <input type="color" [(ngModel)]="category.color" name="color" required>
+    <input [(colorPicker)]="category.color" [style.background]="category.color" (change)="setColor($color)" required>
+    
 </form>
 
 <mat-dialog-actions>
