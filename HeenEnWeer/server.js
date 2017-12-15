@@ -49,6 +49,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 
+app.disable('etag');
+
 // connect to database
 mongoose.connect(config.database);
 
