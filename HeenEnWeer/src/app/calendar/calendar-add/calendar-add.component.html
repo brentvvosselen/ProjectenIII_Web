@@ -75,8 +75,7 @@
 
         <div class="form-item">
           <label>Tot wanneer</label>
-          <mwl-demo-utils-date-time-picker [(ngModel)]="event.until" (ngModelChange)="refresh.next()" placeholder="Not set" name="untilDate">
-          </mwl-demo-utils-date-time-picker>
+          <owl-date-time [(ngModel)]="event.until" (ngModelChange)="refresh.next()" placeholder="Not set" name="untilDate"></owl-date-time>
         </div>
 
         <div class="form-item">
