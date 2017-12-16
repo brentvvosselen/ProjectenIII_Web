@@ -24,8 +24,6 @@ export class ChildComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.model);
-
     var date = new Date(this.model.birthdate);
     var day = date.getDate();
     var month = date.getMonth();
@@ -83,7 +81,7 @@ export class ChildComponent implements OnInit {
     };
   }
 
-  addPicture() {
+  addPictureChild() {
     this.parentService.addPictureChild(this.model._id, this.codedFile).subscribe(item => console.log(item));
   }
 }

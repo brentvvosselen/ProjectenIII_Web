@@ -8,7 +8,7 @@
                 <img *ngIf="!model?.picture" class="img img-responsive" src="../../assets/noPicture.jpg"/>
                 <img *ngIf="model?.picture" src="data:{{model.picture.filetype}};base64,{{model.picture.value}}" alt="{{model.picture.filename}}"/>
               <div class="overlay">
-                <div class="text"><button  data-toggle="modal" data-target="#myModal"><i class="material-icons">mode_edit</i></button>
+                <div class="text"><button  data-toggle="modal" data-target="#pictureChild"><i class="material-icons">mode_edit</i></button>
                 </div>
               </div>
             </div>
@@ -38,7 +38,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="pictureChild" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -52,7 +52,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Terug</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addPicture()">Toevoegen</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addPictureChild()">Toevoegen</button>
       </div>
     </div>
   </div>
