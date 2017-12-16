@@ -8,7 +8,6 @@ import { Observable } from "rxjs/Observable";
 import { Image } from '../models/image';
 
 import {DomSanitizer} from '@angular/platform-browser';
-import { SafeUrl } from '@angular/platform-browser/src/security/dom_sanitization_service';
 
 @Component({
   selector: 'app-navbar',
@@ -38,7 +37,9 @@ export class NavbarComponent implements OnInit {
       this.parentService.getByEmail(this.user.email).subscribe(user => {
         this.currentUser = user;
 
-        this.imageValue = "data:" + this.currentUser.picture.filetype + ";base64," + this.currentUser.picture.value;
+        if(this.currentUser.picture) {
+          this.imageValue = "data:" + this.currentUser.picture.filetype + ";base64," + this.currentUser.picture.value;
+        }
       });      
     }
   }

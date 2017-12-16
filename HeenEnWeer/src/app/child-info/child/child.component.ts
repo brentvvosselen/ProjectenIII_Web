@@ -4,6 +4,7 @@ import { Child } from '../../../app/models/child';
 import { Image } from '../../../app/models/image';
 import { ParentService } from '../../services/parent.service';
 
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-child',
@@ -18,12 +19,15 @@ export class ChildComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
   @ViewChild('preview') preview;
   codedFile: Image;
+  imageValue: string;
 
-  constructor(private parentService: ParentService) {
+  constructor(private parentService: ParentService, private _domSanitizer: DomSanitizer) {
 
   }
 
   ngOnInit() {
+    console.log(this.model);
+
     var date = new Date(this.model.birthdate);
     var day = date.getDate();
     var month = date.getMonth();
@@ -32,6 +36,10 @@ export class ChildComponent implements OnInit {
     this.model.birthdate = myFormattedDate;
 
     this.categories = this.model.categories;
+
+    if(this.model.picture) {
+      this.imageValue = "data:" + this.model.picture.filetype + ";base64," + this.model.picture.value;
+    }
   }
 
   addInfoNode(index: number, name: string, value: string) {
