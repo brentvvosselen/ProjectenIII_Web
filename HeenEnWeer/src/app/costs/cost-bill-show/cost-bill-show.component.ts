@@ -6,6 +6,9 @@ import { AuthenticationService } from '../../services/authentication-service.ser
 import { Cost } from '../../models/cost';
 import { Cell, Row, Table } from 'ng-pdf-make/objects/table';
 import { PdfmakeService } from 'ng-pdf-make';
+import { MatDialog } from '@angular/material';
+import { CostSetupPopupComponent } from '../cost-setup-popup/cost-setup-popup.component';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-cost-bill-show',
   templateUrl: './cost-bill-show.component.html',
@@ -18,15 +21,32 @@ export class CostBillShowComponent implements OnInit {
   costBill: any = {};
   currentDate: Date;
   totalCost: number;
+  mustCompleteSetup: boolean;
 
-  constructor(private parentService: ParentService, private authenticationSerivce: AuthenticationService, private pdfmake: PdfmakeService) {
+  constructor(private parentService: ParentService, private authenticationSerivce: AuthenticationService, private pdfmake: PdfmakeService, public dialog: MatDialog, private router: Router) {
     this.user = this.authenticationSerivce.getUser();
     this.totalCost = 0;
   }
 
   ngOnInit() {
     this.currentDate = new Date();
-    this.parentService.getByEmail(this.user.email).subscribe(data => this.currentUser = data);
+    this.parentService.getByEmail(this.user.email).subscribe(data => {
+      this.currentUser = data
+      if(this.currentUser.group.finance.fintype != ""){
+        this.mustCompleteSetup = true;
+        console.log(this.mustCompleteSetup);
+        const dialogRef = this.dialog.open(CostSetupPopupComponent, {
+
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+          if(result != undefined){
+            this.router.navigate(["/costs/settings"]);
+          }
+        });
+      }
+    });
     this.parentService.getCostBill(this.user.email).subscribe(data => {
       this.costBill = data;
       data.costs.forEach(element => {
