@@ -7,6 +7,9 @@ import { Parent } from '../models/parent';
 import { Observable } from "rxjs/Observable";
 import { Image } from '../models/image';
 
+import {DomSanitizer} from '@angular/platform-browser';
+import { SafeUrl } from '@angular/platform-browser/src/security/dom_sanitization_service';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -22,22 +25,21 @@ export class NavbarComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
   @ViewChild('preview') preview;
   codedFile: Image;
+  imageValue: string;
 
-  constructor(private authenticationService: AuthenticationService, private router: Router, private parentService: ParentService) {
-    authenticationService.userIsLoggedIn.subscribe(isLoggedIn => {
-      this.userIsLoggedIn = isLoggedIn;
-      this.user = authenticationService.getUser();
-      if(this.userIsLoggedIn){
-        this.parentService.getByEmail(this.user.email).subscribe(user => (this.currentUser = user));     
-      }
-    });
+  constructor(private authenticationService: AuthenticationService, private router: Router, private parentService: ParentService, private _domSanitizer: DomSanitizer) {
+
   }
 
   ngOnInit(): void {
     this.user = this.authenticationService.getUser();
     this.userIsLoggedIn = this.user != undefined;
     if(this.userIsLoggedIn){
-      this.parentService.getByEmail(this.user.email).subscribe(user => this.currentUser = user);      
+      this.parentService.getByEmail(this.user.email).subscribe(user => {
+        this.currentUser = user;
+
+        this.imageValue = "data:" + this.currentUser.picture.filetype + ";base64," + this.currentUser.picture.value;
+      });      
     }
   }
 
