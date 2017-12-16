@@ -21,3 +21,12 @@
 .setupForm .input-group{
     width:100%;
 }
+
+mat-radio-group{
+    border: none;
+    padding-left: 0;
+}
+
+input{
+    margin-bottom: .5em;
+}

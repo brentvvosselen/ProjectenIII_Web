@@ -1,5 +1,5 @@
 <form form="ngForm" [formGroup]="childAddForm">
-    <mat-radio-group class="form-control form-border" formControlName="gender" required (change)="fillChild()" >
+    <mat-radio-group class="form-control" formControlName="gender" required (change)="fillChild()" >
         <mat-radio-button value="F" >Meisje</mat-radio-button>
         <mat-radio-button value="M" >Jongen</mat-radio-button>
     </mat-radio-group>
