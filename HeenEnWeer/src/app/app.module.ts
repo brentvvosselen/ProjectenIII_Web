@@ -57,6 +57,7 @@ import { PdfmakeModule, PdfmakeService } from 'ng-pdf-make';
 import { DateTimePickerModule } from 'ng-pick-datetime';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { CostSetupPopupComponent } from './costs/cost-setup-popup/cost-setup-popup.component';
+import { HomeSetupPopupComponent } from './home/home-setup-popup/home-setup-popup.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { CostSetupPopupComponent } from './costs/cost-setup-popup/cost-setup-pop
     CostSettingsComponent,
     CostBillShowComponent,
     CostSetupPopupComponent,
+    HomeSetupPopupComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -141,6 +143,6 @@ import { CostSetupPopupComponent } from './costs/cost-setup-popup/cost-setup-pop
   ],
   providers: [AuthenticationService, ParentService, UserService, AuthGuard, FormBuilder,     PdfmakeService, ],
   bootstrap: [AppComponent],
-  entryComponents: [CategoryAddComponent, CostDetailComponent, DayShowComponent, CostsPayComponent, CostSetupPopupComponent]  
+  entryComponents: [CategoryAddComponent, CostDetailComponent, DayShowComponent, CostsPayComponent, CostSetupPopupComponent, HomeSetupPopupComponent]  
 })
 export class AppModule { }

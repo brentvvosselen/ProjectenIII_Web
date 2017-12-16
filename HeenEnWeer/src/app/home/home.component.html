@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <!-- <div class="center">
+     <div class="center">
         <br>
         <div class="jumbotron">
             <a href="#" class="visible-xs" data-toggle="offcanvas">
@@ -8,12 +8,8 @@
             <h1>Welkom bij oogappl</h1>
             <p>Dit is een platform speciaal gemaakt voor co-ouderschap.</p>
         </div>
-    -->
+    
     <!--Force user to do Setup-->
-    <div class="center" *ngIf="currentUser?.doneSetup == false">
-        <h2>Doorloop de Setup</h2>
-        <button class="btn btn-default" routerLink="/setup" routerLinkActive="active">Setup</button>
-    </div>
     <!--/span-->
     <!--display all homepage templates if user has done setup-->
     <div class="content" *ngIf="currentUser?.doneSetup == true">
