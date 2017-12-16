@@ -42,11 +42,9 @@ export class NavbarComponent implements OnInit {
   }
 
   logout($event): void {
-    $event.preventDefault();
     this.authenticationService.logout().then(success => {
       if (success) {
-        this.router.navigateByUrl('/login');
-        window.location.reload();
+        this.router.navigate(['/login']);
       }
     });
   }
