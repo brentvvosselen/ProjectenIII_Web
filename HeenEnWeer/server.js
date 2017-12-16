@@ -249,7 +249,22 @@ app.post('/api/signup', function(req, res, next) {
     //create a new group for sharing childinfo
     var newGroup = new Group({
       children: [],
+      costCategories: []
     });
+
+    var costCategory1 = new CostCategory({
+      type: "Persoonlijke ontwikkeling"
+    });
+
+    var costCategory2 = new CostCategory({
+      type: "Medisch"
+    });
+
+    var costCategory3 = new CostCategory({
+      type: "School"
+    });
+
+    newGroup.costCategories.push(costCategory1, costCategory2, costCategory3);
 
     //create a new user for authentication
     var newUser = new Users({
@@ -276,6 +291,21 @@ app.post('/api/signup', function(req, res, next) {
           if (err) {
             next(handleError(res, "Email already exists."));
           }
+          costCategory1.save(function(err) {
+            if (err) {
+              next(handleError(res, "Group already exists"));
+            }
+          });
+          costCategory2.save(function(err) {
+            if (err) {
+              next(handleError(res, "Group already exists"));
+            }
+          });
+          costCategory3.save(function(err) {
+            if (err) {
+              next(handleError(res, "Group already exists"));
+            }
+          });
           newGroup.save(function(err) {
             if (err) {
               next(handleError(res, "Group already exists"));
