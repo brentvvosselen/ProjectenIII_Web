@@ -2,9 +2,8 @@
     <mat-radio-group class="form-control form-border" formControlName="gender" required (change)="fillChild()" >
         <mat-radio-button value="F" >Meisje</mat-radio-button>
         <mat-radio-button value="M" >Jongen</mat-radio-button>
-        <div *ngIf="form.submitted &&  !childAddForm.get('gender').valid" class="alert alert-danger">Geslacht is verplicht</div>      
-        
     </mat-radio-group>
+    <div *ngIf="form.submitted &&  !childAddForm.get('gender').valid" class="alert alert-danger">Geslacht is verplicht</div>
 
     <input type="text" class="form-control form-border" id="voornaam" name="voornaam" aria-describedby="voornaam" placeholder="Voornaam"  formControlName="firstname" required (change)="fillChild()">
     <div *ngIf="form.submitted && !childAddForm.get('firstname').valid" class="alert alert-danger">Voornaam is verplicht</div>      
