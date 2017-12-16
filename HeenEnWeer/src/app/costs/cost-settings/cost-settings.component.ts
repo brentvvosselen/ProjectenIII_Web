@@ -5,6 +5,8 @@ import { AuthenticationService } from '../../services/authentication-service.ser
 import { User } from '../../models/user';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { HomeSetupPopupComponent } from '../../home/home-setup-popup/home-setup-popup.component';
+import { MatDialog } from '@angular/material';
 @Component({
   selector: 'app-cost-settings',
   templateUrl: './cost-settings.component.html',
@@ -20,7 +22,7 @@ export class CostSettingsComponent implements OnInit {
   everythingCompleted: boolean;
   model: any = {};
 
-  constructor(private parentService: ParentService, private authenticationService: AuthenticationService, private location: Location, private router: Router) {
+  constructor(private parentService: ParentService, private authenticationService: AuthenticationService, private location: Location, private router: Router, public dialog: MatDialog) {
     this.user = this.authenticationService.getUser();
   }
 
@@ -28,7 +30,20 @@ export class CostSettingsComponent implements OnInit {
     this.parentService.getByEmail(this.user.email).subscribe(data => {
       this.currentUser = data;
       console.log(this.currentUser.group.finance);
-      
+
+      if (this.currentUser.doneSetup == false) {
+        const dialogRef = this.dialog.open(HomeSetupPopupComponent, {
+
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+
+            this.router.navigate(["/setup"]);
+
+        });
+      }
+
       if(this.currentUser.group.finance.accepted.length > 0 && this.currentUser.group.finance.accepted.length < 2 && !this.currentUser.group.finance.accepted.includes(this.currentUser)){
         console.log(this.currentUser.group.finance);
         this.mustAcceptSetup = true;
