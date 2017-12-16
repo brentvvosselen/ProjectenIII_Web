@@ -1,0 +1,23 @@
+.setupForm{
+    margin: 0 auto;
+    display: inline-block;
+    text-align: left;
+}
+
+.setupForm label{
+    color: grey;
+    margin-top: 20px;
+}
+
+.setupForm input{
+    width:100%;
+}
+
+.setupForm button{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: none !important;
+}
+.setupForm .input-group{
+    width:100%;
+}

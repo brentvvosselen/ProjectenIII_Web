@@ -1,11 +1,11 @@
 <div class="container-fluid">
   <h2 class="center page-title">Configureer jouw gezin.</h2>
   
-  <form #setupF="ngForm" (ngSubmit)="submit()" [formGroup]="setupForm">
+  <form class="setupForm col-12 col-md-10 col-lg-8 col-xl-6 align-self-center" #setupF="ngForm" (ngSubmit)="submit()" [formGroup]="setupForm">
 
     <div class="form-group">
-      <label for="Gender">Bent u vader of moeder?</label>
-      <mat-radio-group class="form-control" formControlName="gender" required>
+      <h3>Bent u vader of moeder?</h3>
+      <mat-radio-group class="form-control form-border" formControlName="gender" required>
         <mat-radio-button value="M" >Moeder</mat-radio-button>
         <mat-radio-button value="F" >Vader</mat-radio-button>
       </mat-radio-group>
@@ -13,8 +13,8 @@
     </div>
 
     <div class="form-group">
-      <h2>Geef ons wat meer info over de andere ouder</h2>
-      <input type="email" class="form-control" id="email" name="email" aria-describedby="email" placeholder="email" formControlName="otheremail" required>
+      <h3>Geef ons wat meer info over de andere ouder</h3>
+      <input type="email" class="form-control form-border" id="email" name="email" aria-describedby="email" placeholder="email" formControlName="otheremail" required>
 
       <div *ngIf="setupF.submitted && !setupForm.get('otheremail').valid" class="alert alert-danger">
           <div *ngIf="setupForm.get('otheremail').errors.required">
@@ -25,15 +25,15 @@
           </div>
       </div>
 
-      <input type="text" class="form-control" id="voornaam" name="voornaam" aria-describedby="voornaam" placeholder="Voornaam" formControlName="otherfirstname" required>
+      <input type="text" class="form-control form-border" id="voornaam" name="voornaam" aria-describedby="voornaam" placeholder="Voornaam" formControlName="otherfirstname" required>
       <div *ngIf="setupF.submitted && !setupForm.get('otherfirstname').valid" class="alert alert-danger">Voornaam is verplicht</div>      
       
-      <input type="text" class="form-control" id="achternaam" name="achternaam" aria-describedby="achternaam" placeholder="Achternaam" formControlName="otherlastname" required>
+      <input type="text" class="form-control form-border" id="achternaam" name="achternaam" aria-describedby="achternaam" placeholder="Achternaam" formControlName="otherlastname" required>
       <div *ngIf="setupF.submitted && !setupForm.get('otherlastname').valid" class="alert alert-danger">Achternaam is verplicht</div>      
     </div>
    
     <div class="form-group">
-      <h2>Geef ons wat informatie over je kind(eren)</h2>  
+      <h3>Geef ons wat informatie over je kind(eren)</h3>  
       <i class="material-icons" (click)="addChild()">person_add</i>
 
       <br>
