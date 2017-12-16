@@ -5,3 +5,18 @@ div#wrapper{
   a#menu-toggle{
     display: none;
   }
+
+  
+body{
+  background: var(--color-mid-blue);
+  
+}
+
+@media(min-width: 768px){
+body{
+  background: -webkit-linear-gradient(left, #00C6FF, #3E8DBC);
+  background: -o-linear-gradient(right, #00C6FF, #3E8DBC);
+  background: -moz-linear-gradient(right, #00C6FF, #3E8DBC);
+  background: linear-gradient(to right, #00C6FF, #3E8DBC);
+}
+}
