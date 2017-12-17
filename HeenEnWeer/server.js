@@ -899,7 +899,11 @@ app.get("/api/calendar/event/:id", passport.authenticate('jwt', { session: false
     path:'categoryid',
     model:'Category'},{
       path:'children',
-      model:'Child'
+      model:'Child',
+      populate: {
+        path: 'picture',
+        model: 'Image'
+      }
     }
   ]).exec(function(err,event){
     if(err){
@@ -1280,7 +1284,8 @@ app.get("/api/costs/:email", passport.authenticate('jwt', { session: false }), f
       },
       {
         path: 'children',
-        model: 'Child'
+        model: 'Child',
+        select: ['firstname', 'lastname', 'gender', 'birthdate', 'categories']
       }]
     }
   }).exec(function(err,parent){
@@ -1313,7 +1318,8 @@ app.get("/api/costs/month/:email", function(req, res, next) {
       },
       populate: {
         path: 'children',
-        model: 'Child'
+        model: 'Child',
+        select: ['firstname', 'lastname', 'gender', 'birthdate', 'categories']
       }
     }
   }).exec(function(err, parent) {
