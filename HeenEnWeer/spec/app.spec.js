@@ -127,10 +127,43 @@ let id = {};
             expect(data.body._id).toBeDefined();
         });
 
-        it("check recipe body", () => {
+        it("check body", () => {
             expect(data.body.firstname).toBe("ella");
             expect(data.body.lastname).toBe("aarschot");
             expect(data.body.gender).toBe("F");
+            _id = data.body._id;
+        });
+    });
+
+    describe("POST /api/category/add/:email",() => {
+        let data = {};
+        beforeAll((done) => {
+            Request({
+                method: 'POST',
+                uri: 'http://localhost:5000/api/category/add/jess@aarschot.be',
+                json: true,
+                body: {
+                    type: "school",
+                    color: "#FFFFF"
+                }
+            },(error, response, body) => {
+                data.status = response.statusCode;
+                data.body = response.body;
+                done();
+            }).auth(null,null,true,token);;
+        });
+
+        it("status 200", () => {
+            expect(data.status).toBe(200);
+        });
+
+        it("category is not empty",() => {
+            expect(data.body._id).toBeDefined();
+        });
+
+        it("check body", () => {
+            expect(data.body.type).toBe("school");
+            expect(data.body.color).toBe("#FFFFF");
             _id = data.body._id;
         });
     });
