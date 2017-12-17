@@ -80,6 +80,7 @@ export class CalendarAddComponent implements OnInit {
     this.returning = false;
   }
 
+  /*initialise a new empty event with today's date*/
   newEvent(){
     this.event = {
       title: "",
