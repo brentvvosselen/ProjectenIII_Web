@@ -873,6 +873,10 @@ app.get("/api/calendar/getall/:email", passport.authenticate('jwt', { session: f
       populate:{
         path: 'children',
         model: 'Child',
+        populate: {
+          path: 'picture',
+          model: 'Image'
+        }
       },
     },
   })
